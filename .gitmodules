@@ -1,0 +1,6 @@
+[submodule "libstratosphere"]
+	path = libstratosphere
+	url = git@github.com:Atmosphere-NX/libstratosphere.git
+[submodule "Plutonium"]
+	path = Plutonium
+	url = git@github.com:XorTroll/Plutonium.git
