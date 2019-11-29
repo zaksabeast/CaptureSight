@@ -29,9 +29,11 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s) {
   this->Add(this->menu);
 }
 
-pu::ui::elm::MenuItem::Ref PokemonListLayout::GetMenuItem(PK8* pkm, u32 slot) {
-  std::string itemText = i18n->GetPokemonName(pkm->GetSpecies()) + " - " + pkm->GetFormattedIVs();
+pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(PK8* pkm, u32 slot) {
+  std::string itemText =
+      i18n->GetPokemonName(pkm->GetSpecies()) + " - " + pkm->GetFormattedIVs() + " - " + (pkm->GetIsShiny() ? "Shiny" : "Not shiny");
   auto menuItem = pu::ui::elm::MenuItem::New(itemText);
+
   menuItem->SetColor(gsets.GetTheme().text.light);
   menuItem->SetIcon(getPokemonIconPath(pkm->GetSpecies()));
   menuItem->AddOnClick(std::bind(&PokemonListLayout::OnInputPokemonItem, this, slot));
