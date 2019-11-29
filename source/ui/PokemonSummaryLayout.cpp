@@ -25,7 +25,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm) {
     moves += ", " + i18n->GetPokemonMoveName(pkm->GetMove(i));
   }
 
-  this->spriteImage = createPokemonSprite(0, 0, 4, pkm->GetSpecies(), false);
+  this->spriteImage = createPokemonSprite(0, 0, 4, pkm->GetSpecies(), pkm->GetIsEgg());
   this->speciesBackgroundRectangle =
       pu::ui::elm::Rectangle::New(0, 0, 1280, this->spriteImage->GetHeight() + 50, gsets.GetTheme().background.light, 50);
   this->titleTextBlock = pu::ui::elm::TextBlock::New(700, this->spriteImage->GetHeight() / 4, title, 50);
