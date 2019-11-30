@@ -14,6 +14,6 @@ class PokemonListLayout : public pu::ui::Layout {
  private:
   pu::ui::elm::Menu::Ref menu;
   std::vector<pu::ui::elm::MenuItem::Ref> menuItems;
-  pu::ui::elm::MenuItem::Ref GetMenuItem(PK8* pkm, u32 slot);
+  pu::ui::elm::MenuItem::Ref CreateMenuItem(PK8* pkm, u32 slot);
   void OnInputPokemonItem(u32 slot);
 };

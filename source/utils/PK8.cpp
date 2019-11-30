@@ -100,9 +100,12 @@ u16 PK8::GetSpecies() {
   return *(u16*)(this->data + 8);
 }
 
+u32 PK8::GetIV32() {
+  return *(u32*)(this->data + 0x8C);
+}
+
 u8 PK8::GetIV(u8 stat) {
-  u32 buffer = *(u32*)(this->data + 0x8C);
-  return (u8)((buffer >> 5 * stat) & 0x1F);
+  return (u8)((this->GetIV32() >> 5 * stat) & 0x1F);
 }
 
 u16 PK8::GetTID() {
@@ -143,4 +146,8 @@ u16 PK8::GetMove(u8 slot) {
 
 u8 PK8::GetMovePP(u8 slot) {
   return *(u16*)(this->data + 0x7A + slot);
+}
+
+bool PK8::GetIsEgg() {
+  return ((this->GetIV32() >> 30) & 1) == 1;
 }

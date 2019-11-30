@@ -18,6 +18,7 @@ class PK8 {
   u32 GetEncryptionConstant();
   u16 GetSpecies();
   bool CheckEncrypted();
+  u32 GetIV32();
   u8 GetIV(u8 stat);
   std::string GetFormattedIVs();
   bool GetIsShiny();
@@ -28,6 +29,7 @@ class PK8 {
   u16 GetTID();
   u16 GetMove(u8 slot);
   u8 GetMovePP(u8 slot);
+  bool GetIsEgg();
 
  private:
   u8* data = new u8[0x148];
