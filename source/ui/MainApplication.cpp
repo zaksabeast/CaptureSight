@@ -1,7 +1,7 @@
 #include <stratosphere.hpp>
 #include <ui/MainApplication.hpp>
 #include <utils/Settings.hpp>
-#include <utils/I18n.hpp>
+#include <utils/I18N.hpp>
 
 MainApplication::Ref mainApp;
 Settings gsets;
