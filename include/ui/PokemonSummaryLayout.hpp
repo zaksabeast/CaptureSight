@@ -1,7 +1,7 @@
 #pragma once
 
 #include <pu/Plutonium>
-#include <utils/pk8.hpp>
+#include <utils/PK8.hpp>
 
 class PokemonSummaryLayout : public pu::ui::Layout {
  public:

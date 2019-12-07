@@ -97,7 +97,7 @@ ifeq ($(strip $(NO_ICON)),)
 endif
 
 ifeq ($(strip $(NO_NACP)),)
-	export NROFLAGS += --nacp=$(CURDIR)/Output/$(TARGET).nacp
+	export NROFLAGS += --nacp=$(CURDIR)/output/$(TARGET).nacp
 endif
 
 ifneq ($(APP_TITLEID),)
