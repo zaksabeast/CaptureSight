@@ -17,8 +17,19 @@ std::vector<std::shared_ptr<PK8>> GameReader::ReadBoxes() {
   return this->ReadPK8s(this->boxOffset, 960, 0x158);
 }
 
-std::vector<std::shared_ptr<PK8>> GameReader::ReadWild() {
-  return this->ReadPK8s(this->wildOffset, 1, 0x158);
+std::shared_ptr<PK8> GameReader::ReadWild() {
+  return this->ReadPK8(this->wildOffset);
+}
+
+std::shared_ptr<PK8> GameReader::ReadRaid() {
+  return this->ReadPK8(this->raidOffset);
+}
+
+std::shared_ptr<PK8> GameReader::ReadPK8(u64 offset) {
+  u8 pkmBytes[0x148];
+
+  this->ReadHeap(offset, pkmBytes, 0x148);
+  return std::make_shared<PK8>(pkmBytes);
 }
 
 std::vector<std::shared_ptr<PK8>> GameReader::ReadPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon) {

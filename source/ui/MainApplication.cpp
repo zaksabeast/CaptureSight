@@ -44,7 +44,10 @@ void MainApplication::SetViewMode(PokemonViewMode viewMode) {
   switch (viewMode) {
     case wild:
       this->pokemonSummaryTitle = "Wild Pokemon";
-      this->pkms = this->save->ReadWild();
+      this->pkms = std::vector<std::shared_ptr<PK8>>{
+          this->save->ReadRaid(),
+          this->save->ReadWild(),
+      };
       break;
     case box:
       this->pokemonSummaryTitle = "Box Pokemon";
