@@ -6,7 +6,6 @@
 
 class PokemonListLayout : public pu::ui::Layout {
  public:
-  PokemonListLayout();
   PU_SMART_CTOR(PokemonListLayout)
 
   void UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std::function<std::string(u32)> GetTitle);

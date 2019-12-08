@@ -10,15 +10,10 @@ extern MainApplication::Ref mainApp;
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
-PokemonListLayout::PokemonListLayout() : Layout::Layout() {
-  this->menu = pu::ui::elm::Menu::New(0, 100, 1280, gsets.GetTheme().active.dark, 160, 3);
-  this->Add(this->menu);
-}
-
 void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std::function<std::string(u32)> GetTitle) {
   this->Clear();
   this->menuItems.clear();
-  this->menu = pu::ui::elm::Menu::New(0, 100, 1280, gsets.GetTheme().active.dark, 160, 3);
+  this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
 
   for (auto pk8 = begin(pk8s); pk8 != end(pk8s); ++pk8) {
     auto pkm = *(pk8);
