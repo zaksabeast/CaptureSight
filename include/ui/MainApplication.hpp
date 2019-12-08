@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+#include <functional>
 #include <pu/Plutonium>
 #include <ui/PokemonSummaryLayout.hpp>
 #include <ui/MainMenuLayout.hpp>
@@ -7,7 +9,6 @@
 #include <ui/PokemonViewMode.hpp>
 #include <utils/PK8.hpp>
 #include <utils/GameReader.hpp>
-
 class MainApplication : public pu::ui::Application {
  public:
   using Application::Application;
@@ -24,7 +25,7 @@ class MainApplication : public pu::ui::Application {
  private:
   u32 slot = 0;
   u32 maxSlot = 0;
-  std::string pokemonSummaryTitle = "Party Pokemon";
+  std::function<std::string(u32 slot)> GetSummaryTitle = [&](u32) { return ""; };
   std::unique_ptr<GameReader> save;
   std::vector<std::shared_ptr<PK8>> pkms;
   PokemonSummaryLayout::Ref pokemonSummaryLayout;
@@ -35,4 +36,7 @@ class MainApplication : public pu::ui::Application {
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void IncreaseSlot();
   void DecreaseSlot();
+  std::string GetWildSummaryTitle(u32 slot);
+  std::string GetBoxSummaryTitle(u32 slot);
+  std::string GetPartySummaryTitle(u32 slot);
 };
