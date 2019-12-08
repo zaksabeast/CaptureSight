@@ -82,14 +82,13 @@ std::string MainApplication::GetPartySummaryTitle(u32 slot) {
 
 void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
   if (Down & KEY_DLEFT) {
-    this->DecreaseSlot();
+    this->DecreaseSlot(1);
   } else if (Down & KEY_DRIGHT) {
-    this->IncreaseSlot();
-  }
-
-  if (Down) {
-    std::string summaryTitle = this->GetSummaryTitle(this->slot);
-    this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->GetSlot()].get());
+    this->IncreaseSlot(2);
+  } else if (Down & KEY_L) {
+    this->DecreaseSlot(30);
+  } else if (Down & KEY_R) {
+    this->IncreaseSlot(30);
   }
 }
 
@@ -103,12 +102,16 @@ u32 MainApplication::GetSlot() {
   return this->slot;
 }
 
-void MainApplication::IncreaseSlot() {
-  this->slot = this->slot >= this->maxSlot ? 0 : this->slot + 1;
+void MainApplication::IncreaseSlot(u32 slotIncrease) {
+  u32 newSlot = this->slot + slotIncrease;
+  u32 slot = newSlot >= this->maxSlot ? 0 : newSlot;
+  this->SetSlot(slot);
 }
 
-void MainApplication::DecreaseSlot() {
-  this->slot = this->slot <= 0 ? this->maxSlot : this->slot - 1;
+void MainApplication::DecreaseSlot(u32 slotDecrease) {
+  u32 newSlot = this->slot - slotDecrease;
+  u32 slot = newSlot == 0 || newSlot >= this->maxSlot ? this->maxSlot : newSlot;
+  this->SetSlot(slot);
 }
 
 PokemonSummaryLayout::Ref MainApplication::GetPokemonSummaryLayout() {
