@@ -29,6 +29,7 @@ class PK8 {
   u16 GetTID();
   u16 GetMove(u8 slot);
   u8 GetMovePP(u8 slot);
+  u8 GetNature();
   bool GetIsEgg();
 
  private:

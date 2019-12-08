@@ -16,10 +16,8 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm) {
 
   std::string shinyInfo =
       "PSV " + std::to_string(pkm->GetPSV()) + ", TSV " + std::to_string(pkm->GetTSV()) + (pkm->GetIsShiny() ? ", Shiny" : ", Not shiny");
+  std::string nature = "Nature: " + i18n->GetPokemonNature(pkm->GetNature());
   std::string moves = i18n->GetPokemonMoveName(pkm->GetMove(0));
-  std::stringstream encryptionConstantStream;
-  encryptionConstantStream << std::hex << pkm->GetEncryptionConstant();
-  std::string encryptionConstant = "Encryption constant: " + encryptionConstantStream.str();
 
   for (u8 i = 1; i < 4; i++) {
     moves += ", " + i18n->GetPokemonMoveName(pkm->GetMove(i));
@@ -38,8 +36,8 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm) {
   this->shinyInfoTextBlock->SetColor(gsets.GetTheme().text.light);
   this->moveTextBlock = pu::ui::elm::TextBlock::New(100, this->spriteImage->GetHeight() + 250, moves, 25);
   this->moveTextBlock->SetColor(gsets.GetTheme().text.light);
-  this->ecTextBlock = pu::ui::elm::TextBlock::New(100, this->spriteImage->GetHeight() + 300, encryptionConstant, 25);
-  this->ecTextBlock->SetColor(gsets.GetTheme().text.light);
+  this->natureTextBlock = pu::ui::elm::TextBlock::New(100, this->spriteImage->GetHeight() + 300, nature, 25);
+  this->natureTextBlock->SetColor(gsets.GetTheme().text.light);
 
   this->Add(this->speciesBackgroundRectangle);
   this->Add(this->spriteImage);
@@ -48,5 +46,5 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm) {
   this->Add(this->titleTextBlock);
   this->Add(this->shinyInfoTextBlock);
   this->Add(this->moveTextBlock);
-  this->Add(this->ecTextBlock);
+  this->Add(this->natureTextBlock);
 }

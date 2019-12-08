@@ -8,6 +8,7 @@
 I18N::I18N() {
   this->LoadList("romfs:/pokemon-species.txt", this->pokemonSpecies);
   this->LoadList("romfs:/pokemon-moves.txt", this->pokemonMoves);
+  this->LoadList("romfs:/pokemon-natures.txt", this->pokemonNatures);
 }
 
 void I18N::LoadList(std::string path, std::vector<std::string>& res) {
@@ -29,4 +30,8 @@ std::string I18N::GetPokemonName(u16 species) {
 
 std::string I18N::GetPokemonMoveName(u16 move) {
   return move > this->pokemonMoves.size() ? this->pokemonMoves[0] : this->pokemonMoves[move];
+}
+
+std::string I18N::GetPokemonNature(u8 nature) {
+  return nature > this->pokemonNatures.size() ? this->pokemonNatures[0] : this->pokemonNatures[nature];
 }

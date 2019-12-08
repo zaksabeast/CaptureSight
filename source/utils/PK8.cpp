@@ -151,3 +151,7 @@ u8 PK8::GetMovePP(u8 slot) {
 bool PK8::GetIsEgg() {
   return ((this->GetIV32() >> 30) & 1) == 1;
 }
+
+u8 PK8::GetNature() {
+  return *(u8*)(this->data + 0x20);
+}
