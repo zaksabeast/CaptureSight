@@ -4,8 +4,9 @@
 #include <switch.h>
 #include <stratosphere.hpp>
 #include <utils/PK8.hpp>
+#include <utils/Den.hpp>
 
-class GameReader {
+class GameReader : public Den {
  public:
   GameReader();
   std::vector<std::shared_ptr<PK8>> ReadParty();
