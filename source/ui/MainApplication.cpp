@@ -43,24 +43,41 @@ void MainApplication::OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
 void MainApplication::SetViewMode(PokemonViewMode viewMode) {
   switch (viewMode) {
     case wild:
-      this->pokemonSummaryTitle = "Wild Pokemon";
-      this->pkms = this->save->ReadWild();
+      this->GetSummaryTitle = std::bind(&MainApplication::GetWildSummaryTitle, this, std::placeholders::_1);
+      this->pkms = std::vector<std::shared_ptr<PK8>>{
+          this->save->ReadWild(),
+          this->save->ReadRaid(),
+      };
       break;
     case box:
-      this->pokemonSummaryTitle = "Box Pokemon";
+      this->GetSummaryTitle = std::bind(&MainApplication::GetBoxSummaryTitle, this, std::placeholders::_1);
       this->pkms = this->save->ReadBoxes();
       break;
     case party:
     default:
-      this->pokemonSummaryTitle = "Party Pokemon";
+      this->GetSummaryTitle = std::bind(&MainApplication::GetPartySummaryTitle, this, std::placeholders::_1);
       this->pkms = this->save->ReadParty();
       break;
   }
 
   this->slot = 0;
   this->maxSlot = this->pkms.size() - 1;
-  this->pokemonListLayout->UpdateValues(this->pkms);
+  this->pokemonListLayout->UpdateValues(this->pkms, this->GetSummaryTitle);
   this->LoadLayout(this->pokemonListLayout);
+}
+
+std::string MainApplication::GetWildSummaryTitle(u32 slot) {
+  return slot == 0 ? "Wild Pokemon" : "Raid Pokemon";
+}
+
+std::string MainApplication::GetBoxSummaryTitle(u32 slot) {
+  u32 box = (slot / 30) + 1;
+  u32 boxSlot = (slot % 30) + 1;
+  return "Box " + std::to_string(box) + ", Slot " + std::to_string(boxSlot);
+}
+
+std::string MainApplication::GetPartySummaryTitle(u32 slot) {
+  return "Party " + std::to_string(slot + 1);
 }
 
 void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
@@ -71,13 +88,15 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
   }
 
   if (Down) {
-    this->pokemonSummaryLayout->UpdateValues(this->pokemonSummaryTitle, this->pkms[this->GetSlot()].get());
+    std::string summaryTitle = this->GetSummaryTitle(this->slot);
+    this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->GetSlot()].get());
   }
 }
 
 void MainApplication::SetSlot(u32 newSlot) {
   this->slot = this->slot > this->maxSlot ? this->maxSlot : newSlot;
-  this->pokemonSummaryLayout->UpdateValues(this->pokemonSummaryTitle, this->pkms[this->slot].get());
+  std::string summaryTitle = this->GetSummaryTitle(this->slot);
+  this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot].get());
 }
 
 u32 MainApplication::GetSlot() {
