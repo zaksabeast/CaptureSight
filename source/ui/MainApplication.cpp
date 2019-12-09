@@ -84,7 +84,7 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
   if (Down & KEY_DLEFT) {
     this->DecreaseSlot(1);
   } else if (Down & KEY_DRIGHT) {
-    this->IncreaseSlot(2);
+    this->IncreaseSlot(1);
   } else if (Down & KEY_L) {
     this->DecreaseSlot(30);
   } else if (Down & KEY_R) {
