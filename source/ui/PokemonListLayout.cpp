@@ -18,10 +18,11 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std
   for (auto pk8 = begin(pk8s); pk8 != end(pk8s); ++pk8) {
     auto pkm = *(pk8);
     u32 slot = std::distance(pk8s.begin(), pk8);
-    std::string title = i18n->GetPokemonName(pkm->GetSpecies()) + " - " + pkm->GetFormattedIVs() + " - " +
-                        (pkm->GetIsShiny() ? "Shiny" : "Not shiny") + " - " + GetTitle(slot);
-
+    std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
+    std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not shiny";
+    std::string title = species + " - " + pkm->GetFormattedIVs() + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
+
     this->menuItems.push_back(menuItem);
     this->menu->AddItem(menuItem);
   }

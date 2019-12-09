@@ -11,10 +11,13 @@ All libraries [listed in Plutonium's readme](https://github.com/XorTroll/Plutoni
 After installing those, run `make`.
 
 ## Credits
+
 Thanks to the following for helping make this app:
+
 - Switchbrew for their research and [libnx](https://github.com/switchbrew/libnx) which makes it possible to create homebrew
 - ReSwitched for their research, [Atmosphere](https://github.com/Atmosphere-NX/Atmosphere) and [libstratosphere](https://github.com/Atmosphere-NX/libstratosphere) which was invaluable to make this homebrew possible
 - XorTroll for [Plutonium](https://github.com/XorTroll/Plutonium/tree/master/Plutonium) which is used for the UI
-- Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) which has great documentation of implementation for the PK8 format (among other things), and the Pokemon icons
+- Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) which has great documentation of implementation for the PK8 format (among other things), Pokemon icons, and i18n resources
 - Flagbrew for [PKSM](https://github.com/FlagBrew/PKSM) which gave guidance for c++ Pokemon code organization
 - All Pokemon researchers and contributors
+- nlohmann for the amazing c++ JSON library

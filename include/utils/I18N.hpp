@@ -3,17 +3,17 @@
 #include <vector>
 #include <string>
 #include <switch.h>
+#include <utils/json.hpp>
+
+std::string GetTranslationCode(SetLanguage languageCode);
 
 class I18N {
  public:
   I18N();
-  std::string GetPokemonName(u16 species);
-  std::string GetPokemonMoveName(u16 move);
-  std::string GetPokemonNature(u8 nature);
+  std::string Translate(std::string word);
+  std::string Translate(std::string category, std::string word);
 
  private:
-  std::vector<std::string> pokemonSpecies;
-  std::vector<std::string> pokemonMoves;
-  std::vector<std::string> pokemonNatures;
-  void LoadList(std::string path, std::vector<std::string>& res);
+  nlohmann::json translations;
+  void LoadTranslations(SetLanguage language);
 };

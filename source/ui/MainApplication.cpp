@@ -67,17 +67,18 @@ void MainApplication::SetViewMode(PokemonViewMode viewMode) {
 }
 
 std::string MainApplication::GetWildSummaryTitle(u32 slot) {
-  return slot == 0 ? "Wild Pokemon" : "Raid Pokemon";
+  std::string translationKey = slot == 0 ? "Wild Pokemon" : "Raid Pokemon";
+  return i18n->Translate(translationKey);
 }
 
 std::string MainApplication::GetBoxSummaryTitle(u32 slot) {
   u32 box = (slot / 30) + 1;
   u32 boxSlot = (slot % 30) + 1;
-  return "Box " + std::to_string(box) + ", Slot " + std::to_string(boxSlot);
+  return i18n->Translate("Box") + " " + std::to_string(box) + ", " + i18n->Translate("Slot") + " " + std::to_string(boxSlot);
 }
 
 std::string MainApplication::GetPartySummaryTitle(u32 slot) {
-  return "Party " + std::to_string(slot + 1);
+  return i18n->Translate("Party") + " " + std::to_string(slot + 1);
 }
 
 void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {

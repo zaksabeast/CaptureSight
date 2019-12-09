@@ -4,34 +4,41 @@
 #include <stdio.h>
 #include <utils/I18N.hpp>
 
-// Fake i18n to store Pokemon names and moves until an actual implementation happens
-I18N::I18N() {
-  this->LoadList("romfs:/pokemon-species.txt", this->pokemonSpecies);
-  this->LoadList("romfs:/pokemon-moves.txt", this->pokemonMoves);
-  this->LoadList("romfs:/pokemon-natures.txt", this->pokemonNatures);
+std::string GetTranslationCode(SetLanguage languageCode) {
+  switch (languageCode) {
+    case SetLanguage_FR:
+    case SetLanguage_FRCA:
+      return "fr";
+    case SetLanguage_ENUS:
+    case SetLanguage_ENGB:
+    default:
+      return "en";
+  }
 }
 
-void I18N::LoadList(std::string path, std::vector<std::string>& res) {
-  std::ifstream speciesFile(path);
+I18N::I18N() {
+  u64 languageCode = 0;
+  SetLanguage language = SetLanguage_ENUS;
 
-  if (speciesFile.good()) {
-    std::string line;
-    while (std::getline(speciesFile, line)) {
-      res.push_back(line);
-    }
+  setGetSystemLanguage(&languageCode);
+  setMakeLanguage(languageCode, (s32*)&language);
+  this->LoadTranslations(language);
+}
+
+void I18N::LoadTranslations(SetLanguage language) {
+  std::ifstream translations("romfs:/i18n/" + GetTranslationCode(language) + ".json");
+
+  if (translations.good()) {
+    translations >> this->translations;
   }
 
-  speciesFile.close();
+  translations.close();
 }
 
-std::string I18N::GetPokemonName(u16 species) {
-  return species > this->pokemonSpecies.size() ? this->pokemonSpecies[0] : this->pokemonSpecies[species];
+std::string I18N::Translate(std::string word) {
+  return this->translations["app"].value(word, word);
 }
 
-std::string I18N::GetPokemonMoveName(u16 move) {
-  return move > this->pokemonMoves.size() ? this->pokemonMoves[0] : this->pokemonMoves[move];
-}
-
-std::string I18N::GetPokemonNature(u8 nature) {
-  return nature > this->pokemonNatures.size() ? this->pokemonNatures[0] : this->pokemonNatures[nature];
+std::string I18N::Translate(std::string category, std::string word) {
+  return this->translations.at(category).value(word, word);
 }

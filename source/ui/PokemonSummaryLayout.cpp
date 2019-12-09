@@ -14,13 +14,15 @@ extern std::shared_ptr<I18N> i18n;
 void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm) {
   this->Clear();
 
-  std::string shinyInfo =
-      "PSV " + std::to_string(pkm->GetPSV()) + ", TSV " + std::to_string(pkm->GetTSV()) + (pkm->GetIsShiny() ? ", Shiny" : ", Not shiny");
-  std::string nature = "Nature: " + i18n->GetPokemonNature(pkm->GetNature());
-  std::string moves = i18n->GetPokemonMoveName(pkm->GetMove(0));
+  std::string moves = i18n->Translate("moves", std::to_string(pkm->GetMove(0)));
+  std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
+  std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", std::to_string(pkm->GetNature()));
+  std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
+  std::string shiny = i18n->Translate("PSV") + " " + std::to_string(pkm->GetPSV()) + ", " + i18n->Translate("TSV") + " " +
+                      std::to_string(pkm->GetTSV()) + ", " + i18n->Translate(shinyTranslationKey);
 
   for (u8 i = 1; i < 4; i++) {
-    moves += ", " + i18n->GetPokemonMoveName(pkm->GetMove(i));
+    moves += ", " + i18n->Translate("moves", std::to_string(pkm->GetMove(i)));
   }
 
   this->spriteImage = createPokemonSprite(0, 0, 4, pkm->GetSpecies(), pkm->GetIsEgg());
@@ -28,11 +30,11 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm) {
       pu::ui::elm::Rectangle::New(0, 0, 1280, this->spriteImage->GetHeight() + 50, gsets.GetTheme().background.light, 50);
   this->titleTextBlock = pu::ui::elm::TextBlock::New(700, this->spriteImage->GetHeight() / 4, title, 50);
   this->titleTextBlock->SetColor(gsets.GetTheme().text.light);
-  this->speciesNameTextBlock = pu::ui::elm::TextBlock::New(300, this->spriteImage->GetHeight() / 4, i18n->GetPokemonName(pkm->GetSpecies()), 40);
+  this->speciesNameTextBlock = pu::ui::elm::TextBlock::New(300, this->spriteImage->GetHeight() / 4, species, 40);
   this->speciesNameTextBlock->SetColor(gsets.GetTheme().text.light);
   this->ivTextBlock = pu::ui::elm::TextBlock::New(300, this->spriteImage->GetHeight() / 2, pkm->GetFormattedIVs(), 25);
   this->ivTextBlock->SetColor(gsets.GetTheme().text.light);
-  this->shinyInfoTextBlock = pu::ui::elm::TextBlock::New(100, this->spriteImage->GetHeight() + 200, shinyInfo, 25);
+  this->shinyInfoTextBlock = pu::ui::elm::TextBlock::New(100, this->spriteImage->GetHeight() + 200, shiny, 25);
   this->shinyInfoTextBlock->SetColor(gsets.GetTheme().text.light);
   this->moveTextBlock = pu::ui::elm::TextBlock::New(100, this->spriteImage->GetHeight() + 250, moves, 25);
   this->moveTextBlock->SetColor(gsets.GetTheme().text.light);
