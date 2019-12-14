@@ -17,6 +17,7 @@ class PokemonSummaryLayout : public pu::ui::Layout {
   pu::ui::elm::TextBlock::Ref moveTextBlock;
   pu::ui::elm::TextBlock::Ref natureTextBlock;
   pu::ui::elm::TextBlock::Ref pidEcTextBlock;
+  pu::ui::elm::TextBlock::Ref instructionsTextBlock;
   pu::ui::elm::Image::Ref spriteImage;
   pu::ui::elm::Rectangle::Ref speciesBackgroundRectangle;
 };

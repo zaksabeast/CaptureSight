@@ -13,6 +13,7 @@ extern std::shared_ptr<I18N> i18n;
 void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm, bool isShowingExtraDetail) {
   this->Clear();
 
+  std::string instructions = i18n->Translate("More detail (X), Go back (B)");
   std::string moves = i18n->Translate("moves", std::to_string(pkm->GetMove(0)));
   std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
   std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", std::to_string(pkm->GetNature()));
@@ -44,8 +45,10 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm, bool isShow
   this->moveTextBlock->SetColor(gsets.GetTheme().text.light);
   this->natureTextBlock = pu::ui::elm::TextBlock::New(100, spriteHeight + 300, nature, 25);
   this->natureTextBlock->SetColor(gsets.GetTheme().text.light);
-  this->pidEcTextBlock = pu::ui::elm::TextBlock::New(700, spriteHeight + 300, pidEc, 25);
+  this->pidEcTextBlock = pu::ui::elm::TextBlock::New(700, spriteHeight + 200, pidEc, 25);
   this->pidEcTextBlock->SetColor(gsets.GetTheme().text.light);
+  this->instructionsTextBlock = pu::ui::elm::TextBlock::New(700, spriteHeight + 400, instructions, 25);
+  this->instructionsTextBlock->SetColor(gsets.GetTheme().text.light);
 
   this->Add(this->speciesBackgroundRectangle);
   this->Add(this->spriteImage);
@@ -55,6 +58,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm, bool isShow
   this->Add(this->shinyInfoTextBlock);
   this->Add(this->moveTextBlock);
   this->Add(this->natureTextBlock);
+  this->Add(this->instructionsTextBlock);
 
   if (isShowingExtraDetail) {
     this->Add(this->pidEcTextBlock);
