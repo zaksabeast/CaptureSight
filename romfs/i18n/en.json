@@ -16,7 +16,8 @@
     "Party": "Party",
     "Den List": "Den List",
     "Stars": "Stars",
-    "More detail (X), Go back (B)": "More detail (X), Go back (B)"
+    "More detail (X), Go back (B)": "More detail (X), Go back (B)",
+    "Den Id": "Den Id"
   },
   "natures": {
     "0": "Hardy",

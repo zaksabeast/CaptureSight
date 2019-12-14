@@ -16,7 +16,8 @@
     "Party": "Fête",
     "Den List": "Liste de repaire",
     "Stars": "Étoiles",
-    "More detail (X), Go back (B)": "Plus de détails (X), Retourner (B)"
+    "More detail (X), Go back (B)": "Plus de détails (X), Retourner (B)",
+    "Den Id": "Den Id"
   },
   "natures": {
     "0": "Hardi",

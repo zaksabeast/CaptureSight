@@ -7,17 +7,19 @@
 
 class Den {
  public:
-  Den(u8* data);
+  Den(u8* data, u8 denId);
   ~Den();
   u64 GetSeed();
   u8 GetStars();
   u8 GetRandRoll();
   u8 GetType();
   bool GetIsActive();
+  u8 GetDenId();
 
  private:
   u8 size = 0x18;
   u8* data = new u8[0x18];
+  u8 denId = 0;
 };
 
 class RaidDetails {
