@@ -18,12 +18,7 @@ class MainApplication : public pu::ui::Application {
   PU_SMART_CTOR(MainApplication)
 
   void OnLoad() override;
-  PokemonSummaryLayout::Ref GetPokemonSummaryLayout();
-  MainMenuLayout::Ref GetMainMenuLayout();
-  PokemonListLayout::Ref GetPokemonListLayout();
   u32 GetSlot();
-  void SetSlot(u32 slot);
-  void SetViewMode(ViewMode viewMode);
 
  private:
   u32 slot = 0;
@@ -42,6 +37,8 @@ class MainApplication : public pu::ui::Application {
   void SelectPokemonSlot(u32 slot);
   void IncreaseSlot(u32 slotIncrease);
   void DecreaseSlot(u32 slotDecrease);
+  void SetViewMode(ViewMode viewMode);
+  void SetSlot(u32 slot);
   std::string GetWildSummaryTitle(u32 slot);
   std::string GetBoxSummaryTitle(u32 slot);
   std::string GetPartySummaryTitle(u32 slot);

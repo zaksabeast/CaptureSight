@@ -128,15 +128,3 @@ void MainApplication::DecreaseSlot(u32 slotDecrease) {
   u32 slot = newSlot == 0 || newSlot >= this->maxSlot ? this->maxSlot : newSlot;
   this->SetSlot(slot);
 }
-
-PokemonSummaryLayout::Ref MainApplication::GetPokemonSummaryLayout() {
-  return this->pokemonSummaryLayout;
-}
-
-MainMenuLayout::Ref MainApplication::GetMainMenuLayout() {
-  return this->mainMenuLayout;
-}
-
-PokemonListLayout::Ref MainApplication::GetPokemonListLayout() {
-  return this->pokemonListLayout;
-}
