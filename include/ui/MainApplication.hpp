@@ -39,6 +39,7 @@ class MainApplication : public pu::ui::Application {
 
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void SelectPokemonSlot(u32 slot);
   void IncreaseSlot(u32 slotIncrease);
   void DecreaseSlot(u32 slotDecrease);
   std::string GetWildSummaryTitle(u32 slot);

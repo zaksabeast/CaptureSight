@@ -35,12 +35,15 @@ pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(std::shared_ptr<PK8
 
   menuItem->SetColor(gsets.GetTheme().text.light);
   menuItem->SetIcon(getPokemonIconPath(pk8->GetSpecies(), pk8->GetIsEgg()));
-  menuItem->AddOnClick(std::bind(&PokemonListLayout::OnInputPokemonItem, this, slot));
+  menuItem->AddOnClick(std::bind(&PokemonListLayout::ClickMenuItem, this, slot));
 
   return menuItem;
 }
 
-void PokemonListLayout::OnInputPokemonItem(u32 slot) {
-  mainApp->SetSlot(slot);
-  mainApp->LoadLayout(mainApp->GetPokemonSummaryLayout());
+void PokemonListLayout::ClickMenuItem(u32 slot) {
+  this->onMenuItemInput(slot);
+}
+
+void PokemonListLayout::SetOnInputMenuItem(std::function<void(u32)> onInput) {
+  this->onMenuItemInput = onInput;
 }

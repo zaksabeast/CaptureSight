@@ -27,6 +27,7 @@ void MainApplication::OnLoad() {
   this->mainMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->pokemonListLayout = PokemonListLayout::New();
   this->pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  this->pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));
   this->denMenuLayout = DenMenuLayout::New();
   this->denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->SetOnInput(
@@ -42,6 +43,11 @@ void MainApplication::OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
   } else if (Down & KEY_X) {
     this->LoadLayout(this->mainMenuLayout);
   }
+}
+
+void MainApplication::SelectPokemonSlot(u32 slot) {
+  this->SetSlot(slot);
+  this->LoadLayout(this->pokemonSummaryLayout);
 }
 
 void MainApplication::SetViewMode(ViewMode viewMode) {
