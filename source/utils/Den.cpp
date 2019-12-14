@@ -1,26 +1,54 @@
 #include <utils/Den.hpp>
+#include <stratosphere.hpp>
 
-u8 Den::GetStars(u8 denId) {
-  u8 stars = 0;
-
-  this->ReadDenOffset(0x70 + denId * 0x18, &stars, 1);
-  return stars;
+Den::Den(u8* data) {
+  std::copy(data, data + this->size, this->data);
 }
 
-u8 Den::GetRarity(u8 denId) {
-  u8 rarity = 0;
-
-  this->ReadDenOffset(0x72 + denId * 0x18, &rarity, 1);
-  return rarity;
+Den::~Den() {
+  delete[] this->data;
 }
 
-bool Den::GetWattFlag(u8 denId) {
-  u8 wattFlag = 0;
-
-  this->ReadDenOffset(0x73 + denId * 0x18, &wattFlag, 1);
-  return wattFlag & 1;
+u64 Den::GetSeed() {
+  return *(u64*)(this->data + 0x8);
 }
 
-Result Den::ReadDenOffset(u64 offset, void* buffer, size_t size) {
-  return this->ReadHeap(this->denOffset + offset, buffer, size);
+u8 Den::GetStars() {
+  return *(u8*)(this->data + 0x10) + 1;
+}
+
+u8 Den::GetRandRoll() {
+  return *(u8*)(this->data + 0x11);
+}
+
+u8 Den::GetType() {
+  return *(u8*)(this->data + 0x12);
+}
+
+bool Den::GetIsActive() {
+  return this->GetType() > 0;
+}
+
+std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
+  u8* denBytes = new u8[0x18];
+
+  this->ReadHeap(this->denOffset + (denId * 0x18), denBytes, 0x18);
+
+  auto den = std::make_shared<Den>(denBytes);
+
+  delete[] denBytes;
+  return den;
+}
+
+std::vector<std::shared_ptr<Den>> RaidDetails::ReadDens() {
+  std::vector<std::shared_ptr<Den>> dens;
+
+  for (u32 i = 0; i < 100; i++) {
+    auto den = this->ReadDen(i);
+    if (den->GetIsActive()) {
+      dens.push_back(den);
+    }
+  }
+
+  return dens;
 }

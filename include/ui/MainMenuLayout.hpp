@@ -9,14 +9,15 @@ class MainMenuLayout : public pu::ui::Layout {
   MainMenuLayout();
   PU_SMART_CTOR(MainMenuLayout)
 
-  void SetOnInputMenuItem(std::function<void(PokemonViewMode)> onInput);
+  void SetOnInputMenuItem(std::function<void(ViewMode)> onInput);
 
  private:
-  std::function<void(PokemonViewMode)> onMenuItemInput;
+  std::function<void(ViewMode)> onMenuItemInput;
   pu::ui::elm::Menu::Ref menu;
   pu::ui::elm::MenuItem::Ref wildMenuItem;
   pu::ui::elm::MenuItem::Ref partyMenuItem;
   pu::ui::elm::MenuItem::Ref boxMenuItem;
-  void ClickMenuItem(PokemonViewMode mode);
+  pu::ui::elm::MenuItem::Ref denMenuItem;
+  void ClickMenuItem(ViewMode mode);
   void ClickWildPokemon();
 };

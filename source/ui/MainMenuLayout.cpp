@@ -12,7 +12,7 @@ extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
 MainMenuLayout::MainMenuLayout() : Layout::Layout() {
-  this->onMenuItemInput = [&](PokemonViewMode) {};
+  this->onMenuItemInput = [&](ViewMode) {};
   this->menu = pu::ui::elm::Menu::New(0, 100, 1280, gsets.GetTheme().active.dark, 160, 3);
   this->wildMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Wild Pokemon"));
   this->wildMenuItem->SetColor(gsets.GetTheme().text.light);
@@ -23,14 +23,18 @@ MainMenuLayout::MainMenuLayout() : Layout::Layout() {
   this->boxMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Box Pokemon"));
   this->boxMenuItem->SetColor(gsets.GetTheme().text.light);
   this->boxMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, box));
+  this->denMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Den List"));
+  this->denMenuItem->SetColor(gsets.GetTheme().text.light);
+  this->denMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, den));
 
   this->menu->AddItem(this->wildMenuItem);
   this->menu->AddItem(this->partyMenuItem);
   this->menu->AddItem(this->boxMenuItem);
+  this->menu->AddItem(this->denMenuItem);
   this->Add(this->menu);
 }
 
-void MainMenuLayout::ClickMenuItem(PokemonViewMode mode) {
+void MainMenuLayout::ClickMenuItem(ViewMode mode) {
   this->onMenuItemInput(mode);
 }
 
@@ -38,6 +42,6 @@ void MainMenuLayout::ClickWildPokemon() {
   mainApp->SetViewMode(wild);
 }
 
-void MainMenuLayout::SetOnInputMenuItem(std::function<void(PokemonViewMode)> onInput) {
+void MainMenuLayout::SetOnInputMenuItem(std::function<void(ViewMode)> onInput) {
   this->onMenuItemInput = onInput;
 }

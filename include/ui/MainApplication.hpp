@@ -6,9 +6,12 @@
 #include <ui/PokemonSummaryLayout.hpp>
 #include <ui/MainMenuLayout.hpp>
 #include <ui/PokemonListLayout.hpp>
+#include <ui/DenMenuLayout.hpp>
 #include <ui/PokemonViewMode.hpp>
 #include <utils/PK8.hpp>
 #include <utils/GameReader.hpp>
+#include <utils/Den.hpp>
+
 class MainApplication : public pu::ui::Application {
  public:
   using Application::Application;
@@ -20,7 +23,7 @@ class MainApplication : public pu::ui::Application {
   PokemonListLayout::Ref GetPokemonListLayout();
   u32 GetSlot();
   void SetSlot(u32 slot);
-  void SetViewMode(PokemonViewMode viewMode);
+  void SetViewMode(ViewMode viewMode);
 
  private:
   u32 slot = 0;
@@ -28,9 +31,11 @@ class MainApplication : public pu::ui::Application {
   std::function<std::string(u32 slot)> GetSummaryTitle = [&](u32) { return ""; };
   std::unique_ptr<GameReader> save;
   std::vector<std::shared_ptr<PK8>> pkms;
+  std::vector<std::shared_ptr<Den>> dens;
   PokemonSummaryLayout::Ref pokemonSummaryLayout;
   MainMenuLayout::Ref mainMenuLayout;
   PokemonListLayout::Ref pokemonListLayout;
+  DenMenuLayout::Ref denMenuLayout;
 
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);

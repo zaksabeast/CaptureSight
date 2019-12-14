@@ -1,3 +1,4 @@
+#include <memory>
 #include <stratosphere.hpp>
 #include <ui/MainApplication.hpp>
 #include <utils/Settings.hpp>
@@ -15,6 +16,7 @@ void MainApplication::OnLoad() {
 
   this->save = std::make_unique<GameReader>();
   this->pkms = this->save->ReadParty();
+  this->dens = this->save->ReadDens();
 
   this->pokemonSummaryLayout = PokemonSummaryLayout::New();
   this->pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
@@ -25,6 +27,8 @@ void MainApplication::OnLoad() {
   this->mainMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->pokemonListLayout = PokemonListLayout::New();
   this->pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  this->denMenuLayout = DenMenuLayout::New();
+  this->denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->SetOnInput(
       std::bind(&MainApplication::OnInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
@@ -40,8 +44,12 @@ void MainApplication::OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
   }
 }
 
-void MainApplication::SetViewMode(PokemonViewMode viewMode) {
+void MainApplication::SetViewMode(ViewMode viewMode) {
   switch (viewMode) {
+    case den:
+      this->denMenuLayout->UpdateValues(this->dens);
+      this->LoadLayout(this->denMenuLayout);
+      return;
     case wild:
       this->GetSummaryTitle = std::bind(&MainApplication::GetWildSummaryTitle, this, std::placeholders::_1);
       this->pkms = std::vector<std::shared_ptr<PK8>>{

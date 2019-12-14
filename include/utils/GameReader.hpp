@@ -6,7 +6,7 @@
 #include <utils/PK8.hpp>
 #include <utils/Den.hpp>
 
-class GameReader : public Den {
+class GameReader : public RaidDetails {
  public:
   GameReader();
   std::vector<std::shared_ptr<PK8>> ReadParty();
@@ -20,7 +20,7 @@ class GameReader : public Den {
   u64 wildOffset = 0x8D45C648;
   u64 raidOffset = 0x85C7AB08;
   DmntCheatProcessMetadata metadata;
-  Result ReadHeap(u64 address, void* buffer, size_t size);
+  Result ReadHeap(u64 address, void* buffer, size_t size) override;
   std::shared_ptr<PK8> ReadPK8(u64 offset);
   std::vector<std::shared_ptr<PK8>> ReadPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon);
 };

@@ -1,3 +1,3 @@
 #pragma once
 
-enum PokemonViewMode { party, box, wild };
+enum ViewMode { party, box, wild, den };

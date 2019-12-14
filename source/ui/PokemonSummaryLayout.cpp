@@ -1,5 +1,3 @@
-#include <sstream>
-#include <iostream>
 #include <string>
 #include <stratosphere.hpp>
 #include <ui/PokemonSprite.hpp>
