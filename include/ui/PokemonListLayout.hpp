@@ -13,7 +13,6 @@ class PokemonListLayout : public pu::ui::Layout {
 
  private:
   pu::ui::elm::Menu::Ref menu;
-  std::vector<pu::ui::elm::MenuItem::Ref> menuItems;
   std::function<void(u32)> onMenuItemInput;
   pu::ui::elm::MenuItem::Ref CreateMenuItem(std::shared_ptr<PK8> pk8, u32 slot, std::string title);
   void ClickMenuItem(u32 slot);

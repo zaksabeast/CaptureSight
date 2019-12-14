@@ -12,7 +12,6 @@ extern std::shared_ptr<I18N> i18n;
 
 void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std::function<std::string(u32)> GetTitle) {
   this->Clear();
-  this->menuItems.clear();
   this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
 
   for (auto pk8 = begin(pk8s); pk8 != end(pk8s); ++pk8) {
@@ -23,7 +22,6 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std
     std::string title = species + " - " + pkm->GetFormattedIVs() + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
 
-    this->menuItems.push_back(menuItem);
     this->menu->AddItem(menuItem);
   }
 
