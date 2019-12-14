@@ -13,7 +13,7 @@ extern std::shared_ptr<I18N> i18n;
 
 MainMenuLayout::MainMenuLayout() : Layout::Layout() {
   this->onMenuItemInput = [&](ViewMode) {};
-  this->menu = pu::ui::elm::Menu::New(0, 100, 1280, gsets.GetTheme().active.dark, 160, 3);
+  this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
   this->wildMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Wild Pokemon"));
   this->wildMenuItem->SetColor(gsets.GetTheme().text.light);
   this->wildMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, wild));
