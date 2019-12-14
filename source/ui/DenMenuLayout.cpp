@@ -16,7 +16,7 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
     auto den = *(denIterator);
     std::stringstream seed;
     seed << std::hex << den->GetSeed();
-    std::string title = seed.str() + ", stars: " + std::to_string(den->GetStars());
+    std::string title = seed.str() + ", " + i18n->Translate("Stars") + ": " + std::to_string(den->GetStars());
     auto menuItem = pu::ui::elm::MenuItem::New(title);
     menuItem->SetColor(gsets.GetTheme().text.light);
     menuItem->AddOnClick([&] {});

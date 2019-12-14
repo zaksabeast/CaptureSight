@@ -16,7 +16,7 @@ MainMenuLayout::MainMenuLayout() : Layout::Layout() {
   this->menu = pu::ui::elm::Menu::New(0, 100, 1280, gsets.GetTheme().active.dark, 160, 3);
   this->wildMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Wild Pokemon"));
   this->wildMenuItem->SetColor(gsets.GetTheme().text.light);
-  this->wildMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickWildPokemon, this));
+  this->wildMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, wild));
   this->partyMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Party Pokemon"));
   this->partyMenuItem->SetColor(gsets.GetTheme().text.light);
   this->partyMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, party));
@@ -36,10 +36,6 @@ MainMenuLayout::MainMenuLayout() : Layout::Layout() {
 
 void MainMenuLayout::ClickMenuItem(ViewMode mode) {
   this->onMenuItemInput(mode);
-}
-
-void MainMenuLayout::ClickWildPokemon() {
-  mainApp->SetViewMode(wild);
 }
 
 void MainMenuLayout::SetOnInputMenuItem(std::function<void(ViewMode)> onInput) {
