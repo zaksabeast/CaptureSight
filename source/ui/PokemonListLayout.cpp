@@ -14,7 +14,7 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std
   this->Clear();
   this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
 
-  for (auto pk8 = begin(pk8s); pk8 != end(pk8s); ++pk8) {
+  for (auto pk8 = pk8s.begin(); pk8 != end(pk8s); ++pk8) {
     auto pkm = *(pk8);
     u32 slot = std::distance(pk8s.begin(), pk8);
     std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));

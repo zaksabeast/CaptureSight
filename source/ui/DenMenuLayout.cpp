@@ -12,7 +12,7 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
   this->Clear();
   this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
 
-  for (auto denIterator = begin(dens); denIterator != end(dens); ++denIterator) {
+  for (auto denIterator = dens.begin(); denIterator != end(dens); ++denIterator) {
     auto den = *(denIterator);
     std::stringstream seed;
     seed << std::hex << den->GetSeed();
