@@ -1,8 +1,8 @@
-#include <sstream>
 #include <ui/DenMenuLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
+#include <utils/ConvertNumToHexString.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -14,9 +14,8 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
 
   for (auto denIterator = dens.begin(); denIterator != end(dens); ++denIterator) {
     auto den = *(denIterator);
-    std::stringstream seed;
-    seed << std::hex << den->GetSeed();
-    std::string title = seed.str() + ", " + i18n->Translate("Stars") + ": " + std::to_string(den->GetStars());
+    auto seed = ConvertNumToHexString(den->GetSeed());
+    std::string title = seed + ", " + i18n->Translate("Stars") + ": " + std::to_string(den->GetStars());
     auto menuItem = pu::ui::elm::MenuItem::New(title);
     menuItem->SetColor(gsets.GetTheme().text.light);
     menuItem->AddOnClick([&] {});
