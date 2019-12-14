@@ -2,6 +2,8 @@
   "app": {
     "PSV": "PSV",
     "TSV": "TSV",
+    "PID": "PID",
+    "EC": "EC",
     "Shiny": "Brillant",
     "Not Shiny": "Pas Brillant",
     "Nature": "La Nature",

@@ -27,6 +27,7 @@ class MainApplication : public pu::ui::Application {
   std::unique_ptr<GameReader> save;
   std::vector<std::shared_ptr<PK8>> pkms;
   std::vector<std::shared_ptr<Den>> dens;
+  bool isShowingExtraDetail = false;
   PokemonSummaryLayout::Ref pokemonSummaryLayout;
   MainMenuLayout::Ref mainMenuLayout;
   PokemonListLayout::Ref pokemonListLayout;
@@ -39,6 +40,7 @@ class MainApplication : public pu::ui::Application {
   void DecreaseSlot(u32 slotDecrease);
   void SetViewMode(ViewMode viewMode);
   void SetSlot(u32 slot);
+  void RefreshSummaryLayout();
   std::string GetWildSummaryTitle(u32 slot);
   std::string GetBoxSummaryTitle(u32 slot);
   std::string GetPartySummaryTitle(u32 slot);

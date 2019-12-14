@@ -41,6 +41,9 @@ void MainApplication::OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
     dmntchtExit();
     this->CloseWithFadeOut();
   } else if (Down & KEY_X) {
+    this->isShowingExtraDetail = !this->isShowingExtraDetail;
+    this->RefreshSummaryLayout();
+  } else if (Down & KEY_B) {
     this->LoadLayout(this->mainMenuLayout);
   }
 }
@@ -107,10 +110,14 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
   }
 }
 
+void MainApplication::RefreshSummaryLayout() {
+  this->SetSlot(this->slot);
+}
+
 void MainApplication::SetSlot(u32 newSlot) {
   this->slot = this->slot > this->maxSlot ? this->maxSlot : newSlot;
   std::string summaryTitle = this->GetSummaryTitle(this->slot);
-  this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot].get());
+  this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot].get(), this->isShowingExtraDetail);
 }
 
 u32 MainApplication::GetSlot() {

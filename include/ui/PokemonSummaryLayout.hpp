@@ -7,7 +7,7 @@ class PokemonSummaryLayout : public pu::ui::Layout {
  public:
   PU_SMART_CTOR(PokemonSummaryLayout)
 
-  void UpdateValues(std::string title, PK8* pkm);
+  void UpdateValues(std::string title, PK8* pkm, bool isShowingExtraDetail);
 
  private:
   pu::ui::elm::TextBlock::Ref titleTextBlock;
@@ -16,6 +16,7 @@ class PokemonSummaryLayout : public pu::ui::Layout {
   pu::ui::elm::TextBlock::Ref shinyInfoTextBlock;
   pu::ui::elm::TextBlock::Ref moveTextBlock;
   pu::ui::elm::TextBlock::Ref natureTextBlock;
+  pu::ui::elm::TextBlock::Ref pidEcTextBlock;
   pu::ui::elm::Image::Ref spriteImage;
   pu::ui::elm::Rectangle::Ref speciesBackgroundRectangle;
 };
