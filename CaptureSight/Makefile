@@ -1,4 +1,4 @@
-.SUFFIXES:
+include $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../Atmosphere-libs/config/templates/stratosphere.mk
 
 ifeq ($(strip $(DEVKITPRO)),)
 $(error "Please set DEVKITPRO in your environment. export DEVKITPRO=<path to>/devkitpro")
@@ -21,7 +21,7 @@ ICON	    	:= icon.jpg
 
 BUILD       := build
 SOURCES     := source source/ui source/utils
-INCLUDES    := include include/ui include/utils
+INCLUDES    := include include/ui include/utils ../Atmosphere-libs/libstratosphere/source/dmnt
 ROMFS       := romfs
 
 ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
@@ -37,7 +37,7 @@ ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS	:= -lstratosphere -lnx -lpu -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
-LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/Plutonium/Plutonium/Output $(CURDIR)/libstratosphere
+LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../Plutonium/Plutonium/Output $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 
@@ -116,15 +116,11 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@[ -d output ] || mkdir -p output
-	@$(MAKE) --no-print-directory -C Plutonium/Plutonium/
-	@$(MAKE) --no-print-directory -C libstratosphere/
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 #---------------------------------------------------------------------------------
 clean:
 	@echo Cleaning...
-	@$(MAKE) clean -C Plutonium/Plutonium/
-	@$(MAKE) clean -C libstratosphere/
 	@rm -fr $(BUILD)
 	@rm -fr $(CURDIR)/output
 	@echo Done!

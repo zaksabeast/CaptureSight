@@ -21,7 +21,7 @@ I18N::I18N() {
   SetLanguage language = SetLanguage_ENUS;
 
   setGetSystemLanguage(&languageCode);
-  setMakeLanguage(languageCode, (s32*)&language);
+  setMakeLanguage(languageCode, &language);
   this->LoadTranslations(language);
 }
 

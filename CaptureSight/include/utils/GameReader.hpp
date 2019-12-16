@@ -3,6 +3,7 @@
 #include <vector>
 #include <switch.h>
 #include <stratosphere.hpp>
+#include <dmntcht.h>
 #include <utils/PK8.hpp>
 #include <utils/Den.hpp>
 
