@@ -14,7 +14,8 @@
     "Box": "Box",
     "Slot": "Slot",
     "Party": "Party",
-    "Den List": "Den List",
+    "Active Den List": "Active Den List",
+    "All Dens List": "All Dens List",
     "Stars": "Stars",
     "More detail (X), Go back (B)": "More detail (X), Go back (B)",
     "Den Id": "Den Id"

@@ -17,7 +17,8 @@ class MainMenuLayout : public pu::ui::Layout {
   pu::ui::elm::MenuItem::Ref wildMenuItem;
   pu::ui::elm::MenuItem::Ref partyMenuItem;
   pu::ui::elm::MenuItem::Ref boxMenuItem;
-  pu::ui::elm::MenuItem::Ref denMenuItem;
+  pu::ui::elm::MenuItem::Ref activeDenMenuItem;
+  pu::ui::elm::MenuItem::Ref allDensMenuItem;
   void ClickMenuItem(ViewMode mode);
   void ClickWildPokemon();
 };

@@ -14,7 +14,8 @@
     "Box": "Boîte",
     "Slot": "Fente",
     "Party": "Fête",
-    "Den List": "Liste de repaire",
+    "Active Den List": "Liste des repaires actifs",
+    "All Dens List": "Liste de toutes les densités",
     "Stars": "Étoiles",
     "More detail (X), Go back (B)": "Plus de détails (X), Retourner (B)",
     "Den Id": "Den Id"

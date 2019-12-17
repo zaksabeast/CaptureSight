@@ -16,7 +16,7 @@ void MainApplication::OnLoad() {
 
   this->save = std::make_unique<GameReader>();
   this->pkms = this->save->ReadParty();
-  this->dens = this->save->ReadDens();
+  this->dens = this->save->ReadDens(false);
 
   this->pokemonSummaryLayout = PokemonSummaryLayout::New();
   this->pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
@@ -55,7 +55,13 @@ void MainApplication::SelectPokemonSlot(u32 slot) {
 
 void MainApplication::SetViewMode(ViewMode viewMode) {
   switch (viewMode) {
-    case den:
+    case activeDens:
+      this->dens = this->save->ReadDens(false);
+      this->denMenuLayout->UpdateValues(this->dens);
+      this->LoadLayout(this->denMenuLayout);
+      return;
+    case allDens:
+      this->dens = this->save->ReadDens(true);
       this->denMenuLayout->UpdateValues(this->dens);
       this->LoadLayout(this->denMenuLayout);
       return;

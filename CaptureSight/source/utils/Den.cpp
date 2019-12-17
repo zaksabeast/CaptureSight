@@ -45,12 +45,12 @@ std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
   return den;
 }
 
-std::vector<std::shared_ptr<Den>> RaidDetails::ReadDens() {
+std::vector<std::shared_ptr<Den>> RaidDetails::ReadDens(bool shouldReadAllDens) {
   std::vector<std::shared_ptr<Den>> dens;
 
   for (u32 i = 0; i < 100; i++) {
     auto den = this->ReadDen(i);
-    if (den->GetIsActive()) {
+    if (shouldReadAllDens || den->GetIsActive()) {
       dens.push_back(den);
     }
   }
