@@ -19,5 +19,6 @@ Thanks to the following for helping make this app:
 - XorTroll for [Plutonium](https://github.com/XorTroll/Plutonium/tree/master/Plutonium) which is used for the UI
 - Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) which has great documentation of implementation for the PK8 format (among other things), Pokemon icons, and i18n resources
 - Flagbrew for [PKSM](https://github.com/FlagBrew/PKSM) which gave guidance for c++ Pokemon code organization
+- RichardPaulAstley for French translations
 - All Pokemon researchers and contributors
 - nlohmann for the amazing c++ JSON library
