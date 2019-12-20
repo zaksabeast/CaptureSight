@@ -20,5 +20,6 @@ Thanks to the following for helping make this app:
 - Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) which has great documentation of implementation for the PK8 format (among other things), Pokemon icons, and i18n resources
 - Flagbrew for [PKSM](https://github.com/FlagBrew/PKSM) which gave guidance for c++ Pokemon code organization
 - RichardPaulAstley for French translations
+- Leanny, Admiral Fish, wwwwwwzx, Kaphotics, and Vladcik for helping look into raid RNG
 - All Pokemon researchers and contributors
 - nlohmann for the amazing c++ JSON library
