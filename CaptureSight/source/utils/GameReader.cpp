@@ -25,6 +25,10 @@ std::shared_ptr<PK8> GameReader::ReadRaid() {
   return this->ReadPK8(this->raidOffset);
 }
 
+std::shared_ptr<PK8> GameReader::ReadTrade() {
+  return this->ReadPK8(this->tradeOffset);
+}
+
 std::shared_ptr<PK8> GameReader::ReadPK8(u64 offset) {
   u8 pkmBytes[0x148];
 

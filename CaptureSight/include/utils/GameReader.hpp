@@ -14,12 +14,14 @@ class GameReader : public RaidDetails {
   std::vector<std::shared_ptr<PK8>> ReadBoxes();
   std::shared_ptr<PK8> ReadWild();
   std::shared_ptr<PK8> ReadRaid();
+  std::shared_ptr<PK8> ReadTrade();
 
  private:
   u64 partyOffset = 0x4298E8E0;
   u64 boxOffset = 0x4293D8B0;
   u64 wildOffset = 0x8D45C648;
   u64 raidOffset = 0x85C7AB08;
+  u64 tradeOffset = 0x2E32206A;
   DmntCheatProcessMetadata metadata;
   Result ReadHeap(u64 address, void* buffer, size_t size) override;
   std::shared_ptr<PK8> ReadPK8(u64 offset);

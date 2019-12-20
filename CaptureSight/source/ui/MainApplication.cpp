@@ -70,6 +70,7 @@ void MainApplication::SetViewMode(ViewMode viewMode) {
       this->pkms = std::vector<std::shared_ptr<PK8>>{
           this->save->ReadWild(),
           this->save->ReadRaid(),
+          this->save->ReadTrade(),
       };
       break;
     case box:
@@ -90,7 +91,21 @@ void MainApplication::SetViewMode(ViewMode viewMode) {
 }
 
 std::string MainApplication::GetWildSummaryTitle(u32 slot) {
-  std::string translationKey = slot == 0 ? "Wild Pokemon" : "Raid Pokemon";
+  std::string translationKey;
+
+  switch (slot) {
+    case 0:
+      translationKey = "Wild Pokemon";
+      break;
+    case 1:
+      translationKey = "Raid Pokemon";
+      break;
+    case 2:
+    default:
+      translationKey = "Trade Pokemon";
+      break;
+  }
+
   return i18n->Translate(translationKey);
 }
 

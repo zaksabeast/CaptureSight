@@ -18,7 +18,9 @@
     "All Dens List": "Liste de tous les antres",
     "Stars": "Étoiles",
     "More detail (X), Go back (B)": "Plus d'informations (X), Retour (B)",
-    "Den Id": "ID de l'Antre"
+    "Den Id": "ID de l'Antre",
+    "Wild and Trade Pokemon": "Pokémon sauvage et échangé",
+    "Trade Pokemon": "Pokemon à l'échange"
   },
   "natures": {
     "0": "Hardi",
