@@ -10,6 +10,7 @@ class PokemonListLayout : public pu::ui::Layout {
 
   void UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std::function<std::string(u32)> GetTitle);
   void SetOnInputMenuItem(std::function<void(u32)> onInput);
+  void SetSelectedIndex(u32 index);
 
  private:
   pu::ui::elm::Menu::Ref menu;

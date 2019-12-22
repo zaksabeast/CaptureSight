@@ -45,6 +45,10 @@ void MainApplication::OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
     this->RefreshSummaryLayout();
   } else if (Down & KEY_B) {
     this->LoadLayout(this->mainMenuLayout);
+  } else if (Down & KEY_L) {
+    this->DecreaseSlot(30);
+  } else if (Down & KEY_R) {
+    this->IncreaseSlot(30);
   }
 }
 
@@ -124,10 +128,6 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
     this->DecreaseSlot(1);
   } else if (Down & KEY_DRIGHT) {
     this->IncreaseSlot(1);
-  } else if (Down & KEY_L) {
-    this->DecreaseSlot(30);
-  } else if (Down & KEY_R) {
-    this->IncreaseSlot(30);
   }
 }
 
@@ -137,6 +137,7 @@ void MainApplication::RefreshSummaryLayout() {
 
 void MainApplication::SetSlot(u32 newSlot) {
   this->slot = this->slot > this->maxSlot ? this->maxSlot : newSlot;
+  this->pokemonListLayout->SetSelectedIndex(this->slot);
   std::string summaryTitle = this->GetSummaryTitle(this->slot);
   this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot].get(), this->isShowingExtraDetail);
 }

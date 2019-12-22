@@ -45,3 +45,7 @@ void PokemonListLayout::ClickMenuItem(u32 slot) {
 void PokemonListLayout::SetOnInputMenuItem(std::function<void(u32)> onInput) {
   this->onMenuItemInput = onInput;
 }
+
+void PokemonListLayout::SetSelectedIndex(u32 index) {
+  this->menu->SetSelectedIndex(index);
+}
