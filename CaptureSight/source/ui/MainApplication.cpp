@@ -154,6 +154,6 @@ void MainApplication::IncreaseSlot(u32 slotIncrease) {
 
 void MainApplication::DecreaseSlot(u32 slotDecrease) {
   u32 newSlot = this->slot - slotDecrease;
-  u32 slot = newSlot == 0 || newSlot >= this->maxSlot ? this->maxSlot : newSlot;
+  u32 slot = newSlot >= this->maxSlot ? this->maxSlot : newSlot;
   this->SetSlot(slot);
 }
