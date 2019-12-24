@@ -20,7 +20,10 @@
     "More detail (X), Go back (B)": "More detail (X), Go back (B)",
     "Den Id": "Den Id",
     "Wild and Trade Pokemon": "Wild and Trade Pokemon",
-    "Trade Pokemon": "Trade Pokemon"
+    "Trade Pokemon": "Trade Pokemon",
+    "Minted Nature": "Minted Nature",
+    "IVs": "IVs",
+    "EVs": "EVs"
   },
   "natures": {
     "0": "Hardy",

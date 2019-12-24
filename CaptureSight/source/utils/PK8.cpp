@@ -108,6 +108,22 @@ u8 PK8::GetIV(u8 stat) {
   return (u8)((this->GetIV32() >> 5 * stat) & 0x1F);
 }
 
+std::vector<u8> PK8::GetIVs() {
+  return {
+      this->GetIV(0), this->GetIV(1), this->GetIV(2), this->GetIV(4), this->GetIV(5), this->GetIV(3),
+  };
+}
+
+u8 PK8::GetEV(u8 stat) {
+  return *(u8*)(this->data + 0x26 + stat);
+}
+
+std::vector<u8> PK8::GetEVs() {
+  return {
+      this->GetEV(0), this->GetEV(1), this->GetEV(2), this->GetEV(4), this->GetEV(5), this->GetEV(3),
+  };
+}
+
 u16 PK8::GetTID() {
   return *(u16*)(this->data + 0xc);
 }
@@ -133,15 +149,18 @@ bool PK8::GetIsShiny() {
   return this->GetPSV() == this->GetTSV();
 }
 
-std::string PK8::GetFormattedIVs() {
-  std::string ivs = std::to_string(this->GetIV(0)) + "/" + std::to_string(this->GetIV(1)) + "/" + std::to_string(this->GetIV(2)) + "/" +
-                    std::to_string(this->GetIV(4)) + "/" + std::to_string(this->GetIV(5)) + "/" + std::to_string(this->GetIV(3));
-
-  return ivs;
-}
-
 u16 PK8::GetMove(u8 slot) {
   return *(u16*)(this->data + 0x72 + (slot * 2));
+}
+
+std::vector<u16> PK8::GetMoves() {
+  std::vector<u16> result;
+
+  for (u8 i = 0; i < 4; i++) {
+    result.push_back(this->GetMove(i));
+  }
+
+  return result;
 }
 
 u8 PK8::GetMovePP(u8 slot) {
@@ -154,4 +173,8 @@ bool PK8::GetIsEgg() {
 
 u8 PK8::GetNature() {
   return *(u8*)(this->data + 0x20);
+}
+
+u8 PK8::GetMintedNature() {
+  return *(u8*)(this->data + 0x21);
 }

@@ -5,6 +5,7 @@
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
+#include <utils/Utils.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -16,10 +17,11 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std
 
   for (auto pk8 = pk8s.begin(); pk8 != end(pk8s); ++pk8) {
     auto pkm = *(pk8);
+    auto formattedIVs = joinNums(pkm->GetIVs(), "/");
     u32 slot = std::distance(pk8s.begin(), pk8);
     std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
     std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not shiny";
-    std::string title = species + " - " + pkm->GetFormattedIVs() + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot);
+    std::string title = species + " - " + formattedIVs + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
 
     this->menu->AddItem(menuItem);

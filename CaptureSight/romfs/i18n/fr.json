@@ -20,7 +20,10 @@
     "More detail (X), Go back (B)": "Plus d'informations (X), Retour (B)",
     "Den Id": "ID de l'Antre",
     "Wild and Trade Pokemon": "Pokémon sauvage et échangé",
-    "Trade Pokemon": "Pokemon à l'échange"
+    "Trade Pokemon": "Pokemon à l'échange",
+    "Minted Nature": "Aromate Nature",
+    "IVs": "IVs",
+    "EVs": "EVs"
   },
   "natures": {
     "0": "Hardi",
