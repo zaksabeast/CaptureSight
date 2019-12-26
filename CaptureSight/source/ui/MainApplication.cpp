@@ -33,6 +33,9 @@ void MainApplication::OnLoad() {
     return;
   }
 
+  this->pkms = this->save->ReadParty();
+  this->dens = this->save->ReadDens(false);
+
   this->pokemonSummaryLayout = PokemonSummaryLayout::New();
   this->pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
                                                    std::placeholders::_3, std::placeholders::_4));
@@ -43,6 +46,7 @@ void MainApplication::OnLoad() {
   this->pokemonListLayout = PokemonListLayout::New();
   this->pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));
+  this->pokemonListLayout->UpdateValues(this->pkms, this->GetSummaryTitle);
   this->denMenuLayout = DenMenuLayout::New();
   this->denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->SetOnInput(
@@ -151,7 +155,7 @@ void MainApplication::RefreshSummaryLayout() {
 }
 
 void MainApplication::SetSlot(u32 newSlot) {
-  this->slot = this->slot > this->maxSlot ? this->maxSlot : newSlot;
+  this->slot = newSlot > this->maxSlot ? this->maxSlot : newSlot;
   this->pokemonListLayout->SetSelectedIndex(this->slot);
   std::string summaryTitle = this->GetSummaryTitle(this->slot);
   this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot].get(), this->isShowingExtraDetail);
