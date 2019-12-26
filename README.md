@@ -21,6 +21,8 @@ Thanks to the following for helping make this app:
 - Flagbrew for [PKSM](https://github.com/FlagBrew/PKSM) which gave guidance for c++ Pokemon code organization
 - RichardPaulAstley for French translations
 - Leanny, Admiral Fish, wwwwwwzx, Kaphotics, and Vladcik for helping look into raid RNG
+- Leanny and Kaphotics for the PKHeX Raid Plugin, which CaptureSight borrows raid logic from
 - All Pokemon researchers and contributors
 - nlohmann for the amazing c++ JSON library
 - WerWolv for EdiZon's `isServiceRunning` code
+- imneme for their [cpp xoroshiro gist](https://gist.github.com/imneme/f76f4bb7b7f67ff0850199ab7c077bf7) which is used in CaptureSight

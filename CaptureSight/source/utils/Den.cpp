@@ -1,9 +1,20 @@
+#include <fstream>
+#include <stdio.h>
 #include <utils/Den.hpp>
 #include <stratosphere.hpp>
+#include <utils/DenHashes.hpp>
+#include <utils/Utils.hpp>
 
-Den::Den(u8* data, u8 denId) {
+Den::Den(u8* data, u8 denId, bool isSword) {
   std::copy(data, data + this->size, this->data);
-  this->denId = denId;
+  this->denId = denId > DEN_LIST_SIZE ? DEN_LIST_SIZE : denId;
+  auto denHash = this->GetDenHash(this->denId - 1, this->GetIsRare(), this->GetIsEvent());
+  auto nests = isSword ? swordNests : shieldNests;
+  auto nest = std::find_if(nests.begin(), nests.end(), [denHash](const RaidTemplateTable& nest) { return nest.hash == denHash; });
+  auto spawn = this->FindSpawn(nest->templates);
+
+  this->species = spawn.species;
+  this->flawlessIVs = spawn.flawlessIVs;
 }
 
 Den::~Den() {
@@ -15,7 +26,11 @@ u64 Den::GetSeed() {
 }
 
 u8 Den::GetStars() {
-  return *(u8*)(this->data + 0x10) + 1;
+  return *(u8*)(this->data + 0x10);
+}
+
+u8 Den::GetDisplayStars() {
+  return this->GetStars() + 1;
 }
 
 u8 Den::GetRandRoll() {
@@ -26,6 +41,27 @@ u8 Den::GetType() {
   return *(u8*)(this->data + 0x12);
 }
 
+bool Den::GetIsRare() {
+  u8 type = this->GetType();
+  return type > 0 && (type & 1) == 0;
+}
+
+u64 Den::GetDenHash(u8 denId, bool isRare, bool isEvent) {
+  return isEvent ? eventHash : denHashes[denId][isRare];
+}
+
+u8 Den::GetFlagByte() {
+  return *(u8*)(this->data + 0x13);
+}
+
+bool Den::GetHasWatts() {
+  return (this->GetFlagByte() & 1) == 0;
+}
+
+bool Den::GetIsEvent() {
+  return (this->GetFlagByte() >> 1) & 1;
+}
+
 bool Den::GetIsActive() {
   return this->GetType() > 0;
 }
@@ -34,29 +70,24 @@ u8 Den::GetDenId() {
   return this->denId;
 }
 
-std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
-  u8* denBytes = new u8[0x18];
-  // Dens are zero-indexed in memory, but we omit 16 since it's for special encounters
-  u8 readId = denId < 16 ? denId - 1 : denId;
+std::shared_ptr<RaidPokemon> Den::GetPKM() {
+  return std::make_shared<RaidPokemon>(this->GetSeed(), this->flawlessIVs, this->species);
+};
 
-  this->ReadHeap(this->denOffset + (readId * 0x18), denBytes, 0x18);
+RaidTemplate Den::FindSpawn(std::vector<RaidTemplate> templates) {
+  u32 probability = 0;
+  u32 nestProbability = 0;
+  auto stars = this->GetStars();
+  auto randRoll = this->GetRandRoll();
 
-  auto den = std::make_shared<Den>(denBytes, denId);
+  for (u32 index = 0; index < templates.size(); index++) {
+    nestProbability = templates[index].probabilities[stars];
+    probability += nestProbability;
 
-  delete[] denBytes;
-  return den;
-}
-
-std::vector<std::shared_ptr<Den>> RaidDetails::ReadDens(bool shouldReadAllDens) {
-  std::vector<std::shared_ptr<Den>> dens;
-
-  // Den Ids are not zero-indexed
-  for (u32 i = 1; i < 100; i++) {
-    auto den = this->ReadDen(i);
-    if (shouldReadAllDens || den->GetIsActive()) {
-      dens.push_back(den);
+    if (probability > randRoll) {
+      return templates[index];
     }
   }
 
-  return dens;
+  return getLast(templates);
 }

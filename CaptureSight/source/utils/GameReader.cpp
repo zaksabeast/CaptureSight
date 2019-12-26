@@ -54,6 +54,10 @@ std::shared_ptr<PK8> GameReader::ReadTrade() {
   return this->ReadPK8(this->tradeOffset);
 }
 
+u64 GameReader::GetTitleId() {
+  return this->metadata.title_id;
+}
+
 std::shared_ptr<PK8> GameReader::ReadPK8(u64 offset) {
   u8 pkmBytes[0x148];
 

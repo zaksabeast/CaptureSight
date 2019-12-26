@@ -5,7 +5,7 @@
 #include <stratosphere.hpp>
 #include <dmntcht.h>
 #include <utils/PK8.hpp>
-#include <utils/Den.hpp>
+#include <utils/RaidDetails.hpp>
 
 class GameReader : public RaidDetails {
  public:
@@ -18,6 +18,7 @@ class GameReader : public RaidDetails {
   std::shared_ptr<PK8> ReadWild();
   std::shared_ptr<PK8> ReadRaid();
   std::shared_ptr<PK8> ReadTrade();
+  u64 GetTitleId() override;
 
  private:
   bool isDebugServiceRunning = false;

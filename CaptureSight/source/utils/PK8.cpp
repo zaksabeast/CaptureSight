@@ -1,7 +1,7 @@
 #include <string>
 #include <algorithm>
 #include <utils/PK8.hpp>
-#include <utils/LCRNG.hpp>
+#include <utils/RNG.hpp>
 
 PK8::PK8(u8* data) {
   std::copy(data, data + this->storedSize, this->data);
@@ -26,7 +26,7 @@ void PK8::Crypt(void) {
   u32 seed = this->GetEncryptionConstant();
 
   for (u32 i = 8; i < this->storedSize; i += 2) {
-    seed = lcrng::advance(seed);
+    seed = rng::lcrng::advance(seed);
     pkmWord = (u16*)(this->data + i);
     *pkmWord = *pkmWord ^ (seed >> 16);
   }
@@ -104,11 +104,11 @@ u32 PK8::GetIV32() {
   return *(u32*)(this->data + 0x8C);
 }
 
-u8 PK8::GetIV(u8 stat) {
-  return (u8)((this->GetIV32() >> 5 * stat) & 0x1F);
+s8 PK8::GetIV(u8 stat) {
+  return (s8)((this->GetIV32() >> 5 * stat) & 0x1F);
 }
 
-std::vector<u8> PK8::GetIVs() {
+std::vector<s8> PK8::GetIVs() {
   return {
       this->GetIV(0), this->GetIV(1), this->GetIV(2), this->GetIV(4), this->GetIV(5), this->GetIV(3),
   };

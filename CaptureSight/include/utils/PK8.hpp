@@ -20,8 +20,8 @@ class PK8 {
   u16 GetSpecies();
   bool CheckEncrypted();
   u32 GetIV32();
-  u8 GetIV(u8 stat);
-  std::vector<u8> GetIVs();
+  s8 GetIV(u8 stat);
+  std::vector<s8> GetIVs();
   u8 GetEV(u8 stat);
   std::vector<u8> GetEVs();
   bool GetIsShiny();
