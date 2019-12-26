@@ -37,3 +37,6 @@
 *.nro
 build/
 output/
+
+# VSCode
+.vscode
