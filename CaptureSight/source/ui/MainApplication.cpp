@@ -9,14 +9,29 @@ Settings gsets;
 std::shared_ptr<I18N> i18n;
 
 void MainApplication::OnLoad() {
-  if (R_FAILED(dmntchtInitialize()))
-    this->Close();
-  if (R_FAILED(dmntchtForceOpenCheatProcess()))
-    this->Close();
-
   this->save = std::make_unique<GameReader>();
-  this->pkms = this->save->ReadParty();
-  this->dens = this->save->ReadDens(false);
+  bool isDebugServiceRunning = this->save->GetIsServiceRunning();
+
+  this->warningLayout = WarningLayout::New();
+  this->warningLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+
+  if (!isDebugServiceRunning) {
+    std::string warningTranslationKey = "Atmosphere's dmnt:cht is not running";
+    std::string warningText = i18n->Translate(warningTranslationKey);
+    this->warningLayout->SetWarningText(warningText);
+    this->LoadLayout(this->warningLayout);
+    return;
+  }
+
+  Result rc = this->save->Attach();
+
+  if (R_FAILED(rc) || !this->save->GetIsPokemonRunning()) {
+    std::string warningTranslationKey = "Please start a Pokemon game before running CaptureSight";
+    std::string warningText = i18n->Translate(warningTranslationKey) + "\ndmnt:cht result: " + std::to_string(rc);
+    this->warningLayout->SetWarningText(warningText);
+    this->LoadLayout(this->warningLayout);
+    return;
+  }
 
   this->pokemonSummaryLayout = PokemonSummaryLayout::New();
   this->pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,

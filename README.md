@@ -23,3 +23,4 @@ Thanks to the following for helping make this app:
 - Leanny, Admiral Fish, wwwwwwzx, Kaphotics, and Vladcik for helping look into raid RNG
 - All Pokemon researchers and contributors
 - nlohmann for the amazing c++ JSON library
+- WerWolv for EdiZon's `isServiceRunning` code

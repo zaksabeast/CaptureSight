@@ -1,8 +1,33 @@
 #include <vector>
 #include <utils/GameReader.hpp>
+#include <utils/Utils.hpp>
+#include <TitleIds.hpp>
 
 GameReader::GameReader() {
-  dmntchtGetCheatProcessMetadata(&(this->metadata));
+  this->isDebugServiceRunning = checkIfServiceIsRunning("dmnt:cht");
+}
+
+Result GameReader::Attach() {
+  Result rc = 0;
+
+  dmntchtInitialize();
+  rc = dmntchtForceOpenCheatProcess();
+
+  if (R_FAILED(rc)) {
+    return rc;
+  }
+
+  rc = dmntchtGetCheatProcessMetadata(&(this->metadata));
+
+  return rc;
+}
+
+bool GameReader::GetIsPokemonRunning() {
+  return (this->metadata.title_id == SWORD_TITLE_ID) || (this->metadata.title_id == SHIELD_TITLE_ID);
+}
+
+bool GameReader::GetIsServiceRunning() {
+  return this->isDebugServiceRunning;
 }
 
 Result GameReader::ReadHeap(u64 offset, void* buffer, size_t size) {

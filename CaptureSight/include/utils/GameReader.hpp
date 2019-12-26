@@ -10,6 +10,9 @@
 class GameReader : public RaidDetails {
  public:
   GameReader();
+  Result Attach();
+  bool GetIsPokemonRunning();
+  bool GetIsServiceRunning();
   std::vector<std::shared_ptr<PK8>> ReadParty();
   std::vector<std::shared_ptr<PK8>> ReadBoxes();
   std::shared_ptr<PK8> ReadWild();
@@ -17,6 +20,7 @@ class GameReader : public RaidDetails {
   std::shared_ptr<PK8> ReadTrade();
 
  private:
+  bool isDebugServiceRunning = false;
   u64 partyOffset = 0x4298E8E0;
   u64 boxOffset = 0x4293D8B0;
   u64 wildOffset = 0x8D45C648;

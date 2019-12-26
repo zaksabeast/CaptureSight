@@ -23,7 +23,9 @@
     "Trade Pokemon": "Pokemon à l'échange",
     "Minted Nature": "Aromate Nature",
     "IVs": "IVs",
-    "EVs": "EVs"
+    "EVs": "EVs",
+    "Atmosphere's dmnt:cht is not running": "dmnt:chts de Atmosphère n'est pas en cours d'exécution",
+    "Please start a Pokemon game before running CaptureSight": "Veuillez démarrer un jeu Pokemon avant d'exécuter CaptureSight"
   },
   "natures": {
     "0": "Hardi",
