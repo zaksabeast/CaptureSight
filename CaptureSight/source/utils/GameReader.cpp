@@ -67,7 +67,7 @@ std::shared_ptr<PK8> GameReader::ReadPK8(u64 offset) {
 
 std::vector<std::shared_ptr<PK8>> GameReader::ReadPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon) {
   std::vector<std::shared_ptr<PK8>> pk8s;
-  u32 size = 0x148 * amount;
+  u32 size = bytesBetweenPokemon * amount;
   u8* pkmBytes = new u8[size];
 
   this->ReadHeap(offset, pkmBytes, size);

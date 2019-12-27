@@ -1,7 +1,6 @@
 #pragma once
 
 #include <switch.h>
-#include <string>
 #include <vector>
 
 class PK8 {
@@ -35,8 +34,12 @@ class PK8 {
   u8 GetMovePP(u8 slot);
   u8 GetNature();
   u8 GetMintedNature();
+  u16 GetChecksum();
+  bool GetHasValidChecksum();
   bool GetIsEgg();
+  bool GetIsValid();
 
  private:
   u8* data = new u8[0x148];
+  u16 CalculateChecksum();
 };

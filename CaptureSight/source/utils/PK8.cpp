@@ -1,4 +1,3 @@
-#include <string>
 #include <algorithm>
 #include <utils/PK8.hpp>
 #include <utils/RNG.hpp>
@@ -168,7 +167,7 @@ u8 PK8::GetMovePP(u8 slot) {
 }
 
 bool PK8::GetIsEgg() {
-  return ((this->GetIV32() >> 30) & 1) == 1;
+  return this->GetIsValid() && ((this->GetIV32() >> 30) & 1) == 1;
 }
 
 u8 PK8::GetNature() {
@@ -177,4 +176,26 @@ u8 PK8::GetNature() {
 
 u8 PK8::GetMintedNature() {
   return *(u8*)(this->data + 0x21);
+}
+
+u16 PK8::GetChecksum() {
+  return *(u16*)(this->data + 0x6);
+}
+
+u16 PK8::CalculateChecksum() {
+  u16 chk = 0;
+
+  for (u32 i = 8; i < this->storedSize; i += 2) {
+    chk += *(u16*)(this->data + i);
+  }
+
+  return chk;
+}
+
+bool PK8::GetHasValidChecksum() {
+  return this->GetChecksum() == this->CalculateChecksum();
+}
+
+bool PK8::GetIsValid() {
+  return this->GetSpecies() > 0 && this->GetHasValidChecksum();
 }
