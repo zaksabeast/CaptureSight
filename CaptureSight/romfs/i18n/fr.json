@@ -25,7 +25,9 @@
     "IVs": "IVs",
     "EVs": "EVs",
     "Atmosphere's dmnt:cht is not running": "dmnt:chts de Atmosphère n'est pas en cours d'exécution",
-    "Please start a Pokemon game before running CaptureSight": "Veuillez démarrer un jeu Pokemon avant d'exécuter CaptureSight"
+    "Please start a Pokemon game before running CaptureSight": "Veuillez démarrer un jeu Pokemon avant d'exécuter CaptureSight",
+    "Friendship": "Bonheur",
+    "Egg cycles": "Nombre de cycles"
   },
   "natures": {
     "0": "Hardi",

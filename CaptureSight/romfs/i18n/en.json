@@ -25,7 +25,9 @@
     "IVs": "IVs",
     "EVs": "EVs",
     "Atmosphere's dmnt:cht is not running": "Atmosphere's dmnt:cht is not running",
-    "Please start a Pokemon game before running CaptureSight": "Please start a Pokemon game before running CaptureSight"
+    "Please start a Pokemon game before running CaptureSight": "Please start a Pokemon game before running CaptureSight",
+    "Friendship": "Friendship",
+    "Egg cycles": "Egg cycles"
   },
   "natures": {
     "0": "Hardy",

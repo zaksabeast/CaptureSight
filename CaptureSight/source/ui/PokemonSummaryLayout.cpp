@@ -26,6 +26,8 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm, bool isShow
                       std::to_string(pkm->GetTSV()) + ", " + i18n->Translate(shinyTranslationKey);
   std::string pidEc = i18n->Translate("PID") + ": " + ConvertNumToHexString(pkm->GetPID()) + ", " + i18n->Translate("EC") + ": " +
                       ConvertNumToHexString(pkm->GetEncryptionConstant());
+  std::string friendshipTranslationKey = pkm->GetIsEgg() ? "Egg cycles" : "Friendship";
+  std::string friendship = i18n->Translate(friendshipTranslationKey) + ": " + std::to_string(pkm->GetCurrentFriendship());
 
   for (u8 i = 1; i < 4; i++) {
     moves += ", " + i18n->Translate("moves", std::to_string(pkm->GetMove(i)));
@@ -54,6 +56,8 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm, bool isShow
   this->pidEcTextBlock->SetColor(gsets.GetTheme().text.light);
   this->instructionsTextBlock = pu::ui::elm::TextBlock::New(700, 620, instructions, 25);
   this->instructionsTextBlock->SetColor(gsets.GetTheme().text.light);
+  this->friendshipTextBlock = pu::ui::elm::TextBlock::New(700, 520, friendship, 25);
+  this->friendshipTextBlock->SetColor(gsets.GetTheme().text.light);
 
   this->Add(this->speciesBackgroundRectangle);
   this->Add(this->spriteImage);
@@ -66,6 +70,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm, bool isShow
   this->Add(this->natureTextBlock);
   this->Add(this->mintedNatureTextBlock);
   this->Add(this->instructionsTextBlock);
+  this->Add(this->friendshipTextBlock);
 
   if (isShowingExtraDetail) {
     this->Add(this->pidEcTextBlock);

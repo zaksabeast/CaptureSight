@@ -199,3 +199,19 @@ bool PK8::GetHasValidChecksum() {
 bool PK8::GetIsValid() {
   return this->GetSpecies() > 0 && this->GetHasValidChecksum();
 }
+
+u8 PK8::GetCurrentHandler() {
+  return *(u8*)(this->data + 0xC4);
+}
+
+u8 PK8::GetHTFriendship() {
+  return *(u8*)(this->data + 0xC8);
+}
+
+u8 PK8::GetOTFriendship() {
+  return *(u8*)(this->data + 0x112);
+}
+
+u8 PK8::GetCurrentFriendship() {
+  return this->GetCurrentHandler() == 0 ? this->GetOTFriendship() : this->GetHTFriendship();
+}

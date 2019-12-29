@@ -38,6 +38,10 @@ class PK8 {
   bool GetHasValidChecksum();
   bool GetIsEgg();
   bool GetIsValid();
+  u8 GetCurrentHandler();
+  u8 GetHTFriendship();
+  u8 GetOTFriendship();
+  u8 GetCurrentFriendship();
 
  private:
   u8* data = new u8[0x148];
