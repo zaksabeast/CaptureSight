@@ -167,7 +167,7 @@ u32 MainApplication::GetSlot() {
 
 void MainApplication::IncreaseSlot(u32 slotIncrease) {
   u32 newSlot = this->slot + slotIncrease;
-  u32 slot = newSlot >= this->maxSlot ? 0 : newSlot;
+  u32 slot = newSlot > this->maxSlot ? 0 : newSlot;
   this->SetSlot(slot);
 }
 
