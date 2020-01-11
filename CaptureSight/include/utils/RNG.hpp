@@ -13,6 +13,8 @@ namespace rng {
   class xoroshiro {
    public:
     xoroshiro(ulong seed);
+    u64 nextulong();
+    u32 nextuint();
     uint next(uint mask);
 
    private:

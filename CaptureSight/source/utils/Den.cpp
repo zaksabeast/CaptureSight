@@ -1,6 +1,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <utils/Den.hpp>
+#include <utils/RNG.hpp>
 #include <stratosphere.hpp>
 #include <utils/DenHashes.hpp>
 #include <utils/Utils.hpp>
@@ -23,6 +24,23 @@ Den::~Den() {
 
 u64 Den::GetSeed() {
   return *(u64*)(this->data + 0x8);
+}
+
+u16 Den::GetShinyFrame() {
+  u64 seed = this->GetSeed();
+  u16 ShinyFrame = 0;
+  while (ShinyFrame < 9999) {
+    auto rng = rng::xoroshiro(seed);
+    seed = rng.nextulong();   // Also advance for EC
+    uint TID = rng.nextuint();
+    uint PID = rng.nextuint();
+    auto XOR = (TID & 0xFFFF) ^ (TID >> 16) ^ (PID & 0xFFFF) ^ (PID >> 16);
+    if (XOR < 16)
+      return ShinyFrame;
+    else
+      ShinyFrame++;
+  }
+  return ShinyFrame;
 }
 
 u8 Den::GetStars() {
