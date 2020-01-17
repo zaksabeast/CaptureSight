@@ -31,7 +31,7 @@ u16 Den::GetShinyFrame() {
   u16 ShinyFrame = 0;
   while (ShinyFrame < 9999) {
     auto rng = rng::xoroshiro(seed);
-    seed = rng.nextulong();   // Also advance for EC
+    seed = rng.nextulong();  // Also advance for EC
     uint TID = rng.nextuint();
     uint PID = rng.nextuint();
     auto XOR = (TID & 0xFFFF) ^ (TID >> 16) ^ (PID & 0xFFFF) ^ (PID >> 16);
