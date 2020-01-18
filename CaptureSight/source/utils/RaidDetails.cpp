@@ -4,7 +4,7 @@
 u8 GetDenReadId(u8 denId) {
   // Dens are zero-indexed in memory, but we omit 16 since it's for special encounters
   // This is for consistency with the PKHeX Raid Plugin and RaidFinder
-  return denId < 16 ? denId - 1 : denId;
+  return denId > 16 ? denId : denId - 1;
 }
 
 std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
