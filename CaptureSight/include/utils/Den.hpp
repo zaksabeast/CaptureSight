@@ -12,6 +12,7 @@ class Den {
   Den(u8* data, u8 denId, bool isSword);
   ~Den();
   u64 GetSeed();
+  u16 GetShinyFrame();
   u8 GetStars();
   u8 GetDisplayStars();
   u8 GetRandRoll();

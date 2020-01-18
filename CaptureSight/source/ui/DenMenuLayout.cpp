@@ -20,8 +20,9 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
     auto formattedIVs = joinNums(pkm->GetIVs(), "/");
     auto seed = ConvertNumToHexString(den->GetSeed());
     auto stars = std::to_string(den->GetDisplayStars());
+    auto shinyframe = std::to_string(den->GetShinyFrame());
     std::string title = i18n->Translate("Den Id") + ": " + std::to_string(den->GetDenId()) + " - " + seed + " - " + i18n->Translate("IVs") + ": " +
-                        formattedIVs + ", " + i18n->Translate("Stars") + ": " + stars;
+                        formattedIVs + ", " + stars + "★ " + i18n->Translate("Shiny") + ": " + shinyframe;
     auto menuItem = pu::ui::elm::MenuItem::New(title);
 
     menuItem->SetColor(gsets.GetTheme().text.light);
