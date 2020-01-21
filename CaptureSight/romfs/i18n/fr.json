@@ -17,7 +17,7 @@
     "Active Den List": "Liste des Antres actifs",
     "All Dens List": "Liste de tous les antres",
     "Stars": "Étoiles",
-    "More detail (X), Go back (B)": "Plus d'informations (X), Retour (B)",
+    "More detail (X), Go back (B)\nRaid Searcher (Y)": "Plus d'informations (X), Retour (B)\nRecherche de Raid (Y)",
     "Den Id": "ID de l'Antre",
     "Wild and Trade Pokemon": "Pokémon sauvage et échangé",
     "Trade Pokemon": "Pokemon à l'échange",
@@ -27,7 +27,10 @@
     "Atmosphere's dmnt:cht is not running": "dmnt:chts de Atmosphère n'est pas en cours d'exécution",
     "Please start a Pokemon game before running CaptureSight": "Veuillez démarrer un jeu Pokemon avant d'exécuter CaptureSight",
     "Friendship": "Bonheur",
-    "Egg cycles": "Nombre de cycles"
+    "Egg cycles": "Nombre de cycles",
+    "Frame": "Frame",
+    "No raid seed found!  This may not be a raid Pokemon": "Aucune Raid Seed n'a été trouvée ! Ce n'est peut-être pas un Pokemon de Raid",
+    "Flawless IVs": "IVs Parfaits"
   },
   "natures": {
     "0": "Hardi",

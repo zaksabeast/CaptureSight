@@ -24,7 +24,7 @@ class Den {
   u8 GetDenId();
   bool GetIsRare();
   u64 GetDenHash(u8 denId, bool isRare, bool isEvent);
-  std::shared_ptr<RaidPokemon> GetPKM();
+  std::shared_ptr<raid::RaidPokemon> GetPKM();
 
  private:
   u8 size = 0x18;
@@ -32,5 +32,5 @@ class Den {
   u8 denId = 0;
   u16 species = 0;
   u8 flawlessIVs = 0;
-  RaidTemplate FindSpawn(std::vector<RaidTemplate> templates);
+  raid::RaidTemplate FindSpawn(std::vector<raid::RaidTemplate> templates);
 };

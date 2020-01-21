@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <utils/PK8.hpp>
 #include <utils/RNG.hpp>
+#include <utils/CalculateRaidSeed.hpp>
 
 PK8::PK8(u8* data) {
   std::copy(data, data + this->storedSize, this->data);
@@ -214,4 +215,8 @@ u8 PK8::GetOTFriendship() {
 
 u8 PK8::GetCurrentFriendship() {
   return this->GetCurrentHandler() == 0 ? this->GetOTFriendship() : this->GetHTFriendship();
+}
+
+ulong PK8::GetRaidSeed() {
+  return raid::CalculateRaidSeed(this->GetEncryptionConstant(), this->GetPID(), this->GetIVs());
 }

@@ -17,7 +17,7 @@
     "Active Den List": "Active Den List",
     "All Dens List": "All Dens List",
     "Stars": "Stars",
-    "More detail (X), Go back (B)": "More detail (X), Go back (B)",
+    "More detail (X), Go back (B)\nRaid Searcher (Y)": "More detail (X), Go back (B)\nRaid Searcher (Y)",
     "Den Id": "Den Id",
     "Wild and Trade Pokemon": "Wild and Trade Pokemon",
     "Trade Pokemon": "Trade Pokemon",
@@ -27,7 +27,10 @@
     "Atmosphere's dmnt:cht is not running": "Atmosphere's dmnt:cht is not running",
     "Please start a Pokemon game before running CaptureSight": "Please start a Pokemon game before running CaptureSight",
     "Friendship": "Friendship",
-    "Egg cycles": "Egg cycles"
+    "Egg cycles": "Egg cycles",
+    "Frame": "Frame",
+    "No raid seed found!  This may not be a raid Pokemon": "No raid seed found!  This may not be a raid Pokemon",
+    "Flawless IVs": "Flawless IVs"
   },
   "natures": {
     "0": "Hardy",

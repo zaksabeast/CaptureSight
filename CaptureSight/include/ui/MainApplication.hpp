@@ -7,6 +7,7 @@
 #include <ui/MainMenuLayout.hpp>
 #include <ui/PokemonListLayout.hpp>
 #include <ui/DenMenuLayout.hpp>
+#include <ui/RaidSearchLayout.hpp>
 #include <ui/PokemonViewMode.hpp>
 #include <ui/WarningLayout.hpp>
 #include <utils/PK8.hpp>
@@ -32,11 +33,13 @@ class MainApplication : public pu::ui::Application {
   PokemonSummaryLayout::Ref pokemonSummaryLayout;
   MainMenuLayout::Ref mainMenuLayout;
   PokemonListLayout::Ref pokemonListLayout;
+  RaidSearchLayout::Ref raidSearchLayout;
   DenMenuLayout::Ref denMenuLayout;
   WarningLayout::Ref warningLayout;
 
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void SelectPokemonSlot(u32 slot);
   void IncreaseSlot(u32 slotIncrease);
   void DecreaseSlot(u32 slotDecrease);

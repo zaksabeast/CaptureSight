@@ -14,7 +14,7 @@ extern std::shared_ptr<I18N> i18n;
 void PokemonSummaryLayout::UpdateValues(std::string title, PK8* pkm, bool isShowingExtraDetail) {
   this->Clear();
 
-  std::string instructions = i18n->Translate("More detail (X), Go back (B)");
+  std::string instructions = i18n->Translate("More detail (X), Go back (B)\nRaid Searcher (Y)");
   std::string moves = i18n->Translate("moves", std::to_string(pkm->GetMove(0)));
   std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
   std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", std::to_string(pkm->GetNature()));

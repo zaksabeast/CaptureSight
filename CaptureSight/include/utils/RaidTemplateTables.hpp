@@ -3,17 +3,19 @@
 #include <vector>
 #include <switch.h>
 
-struct RaidTemplate {
-  u32 species;
-  u32 flawlessIVs;
-  u32 probabilities[5];
-};
+namespace raid {
+  struct RaidTemplate {
+    u32 species;
+    u32 flawlessIVs;
+    u32 probabilities[5];
+  };
 
-struct RaidTemplateTable {
-  u64 hash;
-  std::vector<RaidTemplate> templates;
-};
+  struct RaidTemplateTable {
+    u64 hash;
+    std::vector<RaidTemplate> templates;
+  };
 
-extern std::vector<RaidTemplateTable> swordNests;
+  extern std::vector<RaidTemplateTable> swordNests;
 
-extern std::vector<RaidTemplateTable> shieldNests;
+  extern std::vector<RaidTemplateTable> shieldNests;
+}  // namespace raid

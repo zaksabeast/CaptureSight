@@ -47,6 +47,10 @@ void MainApplication::OnLoad() {
   this->pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));
   this->pokemonListLayout->UpdateValues(this->pkms, this->GetSummaryTitle);
+  this->raidSearchLayout = RaidSearchLayout::New();
+  this->raidSearchLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchLayout, this, std::placeholders::_1, std::placeholders::_2,
+                                               std::placeholders::_3, std::placeholders::_4));
+  this->raidSearchLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->denMenuLayout = DenMenuLayout::New();
   this->denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->SetOnInput(
@@ -147,6 +151,20 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
     this->DecreaseSlot(1);
   } else if (Down & KEY_DRIGHT) {
     this->IncreaseSlot(1);
+  } else if (Down & KEY_Y) {
+    this->raidSearchLayout->SetSeed(this->pkms[this->slot]->GetRaidSeed());
+    this->raidSearchLayout->UpdateValues();
+    this->LoadLayout(this->raidSearchLayout);
+  }
+}
+
+void MainApplication::OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
+  if (Down & KEY_L) {
+    this->raidSearchLayout->DecreaseFlawlessIVs();
+    this->raidSearchLayout->UpdateValues();
+  } else if (Down & KEY_R) {
+    this->raidSearchLayout->IncreaseFlawlessIVs();
+    this->raidSearchLayout->UpdateValues();
   }
 }
 

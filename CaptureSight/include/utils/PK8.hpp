@@ -42,6 +42,7 @@ class PK8 {
   u8 GetHTFriendship();
   u8 GetOTFriendship();
   u8 GetCurrentFriendship();
+  ulong GetRaidSeed();
 
  private:
   u8* data = new u8[0x148];

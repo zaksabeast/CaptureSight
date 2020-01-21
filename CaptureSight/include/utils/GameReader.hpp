@@ -7,7 +7,7 @@
 #include <utils/PK8.hpp>
 #include <utils/RaidDetails.hpp>
 
-class GameReader : public RaidDetails {
+class GameReader : public raid::RaidDetails {
  public:
   GameReader();
   Result Attach();

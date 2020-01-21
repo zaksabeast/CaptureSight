@@ -10,8 +10,8 @@ Den::Den(u8* data, u8 denId, bool isSword) {
   std::copy(data, data + this->size, this->data);
   this->denId = denId > DEN_LIST_SIZE ? DEN_LIST_SIZE : denId;
   auto denHash = this->GetDenHash(this->denId - 1, this->GetIsRare(), this->GetIsEvent());
-  auto nests = isSword ? swordNests : shieldNests;
-  auto nest = std::find_if(nests.begin(), nests.end(), [denHash](const RaidTemplateTable& nest) { return nest.hash == denHash; });
+  auto nests = isSword ? raid::swordNests : raid::shieldNests;
+  auto nest = std::find_if(nests.begin(), nests.end(), [denHash](const raid::RaidTemplateTable& nest) { return nest.hash == denHash; });
   auto spawn = this->FindSpawn(nest->templates);
 
   this->species = spawn.species;
@@ -88,11 +88,11 @@ u8 Den::GetDenId() {
   return this->denId;
 }
 
-std::shared_ptr<RaidPokemon> Den::GetPKM() {
-  return std::make_shared<RaidPokemon>(this->GetSeed(), this->flawlessIVs, this->species);
+std::shared_ptr<raid::RaidPokemon> Den::GetPKM() {
+  return std::make_shared<raid::RaidPokemon>(this->GetSeed(), this->flawlessIVs, this->species);
 };
 
-RaidTemplate Den::FindSpawn(std::vector<RaidTemplate> templates) {
+raid::RaidTemplate Den::FindSpawn(std::vector<raid::RaidTemplate> templates) {
   u32 probability = 0;
   u32 nestProbability = 0;
   auto stars = this->GetStars();
