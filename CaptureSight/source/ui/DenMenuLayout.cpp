@@ -1,3 +1,4 @@
+#include <functional>
 #include <ui/DenMenuLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
@@ -27,9 +28,17 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
 
     menuItem->SetColor(gsets.GetTheme().text.light);
     menuItem->SetIcon(getPokemonIconPath(pkm->GetSpecies(), false));
-    menuItem->AddOnClick([&] {});
+    menuItem->AddOnClick(std::bind(&DenMenuLayout::ClickMenuItem, this, den->GetSeed()));
     this->menu->AddItem(menuItem);
   }
 
   this->Add(this->menu);
+}
+
+void DenMenuLayout::ClickMenuItem(u64 seed) {
+  this->onMenuItemInput(seed);
+}
+
+void DenMenuLayout::SetOnInputMenuItem(std::function<void(u64)> onInput) {
+  this->onMenuItemInput = onInput;
 }

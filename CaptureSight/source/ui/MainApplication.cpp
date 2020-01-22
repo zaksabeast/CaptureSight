@@ -53,6 +53,7 @@ void MainApplication::OnLoad() {
   this->raidSearchLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->denMenuLayout = DenMenuLayout::New();
   this->denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  this->denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
   this->SetOnInput(
       std::bind(&MainApplication::OnInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
@@ -73,6 +74,12 @@ void MainApplication::OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
   } else if (Down & KEY_R) {
     this->IncreaseSlot(30);
   }
+}
+
+void MainApplication::OnInputDenList(u64 seed) {
+  this->raidSearchLayout->SetSeed(seed);
+  this->raidSearchLayout->UpdateValues();
+  this->LoadLayout(this->raidSearchLayout);
 }
 
 void MainApplication::SelectPokemonSlot(u32 slot) {

@@ -41,7 +41,6 @@ void RaidSearchLayout::UpdateValues() {
       auto menuItem = pu::ui::elm::MenuItem::New(title);
 
       menuItem->SetColor(gsets.GetTheme().text.light);
-      menuItem->AddOnClick([&] {});
       this->menu->AddItem(menuItem);
     }
 

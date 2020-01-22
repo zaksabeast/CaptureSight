@@ -40,6 +40,7 @@ class MainApplication : public pu::ui::Application {
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void OnInputDenList(u64 seed);
   void SelectPokemonSlot(u32 slot);
   void IncreaseSlot(u32 slotIncrease);
   void DecreaseSlot(u32 slotDecrease);
