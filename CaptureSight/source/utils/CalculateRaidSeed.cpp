@@ -31,8 +31,8 @@ namespace raid {
     // Test the bytes that impact the PID most
     // By picking only the most impactul bytes, we avoid unneeded iterations
     // TODO: choose most impactful bits
-    for (ulong i = 0; i < 0xFF; i++) {
-      for (ulong j = 0; j < 0xFF; j++) {
+    for (ulong i = 0; i <= 0xFF; i++) {
+      for (ulong j = 0; j <= 0xFF; j++) {
         auto s0_high = (rotateRight(j ^ temp_low, 24) & 0xFFFFFFFF00000000) | (i << 32);
         auto partialTestSeed = s0_low | s0_high;
         auto res = xoroshiro(partialTestSeed, s1);   // ec
@@ -41,7 +41,7 @@ namespace raid {
 
         // Only compare bits of the PID guaranteed with the missing seed bytes
         if (testPID == maskedPID) {
-          for (ulong k = 0; k < 0xffff; k++) {
+          for (ulong k = 0; k <= 0xffff; k++) {
             auto seed = (k << 48) + partialTestSeed;
             res = xoroshiro(seed, s1);                           // ec
             res = xoroshiro(res[0], res[1]);                     // sidtid
