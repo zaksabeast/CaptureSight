@@ -26,6 +26,7 @@ class GameReader : public raid::RaidDetails {
   u64 boxOffset = 0x4293D8B0;
   u64 wildOffset = 0x8D45C648;
   u64 raidOffset = 0x85C7AB08;
+  u64 legendOffset = 0x85C74F88;
   u64 tradeOffset = 0x2E32206A;
   DmntCheatProcessMetadata metadata;
   Result ReadHeap(u64 address, void* buffer, size_t size) override;

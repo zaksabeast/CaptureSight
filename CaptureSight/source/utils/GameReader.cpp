@@ -43,7 +43,8 @@ std::vector<std::shared_ptr<PK8>> GameReader::ReadBoxes() {
 }
 
 std::shared_ptr<PK8> GameReader::ReadWild() {
-  return this->ReadPK8(this->wildOffset);
+  auto pkm = this->ReadPK8(this->wildOffset);
+  return pkm->GetIsValid() ? pkm : this->ReadPK8(this->legendOffset);
 }
 
 std::shared_ptr<PK8> GameReader::ReadRaid() {
