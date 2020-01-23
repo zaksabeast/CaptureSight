@@ -17,5 +17,5 @@ class RaidSearchLayout : public pu::ui::Layout {
   uint flawlessIVs = 1;
   ulong seed = 0;
   pu::ui::elm::Menu::Ref menu;
-  pu::ui::elm::TextBlock::Ref raidHeaderTextBlock;
+  pu::ui::elm::TextBlock::Ref headerTextBlock;
 };

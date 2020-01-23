@@ -48,10 +48,10 @@ void RaidSearchLayout::UpdateValues() {
                  i18n->Translate("Flawless IVs") + " " + std::to_string(this->flawlessIVs) + " (+R)";
   }
 
-  this->raidHeaderTextBlock = pu::ui::elm::TextBlock::New(50, 50, headerText, 25);
-  this->raidHeaderTextBlock->SetColor(gsets.GetTheme().text.light);
+  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, headerText, 25);
+  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
 
-  this->Add(this->raidHeaderTextBlock);
+  this->Add(this->headerTextBlock);
   this->Add(this->menu);
 }
 

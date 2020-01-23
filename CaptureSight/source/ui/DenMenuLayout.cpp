@@ -32,6 +32,12 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
     this->menu->AddItem(menuItem);
   }
 
+  auto headerText = i18n->Translate("View upcoming frames (A)");
+
+  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, headerText, 25);
+  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
+
+  this->Add(this->headerTextBlock);
   this->Add(this->menu);
 }
 

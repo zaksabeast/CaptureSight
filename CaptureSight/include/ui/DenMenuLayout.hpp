@@ -14,5 +14,6 @@ class DenMenuLayout : public pu::ui::Layout {
 
  private:
   pu::ui::elm::Menu::Ref menu;
+  pu::ui::elm::TextBlock::Ref headerTextBlock;
   std::function<void(u64)> onMenuItemInput = [&](u64) {};
 };
