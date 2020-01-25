@@ -8,8 +8,8 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
 VER_MAJOR	:= 0
-VER_MINOR	:= 0
-VER_MICRO	:= 1
+VER_MINOR	:= 3
+VER_MICRO	:= 0
 
 APP_TITLE   := CaptureSight
 APP_AUTHOR  := Zaksabeast
@@ -29,7 +29,7 @@ ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
 CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 			$(ARCH) $(DEFINES)
 
-CFLAGS	+=	$(INCLUDE) -D__SWITCH__
+CFLAGS	+=	$(INCLUDE) -D__SWITCH__ -DCSIGHT_VERION=\"CaptureSight\ v$(VER_MAJOR).$(VER_MINOR).$(VER_MICRO)\"
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=gnu++17
 

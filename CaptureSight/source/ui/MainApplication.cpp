@@ -36,6 +36,8 @@ void MainApplication::OnLoad() {
   this->pkms = this->save->ReadParty();
   this->dens = this->save->ReadDens(false);
 
+  this->versionTextBlock = pu::ui::elm::TextBlock::New(50, 50, CSIGHT_VERION, 25);
+  this->versionTextBlock->SetColor(gsets.GetTheme().text.light);
   this->pokemonSummaryLayout = PokemonSummaryLayout::New();
   this->pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
                                                    std::placeholders::_3, std::placeholders::_4));
@@ -43,6 +45,7 @@ void MainApplication::OnLoad() {
   this->mainMenuLayout = MainMenuLayout::New();
   this->mainMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::SetViewMode, this, std::placeholders::_1));
   this->mainMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  this->mainMenuLayout->Add(this->versionTextBlock);
   this->pokemonListLayout = PokemonListLayout::New();
   this->pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));

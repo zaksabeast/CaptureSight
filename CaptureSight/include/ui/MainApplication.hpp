@@ -36,6 +36,7 @@ class MainApplication : public pu::ui::Application {
   RaidSearchLayout::Ref raidSearchLayout;
   DenMenuLayout::Ref denMenuLayout;
   WarningLayout::Ref warningLayout;
+  pu::ui::elm::TextBlock::Ref versionTextBlock;
 
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
