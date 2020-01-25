@@ -11,9 +11,18 @@ extern MainApplication::Ref mainApp;
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
-void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
-  this->Clear();
+DenMenuLayout::DenMenuLayout() : Layout::Layout() {
+  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
+  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
+
   this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
+
+  this->Add(this->menu);
+  this->Add(this->headerTextBlock);
+}
+
+void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
+  this->menu->ClearItems();
 
   for (auto denIterator = dens.begin(); denIterator != end(dens); ++denIterator) {
     auto den = *(denIterator);
@@ -32,13 +41,11 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<Den>> dens) {
     this->menu->AddItem(menuItem);
   }
 
+  this->menu->SetSelectedIndex(0);
+
   auto headerText = i18n->Translate("View upcoming frames (A)");
 
-  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, headerText, 25);
-  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
-
-  this->Add(this->headerTextBlock);
-  this->Add(this->menu);
+  this->headerTextBlock->SetText(headerText);
 }
 
 void DenMenuLayout::ClickMenuItem(u64 seed) {

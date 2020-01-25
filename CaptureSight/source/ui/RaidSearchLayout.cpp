@@ -12,14 +12,21 @@ extern MainApplication::Ref mainApp;
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
+RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
+  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
+  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
+  this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
+
+  this->Add(this->headerTextBlock);
+  this->Add(this->menu);
+}
+
 void RaidSearchLayout::UpdateValues() {
   uint shinyFrame = 0;
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = ConvertNumToHexString(this->seed);
   ulong nextSeed = this->seed;
-
-  this->Clear();
-  this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
+  this->menu->ClearItems();
 
   if (this->seed > 0) {
     for (uint frame = 0; frame < 9999; frame++) {
@@ -48,11 +55,7 @@ void RaidSearchLayout::UpdateValues() {
                  i18n->Translate("Flawless IVs") + " " + std::to_string(this->flawlessIVs) + " (+R)";
   }
 
-  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, headerText, 25);
-  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
-
-  this->Add(this->headerTextBlock);
-  this->Add(this->menu);
+  this->headerTextBlock->SetText(headerText);
 }
 
 void RaidSearchLayout::SetSeed(ulong seed) {

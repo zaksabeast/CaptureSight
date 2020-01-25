@@ -183,7 +183,7 @@ void MainApplication::SetSlot(u32 newSlot) {
   this->slot = newSlot > this->maxSlot ? this->maxSlot : newSlot;
   this->pokemonListLayout->SetSelectedIndex(this->slot);
   std::string summaryTitle = this->GetSummaryTitle(this->slot);
-  this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot].get(), this->isShowingExtraDetail);
+  this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot], this->isShowingExtraDetail);
 }
 
 u32 MainApplication::GetSlot() {

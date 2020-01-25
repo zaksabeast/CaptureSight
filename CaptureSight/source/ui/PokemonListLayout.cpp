@@ -11,9 +11,13 @@ extern MainApplication::Ref mainApp;
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
-void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std::function<std::string(u32)> GetTitle) {
-  this->Clear();
+PokemonListLayout::PokemonListLayout() : Layout::Layout() {
   this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
+  this->Add(this->menu);
+}
+
+void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std::function<std::string(u32)> GetTitle) {
+  this->menu->ClearItems();
 
   for (auto pk8 = pk8s.begin(); pk8 != end(pk8s); ++pk8) {
     auto pkm = *(pk8);
@@ -28,7 +32,7 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std
     this->menu->AddItem(menuItem);
   }
 
-  this->Add(this->menu);
+  this->menu->SetSelectedIndex(0);
 }
 
 pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(std::shared_ptr<PK8> pk8, u32 slot, std::string title) {

@@ -1,14 +1,12 @@
 #include <pu/Plutonium>
 #include <ui/PokemonSprite.hpp>
 
-pu::ui::elm::Image::Ref createPokemonSprite(s32 x, s32 y, u8 scale, u16 species, bool isEgg) {
+void setPokemonSprite(pu::ui::elm::Image::Ref sprite, u8 scale, u16 species, bool isEgg) {
   std::string spritePath = getPokemonIconPath(species, isEgg);
-  pu::ui::elm::Image::Ref sprite = pu::ui::elm::Image::New(0, 0, spritePath);
 
+  sprite->SetImage(spritePath);
   sprite->SetHeight(sprite->GetHeight() * scale);
   sprite->SetWidth(sprite->GetWidth() * scale);
-
-  return sprite;
 }
 
 std::string getPokemonIconPath(u16 species, bool isEgg) {

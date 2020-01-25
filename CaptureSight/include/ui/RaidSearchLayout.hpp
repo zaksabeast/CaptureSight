@@ -6,6 +6,7 @@
 
 class RaidSearchLayout : public pu::ui::Layout {
  public:
+  RaidSearchLayout();
   PU_SMART_CTOR(RaidSearchLayout)
 
   void UpdateValues();
