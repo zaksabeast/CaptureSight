@@ -26,7 +26,7 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std
     std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
     std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
     std::string title = pkm->GetIsValid() ? species + " - " + formattedIVs + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot)
-                                          : i18n->Translate(std::string("Empty")) + " - " + GetTitle(slot);
+                                          : i18n->Translate("Error") + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
 
     this->menu->AddItem(menuItem);

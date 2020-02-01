@@ -4,6 +4,8 @@
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
 
+using namespace csight;
+
 MainApplication::Ref mainApp;
 Settings gsets;
 std::shared_ptr<I18N> i18n;

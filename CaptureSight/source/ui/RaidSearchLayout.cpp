@@ -1,3 +1,4 @@
+#include <csight/core>
 #include <ui/RaidSearchLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
@@ -5,8 +6,8 @@
 #include <utils/I18N.hpp>
 #include <utils/ConvertNumToHexString.hpp>
 #include <utils/Utils.hpp>
-#include <utils/RaidPokemon.hpp>
-#include <utils/RNG.hpp>
+
+using namespace csight;
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;

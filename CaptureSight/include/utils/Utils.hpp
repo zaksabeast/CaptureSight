@@ -1,10 +1,6 @@
 #pragma once
 
 #include <string>
-#include <vector>
-#include <switch.h>
-
-bool checkIfServiceIsRunning(const char* serviceName);
 
 template <typename T>
 std::string joinNums(std::vector<T> nums, std::string separator) {
@@ -19,9 +15,4 @@ std::string joinNums(std::vector<T> nums, std::string separator) {
   }
 
   return accumulator;
-}
-
-template <typename T>
-T getLast(std::vector<T> arr) {
-  return arr[arr.size() - 1];
 }
