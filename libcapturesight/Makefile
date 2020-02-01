@@ -17,9 +17,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 # INCLUDES is a list of directories containing header files
 #---------------------------------------------------------------------------------
 TARGET		:=	csight
-SOURCES		:=	source/csight
+SOURCES		:=	source source/csight
 DATA		:=	data
-INCLUDES	:= include/csight ../Atmosphere-libs/libstratosphere/source/dmnt
+INCLUDES	:= include include/csight ../Atmosphere-libs/libstratosphere/source/dmnt
 
 #---------------------------------------------------------------------------------
 # options for code generation
