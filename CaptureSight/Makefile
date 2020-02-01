@@ -36,8 +36,8 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=gnu++17
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lstratosphere -lnx -lpu -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
-LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../Plutonium/Plutonium/Output $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
+LIBS	:= -lstratosphere -lnx -lpu -lcsight -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
+LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../libcapturesight $(CURDIR)/../Plutonium/Plutonium/Output $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 

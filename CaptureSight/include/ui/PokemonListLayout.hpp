@@ -2,7 +2,9 @@
 
 #include <vector>
 #include <pu/Plutonium>
-#include <utils/PK8.hpp>
+#include <csight/core>
+
+using namespace csight;
 
 class PokemonListLayout : public pu::ui::Layout {
  public:

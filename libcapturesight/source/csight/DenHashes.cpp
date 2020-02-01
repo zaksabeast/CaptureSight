@@ -1,5 +1,5 @@
 #include <switch.h>
-#include <utils/DenHashes.hpp>
+#include <DenHashes.hpp>
 
 u64 eventHash = 1721953670860364124u;
 

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <pu/Plutonium>
-#include <utils/PK8.hpp>
+#include <csight/core>
+
+using namespace csight;
 
 class PokemonSummaryLayout : public pu::ui::Layout {
  public:

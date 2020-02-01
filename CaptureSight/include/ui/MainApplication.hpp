@@ -10,9 +10,9 @@
 #include <ui/RaidSearchLayout.hpp>
 #include <ui/PokemonViewMode.hpp>
 #include <ui/WarningLayout.hpp>
-#include <utils/PK8.hpp>
-#include <utils/GameReader.hpp>
-#include <utils/Den.hpp>
+#include <csight/core>
+
+using namespace csight;
 
 class MainApplication : public pu::ui::Application {
  public:

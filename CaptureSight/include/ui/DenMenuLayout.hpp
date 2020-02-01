@@ -2,7 +2,9 @@
 
 #include <vector>
 #include <pu/Plutonium>
-#include <utils/Den.hpp>
+#include <csight/core>
+
+using namespace csight;
 
 class DenMenuLayout : public pu::ui::Layout {
  public:

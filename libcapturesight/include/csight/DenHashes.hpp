@@ -1,7 +1,6 @@
 #pragma once
 
 #include <switch.h>
-#include <utils/RaidTemplateTables.hpp>
 
 #define DEN_LIST_SIZE 99
 

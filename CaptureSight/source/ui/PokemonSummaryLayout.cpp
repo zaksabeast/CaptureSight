@@ -2,11 +2,13 @@
 #include <stratosphere.hpp>
 #include <ui/PokemonSprite.hpp>
 #include <ui/PokemonSummaryLayout.hpp>
-#include <utils/GameReader.hpp>
+#include <csight/core>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
 #include <utils/ConvertNumToHexString.hpp>
 #include <utils/Utils.hpp>
+
+using namespace csight;
 
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
