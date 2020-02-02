@@ -72,7 +72,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<PK8> 
     moves += ", " + i18n->Translate("moves", std::to_string(pkm->GetMove(i)));
   }
 
-  setPokemonSprite(this->spriteImage, 4, pkm->GetSpecies(), pkm->GetIsEgg());
+  setPokemonSprite(this->spriteImage, 4, pkm->GetSpecies(), pkm->GetIsEgg(), pkm->GetIsShiny());
   this->speciesNameTextBlock->SetText(species);
   this->ivTextBlock->SetText(formattedIVs);
   this->evTextBlock->SetText(formattedEVs);
