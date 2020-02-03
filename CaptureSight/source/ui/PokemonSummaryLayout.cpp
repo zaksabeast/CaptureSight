@@ -34,7 +34,7 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
   this->mintedNatureTextBlock = pu::ui::elm::TextBlock::New(100, 570, "", 25);
   this->mintedNatureTextBlock->SetColor(gsets.GetTheme().text.light);
   this->abilityTextBlock = pu::ui::elm::TextBlock::New(100, 620, "", 25);
-  this->abilityTextBlock->setColor(gsets.GetTheme().text.light);
+  this->abilityTextBlock->SetColor(gsets.GetTheme().text.light);
   this->pidEcTextBlock = pu::ui::elm::TextBlock::New(700, 420, "", 25);
   this->pidEcTextBlock->SetColor(gsets.GetTheme().text.light);
   this->friendshipTextBlock = pu::ui::elm::TextBlock::New(700, 520, "", 25);
