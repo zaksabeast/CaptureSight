@@ -85,6 +85,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<PK8> 
   this->moveTextBlock->SetText(moves);
   this->natureTextBlock->SetText(nature);
   this->mintedNatureTextBlock->SetText(mintedNature);
+  this->abilityTextBlock->SetText(ability);
   this->friendshipTextBlock->SetText(friendship);
   this->pidEcTextBlock->SetText(isShowingExtraDetail ? pidEc : "");
 }
