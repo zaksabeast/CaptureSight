@@ -19,6 +19,7 @@ class PokemonSummaryLayout : public pu::ui::Layout {
   pu::ui::elm::TextBlock::Ref moveTextBlock;
   pu::ui::elm::TextBlock::Ref natureTextBlock;
   pu::ui::elm::TextBlock::Ref mintedNatureTextBlock;
+  pu::ui::elm::TextBlock::Ref abilityTextBlock;
   pu::ui::elm::TextBlock::Ref pidEcTextBlock;
   pu::ui::elm::TextBlock::Ref instructionsTextBlock;
   pu::ui::elm::TextBlock::Ref friendshipTextBlock;

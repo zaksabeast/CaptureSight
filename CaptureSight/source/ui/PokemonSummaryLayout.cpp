@@ -33,6 +33,8 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
   this->natureTextBlock->SetColor(gsets.GetTheme().text.light);
   this->mintedNatureTextBlock = pu::ui::elm::TextBlock::New(100, 570, "", 25);
   this->mintedNatureTextBlock->SetColor(gsets.GetTheme().text.light);
+  this->abilityTextBlock = pu::ui::elm::TextBlock::New(100, 620, "", 25);
+  this->abilityTextBlock->setColor(gsets.GetTheme().text.light);
   this->pidEcTextBlock = pu::ui::elm::TextBlock::New(700, 420, "", 25);
   this->pidEcTextBlock->SetColor(gsets.GetTheme().text.light);
   this->friendshipTextBlock = pu::ui::elm::TextBlock::New(700, 520, "", 25);
@@ -49,6 +51,7 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
   this->Add(this->moveTextBlock);
   this->Add(this->natureTextBlock);
   this->Add(this->mintedNatureTextBlock);
+  this->Add(this->abilityTextBlock);
   this->Add(this->friendshipTextBlock);
   this->Add(this->pidEcTextBlock);
 }
@@ -58,6 +61,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<PK8> 
   std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
   std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", std::to_string(pkm->GetNature()));
   std::string mintedNature = i18n->Translate("Minted Nature") + ": " + i18n->Translate("natures", std::to_string(pkm->GetMintedNature()));
+  std::string ability = i18n->Translate("Ability") + ": " + i18n->Translate("abilities", std::to_string(pkm->GetAbility()));
   std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
   std::string formattedIVs = i18n->Translate("IVs") + ": " + joinNums(pkm->GetIVs(), "/");
   std::string formattedEVs = i18n->Translate("EVs") + ": " + joinNums(pkm->GetEVs(), "/");

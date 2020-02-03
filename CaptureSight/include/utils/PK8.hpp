@@ -32,6 +32,7 @@ class PK8 {
   u16 GetMove(u8 slot);
   std::vector<u16> GetMoves();
   u8 GetMovePP(u8 slot);
+  u8 GetAbility();
   u8 GetNature();
   u8 GetMintedNature();
   u16 GetChecksum();

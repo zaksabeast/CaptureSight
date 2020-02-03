@@ -171,6 +171,10 @@ bool PK8::GetIsEgg() {
   return this->GetIsValid() && ((this->GetIV32() >> 30) & 1) == 1;
 }
 
+u8 PK8::GetAbility() {
+  return *(u8*)(this->data + 0x14);
+}
+
 u8 PK8::GetNature() {
   return *(u8*)(this->data + 0x20);
 }
