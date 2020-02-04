@@ -31,7 +31,8 @@
     "Frame": "Frame",
     "No raid seed found!  This may not be a raid Pokemon": "No raid seed found!  This may not be a raid Pokemon",
     "Flawless IVs": "Flawless IVs",
-    "View upcoming frames (A)": "View upcoming frames (A)"
+    "View upcoming frames (A)": "View upcoming frames (A)",
+    "Ability": "Ability"
   },
   "natures": {
     "0": "Hardy",
