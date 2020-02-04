@@ -8,15 +8,15 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
 VER_MAJOR	:= 0
-VER_MINOR	:= 2
-VER_MICRO	:= 0
+VER_MINOR	:= 0
+VER_MICRO	:= 1
 
 APP_TITLE   := CaptureSight
 APP_AUTHOR  := Zaksabeast
 APP_VERSION := $(VER_MAJOR).$(VER_MINOR).$(VER_MICRO)
-APP_TITLEID	:= 0500A0AF32302400
+APP_TITLEID	:= 0500A0AF32302500
 
-TARGET      := CaptureSight
+TARGET      := CaptureSight-Overlay
 ICON	    	:= icon.jpg
 
 BUILD       := build
@@ -36,8 +36,8 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=gnu++17
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lstratosphere -lnx -lpu -lcsight -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
-LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../libcsight $(CURDIR)/../Plutonium/Plutonium/Output $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
+LIBS	:= -lcsight -lstratosphere -lnx -ltesla -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
+LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../libcsight $(CURDIR)/../libtesla $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 
@@ -117,6 +117,7 @@ $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@[ -d output ] || mkdir -p output
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@mv $(OUTPUT).nro $(OUTPUT).ovl
 
 #---------------------------------------------------------------------------------
 clean:

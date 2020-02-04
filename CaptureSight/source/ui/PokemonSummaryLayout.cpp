@@ -1,14 +1,11 @@
 #include <string>
 #include <stratosphere.hpp>
+#include <csight/core>
 #include <ui/PokemonSprite.hpp>
 #include <ui/PokemonSummaryLayout.hpp>
 #include <csight/core>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
-#include <utils/ConvertNumToHexString.hpp>
-#include <utils/Utils.hpp>
-
-using namespace csight;
 
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
@@ -56,22 +53,22 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
 }
 
 void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<PK8> pkm, bool isShowingExtraDetail) {
-  std::string moves = i18n->Translate("moves", std::to_string(pkm->GetMove(0)));
-  std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
-  std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", std::to_string(pkm->GetNature()));
-  std::string mintedNature = i18n->Translate("Minted Nature") + ": " + i18n->Translate("natures", std::to_string(pkm->GetMintedNature()));
+  std::string moves = i18n->Translate("moves", pkm->GetMoveString(0));
+  std::string species = i18n->Translate("species", pkm->GetSpeciesString());
+  std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", pkm->GetNatureString());
+  std::string mintedNature = i18n->Translate("Minted Nature") + ": " + i18n->Translate("natures", pkm->GetMintedNatureString());
   std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
-  std::string formattedIVs = i18n->Translate("IVs") + ": " + joinNums(pkm->GetIVs(), "/");
-  std::string formattedEVs = i18n->Translate("EVs") + ": " + joinNums(pkm->GetEVs(), "/");
+  std::string formattedIVs = i18n->Translate("IVs") + ": " + csight::utils::joinNums(pkm->GetIVs(), "/");
+  std::string formattedEVs = i18n->Translate("EVs") + ": " + csight::utils::joinNums(pkm->GetEVs(), "/");
   std::string shiny = i18n->Translate("PSV") + " " + std::to_string(pkm->GetPSV()) + ", " + i18n->Translate("TSV") + " " +
                       std::to_string(pkm->GetTSV()) + ", " + i18n->Translate(shinyTranslationKey);
-  std::string pidEc = i18n->Translate("PID") + ": " + ConvertNumToHexString(pkm->GetPID()) + ", " + i18n->Translate("EC") + ": " +
-                      ConvertNumToHexString(pkm->GetEncryptionConstant());
+  std::string pidEc = i18n->Translate("PID") + ": " + csight::utils::convertNumToHexString(pkm->GetPID()) + ", " + i18n->Translate("EC") + ": " +
+                      csight::utils::convertNumToHexString(pkm->GetEncryptionConstant());
   std::string friendshipTranslationKey = pkm->GetIsEgg() ? "Egg cycles" : "Friendship";
   std::string friendship = i18n->Translate(friendshipTranslationKey) + ": " + std::to_string(pkm->GetCurrentFriendship());
 
   for (u8 i = 1; i < 4; i++) {
-    moves += ", " + i18n->Translate("moves", std::to_string(pkm->GetMove(i)));
+    moves += ", " + i18n->Translate("moves", pkm->GetMoveString(i));
   }
 
   setPokemonSprite(this->spriteImage, 4, pkm->GetSpecies(), pkm->GetIsEgg());
