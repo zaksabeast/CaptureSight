@@ -8,8 +8,8 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
 VER_MAJOR	:= 0
-VER_MINOR	:= 0
-VER_MICRO	:= 1
+VER_MINOR	:= 2
+VER_MICRO	:= 0
 
 APP_TITLE   := CaptureSight
 APP_AUTHOR  := Zaksabeast

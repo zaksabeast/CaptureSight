@@ -4,10 +4,6 @@
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
-#include <utils/ConvertNumToHexString.hpp>
-#include <utils/Utils.hpp>
-
-using namespace csight;
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -25,7 +21,7 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
 void RaidSearchLayout::UpdateValues() {
   uint shinyFrame = 0;
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
-  auto seedString = ConvertNumToHexString(this->seed);
+  auto seedString = csight::utils::convertNumToHexString(this->seed);
   ulong nextSeed = this->seed;
   this->menu->ClearItems();
 
@@ -43,7 +39,7 @@ void RaidSearchLayout::UpdateValues() {
         shinyText = "Shiny";
       }
 
-      auto formattedIVs = joinNums(raid->GetIVs(), "/");
+      auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
       std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + " ★ " +
                           i18n->Translate("Shiny") + ": " + i18n->Translate(shinyText);
       auto menuItem = pu::ui::elm::MenuItem::New(title);

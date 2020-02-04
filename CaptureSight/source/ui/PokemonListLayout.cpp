@@ -1,11 +1,11 @@
 #include <vector>
+#include <csight/core>
 #include <pu/Plutonium>
 #include <ui/PokemonListLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
-#include <utils/Utils.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -16,15 +16,15 @@ PokemonListLayout::PokemonListLayout() : Layout::Layout() {
   this->Add(this->menu);
 }
 
-void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<PK8>> pk8s, std::function<std::string(u32)> GetTitle) {
+void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<csight::PK8>> pk8s, std::function<std::string(u32)> GetTitle) {
   this->menu->ClearItems();
 
   for (auto pk8 = pk8s.begin(); pk8 != end(pk8s); ++pk8) {
     auto pkm = *(pk8);
-    auto formattedIVs = joinNums(pkm->GetIVs(), "/");
+    auto formattedIVs = csight::utils::joinNums(pkm->GetIVs(), "/");
     u32 slot = std::distance(pk8s.begin(), pk8);
-    std::string species = i18n->Translate("species", std::to_string(pkm->GetSpecies()));
-    std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
+    std::string species = i18n->Translate("species", pkm->GetSpeciesString());
+    std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not shiny";
     std::string title = pkm->GetIsValid() ? species + " - " + formattedIVs + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot)
                                           : i18n->Translate("Error") + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
