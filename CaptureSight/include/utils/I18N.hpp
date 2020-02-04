@@ -2,10 +2,9 @@
 
 #include <vector>
 #include <string>
-#include <switch.h>
 #include <utils/json.hpp>
 
-std::string GetTranslationCode(SetLanguage languageCode);
+std::string GetTranslationCode();
 
 class I18N {
  public:
@@ -15,5 +14,5 @@ class I18N {
 
  private:
   nlohmann::json translations;
-  void LoadTranslations(SetLanguage language);
+  void LoadTranslations();
 };
