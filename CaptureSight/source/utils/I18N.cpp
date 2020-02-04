@@ -9,6 +9,12 @@ std::string GetTranslationCode(SetLanguage languageCode) {
     case SetLanguage_FR:
     case SetLanguage_FRCA:
       return "fr";
+    case SetLanguage_ZHCN:
+    case SetLanguage_ZHHANS:
+      return "chs";
+    case SetLanguage_ZHTW:
+    case SetLanguage_ZHHANT:
+      return "cht";
     case SetLanguage_ENUS:
     case SetLanguage_ENGB:
     default:
