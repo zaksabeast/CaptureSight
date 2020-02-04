@@ -32,7 +32,8 @@
     "No raid seed found!  This may not be a raid Pokemon": "Aucune Raid Seed n'a été trouvée ! Ce n'est peut-être pas un Pokemon de Raid",
     "Flawless IVs": "IVs Parfaits",
     "View upcoming frames (A)": "Voir les prochaines frames (A)",
-    "Ability": "Talent"
+    "Ability": "Talent",
+    "Empty": "Vide"
   },
   "natures": {
     "0": "Hardi",
