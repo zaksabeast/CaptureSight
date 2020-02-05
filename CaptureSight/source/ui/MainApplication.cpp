@@ -9,6 +9,11 @@ Settings gsets;
 std::shared_ptr<I18N> i18n;
 
 void MainApplication::OnLoad() {
+  // Change default font to load characters properly (chs cht ko)
+  std::string language = GetTranslationCode();
+  if (language.compare("chs") == 0 || language.compare("cht") == 0)
+    pu::ui::render::SetDefaultFontFromShared(pu::ui::render::SharedFont::ChineseSimplified);  // ChineseTraditional doesn't work for cht!?
+
   this->save = std::make_unique<GameReader>();
   bool isDebugServiceRunning = this->save->GetIsServiceRunning();
 

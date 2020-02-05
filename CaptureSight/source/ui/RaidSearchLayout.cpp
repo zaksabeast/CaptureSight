@@ -35,7 +35,7 @@ void RaidSearchLayout::UpdateValues() {
       nextSeed = rng.nextulong();
 
       auto isShiny = raid->GetIsShiny();
-      auto shinyText = "Not shiny";
+      auto shinyText = "Not Shiny";
 
       if (isShiny) {
         shinyFrame = shinyFrame == 0 ? frame : shinyFrame;
@@ -44,7 +44,7 @@ void RaidSearchLayout::UpdateValues() {
 
       auto formattedIVs = joinNums(raid->GetIVs(), "/");
       std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + " ★ " +
-                          i18n->Translate("Shiny") + ": " + shinyText;
+                          i18n->Translate("Shiny") + ": " + i18n->Translate(shinyText);
       auto menuItem = pu::ui::elm::MenuItem::New(title);
 
       menuItem->SetColor(gsets.GetTheme().text.light);

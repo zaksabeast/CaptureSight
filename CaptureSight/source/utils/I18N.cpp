@@ -2,13 +2,24 @@
 #include <vector>
 #include <string>
 #include <stdio.h>
+#include <switch.h>
 #include <utils/I18N.hpp>
 
-std::string GetTranslationCode(SetLanguage languageCode) {
-  switch (languageCode) {
+std::string GetTranslationCode() {
+  u64 languageCode = 0;
+  SetLanguage language = SetLanguage_ENUS;
+  setGetSystemLanguage(&languageCode);
+  setMakeLanguage(languageCode, &language);
+  switch (language) {
     case SetLanguage_FR:
     case SetLanguage_FRCA:
       return "fr";
+    case SetLanguage_ZHCN:
+    case SetLanguage_ZHHANS:
+      return "chs";
+    case SetLanguage_ZHTW:
+    case SetLanguage_ZHHANT:
+      return "cht";
     case SetLanguage_ENUS:
     case SetLanguage_ENGB:
     default:
@@ -17,16 +28,11 @@ std::string GetTranslationCode(SetLanguage languageCode) {
 }
 
 I18N::I18N() {
-  u64 languageCode = 0;
-  SetLanguage language = SetLanguage_ENUS;
-
-  setGetSystemLanguage(&languageCode);
-  setMakeLanguage(languageCode, &language);
-  this->LoadTranslations(language);
+  this->LoadTranslations();
 }
 
-void I18N::LoadTranslations(SetLanguage language) {
-  std::ifstream translations("romfs:/i18n/" + GetTranslationCode(language) + ".json");
+void I18N::LoadTranslations() {
+  std::ifstream translations("romfs:/i18n/" + GetTranslationCode() + ".json");
 
   if (translations.good()) {
     translations >> this->translations;
