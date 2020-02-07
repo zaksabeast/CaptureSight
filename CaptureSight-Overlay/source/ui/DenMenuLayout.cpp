@@ -34,10 +34,8 @@ void DenMenuLayout::AddTitleBlock(u16 x, u16 y, tsl::Screen* screen) {
 
 bool DenMenuLayout::OnClickDen(std::shared_ptr<csight::Den> den, s64 keys) {
   if (keys == KEY_A) {
-    // Do something when key A was pressed while this list item was focused
     this->changeTo(new RaidSearchLayout(den->GetSeed(), 5));
 
-    // Return true for if this view handled the input
     return true;
   }
 

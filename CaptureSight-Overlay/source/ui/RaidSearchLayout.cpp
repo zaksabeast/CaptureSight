@@ -16,7 +16,6 @@ tsl::Element* RaidSearchLayout::createUI() {
   if (this->seed > 0) {
     for (u32 frame = 0; frame < 9999; frame++) {
       auto raid = csight::raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
-      // auto raid = std::make_unique<csight::raid::RaidPokemon>(nextSeed, this->flawlessIVs, 0);
       auto rng = csight::rng::xoroshiro(nextSeed);
       nextSeed = rng.nextulong();
 
