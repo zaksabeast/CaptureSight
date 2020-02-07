@@ -27,11 +27,11 @@ void RaidSearchLayout::UpdateValues() {
 
   if (this->seed > 0) {
     for (uint frame = 0; frame < 9999; frame++) {
-      auto raid = new raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
+      auto raid = raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
       auto rng = rng::xoroshiro(nextSeed);
       nextSeed = rng.nextulong();
 
-      auto isShiny = raid->GetIsShiny();
+      auto isShiny = raid.GetIsShiny();
       auto shinyText = "Not Shiny";
 
       if (isShiny) {
@@ -39,7 +39,7 @@ void RaidSearchLayout::UpdateValues() {
         shinyText = "Shiny";
       }
 
-      auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
+      auto formattedIVs = csight::utils::joinNums(raid.GetIVs(), "/");
       std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + " ★ " +
                           i18n->Translate("Shiny") + ": " + i18n->Translate(shinyText);
       auto menuItem = pu::ui::elm::MenuItem::New(title);
