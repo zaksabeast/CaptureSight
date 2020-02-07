@@ -60,7 +60,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<PK8> 
   std::string species = i18n->Translate("species", pkm->GetSpeciesString());
   std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", pkm->GetNatureString());
   std::string mintedNature = i18n->Translate("Minted Nature") + ": " + i18n->Translate("natures", pkm->GetMintedNatureString());
-  std::string ability = i18n->Translate("Ability") + ": " + i18n->Translate("abilities", std::to_string(pkm->GetAbility()));
+  std::string ability = i18n->Translate("Ability") + ": " + i18n->Translate("abilities", pkm->GetAbilityString());
   std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
   std::string formattedIVs = i18n->Translate("IVs") + ": " + csight::utils::joinNums(pkm->GetIVs(), "/");
   std::string formattedEVs = i18n->Translate("EVs") + ": " + csight::utils::joinNums(pkm->GetEVs(), "/");
