@@ -7,3 +7,6 @@
 [submodule "libtesla"]
 	path = libtesla
 	url = https://github.com/WerWolv/libtesla.git
+[submodule "flatbuffers"]
+	path = flatbuffers
+	url = https://github.com/google/flatbuffers.git

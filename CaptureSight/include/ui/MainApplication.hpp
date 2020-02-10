@@ -12,8 +12,6 @@
 #include <ui/WarningLayout.hpp>
 #include <csight/core>
 
-using namespace csight;
-
 class MainApplication : public pu::ui::Application {
  public:
   using Application::Application;
@@ -26,9 +24,9 @@ class MainApplication : public pu::ui::Application {
   u32 slot = 0;
   u32 maxSlot = 0;
   std::function<std::string(u32 slot)> GetSummaryTitle = [&](u32) { return ""; };
-  std::unique_ptr<GameReader> save;
-  std::vector<std::shared_ptr<PK8>> pkms;
-  std::vector<std::shared_ptr<Den>> dens;
+  std::unique_ptr<csight::GameReader> save;
+  std::vector<std::shared_ptr<csight::PK8>> pkms;
+  std::vector<std::shared_ptr<csight::raid::Den>> dens;
   bool isShowingExtraDetail = false;
   PokemonSummaryLayout::Ref pokemonSummaryLayout;
   MainMenuLayout::Ref mainMenuLayout;

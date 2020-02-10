@@ -54,7 +54,7 @@ std::string MainApplication::GetBoxTitle(u32 slot) {
 void MainApplication::ChangeViewMode(ViewMode mode) {
   std::string guiTitle = "Party Pokemon";
   std::vector<std::shared_ptr<csight::PK8>> pkms;
-  std::vector<std::shared_ptr<csight::Den>> dens;
+  std::vector<std::shared_ptr<csight::raid::Den>> dens;
   tsl::Gui* layout;
   std::function<std::string(u32)> getTitle = [](u32) { return ""; };
 

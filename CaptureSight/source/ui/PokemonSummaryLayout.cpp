@@ -55,7 +55,7 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
   this->Add(this->pidEcTextBlock);
 }
 
-void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<PK8> pkm, bool isShowingExtraDetail) {
+void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<csight::PK8> pkm, bool isShowingExtraDetail) {
   std::string moves = i18n->Translate("moves", pkm->GetMoveString(0));
   std::string species = i18n->Translate("species", pkm->GetSpeciesString());
   std::string nature = i18n->Translate("Nature") + ": " + i18n->Translate("natures", pkm->GetNatureString());

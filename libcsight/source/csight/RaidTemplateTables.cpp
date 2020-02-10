@@ -2,7 +2,7 @@
 
 namespace csight {
   namespace raid {
-    std::vector<RaidTemplateTable> swordNests = {
+    std::vector<RaidEncounterTable> swordEncounterTables = {
         {
             1676046420423018998u,
             {
@@ -1598,7 +1598,7 @@ namespace csight {
         },
     };
 
-    std::vector<RaidTemplateTable> shieldNests = {
+    std::vector<RaidEncounterTable> shieldEncounterTables = {
         {
             1676046420423018998u,
             {

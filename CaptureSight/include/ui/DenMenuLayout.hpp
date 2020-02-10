@@ -4,14 +4,12 @@
 #include <pu/Plutonium>
 #include <csight/core>
 
-using namespace csight;
-
 class DenMenuLayout : public pu::ui::Layout {
  public:
   DenMenuLayout();
   PU_SMART_CTOR(DenMenuLayout)
 
-  void UpdateValues(std::vector<std::shared_ptr<Den>> dens);
+  void UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>> dens);
   void SetOnInputMenuItem(std::function<void(u64)> onInput);
   void ClickMenuItem(u64 seed);
 

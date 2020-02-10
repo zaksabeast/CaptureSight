@@ -28,8 +28,8 @@ void RaidSearchLayout::UpdateValues() {
 
   if (this->seed > 0) {
     for (uint frame = 0; frame < 9999; frame++) {
-      auto raid = raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
-      auto rng = rng::xoroshiro(nextSeed);
+      auto raid = csight::raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
+      auto rng = csight::rng::xoroshiro(nextSeed);
       nextSeed = rng.nextulong();
 
       auto isShiny = raid.GetIsShiny();

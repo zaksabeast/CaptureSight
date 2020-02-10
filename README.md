@@ -57,13 +57,15 @@ All libraries [listed in Plutonium's readme](https://github.com/XorTroll/Plutoni
 
 After installing those, run `make`.
 
+Optional: To build the raid event flatbuffer header, install [flatc](https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html) and run `flatc --cpp -o libcsight/include/csight/ libcsight/resources/NestHoleDistributionEncounter8Archive.fbs`. Alternatively, use a docker image with `flatc`, such as [neomantra/flatbuffers](https://hub.docker.com/r/neomantra/flatbuffers).
+
 ## Credits
 
 Thanks to the following for helping make this app:
 
 - Switchbrew for their research and [libnx](https://github.com/switchbrew/libnx) which makes it possible to create homebrew
 - ReSwitched for their research, [Atmosphere](https://github.com/Atmosphere-NX/Atmosphere) and [libstratosphere](https://github.com/Atmosphere-NX/libstratosphere) which is invaluable for switch homebrew
-- Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) which has great documentation for the all things Pokemons, Pokemon icons, and i18n resources
+- Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) and [pkNX](https://github.com/kwsch/pkNX) which have resource including Pokemon icons, i18n for Pokemon, and great documentation
 - imneme for their [cpp xoroshiro gist](https://gist.github.com/imneme/f76f4bb7b7f67ff0850199ab7c077bf7) which is used in CaptureSight
 - nlohmann for their [c++ JSON library](https://github.com/nlohmann/json)
 - XorTroll for [Plutonium](https://github.com/XorTroll/Plutonium/tree/master/Plutonium)

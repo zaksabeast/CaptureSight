@@ -35,7 +35,7 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<csight::PK8>> p
   this->menu->SetSelectedIndex(0);
 }
 
-pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(std::shared_ptr<PK8> pk8, u32 slot, std::string title) {
+pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(std::shared_ptr<csight::PK8> pk8, u32 slot, std::string title) {
   auto menuItem = pu::ui::elm::MenuItem::New(title);
 
   menuItem->SetColor(gsets.GetTheme().text.light);

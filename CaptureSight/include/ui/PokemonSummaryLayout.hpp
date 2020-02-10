@@ -3,14 +3,12 @@
 #include <pu/Plutonium>
 #include <csight/core>
 
-using namespace csight;
-
 class PokemonSummaryLayout : public pu::ui::Layout {
  public:
   PokemonSummaryLayout();
   PU_SMART_CTOR(PokemonSummaryLayout)
 
-  void UpdateValues(std::string title, std::shared_ptr<PK8> pkm, bool isShowingExtraDetail);
+  void UpdateValues(std::string title, std::shared_ptr<csight::PK8> pkm, bool isShowingExtraDetail);
 
  private:
   pu::ui::elm::TextBlock::Ref titleTextBlock;

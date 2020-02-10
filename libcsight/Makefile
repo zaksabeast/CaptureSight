@@ -19,7 +19,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 TARGET		:=	csight
 SOURCES		:=	source source/csight
 DATA		:=	data
-INCLUDES	:= include include/csight include/csight/lookups ../Atmosphere-libs/libstratosphere/source/dmnt
+INCLUDES	:= include include/csight include/csight/lookups ../Atmosphere-libs/libstratosphere/source/dmnt ../flatbuffers/include
 
 #---------------------------------------------------------------------------------
 # options for code generation

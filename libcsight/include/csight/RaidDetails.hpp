@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <csight/Den.hpp>
 
 namespace csight {
@@ -13,6 +14,9 @@ namespace csight {
 
      private:
       u64 denOffset = 0x4298FA80;
+      u64 eventFlatbufferOffset = 0x2E5E58B8;
+      size_t eventFlatbufferSize = 0x23D4;
+      std::shared_ptr<RaidEncounterTable> ReadEventEncounterTable(bool isPlayingSword);
       virtual Result ReadHeap(u64 offset, void* buffer, size_t size);
     };
   }  // namespace raid

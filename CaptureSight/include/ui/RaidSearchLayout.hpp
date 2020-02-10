@@ -4,8 +4,6 @@
 #include <pu/Plutonium>
 #include <csight/core>
 
-using namespace csight;
-
 class RaidSearchLayout : public pu::ui::Layout {
  public:
   RaidSearchLayout();

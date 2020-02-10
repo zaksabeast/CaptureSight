@@ -12,11 +12,6 @@ namespace csight {
     bool checkIfServiceIsRunning(const char* serviceName);
 
     template <typename T>
-    T getLast(std::vector<T> arr) {
-      return arr[arr.size() - 1];
-    }
-
-    template <typename T>
     T getIndex(std::vector<T> arr, size_t index) {
       if (index > arr.size()) {
         return arr[0];

@@ -14,7 +14,7 @@ void MainApplication::OnLoad() {
   if (language.compare("chs") == 0 || language.compare("cht") == 0)
     pu::ui::render::SetDefaultFontFromShared(pu::ui::render::SharedFont::ChineseSimplified);  // ChineseTraditional doesn't work for cht!?
 
-  this->save = std::make_unique<GameReader>();
+  this->save = std::make_unique<csight::GameReader>();
   bool isDebugServiceRunning = this->save->GetIsServiceRunning();
 
   this->warningLayout = WarningLayout::New();
@@ -109,7 +109,7 @@ void MainApplication::SetViewMode(ViewMode viewMode) {
       return;
     case wild:
       this->GetSummaryTitle = std::bind(&MainApplication::GetWildSummaryTitle, this, std::placeholders::_1);
-      this->pkms = std::vector<std::shared_ptr<PK8>>{
+      this->pkms = std::vector<std::shared_ptr<csight::PK8>>{
           this->save->ReadWild(),
           this->save->ReadRaid(),
           this->save->ReadTrade(),

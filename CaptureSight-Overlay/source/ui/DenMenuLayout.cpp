@@ -2,7 +2,7 @@
 #include <ui/DenMenuLayout.hpp>
 #include <ui/RaidSearchLayout.hpp>
 
-DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::Den>> dens, std::string title) {
+DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> dens, std::string title) {
   this->dens = dens;
   this->title = title;
 }
@@ -32,7 +32,7 @@ void DenMenuLayout::AddTitleBlock(u16 x, u16 y, tsl::Screen* screen) {
   screen->drawString(this->title.c_str(), false, 20, 100, 20, tsl::a(0xFFFF));
 }
 
-bool DenMenuLayout::OnClickDen(std::shared_ptr<csight::Den> den, s64 keys) {
+bool DenMenuLayout::OnClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys) {
   if (keys == KEY_A) {
     this->changeTo(new RaidSearchLayout(den->GetSeed(), 5));
 

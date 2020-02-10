@@ -5,19 +5,19 @@
 
 namespace csight {
   namespace raid {
-    struct RaidTemplate {
+    struct RaidEncounter {
       u32 species;
       u32 flawlessIVs;
       u32 probabilities[5];
     };
 
-    struct RaidTemplateTable {
+    struct RaidEncounterTable {
       u64 hash;
-      std::vector<RaidTemplate> templates;
+      std::vector<RaidEncounter> templates;
     };
 
-    extern std::vector<RaidTemplateTable> swordNests;
+    extern std::vector<RaidEncounterTable> swordEncounterTables;
 
-    extern std::vector<RaidTemplateTable> shieldNests;
+    extern std::vector<RaidEncounterTable> shieldEncounterTables;
   }  // namespace raid
 }  // namespace csight

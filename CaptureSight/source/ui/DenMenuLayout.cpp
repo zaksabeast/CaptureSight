@@ -20,7 +20,7 @@ DenMenuLayout::DenMenuLayout() : Layout::Layout() {
   this->Add(this->headerTextBlock);
 }
 
-void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::Den>> dens) {
+void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>> dens) {
   this->menu->ClearItems();
 
   for (auto denIterator = dens.begin(); denIterator != end(dens); ++denIterator) {
