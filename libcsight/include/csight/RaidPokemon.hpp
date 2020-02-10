@@ -13,6 +13,7 @@ namespace csight {
       u32 GetPID();
       u16 GetSpecies();
       bool GetIsShiny();
+      shiny::ShinyType GetShineType();
       std::vector<s8> GetIVs();
 
      private:
@@ -20,6 +21,7 @@ namespace csight {
       u32 PID;
       u16 species;
       std::vector<s8> IVs;
+      shiny::ShinyType shineType;
     };
   }  // namespace raid
 }  // namespace csight

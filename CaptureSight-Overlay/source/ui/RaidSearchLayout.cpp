@@ -10,6 +10,7 @@ RaidSearchLayout::RaidSearchLayout(u64 seed, u32 flawlessIVs) {
 tsl::Element* RaidSearchLayout::createUI() {
   u64 nextSeed = this->seed;
   u32 shinyFrame = 0;
+  std::string firstShinyType = "";
   auto rootFrame = new tsl::element::Frame();
   auto denList = new tsl::element::List();
 
@@ -20,9 +21,14 @@ tsl::Element* RaidSearchLayout::createUI() {
       nextSeed = rng.nextulong();
 
       std::string shinyText = "";
+
       if (raid.GetIsShiny()) {
-        shinyFrame = shinyFrame == 0 ? frame : shinyFrame;
-        shinyText = " ★";
+        shinyText = raid.GetShineType() == csight::shiny::Square ? " ■ " : " ★";
+
+        if (shinyFrame == 0) {
+          shinyFrame = frame;
+          firstShinyType = shinyText;
+        }
       }
 
       auto formattedIVs = csight::utils::joinNums(raid.GetIVs(), "/");
@@ -31,7 +37,7 @@ tsl::Element* RaidSearchLayout::createUI() {
 
       denList->addItem(menuItem);
     }
-    this->title = csight::utils::convertNumToHexString(this->seed) + " ★ " + std::to_string(shinyFrame);
+    this->title = csight::utils::convertNumToHexString(this->seed) + firstShinyType + std::to_string(shinyFrame);
   } else {
     this->title = "Not a non-shiny raid Pokemon!";
   }

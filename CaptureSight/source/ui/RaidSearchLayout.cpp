@@ -20,6 +20,7 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
 
 void RaidSearchLayout::UpdateValues() {
   uint shinyFrame = 0;
+  std::string firstShineType = "";
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(this->seed);
   ulong nextSeed = this->seed;
@@ -32,24 +33,30 @@ void RaidSearchLayout::UpdateValues() {
       nextSeed = rng.nextulong();
 
       auto isShiny = raid.GetIsShiny();
-      auto shinyText = "Not Shiny";
+      std::string shinyText = "";
+      std::string frameShineType = "";
 
       if (isShiny) {
-        shinyFrame = shinyFrame == 0 ? frame : shinyFrame;
+        frameShineType = raid.GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
         shinyText = "Shiny";
+
+        if (shinyFrame == 0) {
+          shinyFrame = frame;
+          firstShineType = frameShineType;
+        }
       }
 
       auto formattedIVs = csight::utils::joinNums(raid.GetIVs(), "/");
-      std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + " ★ " +
-                          i18n->Translate("Shiny") + ": " + i18n->Translate(shinyText);
+      std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs +
+                          frameShineType + i18n->Translate(shinyText);
       auto menuItem = pu::ui::elm::MenuItem::New(title);
 
       menuItem->SetColor(gsets.GetTheme().text.light);
       this->menu->AddItem(menuItem);
     }
 
-    headerText = i18n->Translate("Seed") + ": " + seedString + ", " + i18n->Translate("Shiny") + " " + std::to_string(shinyFrame) + ", (-L) " +
-                 i18n->Translate("Flawless IVs") + " " + std::to_string(this->flawlessIVs) + " (+R)";
+    headerText = i18n->Translate("Seed") + ": " + seedString + firstShineType + i18n->Translate("Shiny") + " " + std::to_string(shinyFrame) +
+                 ", (-L) " + i18n->Translate("Flawless IVs") + " " + std::to_string(this->flawlessIVs) + " (+R)";
   }
 
   this->headerTextBlock->SetText(headerText);

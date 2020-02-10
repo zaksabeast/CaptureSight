@@ -11,7 +11,7 @@ namespace csight {
       this->EC = rng.next(0xFFFFFFFF);
       u32 SIDTID = rng.next(0xFFFFFFFF);
       this->PID = rng.next(0xFFFFFFFF);
-      this->isShiny = shiny::GetShinyType(PID, SIDTID) > shiny::None;
+      this->shineType = shiny::GetShinyType(PID, SIDTID);
 
       this->IVs = {-1, -1, -1, -1, -1, -1};
 
@@ -38,7 +38,9 @@ namespace csight {
 
     u16 RaidPokemon::GetSpecies() { return this->species; }
 
-    bool RaidPokemon::GetIsShiny() { return this->isShiny; }
+    bool RaidPokemon::GetIsShiny() { return this->shineType > shiny::None; }
+
+    shiny::ShinyType RaidPokemon::GetShineType() { return this->shineType; }
 
     std::vector<s8> RaidPokemon::GetIVs() { return this->IVs; }
   }  // namespace raid
