@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <switch.h>
+#include <csight/Shiny.hpp>
 
 namespace csight {
   namespace raid {
@@ -19,7 +20,6 @@ namespace csight {
       u32 PID;
       u16 species;
       std::vector<s8> IVs;
-      bool isShiny = false;
     };
   }  // namespace raid
 }  // namespace csight

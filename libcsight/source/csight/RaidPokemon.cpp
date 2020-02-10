@@ -1,6 +1,7 @@
 #include <csight/RaidPokemon.hpp>
 #include <csight/Shiny.hpp>
 #include <csight/RNG.hpp>
+#include <csight/Shiny.hpp>
 
 namespace csight {
   namespace raid {
@@ -10,7 +11,7 @@ namespace csight {
       this->EC = rng.next(0xFFFFFFFF);
       u32 SIDTID = rng.next(0xFFFFFFFF);
       this->PID = rng.next(0xFFFFFFFF);
-      this->isShiny = GetShinyType(PID, SIDTID) > None;
+      this->isShiny = shiny::GetShinyType(PID, SIDTID) > shiny::None;
 
       this->IVs = {-1, -1, -1, -1, -1, -1};
 
