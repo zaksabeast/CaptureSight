@@ -7,6 +7,9 @@ extern std::shared_ptr<I18N> i18n;
 
 int main() {
   setInitialize();
+  dmntchtInitialize();
+  dmntchtForceOpenCheatProcess();
+
   auto renderer =
       pu::ui::render::Renderer::New(SDL_INIT_EVERYTHING, pu::ui::render::RendererInitOptions::RendererNoSound, pu::ui::render::RendererHardwareFlags);
   mainApp = MainApplication::New(renderer);
@@ -15,6 +18,8 @@ int main() {
   mainApp->Prepare();
   mainApp->ShowWithFadeIn();
 
+  dmntchtExit();
   setExit();
+
   return 0;
 }

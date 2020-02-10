@@ -11,9 +11,10 @@ MainApplication* mainApp;
 
 tsl::Gui* MainApplication::onSetup() {
   smInitialize();
-  Result rc = this->gameReader->Attach();
+  dmntchtInitialize();
+  dmntchtForceOpenCheatProcess();
 
-  if (R_FAILED(rc))
+  if (R_FAILED(this->gameReader->Attach()))
     return new ErrorLayout();
 
   this->mainLayout->SetMenuItemClickCallback(std::bind(&MainApplication::ChangeViewMode, this, std::placeholders::_1));

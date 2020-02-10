@@ -6,20 +6,7 @@
 namespace csight {
   GameReader::GameReader() { this->isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht"); }
 
-  Result GameReader::Attach() {
-    Result rc = 0;
-
-    dmntchtInitialize();
-    rc = dmntchtForceOpenCheatProcess();
-
-    if (R_FAILED(rc)) {
-      return rc;
-    }
-
-    rc = dmntchtGetCheatProcessMetadata(&(this->metadata));
-
-    return rc;
-  }
+  Result GameReader::Attach() { return dmntchtGetCheatProcessMetadata(&this->metadata); }
 
   bool GameReader::GetIsPokemonRunning() { return (this->metadata.title_id == SWORD_TITLE_ID) || (this->metadata.title_id == SHIELD_TITLE_ID); }
 
