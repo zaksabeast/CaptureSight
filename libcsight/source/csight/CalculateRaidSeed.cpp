@@ -36,9 +36,9 @@ namespace csight {
         for (ulong j = 0; j <= 0xFF; j++) {
           auto s0_high = (rotateRight(j ^ temp_low, 24) & 0xFFFFFFFF00000000) | (i << 32);
           auto partialTestSeed = s0_low | s0_high;
-          auto res = xoroshiro(partialTestSeed, s1);   // ec
-          res = xoroshiro(res[0], res[1]);             // sidtid
-          auto testPID = (res[0] + res[1]) & pidMask;  // pid
+          auto res = xoroshiro((partialTestSeed & 0xffffffffffff), s1);  // ec
+          res = xoroshiro(res[0], res[1]);                               // sidtid
+          auto testPID = (res[0] + res[1]) & pidMask;                    // pid
 
           // Only compare bits of the PID guaranteed with the missing seed bytes
           if (testPID == maskedPID) {
