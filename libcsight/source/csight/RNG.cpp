@@ -9,7 +9,7 @@ namespace csight {
     xoroshiro::xoroshiro(ulong seed) { this->prng = swsh_xoroshiro(seed, 0x82A2B175229D6A5B); }
 
     u64 xoroshiro::nextulong() { return this->prng(); }
-    u32 xoroshiro::nextuint() { return (uint)this->nextulong(); }
-    uint xoroshiro::next(uint mask) { return this->prng() & mask; }
+    u32 xoroshiro::nextuint() { return (u32)this->nextulong(); }
+    u32 xoroshiro::next(u32 mask) { return this->prng() & mask; }
   }  // namespace rng
 }  // namespace csight

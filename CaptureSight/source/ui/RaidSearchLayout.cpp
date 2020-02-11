@@ -23,7 +23,7 @@ void RaidSearchLayout::UpdateValues() {
   std::string firstShineType = "";
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(this->seed);
-  ulong nextSeed = this->seed;
+  u64 nextSeed = this->seed;
   this->menu->ClearItems();
 
   if (this->seed > 0) {
@@ -62,7 +62,7 @@ void RaidSearchLayout::UpdateValues() {
   this->headerTextBlock->SetText(headerText);
 }
 
-void RaidSearchLayout::SetSeed(ulong seed) {
+void RaidSearchLayout::SetSeed(u64 seed) {
   this->seed = seed;
 }
 

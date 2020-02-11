@@ -63,7 +63,7 @@ namespace csight {
       for (auto eventEncounter = eventEncounters->begin(); eventEncounter != eventEncounters->end(); ++eventEncounter) {
         auto eventProbabilities = eventEncounter->Probabilities();
         RaidEncounter raidEncounter = {eventEncounter->Species(),
-                                       (uint)eventEncounter->FlawlessIVs(),
+                                       (u32)eventEncounter->FlawlessIVs(),
                                        {
                                            eventProbabilities->Get(0),
                                            eventProbabilities->Get(1),

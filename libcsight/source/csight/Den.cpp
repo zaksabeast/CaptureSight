@@ -39,8 +39,8 @@ namespace csight {
       while (ShinyFrame < 9999) {
         auto rng = rng::xoroshiro(seed);
         seed = rng.nextulong();  // Also advance for EC
-        uint TID = rng.nextuint();
-        uint PID = rng.nextuint();
+        u32 TID = rng.nextuint();
+        u32 PID = rng.nextuint();
         auto XOR = (TID & 0xFFFF) ^ (TID >> 16) ^ (PID & 0xFFFF) ^ (PID >> 16);
         if (XOR < 16)
           return ShinyFrame;
