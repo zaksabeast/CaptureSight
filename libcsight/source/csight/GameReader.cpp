@@ -4,7 +4,7 @@
 #include <csight/TitleIds.hpp>
 
 namespace csight {
-  GameReader::GameReader() { this->isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht"); }
+  GameReader::GameReader() : raid::RaidDetails::RaidDetails() { this->isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht"); }
 
   Result GameReader::Attach() { return dmntchtGetCheatProcessMetadata(&this->metadata); }
 
