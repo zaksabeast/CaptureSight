@@ -20,7 +20,8 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
 
 void RaidSearchLayout::UpdateValues() {
   uint firstShinyFrame = MAX_DEN_SHINY_FRAME;
-  std::string firstShineType = " ";
+  // Assume shiny will be star in case no nearby shinies are found
+  std::string firstShineType = " ★ ";
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(this->seed);
   u64 nextSeed = this->seed;

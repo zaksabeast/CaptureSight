@@ -10,7 +10,8 @@ RaidSearchLayout::RaidSearchLayout(u64 seed, u32 flawlessIVs) {
 tsl::Element* RaidSearchLayout::createUI() {
   u64 nextSeed = this->seed;
   u32 firstShinyFrame = MAX_DEN_SHINY_FRAME;
-  std::string firstShinyType = " ";
+  // Assume shiny will be star in case no nearby shinies are found
+  std::string firstShinyType = " ★";
   auto rootFrame = new tsl::element::Frame();
   auto denList = new tsl::element::List();
 
