@@ -162,9 +162,9 @@ std::string MainApplication::GetPartySummaryTitle(u32 slot) {
 }
 
 void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
-  if (Down & KEY_DLEFT) {
+  if (Down & KEY_DUP) {
     this->DecreaseSlot(1);
-  } else if (Down & KEY_DRIGHT) {
+  } else if (Down & KEY_DDOWN) {
     this->IncreaseSlot(1);
   } else if (Down & KEY_Y) {
     this->raidSearchLayout->SetSeed(this->pkms[this->slot]->GetRaidSeed());
