@@ -2,6 +2,7 @@
 
 #include <switch.h>
 #include <vector>
+#include <future>
 #include <string>
 
 namespace csight {
@@ -52,6 +53,7 @@ namespace csight {
     u8 GetOTFriendship();
     u8 GetCurrentFriendship();
     ulong GetRaidSeed();
+    std::future<ulong> GetRaidSeedAsync();
 
    private:
     u8* data = new u8[0x148];
