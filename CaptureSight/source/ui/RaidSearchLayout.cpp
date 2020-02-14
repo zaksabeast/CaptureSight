@@ -19,8 +19,8 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
 }
 
 void RaidSearchLayout::UpdateValues() {
-  uint shinyFrame = MAX_DEN_SHINY_FRAME;
-  std::string firstShineType = "";
+  uint firstShinyFrame = MAX_DEN_SHINY_FRAME;
+  std::string firstShineType = " ";
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(this->seed);
   u64 nextSeed = this->seed;
@@ -40,8 +40,8 @@ void RaidSearchLayout::UpdateValues() {
         frameShineType = raid.GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
         shinyText = "Shiny";
 
-        if (shinyFrame == MAX_DEN_SHINY_FRAME) {
-          shinyFrame = frame;
+        if (firstShinyFrame == MAX_DEN_SHINY_FRAME) {
+          firstShinyFrame = frame;
           firstShineType = frameShineType;
         }
       }
@@ -55,8 +55,9 @@ void RaidSearchLayout::UpdateValues() {
       this->menu->AddItem(menuItem);
     }
 
-    headerText = i18n->Translate("Seed") + ": " + seedString + firstShineType + i18n->Translate("Shiny") + " " + std::to_string(shinyFrame) +
-                 ", (-L) " + i18n->Translate("Flawless IVs") + " " + std::to_string(this->flawlessIVs) + " (+R)";
+    std::string firstShinyFrameText = firstShinyFrame == MAX_DEN_SHINY_FRAME ? "10K+" : std::to_string(firstShinyFrame);
+    headerText = i18n->Translate("Seed") + ": " + seedString + firstShineType + i18n->Translate("Shiny") + " " + firstShinyFrameText + ", (-L) " +
+                 i18n->Translate("Flawless IVs") + " " + std::to_string(this->flawlessIVs) + " (+R)";
   }
 
   this->headerTextBlock->SetText(headerText);
