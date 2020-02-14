@@ -14,3 +14,4 @@
 #include <csight/TitleIds.hpp>
 #include <csight/Utils.hpp>
 #include <csight/XOROSHIRO.hpp>
+#include <csight/Config.hpp>

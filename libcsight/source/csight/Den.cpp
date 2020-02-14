@@ -5,6 +5,7 @@
 #include <csight/RNG.hpp>
 #include <csight/DenHashes.hpp>
 #include <csight/Utils.hpp>
+#include <csight/Config.hpp>
 
 namespace csight {
   namespace raid {
@@ -36,7 +37,7 @@ namespace csight {
     u16 Den::GetShinyFrame() {
       u64 seed = this->GetSeed();
       u16 ShinyFrame = 0;
-      while (ShinyFrame < 9999) {
+      while (ShinyFrame < MAX_DEN_SHINY_FRAME) {
         auto rng = rng::xoroshiro(seed);
         seed = rng.nextulong();  // Also advance for EC
         u32 TID = rng.nextuint();

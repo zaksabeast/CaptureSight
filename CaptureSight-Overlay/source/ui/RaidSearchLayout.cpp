@@ -9,13 +9,13 @@ RaidSearchLayout::RaidSearchLayout(u64 seed, u32 flawlessIVs) {
 
 tsl::Element* RaidSearchLayout::createUI() {
   u64 nextSeed = this->seed;
-  u32 shinyFrame = 0;
+  u32 shinyFrame = MAX_DEN_SHINY_FRAME;
   std::string firstShinyType = "";
   auto rootFrame = new tsl::element::Frame();
   auto denList = new tsl::element::List();
 
   if (this->seed > 0) {
-    for (u32 frame = 0; frame < 9999; frame++) {
+    for (u32 frame = 0; frame < MAX_DEN_SHINY_FRAME; frame++) {
       auto raid = csight::raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
       auto rng = csight::rng::xoroshiro(nextSeed);
       nextSeed = rng.nextulong();
@@ -25,7 +25,7 @@ tsl::Element* RaidSearchLayout::createUI() {
       if (raid.GetIsShiny()) {
         shinyText = raid.GetShineType() == csight::shiny::Square ? " ■ " : " ★";
 
-        if (shinyFrame == 0) {
+        if (shinyFrame == MAX_DEN_SHINY_FRAME) {
           shinyFrame = frame;
           firstShinyType = shinyText;
         }

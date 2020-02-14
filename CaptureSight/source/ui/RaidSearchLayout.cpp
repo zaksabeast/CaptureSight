@@ -19,7 +19,7 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
 }
 
 void RaidSearchLayout::UpdateValues() {
-  uint shinyFrame = 0;
+  uint shinyFrame = MAX_DEN_SHINY_FRAME;
   std::string firstShineType = "";
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(this->seed);
@@ -27,7 +27,7 @@ void RaidSearchLayout::UpdateValues() {
   this->menu->ClearItems();
 
   if (this->seed > 0) {
-    for (uint frame = 0; frame < 9999; frame++) {
+    for (uint frame = 0; frame < MAX_DEN_SHINY_FRAME; frame++) {
       auto raid = csight::raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
       auto rng = csight::rng::xoroshiro(nextSeed);
       nextSeed = rng.nextulong();
@@ -40,7 +40,7 @@ void RaidSearchLayout::UpdateValues() {
         frameShineType = raid.GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
         shinyText = "Shiny";
 
-        if (shinyFrame == 0) {
+        if (shinyFrame == MAX_DEN_SHINY_FRAME) {
           shinyFrame = frame;
           firstShineType = frameShineType;
         }
