@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <future>
 #include <csight/RaidPokemon.hpp>
 
 u64 rotateLeft(u64 first, u64 second) {
@@ -30,7 +31,7 @@ namespace csight {
       temp_low = temp_low ^ (temp_low << 16);
 
       // Test the bytes that impact the PID most
-      // By picking only the most impactul bytes, we avoid unneeded iterations
+      // By picking only the most impactful bytes, we avoid unneeded iterations
       // TODO: choose most impactful bits
       for (u64 i = 0; i <= 0xFF; i++) {
         for (u64 j = 0; j <= 0xFF; j++) {
@@ -63,6 +64,10 @@ namespace csight {
       }
 
       return 0;
+    }
+
+    std::future<u64> CalculateRaidSeedAsync(u32 ec, u32 pid, std::vector<s8> ivs) {
+      return std::async(&csight::raid::CalculateRaidSeed, ec, pid, ivs);
     }
   }  // namespace raid
 }  // namespace csight

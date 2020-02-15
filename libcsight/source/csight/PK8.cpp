@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <future>
 #include <csight/PK8.hpp>
 #include <csight/RNG.hpp>
 #include <csight/CalculateRaidSeed.hpp>
@@ -201,4 +202,6 @@ namespace csight {
   u8 PK8::GetCurrentFriendship() { return this->GetCurrentHandler() == 0 ? this->GetOTFriendship() : this->GetHTFriendship(); }
 
   ulong PK8::GetRaidSeed() { return raid::CalculateRaidSeed(this->GetEncryptionConstant(), this->GetPID(), this->GetIVs()); }
+
+  std::future<ulong> PK8::GetRaidSeedAsync() { return raid::CalculateRaidSeedAsync(this->GetEncryptionConstant(), this->GetPID(), this->GetIVs()); }
 }  // namespace csight

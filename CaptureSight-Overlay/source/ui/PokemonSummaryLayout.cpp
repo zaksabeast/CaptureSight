@@ -55,7 +55,9 @@ void PokemonSummaryLayout::AddBodyDrawer(u16 x, u16 y, tsl::Screen* screen) {
 
 bool PokemonSummaryLayout::FindRaidSeed(s64 keys) {
   if (keys == KEY_A) {
-    this->seed = this->pkm->GetRaidSeed();
+    auto seedFuture = this->pkm->GetRaidSeedAsync();
+    seedFuture.wait();
+    this->seed = seedFuture.get();
     this->changeTo(new RaidSearchLayout(this->seed, 5));
     this->shouldSearchForSeed = false;
     return true;
