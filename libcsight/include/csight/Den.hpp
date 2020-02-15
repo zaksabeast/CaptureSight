@@ -26,7 +26,6 @@ namespace csight {
       bool GetIsActive();
       u8 GetDenId();
       bool GetIsRare();
-      u64 GetDenHash(u8 denId, bool isRare, bool isEvent);
       std::shared_ptr<raid::RaidPokemon> GetPKM();
 
      private:

@@ -20,7 +20,7 @@ namespace csight {
         spawn = this->FindSpawn(eventEncounterTable->templates);
       } else {
         auto isRare = this->GetIsRare();
-        auto denHash = denHashes[denId][isRare];
+        auto denHash = denHashes[denId - 1][isRare];
         auto nest = std::find_if(encounterTables.begin(), encounterTables.end(),
                                  [denHash](const raid::RaidEncounterTable& encounterTable) { return encounterTable.hash == denHash; });
         spawn = this->FindSpawn(nest->templates);
@@ -72,8 +72,6 @@ namespace csight {
       u8 type = this->GetType();
       return type > 0 && (type & 1) == 0;
     }
-
-    u64 Den::GetDenHash(u8 denId, bool isRare, bool isEvent) { return isEvent ? eventHash : denHashes[denId][isRare]; }
 
     u8 Den::GetFlagByte() { return *(u8*)(this->data + 0x13); }
 
