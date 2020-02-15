@@ -36,7 +36,8 @@ class MainApplication : public pu::ui::Application {
   WarningLayout::Ref warningLayout;
   pu::ui::elm::TextBlock::Ref versionTextBlock;
 
-  void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void OnWarningInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputDenList(u64 seed);

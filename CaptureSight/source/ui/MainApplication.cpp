@@ -19,6 +19,8 @@ void MainApplication::OnLoad() {
 
   this->warningLayout = WarningLayout::New();
   this->warningLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  this->SetOnInput(
+      std::bind(&MainApplication::OnWarningInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
   if (!isDebugServiceRunning) {
     std::string warningTranslationKey = "Atmosphere's dmnt:cht is not running";
@@ -62,13 +64,20 @@ void MainApplication::OnLoad() {
   this->denMenuLayout = DenMenuLayout::New();
   this->denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
-  this->SetOnInput(
-      std::bind(&MainApplication::OnInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+  this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
+                             std::placeholders::_4));
 
   this->LoadLayout(this->mainMenuLayout);
 }
 
-void MainApplication::OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
+void MainApplication::OnWarningInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
+  if (Down & KEY_PLUS) {
+    dmntchtExit();
+    this->CloseWithFadeOut();
+  }
+}
+
+void MainApplication::OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
   if (Down & KEY_PLUS) {
     dmntchtExit();
     this->CloseWithFadeOut();
