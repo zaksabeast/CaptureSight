@@ -1,4 +1,5 @@
 #include <tesla.hpp>
+#include <csight/core>
 #include <ui/DenMenuLayout.hpp>
 #include <ui/RaidSearchLayout.hpp>
 
@@ -16,7 +17,9 @@ tsl::Element* DenMenuLayout::createUI() {
 
   for (u32 i = 0; i < this->dens.size(); i++) {
     auto den = this->dens[i];
-    auto title = "Id: " + std::to_string(den->GetDenId()) + " - Shiny " + std::to_string(den->GetShinyFrame());
+    std::string shineTypeText = den->GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
+    auto speciesText = den->GetPKM()->GetSpeciesString();
+    auto title = "Id: " + std::to_string(den->GetDenId()) + shineTypeText + std::to_string(den->GetShinyFrame()) + " " + speciesText;
     auto listItem = new tsl::element::ListItem(title);
     listItem->setClickListener(std::bind(&DenMenuLayout::OnClickDen, this, den, std::placeholders::_1));
     denList->addItem(listItem);

@@ -28,27 +28,36 @@ namespace csight {
 
       this->species = spawn.species;
       this->flawlessIVs = spawn.flawlessIVs;
+      this->CalculateShinyDetails();
     }
 
     Den::~Den() { delete[] this->data; }
 
     u64 Den::GetSeed() { return *(u64*)(this->data + 0x8); }
 
-    u16 Den::GetShinyFrame() {
+    u16 Den::GetShinyFrame() { return this->shinyFrame; }
+
+    shiny::ShinyType Den::GetShineType() { return this->shineType; }
+
+    void Den::CalculateShinyDetails() {
       u64 seed = this->GetSeed();
-      u16 ShinyFrame = 0;
-      while (ShinyFrame < MAX_DEN_SHINY_FRAME) {
+      u16 shinyFrame = 0;
+      shiny::ShinyType shineType = shiny::None;
+
+      while (shinyFrame < MAX_DEN_SHINY_FRAME) {
         auto rng = rng::xoroshiro(seed);
         seed = rng.nextulong();  // Also advance for EC
-        u32 TID = rng.nextuint();
+        u32 SIDTID = rng.nextuint();
         u32 PID = rng.nextuint();
-        auto XOR = (TID & 0xFFFF) ^ (TID >> 16) ^ (PID & 0xFFFF) ^ (PID >> 16);
-        if (XOR < 16)
-          return ShinyFrame;
+        shineType = shiny::GetShinyType(PID, SIDTID);
+        if (shineType > shiny::None)
+          break;
         else
-          ShinyFrame++;
+          shinyFrame++;
       }
-      return ShinyFrame;
+
+      this->shinyFrame = shinyFrame;
+      this->shineType = shineType;
     }
 
     u8 Den::GetStars() { return *(u8*)(this->data + 0x10); }

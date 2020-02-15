@@ -15,6 +15,7 @@ namespace csight {
       ~Den();
       u64 GetSeed();
       u16 GetShinyFrame();
+      shiny::ShinyType GetShineType();
       u8 GetStars();
       u8 GetDisplayStars();
       u8 GetRandRoll();
@@ -34,7 +35,10 @@ namespace csight {
       u8 denId = 0;
       u16 species = 0;
       u8 flawlessIVs = 0;
+      u16 shinyFrame = 0;
+      shiny::ShinyType shineType = shiny::Star;
       raid::RaidEncounter FindSpawn(std::vector<raid::RaidEncounter> raidEncounters);
+      void CalculateShinyDetails();
     };
   }  // namespace raid
 }  // namespace csight

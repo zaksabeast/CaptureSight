@@ -1,7 +1,10 @@
+#include <string>
 #include <csight/RaidPokemon.hpp>
 #include <csight/Shiny.hpp>
 #include <csight/RNG.hpp>
 #include <csight/Shiny.hpp>
+#include <csight/Utils.hpp>
+#include <csight/lookups/Species.hpp>
 
 namespace csight {
   namespace raid {
@@ -37,6 +40,8 @@ namespace csight {
     u32 RaidPokemon::GetPID() { return this->PID; }
 
     u16 RaidPokemon::GetSpecies() { return this->species; }
+
+    std::string RaidPokemon::GetSpeciesString() { return utils::getIndex(SpeciesList, this->GetSpecies()); }
 
     bool RaidPokemon::GetIsShiny() { return this->shineType > shiny::None; }
 

@@ -12,6 +12,7 @@ namespace csight {
       u32 GetEC();
       u32 GetPID();
       u16 GetSpecies();
+      std::string GetSpeciesString();
       bool GetIsShiny();
       shiny::ShinyType GetShineType();
       std::vector<s8> GetIVs();
