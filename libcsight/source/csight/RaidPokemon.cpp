@@ -6,47 +6,45 @@
 #include <csight/Utils.hpp>
 #include <csight/lookups/Species.hpp>
 
-namespace csight {
-  namespace raid {
-    RaidPokemon::RaidPokemon(u64 seed, u32 flawlessIvs, u16 species) {
-      this->species = species;
-      auto rng = rng::xoroshiro(seed);
-      this->EC = rng.next(0xFFFFFFFF);
-      u32 SIDTID = rng.next(0xFFFFFFFF);
-      this->PID = rng.next(0xFFFFFFFF);
-      this->shineType = shiny::GetShinyType(PID, SIDTID);
+namespace csight::raid {
+  RaidPokemon::RaidPokemon(u64 seed, u32 flawlessIvs, u16 species) {
+    this->species = species;
+    auto rng = rng::xoroshiro(seed);
+    this->EC = rng.next(0xFFFFFFFF);
+    u32 SIDTID = rng.next(0xFFFFFFFF);
+    this->PID = rng.next(0xFFFFFFFF);
+    this->shineType = shiny::GetShinyType(PID, SIDTID);
 
-      this->IVs = {-1, -1, -1, -1, -1, -1};
+    this->IVs = {-1, -1, -1, -1, -1, -1};
 
-      for (u32 i = 0; i < flawlessIvs; i++) {
-        s32 ivIndex;
+    for (u32 i = 0; i < flawlessIvs; i++) {
+      s32 ivIndex;
 
-        do {
-          ivIndex = (s32)rng.next(7);
-        } while (this->IVs[ivIndex] != -1);
+      do {
+        ivIndex = (s32)rng.next(7);
+      } while (this->IVs[ivIndex] != -1);
 
-        this->IVs[ivIndex] = 31;
-      }
-
-      for (s32 i = 0; i < 6; i++) {
-        if (this->IVs[i] == -1) {
-          this->IVs[i] = (s8)rng.next(31);
-        }
-      }
+      this->IVs[ivIndex] = 31;
     }
 
-    u32 RaidPokemon::GetEC() { return this->EC; }
+    for (s32 i = 0; i < 6; i++) {
+      if (this->IVs[i] == -1) {
+        this->IVs[i] = (s8)rng.next(31);
+      }
+    }
+  }
 
-    u32 RaidPokemon::GetPID() { return this->PID; }
+  u32 RaidPokemon::GetEC() { return this->EC; }
 
-    u16 RaidPokemon::GetSpecies() { return this->species; }
+  u32 RaidPokemon::GetPID() { return this->PID; }
 
-    std::string RaidPokemon::GetSpeciesString() { return utils::getIndex(SpeciesList, this->GetSpecies()); }
+  u16 RaidPokemon::GetSpecies() { return this->species; }
 
-    bool RaidPokemon::GetIsShiny() { return this->shineType > shiny::None; }
+  std::string RaidPokemon::GetSpeciesString() { return utils::getIndex(SpeciesList, this->GetSpecies()); }
 
-    shiny::ShinyType RaidPokemon::GetShineType() { return this->shineType; }
+  bool RaidPokemon::GetIsShiny() { return this->shineType > shiny::None; }
 
-    std::vector<s8> RaidPokemon::GetIVs() { return this->IVs; }
-  }  // namespace raid
-}  // namespace csight
+  shiny::ShinyType RaidPokemon::GetShineType() { return this->shineType; }
+
+  std::vector<s8> RaidPokemon::GetIVs() { return this->IVs; }
+}  // namespace csight::raid
