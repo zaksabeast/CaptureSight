@@ -13,7 +13,8 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
 - View all Active Dens
   - Current seed for Raid RNG
   - The number of advances until a Shiny Pokemon
-  - Species of a den (has a bug with event Pokemon - see below)
+  - Species of a den
+  - Shiny type of a den (star or square)
   - Stars of a den
 - Find the raid seed that created a Pokemon
   - Join a trade or raid with a person who doesn't have custom firmware and use CaptureSight to get their raid seed
@@ -21,6 +22,9 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
 - Since CaptureSight can show the next shiny frame, upcoming IVs, and seed that created a Pokemon, no external tools are needed for Raid RNG
   - With raid and trade views, anyone without custom firmware only needs to know someone with custom firmware to do Raid RNG
 - The Applet has translations for multiple langues based on the Switch language setting
+  - English
+  - Chinese
+  - French
 
 ## How do I use CaptureSight?
 
