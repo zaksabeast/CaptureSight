@@ -30,7 +30,8 @@ void PokemonSummaryLayout::AddBodyDrawer(u16 x, u16 y, tsl::Screen* screen) {
   std::string formattedEVs = "EVs: " + csight::utils::joinNums(this->pkm->GetEVs(), "/");
   std::string nature = "Nature: " + this->pkm->GetNatureString();
   std::string mintedNature = "Minted Nature: " + this->pkm->GetMintedNatureString();
-  std::string friendship = this->pkm->GetIsEgg() ? "Egg cycles: " : "Friendship: " + std::to_string(this->pkm->GetCurrentFriendship());
+  std::string friendshipLabel = this->pkm->GetIsEgg() ? "Egg cycles: " : "Friendship: ";
+  std::string friendship = friendshipLabel + std::to_string(this->pkm->GetCurrentFriendship());
   std::string moves = "Moves:";
   std::string move0 = "- " + this->pkm->GetMoveString(0);
   std::string move1 = "- " + this->pkm->GetMoveString(1);
