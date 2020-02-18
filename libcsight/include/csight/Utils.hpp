@@ -34,5 +34,7 @@ namespace csight {
 
       return accumulator;
     }
+
+    std::string getRaidShinyFrameText(u32 shinyFrame);
   }  // namespace utils
 }  // namespace csight

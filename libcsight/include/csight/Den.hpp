@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <memory>
 #include <vector>
 #include <switch.h>
@@ -15,6 +16,7 @@ namespace csight {
       ~Den();
       u64 GetSeed();
       u16 GetShinyFrame();
+      std::string GetShinyFrameText();
       shiny::ShinyType GetShineType();
       u8 GetStars();
       u8 GetDisplayStars();

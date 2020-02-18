@@ -56,9 +56,9 @@ void RaidSearchLayout::UpdateValues() {
       this->menu->AddItem(menuItem);
     }
 
-    std::string firstShinyFrameText = firstShinyFrame == MAX_DEN_SHINY_FRAME ? "10K+" : std::to_string(firstShinyFrame);
-    headerText = i18n->Translate("Seed") + ": " + seedString + firstShineType + i18n->Translate("Shiny") + " " + firstShinyFrameText + ", (-L) " +
-                 i18n->Translate("Flawless IVs") + " " + std::to_string(this->flawlessIVs) + " (+R)";
+    headerText = i18n->Translate("Seed") + ": " + seedString + firstShineType + i18n->Translate("Shiny") + " " +
+                 csight::utils::getRaidShinyFrameText(firstShinyFrame) + ", (-L) " + i18n->Translate("Flawless IVs") + " " +
+                 std::to_string(this->flawlessIVs) + " (+R)";
   }
 
   this->headerTextBlock->SetText(headerText);

@@ -38,8 +38,7 @@ tsl::Element* RaidSearchLayout::createUI() {
 
       denList->addItem(menuItem);
     }
-    std::string firstShinyFrameText = firstShinyFrame == MAX_DEN_SHINY_FRAME ? "10K+" : std::to_string(firstShinyFrame);
-    this->title = csight::utils::convertNumToHexString(this->seed) + firstShinyType + firstShinyFrameText;
+    this->title = csight::utils::convertNumToHexString(this->seed) + firstShinyType + csight::utils::getRaidShinyFrameText(firstShinyFrame);
   } else {
     this->title = "Not a non-shiny raid Pokemon!";
   }

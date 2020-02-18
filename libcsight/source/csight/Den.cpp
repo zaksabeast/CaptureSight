@@ -36,6 +36,8 @@ namespace csight::raid {
 
   u16 Den::GetShinyFrame() { return this->shinyFrame; }
 
+  std::string Den::GetShinyFrameText() { return utils::getRaidShinyFrameText(this->shinyFrame); }
+
   shiny::ShinyType Den::GetShineType() { return this->shineType; }
 
   void Den::CalculateShinyDetails() {
