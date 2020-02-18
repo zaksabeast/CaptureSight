@@ -20,6 +20,8 @@ std::string GetTranslationCode() {
     case SetLanguage_ZHTW:
     case SetLanguage_ZHHANT:
       return "cht";
+    case SetLanguage_IT:
+      return "it";
     case SetLanguage_ENUS:
     case SetLanguage_ENGB:
     default:
