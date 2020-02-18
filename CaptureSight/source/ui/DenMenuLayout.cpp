@@ -28,10 +28,9 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>>
     auto pkm = den->GetPKM();
     auto formattedIVs = csight::utils::joinNums(pkm->GetIVs(), "/");
     auto stars = std::to_string(den->GetDisplayStars());
-    auto shinyframe = std::to_string(den->GetShinyFrame());
     std::string eventText = den->GetIsEvent() ? " - " + i18n->Translate("Event") : "";
     std::string title = i18n->Translate("Den Id") + ": " + std::to_string(den->GetDenId()) + " - " + i18n->Translate("IVs") + ": " + formattedIVs +
-                        ", " + stars + "★ " + i18n->Translate("Shiny") + ": " + shinyframe + eventText;
+                        ", " + stars + "★ " + i18n->Translate("Shiny") + ": " + den->GetShinyFrameText() + eventText;
     auto menuItem = pu::ui::elm::MenuItem::New(title);
 
     menuItem->SetColor(gsets.GetTheme().text.light);
