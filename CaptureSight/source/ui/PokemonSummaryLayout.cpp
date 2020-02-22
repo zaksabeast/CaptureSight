@@ -6,6 +6,7 @@
 #include <csight/core>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
+#include <utils/Constants.hpp>
 
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
@@ -15,7 +16,7 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
   this->instructionsTextBlock = pu::ui::elm::TextBlock::New(700, 620, instructions, 25);
   this->instructionsTextBlock->SetColor(gsets.GetTheme().text.light);
   this->spriteImage = pu::ui::elm::Image::New(0, 0, "");
-  this->speciesBackgroundRectangle = pu::ui::elm::Rectangle::New(0, 0, 1280, 274, gsets.GetTheme().background.light, 50);
+  this->speciesBackgroundRectangle = pu::ui::elm::Rectangle::New(0, 0, SCREEN_MAX_WIDTH, 274, gsets.GetTheme().background.light, 50);
   this->titleTextBlock = pu::ui::elm::TextBlock::New(700, 55, "", 50);
   this->titleTextBlock->SetColor(gsets.GetTheme().text.light);
   this->speciesNameTextBlock = pu::ui::elm::TextBlock::New(300, 55, "", 40);

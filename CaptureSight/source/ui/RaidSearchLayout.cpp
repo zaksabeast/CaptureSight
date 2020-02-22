@@ -4,6 +4,7 @@
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
+#include <utils/Constants.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -12,7 +13,7 @@ extern std::shared_ptr<I18N> i18n;
 RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
   this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
   this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
-  this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
+  this->menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
 
   this->Add(this->headerTextBlock);
   this->Add(this->menu);

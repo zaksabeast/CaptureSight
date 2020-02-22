@@ -6,6 +6,7 @@
 #include <ui/MainApplication.hpp>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
+#include <utils/Constants.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -13,7 +14,7 @@ extern std::shared_ptr<I18N> i18n;
 
 MainMenuLayout::MainMenuLayout() : Layout::Layout() {
   this->onMenuItemInput = [&](ViewMode) {};
-  this->menu = pu::ui::elm::Menu::New(0, 120, 1280, gsets.GetTheme().active.dark, 150, 4);
+  this->menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
   this->wildMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Wild and Trade Pokemon"));
   this->wildMenuItem->SetColor(gsets.GetTheme().text.light);
   this->wildMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, wild));
