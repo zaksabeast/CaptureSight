@@ -10,5 +10,5 @@ class WarningLayout : public pu::ui::Layout {
   void SetWarningText(std::string warning);
 
  private:
-  pu::ui::elm::TextBlock::Ref warningTextBlock;
+  pu::ui::elm::TextBlock::Ref m_warningTextBlock;
 };

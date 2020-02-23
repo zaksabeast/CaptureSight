@@ -42,7 +42,7 @@ namespace csight::raid {
     }
   }
 
-  RaidDetails::RaidDetails() { this->eventFlatbufferOffset = GetEventFlatbufferOffset(); }
+  RaidDetails::RaidDetails() { m_eventFlatbufferOffset = GetEventFlatbufferOffset(); }
 
   std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
     u8* denBytes = new u8[0x18];
@@ -50,7 +50,7 @@ namespace csight::raid {
     auto encounterTables = isPlayingSword ? swordEncounterTables : shieldEncounterTables;
     auto eventTemplateTable = this->ReadEventEncounterTable(isPlayingSword);
 
-    this->ReadHeap(this->denOffset + (denId * 0x18), denBytes, 0x18);
+    this->ReadHeap(m_denOffset + (denId * 0x18), denBytes, 0x18);
 
     auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable);
 
@@ -76,13 +76,13 @@ namespace csight::raid {
     std::vector<RaidEncounter> raidEncounters;
     auto encounterTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable{eventHash, raidEncounters});
     u32 eventFlatbufferInMemorySize = 0;
-    this->ReadHeap(this->eventFlatbufferOffset + 0x10, &eventFlatbufferInMemorySize, sizeof(u32));
+    this->ReadHeap(m_eventFlatbufferOffset + 0x10, &eventFlatbufferInMemorySize, sizeof(u32));
 
-    if (eventFlatbufferInMemorySize + 4 != this->eventFlatbufferSize)
+    if (eventFlatbufferInMemorySize + 4 != m_eventFlatbufferSize)
       return encounterTable;
 
-    u8* eventFlatbuffer = new u8[this->eventFlatbufferSize];
-    this->ReadHeap(this->eventFlatbufferOffset + 0x20, eventFlatbuffer, this->eventFlatbufferSize);
+    u8* eventFlatbuffer = new u8[m_eventFlatbufferSize];
+    this->ReadHeap(m_eventFlatbufferOffset + 0x20, eventFlatbuffer, m_eventFlatbufferSize);
     auto eventEncounterTables = pkNX::Structures::GetNestHoleDistributionEncounter8Archive(eventFlatbuffer)->Tables();
 
     // Don't assume Sword will always be first

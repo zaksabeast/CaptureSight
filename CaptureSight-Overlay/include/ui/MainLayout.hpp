@@ -12,6 +12,5 @@ class MainLayout : public tsl::Gui {
   tsl::element::Frame* GetRootFrame();
 
  private:
-  tsl::element::CustomDrawer* header;
-  std::function<void(ViewMode)> menuItemClickCallback = [](ViewMode) {};
+  std::function<void(ViewMode)> m_menuItemClickCallback = [](ViewMode) {};
 };

@@ -10,9 +10,9 @@
 namespace csight::raid {
   // Pass the den encounter tables to use since its responsibility is to parse the den data, not read/choose encounter tables
   Den::Den(u8* data, u8 denId, std::vector<RaidEncounterTable> encounterTables, std::shared_ptr<RaidEncounterTable> eventEncounterTable) {
-    std::copy(data, data + this->size, this->data);
+    std::copy(data, data + m_size, m_data);
 
-    this->denId = denId > DEN_LIST_SIZE ? DEN_LIST_SIZE : denId;
+    m_denId = denId > DEN_LIST_SIZE ? DEN_LIST_SIZE : denId;
     RaidEncounter spawn;
 
     if (this->GetIsEvent()) {
@@ -25,20 +25,20 @@ namespace csight::raid {
       spawn = this->FindSpawn(nest->templates);
     }
 
-    this->species = spawn.species;
-    this->flawlessIVs = spawn.flawlessIVs;
+    m_species = spawn.species;
+    m_flawlessIVs = spawn.flawlessIVs;
     this->CalculateShinyDetails();
   }
 
-  Den::~Den() { delete[] this->data; }
+  Den::~Den() { delete[] m_data; }
 
-  u64 Den::GetSeed() { return *(u64*)(this->data + 0x8); }
+  u64 Den::GetSeed() { return *(u64*)(m_data + 0x8); }
 
-  u16 Den::GetShinyFrame() { return this->shinyFrame; }
+  u16 Den::GetShinyFrame() { return m_shinyFrame; }
 
-  std::string Den::GetShinyFrameText() { return utils::getRaidShinyFrameText(this->shinyFrame); }
+  std::string Den::GetShinyFrameText() { return utils::getRaidShinyFrameText(m_shinyFrame); }
 
-  shiny::ShinyType Den::GetShineType() { return this->shineType; }
+  shiny::ShinyType Den::GetShineType() { return m_shineType; }
 
   void Den::CalculateShinyDetails() {
     u64 seed = this->GetSeed();
@@ -57,24 +57,24 @@ namespace csight::raid {
         shinyFrame++;
     }
 
-    this->shinyFrame = shinyFrame;
-    this->shineType = shineType;
+    m_shinyFrame = shinyFrame;
+    m_shineType = shineType;
   }
 
-  u8 Den::GetStars() { return *(u8*)(this->data + 0x10); }
+  u8 Den::GetStars() { return *(u8*)(m_data + 0x10); }
 
   u8 Den::GetDisplayStars() { return this->GetStars() + 1; }
 
-  u8 Den::GetRandRoll() { return *(u8*)(this->data + 0x11); }
+  u8 Den::GetRandRoll() { return *(u8*)(m_data + 0x11); }
 
-  u8 Den::GetType() { return *(u8*)(this->data + 0x12); }
+  u8 Den::GetType() { return *(u8*)(m_data + 0x12); }
 
   bool Den::GetIsRare() {
     u8 type = this->GetType();
     return type > 0 && (type & 1) == 0;
   }
 
-  u8 Den::GetFlagByte() { return *(u8*)(this->data + 0x13); }
+  u8 Den::GetFlagByte() { return *(u8*)(m_data + 0x13); }
 
   bool Den::GetHasWatts() { return (this->GetFlagByte() & 1) == 0; }
 
@@ -82,11 +82,11 @@ namespace csight::raid {
 
   bool Den::GetIsActive() { return this->GetType() > 0; }
 
-  u8 Den::GetDenId() { return this->denId; }
+  u8 Den::GetDenId() { return m_denId; }
 
-  u8 Den::GetDenDisplayId() { return this->denId + 1; }
+  u8 Den::GetDenDisplayId() { return m_denId + 1; }
 
-  std::shared_ptr<RaidPokemon> Den::GetPKM() { return std::make_shared<RaidPokemon>(this->GetSeed(), this->flawlessIVs, this->species); };
+  std::shared_ptr<RaidPokemon> Den::GetPKM() { return std::make_shared<RaidPokemon>(this->GetSeed(), m_flawlessIVs, m_species); };
 
   RaidEncounter Den::FindSpawn(std::vector<RaidEncounter> raidEncounters) {
     u32 userProbability = 0;

@@ -15,8 +15,8 @@ class RaidSearchLayout : public pu::ui::Layout {
   void DecreaseFlawlessIVs();
 
  private:
-  u32 flawlessIVs = 1;
-  u64 seed = 0;
-  pu::ui::elm::Menu::Ref menu;
-  pu::ui::elm::TextBlock::Ref headerTextBlock;
+  u32 m_flawlessIVs = 1;
+  u64 m_seed = 0;
+  pu::ui::elm::Menu::Ref m_menu;
+  pu::ui::elm::TextBlock::Ref m_headerTextBlock;
 };

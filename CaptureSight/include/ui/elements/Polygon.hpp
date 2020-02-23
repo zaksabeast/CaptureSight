@@ -16,11 +16,11 @@ class Polygon : public pu::ui::elm::Element {
   void SetPoints(std::vector<SDL_Point> points);
 
  private:
-  s32 borderr;
-  s32 centerX;
-  s32 centerY;
-  std::vector<s16> pointsX = {};
-  std::vector<s16> pointsY = {};
-  pu::ui::render::NativeRenderer renderer;
-  pu::ui::Color clr;
+  s32 m_borderr;
+  s32 m_centerX;
+  s32 m_centerY;
+  std::vector<s16> m_pointsX = {};
+  std::vector<s16> m_pointsY = {};
+  pu::ui::render::NativeRenderer m_renderer;
+  pu::ui::Color m_clr;
 };

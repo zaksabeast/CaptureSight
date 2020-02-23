@@ -4,8 +4,8 @@
 #include <ui/RaidSearchLayout.hpp>
 
 DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> dens, std::string title) {
-  this->dens = dens;
-  this->title = title;
+  m_dens = dens;
+  m_title = title;
 }
 
 tsl::Element* DenMenuLayout::createUI() {
@@ -15,8 +15,8 @@ tsl::Element* DenMenuLayout::createUI() {
       100, FB_WIDTH, 200, FB_WIDTH,
       std::bind(&DenMenuLayout::AddTitleBlock, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
-  for (u32 i = 0; i < this->dens.size(); i++) {
-    auto den = this->dens[i];
+  for (u32 i = 0; i < m_dens.size(); i++) {
+    auto den = m_dens[i];
     std::string shineTypeText = den->GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
     auto speciesText = den->GetPKM()->GetSpeciesString();
     auto title = "Id: " + std::to_string(den->GetDenDisplayId()) + shineTypeText + den->GetShinyFrameText() + " " + speciesText;
@@ -32,7 +32,7 @@ tsl::Element* DenMenuLayout::createUI() {
 }
 
 void DenMenuLayout::AddTitleBlock(u16 x, u16 y, tsl::Screen* screen) {
-  screen->drawString(this->title.c_str(), false, 20, 100, 20, tsl::a(0xFFFF));
+  screen->drawString(m_title.c_str(), false, 20, 100, 20, tsl::a(0xFFFF));
 }
 
 bool DenMenuLayout::OnClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys) {

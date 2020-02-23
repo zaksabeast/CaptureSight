@@ -11,10 +11,6 @@ namespace csight {
     PK8(u8* data);
     ~PK8();
 
-    u32 blockSize = 80;
-    u32 storedSize = 0x148;
-    u32 partySize = 0x158;
-
     void Crypt();
     u8 GetBlockPosition(u8 index);
     void ShuffleArray(u8 shuffleValue);
@@ -56,7 +52,11 @@ namespace csight {
     std::future<ulong> GetRaidSeedAsync();
 
    private:
-    u8* data = new u8[0x148];
+    u8* m_data = new u8[0x148];
+    u32 m_blockSize = 80;
+    u32 m_storedSize = 0x148;
+    u32 m_partySize = 0x158;
+
     u16 CalculateChecksum();
   };
 }  // namespace csight

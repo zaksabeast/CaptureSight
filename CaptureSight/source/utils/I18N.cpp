@@ -37,16 +37,16 @@ void I18N::LoadTranslations() {
   std::ifstream translations("romfs:/i18n/" + GetTranslationCode() + ".json");
 
   if (translations.good()) {
-    translations >> this->translations;
+    translations >> m_translations;
   }
 
   translations.close();
 }
 
 std::string I18N::Translate(std::string word) {
-  return this->translations["app"].value(word, word);
+  return m_translations["app"].value(word, word);
 }
 
 std::string I18N::Translate(std::string category, std::string word) {
-  return this->translations.at(category).value(word, word);
+  return m_translations.at(category).value(word, word);
 }

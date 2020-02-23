@@ -11,12 +11,12 @@ extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
 RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
-  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
-  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
-  this->menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
+  m_headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
+  m_headerTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
 
-  this->Add(this->headerTextBlock);
-  this->Add(this->menu);
+  this->Add(m_headerTextBlock);
+  this->Add(m_menu);
 }
 
 void RaidSearchLayout::UpdateValues() {
@@ -24,13 +24,13 @@ void RaidSearchLayout::UpdateValues() {
   // Assume shiny will be star in case no nearby shinies are found
   std::string firstShineType = " ★ ";
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
-  auto seedString = csight::utils::convertNumToHexString(this->seed);
-  u64 nextSeed = this->seed;
-  this->menu->ClearItems();
+  auto seedString = csight::utils::convertNumToHexString(m_seed);
+  u64 nextSeed = m_seed;
+  m_menu->ClearItems();
 
-  if (this->seed > 0) {
+  if (m_seed > 0) {
     for (uint frame = 0; frame < MAX_DEN_SHINY_FRAME; frame++) {
-      auto raid = csight::raid::RaidPokemon(nextSeed, this->flawlessIVs, 0);
+      auto raid = csight::raid::RaidPokemon(nextSeed, m_flawlessIVs, 0);
       auto rng = csight::rng::xoroshiro(nextSeed);
       nextSeed = rng.nextulong();
 
@@ -54,25 +54,25 @@ void RaidSearchLayout::UpdateValues() {
       auto menuItem = pu::ui::elm::MenuItem::New(title);
 
       menuItem->SetColor(gsets.GetTheme().text.light);
-      this->menu->AddItem(menuItem);
+      m_menu->AddItem(menuItem);
     }
 
     headerText = i18n->Translate("Seed") + ": " + seedString + firstShineType + i18n->Translate("Shiny") + " " +
                  csight::utils::getRaidShinyFrameText(firstShinyFrame) + ", (-L) " + i18n->Translate("Flawless IVs") + " " +
-                 std::to_string(this->flawlessIVs) + " (+R)";
+                 std::to_string(m_flawlessIVs) + " (+R)";
   }
 
-  this->headerTextBlock->SetText(headerText);
+  m_headerTextBlock->SetText(headerText);
 }
 
 void RaidSearchLayout::SetSeed(u64 seed) {
-  this->seed = seed;
+  m_seed = seed;
 }
 
 void RaidSearchLayout::IncreaseFlawlessIVs() {
-  this->flawlessIVs = this->flawlessIVs >= 5 ? 1 : this->flawlessIVs + 1;
+  m_flawlessIVs = m_flawlessIVs >= 5 ? 1 : m_flawlessIVs + 1;
 }
 
 void RaidSearchLayout::DecreaseFlawlessIVs() {
-  this->flawlessIVs = this->flawlessIVs == 1 ? 5 : this->flawlessIVs - 1;
+  m_flawlessIVs = m_flawlessIVs == 1 ? 5 : m_flawlessIVs - 1;
 }

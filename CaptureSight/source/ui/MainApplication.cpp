@@ -14,60 +14,60 @@ void MainApplication::OnLoad() {
   if (language.compare("chs") == 0 || language.compare("cht") == 0)
     pu::ui::render::SetDefaultFontFromShared(pu::ui::render::SharedFont::ChineseSimplified);  // ChineseTraditional doesn't work for cht!?
 
-  this->save = std::make_unique<csight::GameReader>();
-  bool isDebugServiceRunning = this->save->GetIsServiceRunning();
+  m_save = std::make_unique<csight::GameReader>();
+  bool isDebugServiceRunning = m_save->GetIsServiceRunning();
 
-  this->warningLayout = WarningLayout::New();
-  this->warningLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  m_warningLayout = WarningLayout::New();
+  m_warningLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   this->SetOnInput(
       std::bind(&MainApplication::OnWarningInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
   if (!isDebugServiceRunning) {
     std::string warningTranslationKey = "Atmosphere's dmnt:cht is not running";
     std::string warningText = i18n->Translate(warningTranslationKey);
-    this->warningLayout->SetWarningText(warningText);
-    this->LoadLayout(this->warningLayout);
+    m_warningLayout->SetWarningText(warningText);
+    this->LoadLayout(m_warningLayout);
     return;
   }
 
-  Result rc = this->save->Attach();
+  Result rc = m_save->Attach();
 
-  if (R_FAILED(rc) || !this->save->GetIsPokemonRunning()) {
+  if (R_FAILED(rc) || !m_save->GetIsPokemonRunning()) {
     std::string warningTranslationKey = "Please start a Pokemon game before running CaptureSight";
     std::string warningText = i18n->Translate(warningTranslationKey) + "\ndmnt:cht result: " + std::to_string(rc);
-    this->warningLayout->SetWarningText(warningText);
-    this->LoadLayout(this->warningLayout);
+    m_warningLayout->SetWarningText(warningText);
+    this->LoadLayout(m_warningLayout);
     return;
   }
 
-  this->pkms = this->save->ReadParty();
-  this->dens = this->save->ReadDens(false);
+  m_pkms = m_save->ReadParty();
+  m_dens = m_save->ReadDens(false);
 
-  this->versionTextBlock = pu::ui::elm::TextBlock::New(50, 50, CSIGHT_VERION, 25);
-  this->versionTextBlock->SetColor(gsets.GetTheme().text.light);
-  this->pokemonSummaryLayout = PokemonSummaryLayout::New();
-  this->pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
-                                                   std::placeholders::_3, std::placeholders::_4));
-  this->pokemonSummaryLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  this->mainMenuLayout = MainMenuLayout::New();
-  this->mainMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::SetViewMode, this, std::placeholders::_1));
-  this->mainMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  this->mainMenuLayout->Add(this->versionTextBlock);
-  this->pokemonListLayout = PokemonListLayout::New();
-  this->pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  this->pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));
-  this->pokemonListLayout->UpdateValues(this->pkms, this->GetSummaryTitle);
-  this->raidSearchLayout = RaidSearchLayout::New();
-  this->raidSearchLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchLayout, this, std::placeholders::_1, std::placeholders::_2,
+  m_versionTextBlock = pu::ui::elm::TextBlock::New(50, 50, CSIGHT_VERION, 25);
+  m_versionTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_pokemonSummaryLayout = PokemonSummaryLayout::New();
+  m_pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
                                                std::placeholders::_3, std::placeholders::_4));
-  this->raidSearchLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  this->denMenuLayout = DenMenuLayout::New();
-  this->denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  this->denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
+  m_pokemonSummaryLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  m_mainMenuLayout = MainMenuLayout::New();
+  m_mainMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::SetViewMode, this, std::placeholders::_1));
+  m_mainMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  m_mainMenuLayout->Add(m_versionTextBlock);
+  m_pokemonListLayout = PokemonListLayout::New();
+  m_pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  m_pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));
+  m_pokemonListLayout->UpdateValues(m_pkms, m_GetSummaryTitle);
+  m_raidSearchLayout = RaidSearchLayout::New();
+  m_raidSearchLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchLayout, this, std::placeholders::_1, std::placeholders::_2,
+                                           std::placeholders::_3, std::placeholders::_4));
+  m_raidSearchLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  m_denMenuLayout = DenMenuLayout::New();
+  m_denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+  m_denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
   this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                              std::placeholders::_4));
 
-  this->LoadLayout(this->mainMenuLayout);
+  this->LoadLayout(m_mainMenuLayout);
 }
 
 void MainApplication::OnWarningInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
@@ -82,10 +82,10 @@ void MainApplication::OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui:
     dmntchtExit();
     this->CloseWithFadeOut();
   } else if (Down & KEY_X) {
-    this->isShowingExtraDetail = !this->isShowingExtraDetail;
+    m_isShowingExtraDetail = !m_isShowingExtraDetail;
     this->RefreshSummaryLayout();
   } else if (Down & KEY_B) {
-    this->LoadLayout(this->mainMenuLayout);
+    this->LoadLayout(m_mainMenuLayout);
   } else if (Down & KEY_L) {
     this->DecreaseSlot(30);
   } else if (Down & KEY_R) {
@@ -94,51 +94,51 @@ void MainApplication::OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui:
 }
 
 void MainApplication::OnInputDenList(u64 seed) {
-  this->raidSearchLayout->SetSeed(seed);
-  this->raidSearchLayout->UpdateValues();
-  this->LoadLayout(this->raidSearchLayout);
+  m_raidSearchLayout->SetSeed(seed);
+  m_raidSearchLayout->UpdateValues();
+  this->LoadLayout(m_raidSearchLayout);
 }
 
 void MainApplication::SelectPokemonSlot(u32 slot) {
   this->SetSlot(slot);
-  this->LoadLayout(this->pokemonSummaryLayout);
+  this->LoadLayout(m_pokemonSummaryLayout);
 }
 
 void MainApplication::SetViewMode(ViewMode viewMode) {
   switch (viewMode) {
     case activeDens:
-      this->dens = this->save->ReadDens(false);
-      this->denMenuLayout->UpdateValues(this->dens);
-      this->LoadLayout(this->denMenuLayout);
+      m_dens = m_save->ReadDens(false);
+      m_denMenuLayout->UpdateValues(m_dens);
+      this->LoadLayout(m_denMenuLayout);
       return;
     case allDens:
-      this->dens = this->save->ReadDens(true);
-      this->denMenuLayout->UpdateValues(this->dens);
-      this->LoadLayout(this->denMenuLayout);
+      m_dens = m_save->ReadDens(true);
+      m_denMenuLayout->UpdateValues(m_dens);
+      this->LoadLayout(m_denMenuLayout);
       return;
     case wild:
-      this->GetSummaryTitle = std::bind(&MainApplication::GetWildSummaryTitle, this, std::placeholders::_1);
-      this->pkms = std::vector<std::shared_ptr<csight::PK8>>{
-          this->save->ReadWild(),
-          this->save->ReadRaid(),
-          this->save->ReadTrade(),
+      m_GetSummaryTitle = std::bind(&MainApplication::GetWildSummaryTitle, this, std::placeholders::_1);
+      m_pkms = std::vector<std::shared_ptr<csight::PK8>>{
+          m_save->ReadWild(),
+          m_save->ReadRaid(),
+          m_save->ReadTrade(),
       };
       break;
     case box:
-      this->GetSummaryTitle = std::bind(&MainApplication::GetBoxSummaryTitle, this, std::placeholders::_1);
-      this->pkms = this->save->ReadBoxes();
+      m_GetSummaryTitle = std::bind(&MainApplication::GetBoxSummaryTitle, this, std::placeholders::_1);
+      m_pkms = m_save->ReadBoxes();
       break;
     case party:
     default:
-      this->GetSummaryTitle = std::bind(&MainApplication::GetPartySummaryTitle, this, std::placeholders::_1);
-      this->pkms = this->save->ReadParty();
+      m_GetSummaryTitle = std::bind(&MainApplication::GetPartySummaryTitle, this, std::placeholders::_1);
+      m_pkms = m_save->ReadParty();
       break;
   }
 
-  this->slot = 0;
-  this->maxSlot = this->pkms.size() - 1;
-  this->pokemonListLayout->UpdateValues(this->pkms, this->GetSummaryTitle);
-  this->LoadLayout(this->pokemonListLayout);
+  m_slot = 0;
+  m_maxSlot = m_pkms.size() - 1;
+  m_pokemonListLayout->UpdateValues(m_pkms, m_GetSummaryTitle);
+  this->LoadLayout(m_pokemonListLayout);
 }
 
 std::string MainApplication::GetWildSummaryTitle(u32 slot) {
@@ -176,49 +176,49 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
   } else if (Down & KEY_DRIGHT) {
     this->IncreaseSlot(1);
   } else if (Down & KEY_Y) {
-    this->raidSearchLayout->SetSeed(this->pkms[this->slot]->GetRaidSeed());
-    this->raidSearchLayout->UpdateValues();
-    this->LoadLayout(this->raidSearchLayout);
+    m_raidSearchLayout->SetSeed(m_pkms[m_slot]->GetRaidSeed());
+    m_raidSearchLayout->UpdateValues();
+    this->LoadLayout(m_raidSearchLayout);
   } else if (Down & KEY_A) {
-    auto nextStatType = this->pokemonSummaryLayout->GetStatType() == statType::ivs ? statType::evs : statType::ivs;
-    this->pokemonSummaryLayout->SetStatType(nextStatType);
+    auto nextStatType = m_pokemonSummaryLayout->GetStatType() == statType::ivs ? statType::evs : statType::ivs;
+    m_pokemonSummaryLayout->SetStatType(nextStatType);
     this->RefreshSummaryLayout();
   }
 }
 
 void MainApplication::OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
   if (Down & KEY_L) {
-    this->raidSearchLayout->DecreaseFlawlessIVs();
-    this->raidSearchLayout->UpdateValues();
+    m_raidSearchLayout->DecreaseFlawlessIVs();
+    m_raidSearchLayout->UpdateValues();
   } else if (Down & KEY_R) {
-    this->raidSearchLayout->IncreaseFlawlessIVs();
-    this->raidSearchLayout->UpdateValues();
+    m_raidSearchLayout->IncreaseFlawlessIVs();
+    m_raidSearchLayout->UpdateValues();
   }
 }
 
 void MainApplication::RefreshSummaryLayout() {
-  this->SetSlot(this->slot);
+  this->SetSlot(m_slot);
 }
 
 void MainApplication::SetSlot(u32 newSlot) {
-  this->slot = newSlot > this->maxSlot ? this->maxSlot : newSlot;
-  this->pokemonListLayout->SetSelectedIndex(this->slot);
-  std::string summaryTitle = this->GetSummaryTitle(this->slot);
-  this->pokemonSummaryLayout->UpdateValues(summaryTitle, this->pkms[this->slot], this->isShowingExtraDetail);
+  m_slot = newSlot > m_maxSlot ? m_maxSlot : newSlot;
+  m_pokemonListLayout->SetSelectedIndex(m_slot);
+  std::string summaryTitle = m_GetSummaryTitle(m_slot);
+  m_pokemonSummaryLayout->UpdateValues(summaryTitle, m_pkms[m_slot], m_isShowingExtraDetail);
 }
 
 u32 MainApplication::GetSlot() {
-  return this->slot;
+  return m_slot;
 }
 
 void MainApplication::IncreaseSlot(u32 slotIncrease) {
-  u32 newSlot = this->slot + slotIncrease;
-  u32 slot = newSlot > this->maxSlot ? 0 : newSlot;
+  u32 newSlot = m_slot + slotIncrease;
+  u32 slot = newSlot > m_maxSlot ? 0 : newSlot;
   this->SetSlot(slot);
 }
 
 void MainApplication::DecreaseSlot(u32 slotDecrease) {
-  u32 newSlot = this->slot - slotDecrease;
-  u32 slot = newSlot >= this->maxSlot ? this->maxSlot : newSlot;
+  u32 newSlot = m_slot - slotDecrease;
+  u32 slot = newSlot >= m_maxSlot ? m_maxSlot : newSlot;
   this->SetSlot(slot);
 }

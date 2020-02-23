@@ -18,6 +18,6 @@ namespace csight::rng {
     uint next(uint mask);
 
    private:
-    swsh_xoroshiro prng;
+    swsh_xoroshiro m_prng;
   };
 }  // namespace csight::rng

@@ -13,6 +13,6 @@ class I18N {
   std::string Translate(std::string category, std::string word);
 
  private:
-  nlohmann::json translations;
+  nlohmann::json m_translations;
   void LoadTranslations();
 };

@@ -11,6 +11,6 @@ class DenMenuLayout : public tsl::Gui {
   bool OnClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys);
 
  private:
-  std::string title = "Den List";
-  std::vector<std::shared_ptr<csight::raid::Den>> dens = {};
+  std::string m_title = "Den List";
+  std::vector<std::shared_ptr<csight::raid::Den>> m_dens = {};
 };

@@ -9,7 +9,7 @@ class RaidSearchLayout : public tsl::Gui {
   void AddTitleBlock(u16 x, u16 y, tsl::Screen* screen);
 
  private:
-  u64 seed = 0;
-  u32 flawlessIVs = 0;
-  std::string title = "";
+  std::string m_title = "";
+  u64 m_seed = 0;
+  u32 m_flawlessIVs = 0;
 };

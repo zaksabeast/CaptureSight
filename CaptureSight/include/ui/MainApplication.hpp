@@ -21,20 +21,20 @@ class MainApplication : public pu::ui::Application {
   u32 GetSlot();
 
  private:
-  u32 slot = 0;
-  u32 maxSlot = 0;
-  std::function<std::string(u32 slot)> GetSummaryTitle = [&](u32) { return ""; };
-  std::unique_ptr<csight::GameReader> save;
-  std::vector<std::shared_ptr<csight::PK8>> pkms;
-  std::vector<std::shared_ptr<csight::raid::Den>> dens;
-  bool isShowingExtraDetail = false;
-  PokemonSummaryLayout::Ref pokemonSummaryLayout;
-  MainMenuLayout::Ref mainMenuLayout;
-  PokemonListLayout::Ref pokemonListLayout;
-  RaidSearchLayout::Ref raidSearchLayout;
-  DenMenuLayout::Ref denMenuLayout;
-  WarningLayout::Ref warningLayout;
-  pu::ui::elm::TextBlock::Ref versionTextBlock;
+  u32 m_slot = 0;
+  u32 m_maxSlot = 0;
+  std::function<std::string(u32 slot)> m_GetSummaryTitle = [&](u32) { return ""; };
+  std::unique_ptr<csight::GameReader> m_save;
+  std::vector<std::shared_ptr<csight::PK8>> m_pkms;
+  std::vector<std::shared_ptr<csight::raid::Den>> m_dens;
+  bool m_isShowingExtraDetail = false;
+  PokemonSummaryLayout::Ref m_pokemonSummaryLayout;
+  MainMenuLayout::Ref m_mainMenuLayout;
+  PokemonListLayout::Ref m_pokemonListLayout;
+  RaidSearchLayout::Ref m_raidSearchLayout;
+  DenMenuLayout::Ref m_denMenuLayout;
+  WarningLayout::Ref m_warningLayout;
+  pu::ui::elm::TextBlock::Ref m_versionTextBlock;
 
   void OnWarningInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);

@@ -14,12 +14,12 @@ tsl::Gui* MainApplication::onSetup() {
   dmntchtInitialize();
   dmntchtForceOpenCheatProcess();
 
-  if (R_FAILED(this->gameReader->Attach()))
+  if (R_FAILED(m_gameReader->Attach()))
     return new ErrorLayout();
 
-  this->mainLayout->SetMenuItemClickCallback(std::bind(&MainApplication::ChangeViewMode, this, std::placeholders::_1));
+  m_mainLayout->SetMenuItemClickCallback(std::bind(&MainApplication::ChangeViewMode, this, std::placeholders::_1));
 
-  return this->mainLayout;
+  return m_mainLayout;
 }
 
 void MainApplication::onDestroy() {
@@ -28,7 +28,7 @@ void MainApplication::onDestroy() {
 }
 
 std::shared_ptr<csight::GameReader> MainApplication::GetGameReader() {
-  return this->gameReader;
+  return m_gameReader;
 }
 
 std::string MainApplication::GetPartyTitle(u32 slot) {
@@ -60,28 +60,28 @@ void MainApplication::ChangeViewMode(ViewMode mode) {
 
   switch (mode) {
     case activeDens:
-      dens = this->gameReader->ReadDens(false);
+      dens = m_gameReader->ReadDens(false);
       layout = new DenMenuLayout(dens, "Active Dens");
-      this->mainLayout->changeTo(layout);
+      m_mainLayout->changeTo(layout);
       return;
     case wild:
       guiTitle = "Wild/Trade/Party";
-      pkms = {this->gameReader->ReadWild(), this->gameReader->ReadTrade(), this->gameReader->ReadRaid()};
+      pkms = {m_gameReader->ReadWild(), m_gameReader->ReadTrade(), m_gameReader->ReadRaid()};
       getTitle = std::bind(&MainApplication::GetWildTitle, this, std::placeholders::_1);
       break;
     case box:
       guiTitle = "Box";
-      pkms = this->gameReader->ReadBoxes();
+      pkms = m_gameReader->ReadBoxes();
       getTitle = std::bind(&MainApplication::GetBoxTitle, this, std::placeholders::_1);
       break;
     case party:
     default:
       guiTitle = "Party Pokemon";
-      pkms = this->gameReader->ReadParty();
+      pkms = m_gameReader->ReadParty();
       getTitle = std::bind(&MainApplication::GetPartyTitle, this, std::placeholders::_1);
       break;
   }
 
   layout = new PokemonListLayout(guiTitle, pkms, getTitle);
-  this->mainLayout->changeTo(layout);
+  m_mainLayout->changeTo(layout);
 }

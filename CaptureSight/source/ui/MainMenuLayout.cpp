@@ -13,36 +13,36 @@ extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
 MainMenuLayout::MainMenuLayout() : Layout::Layout() {
-  this->onMenuItemInput = [&](ViewMode) {};
-  this->menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
-  this->wildMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Wild and Trade Pokemon"));
-  this->wildMenuItem->SetColor(gsets.GetTheme().text.light);
-  this->wildMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, wild));
-  this->partyMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Party Pokemon"));
-  this->partyMenuItem->SetColor(gsets.GetTheme().text.light);
-  this->partyMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, party));
-  this->boxMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Box Pokemon"));
-  this->boxMenuItem->SetColor(gsets.GetTheme().text.light);
-  this->boxMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, box));
-  this->activeDenMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Active Den List"));
-  this->activeDenMenuItem->SetColor(gsets.GetTheme().text.light);
-  this->activeDenMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, activeDens));
-  this->allDensMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("All Dens List"));
-  this->allDensMenuItem->SetColor(gsets.GetTheme().text.light);
-  this->allDensMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, allDens));
+  m_onMenuItemInput = [&](ViewMode) {};
+  m_menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
+  m_wildMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Wild and Trade Pokemon"));
+  m_wildMenuItem->SetColor(gsets.GetTheme().text.light);
+  m_wildMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, wild));
+  m_partyMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Party Pokemon"));
+  m_partyMenuItem->SetColor(gsets.GetTheme().text.light);
+  m_partyMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, party));
+  m_boxMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Box Pokemon"));
+  m_boxMenuItem->SetColor(gsets.GetTheme().text.light);
+  m_boxMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, box));
+  m_activeDenMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("Active Den List"));
+  m_activeDenMenuItem->SetColor(gsets.GetTheme().text.light);
+  m_activeDenMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, activeDens));
+  m_allDensMenuItem = pu::ui::elm::MenuItem::New(i18n->Translate("All Dens List"));
+  m_allDensMenuItem->SetColor(gsets.GetTheme().text.light);
+  m_allDensMenuItem->AddOnClick(std::bind(&MainMenuLayout::ClickMenuItem, this, allDens));
 
-  this->menu->AddItem(this->wildMenuItem);
-  this->menu->AddItem(this->partyMenuItem);
-  this->menu->AddItem(this->boxMenuItem);
-  this->menu->AddItem(this->activeDenMenuItem);
-  this->menu->AddItem(this->allDensMenuItem);
-  this->Add(this->menu);
+  m_menu->AddItem(m_wildMenuItem);
+  m_menu->AddItem(m_partyMenuItem);
+  m_menu->AddItem(m_boxMenuItem);
+  m_menu->AddItem(m_activeDenMenuItem);
+  m_menu->AddItem(m_allDensMenuItem);
+  this->Add(m_menu);
 }
 
 void MainMenuLayout::ClickMenuItem(ViewMode mode) {
-  this->onMenuItemInput(mode);
+  m_onMenuItemInput(mode);
 }
 
 void MainMenuLayout::SetOnInputMenuItem(std::function<void(ViewMode)> onInput) {
-  this->onMenuItemInput = onInput;
+  m_onMenuItemInput = onInput;
 }

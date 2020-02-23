@@ -14,8 +14,8 @@ class PokemonListLayout : public pu::ui::Layout {
   void SetSelectedIndex(u32 index);
 
  private:
-  pu::ui::elm::Menu::Ref menu;
-  std::function<void(u32)> onMenuItemInput;
+  pu::ui::elm::Menu::Ref m_menu;
+  std::function<void(u32)> m_onMenuItemInput;
   pu::ui::elm::MenuItem::Ref CreateMenuItem(std::shared_ptr<csight::PK8> pk8, u32 slot, std::string title);
   void ClickMenuItem(u32 slot);
 };

@@ -33,7 +33,7 @@ tsl::Element* MainLayout::createUI() {
 
 bool MainLayout::OnMenuItemClick(ViewMode mode, s64 keys) {
   if (keys == KEY_A) {
-    this->menuItemClickCallback(mode);
+    m_menuItemClickCallback(mode);
     return true;
   }
 
@@ -41,5 +41,5 @@ bool MainLayout::OnMenuItemClick(ViewMode mode, s64 keys) {
 }
 
 void MainLayout::SetMenuItemClickCallback(std::function<void(ViewMode)> callback) {
-  this->menuItemClickCallback = callback;
+  m_menuItemClickCallback = callback;
 }

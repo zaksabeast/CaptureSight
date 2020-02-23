@@ -97,16 +97,16 @@ extern std::shared_ptr<I18N> i18n;
 PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
   auto theme = gsets.GetTheme();
 
-  this->instructionLabelBackground = RoundedRectangle::New(INSTRUCTION_LABEL_BASE_X, INSTRUCTION_LABEL_BASE_Y, INSTRUCTION_LABEL_WIDTH, LABEL_HEIGHT,
-                                                           theme.background.light, TABLE_BORDER_RADIUS);
-  createInstructionLabelText(this->instructionsTextBlock, theme);
+  m_instructionLabelBackground = RoundedRectangle::New(INSTRUCTION_LABEL_BASE_X, INSTRUCTION_LABEL_BASE_Y, INSTRUCTION_LABEL_WIDTH, LABEL_HEIGHT,
+                                                       theme.background.light, TABLE_BORDER_RADIUS);
+  createInstructionLabelText(m_instructionsTextBlock, theme);
 
-  this->spriteImage = pu::ui::elm::Image::New(SPECIES_SPRITE_X, SPECIES_SPRITE_Y, "");
-  this->headerBackground = pu::ui::elm::Rectangle::New(0, 0, SCREEN_MAX_WIDTH, HEADER_BACKGROUND_HEIGHT, theme.background.light, 50);
-  this->speciesNameTextBlock = pu::ui::elm::TextBlock::New(SPECIES_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
-  this->speciesNameTextBlock->SetColor(theme.text.light);
-  this->titleTextBlock = pu::ui::elm::TextBlock::New(TITLE_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
-  this->titleTextBlock->SetColor(theme.text.light);
+  m_spriteImage = pu::ui::elm::Image::New(SPECIES_SPRITE_X, SPECIES_SPRITE_Y, "");
+  m_headerBackground = pu::ui::elm::Rectangle::New(0, 0, SCREEN_MAX_WIDTH, HEADER_BACKGROUND_HEIGHT, theme.background.light, 50);
+  m_speciesNameTextBlock = pu::ui::elm::TextBlock::New(SPECIES_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
+  m_speciesNameTextBlock->SetColor(theme.text.light);
+  m_titleTextBlock = pu::ui::elm::TextBlock::New(TITLE_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
+  m_titleTextBlock->SetColor(theme.text.light);
 
   SDL_Point hpPoint = {0, -100};
   SDL_Point atkPoint = {86, -50};
@@ -116,48 +116,48 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
   SDL_Point spaPoint = {-86, -50};
   std::vector<SDL_Point> points = {hpPoint, atkPoint, defPoint, spePoint, spdPoint, spaPoint};
 
-  this->statLabelBackground =
+  m_statLabelBackground =
       RoundedRectangle::New(STAT_LABEL_BASE_X, STAT_LABEL_BASE_Y, STAT_LABEL_WIDTH, LABEL_HEIGHT, theme.background.light, TABLE_BORDER_RADIUS);
-  createStatLabelText(this->statTextBlock, theme);
+  createStatLabelText(m_statTextBlock, theme);
 
-  this->hpStatTextBlock = pu::ui::elm::TextBlock::New(hpPoint.x + STAT_WHEEL_CENTER_X - 30, hpPoint.y + STAT_WHEEL_CENTER_Y - 30, "", 20);
-  this->hpStatTextBlock->SetColor(theme.text.light);
-  this->atkStatTextBlock = pu::ui::elm::TextBlock::New(atkPoint.x + STAT_WHEEL_CENTER_X + 20, atkPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
-  this->atkStatTextBlock->SetColor(theme.text.light);
-  this->defStatTextBlock = pu::ui::elm::TextBlock::New(defPoint.x + STAT_WHEEL_CENTER_X + 20, defPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
-  this->defStatTextBlock->SetColor(theme.text.light);
-  this->speStatTextBlock = pu::ui::elm::TextBlock::New(spePoint.x + STAT_WHEEL_CENTER_X - 40, spePoint.y + STAT_WHEEL_CENTER_Y + 10, "", 20);
-  this->speStatTextBlock->SetColor(theme.text.light);
-  this->spdStatTextBlock = pu::ui::elm::TextBlock::New(spdPoint.x + STAT_WHEEL_CENTER_X - 90, spdPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
-  this->spdStatTextBlock->SetColor(theme.text.light);
-  this->spaStatTextBlock = pu::ui::elm::TextBlock::New(spaPoint.x + STAT_WHEEL_CENTER_X - 90, spaPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
-  this->spaStatTextBlock->SetColor(theme.text.light);
+  m_hpStatTextBlock = pu::ui::elm::TextBlock::New(hpPoint.x + STAT_WHEEL_CENTER_X - 30, hpPoint.y + STAT_WHEEL_CENTER_Y - 30, "", 20);
+  m_hpStatTextBlock->SetColor(theme.text.light);
+  m_atkStatTextBlock = pu::ui::elm::TextBlock::New(atkPoint.x + STAT_WHEEL_CENTER_X + 20, atkPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
+  m_atkStatTextBlock->SetColor(theme.text.light);
+  m_defStatTextBlock = pu::ui::elm::TextBlock::New(defPoint.x + STAT_WHEEL_CENTER_X + 20, defPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
+  m_defStatTextBlock->SetColor(theme.text.light);
+  m_speStatTextBlock = pu::ui::elm::TextBlock::New(spePoint.x + STAT_WHEEL_CENTER_X - 40, spePoint.y + STAT_WHEEL_CENTER_Y + 10, "", 20);
+  m_speStatTextBlock->SetColor(theme.text.light);
+  m_spdStatTextBlock = pu::ui::elm::TextBlock::New(spdPoint.x + STAT_WHEEL_CENTER_X - 90, spdPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
+  m_spdStatTextBlock->SetColor(theme.text.light);
+  m_spaStatTextBlock = pu::ui::elm::TextBlock::New(spaPoint.x + STAT_WHEEL_CENTER_X - 90, spaPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
+  m_spaStatTextBlock->SetColor(theme.text.light);
 
-  this->outerStatPolygon = Polygon::New(STAT_WHEEL_CENTER_X, STAT_WHEEL_CENTER_Y, theme.background.light);
-  this->outerStatPolygon->SetPoints(points);
-  this->innerStatPolygon = Polygon::New(STAT_WHEEL_CENTER_X, STAT_WHEEL_CENTER_Y, theme.primary.a90);
-  this->innerStatPolygon->SetPoints(points);
+  m_outerStatPolygon = Polygon::New(STAT_WHEEL_CENTER_X, STAT_WHEEL_CENTER_Y, theme.background.light);
+  m_outerStatPolygon->SetPoints(points);
+  m_innerStatPolygon = Polygon::New(STAT_WHEEL_CENTER_X, STAT_WHEEL_CENTER_Y, theme.primary.a90);
+  m_innerStatPolygon->SetPoints(points);
 
-  this->moveTableBackground =
+  m_moveTableBackground =
       RoundedRectangle::New(MOVE_TABLE_BASE_X, MOVE_TABLE_BASE_Y, MOVE_TABLE_WIDTH, MOVE_TABLE_HEIGHT, theme.background.light, TABLE_BORDER_RADIUS);
-  createMoveTableItem(this->move1TextBlock, 0, theme);
-  createMoveTableItem(this->move2TextBlock, 1, theme);
-  createMoveTableItem(this->move3TextBlock, 2, theme);
-  createMoveTableItem(this->move4TextBlock, 3, theme);
+  createMoveTableItem(m_move1TextBlock, 0, theme);
+  createMoveTableItem(m_move2TextBlock, 1, theme);
+  createMoveTableItem(m_move3TextBlock, 2, theme);
+  createMoveTableItem(m_move4TextBlock, 3, theme);
 
-  this->mainInfoTableBackground = RoundedRectangle::New(MAIN_INFO_TABLE_BASE_X, MAIN_INFO_TABLE_BASE_Y, MAIN_INFO_TABLE_WIDTH, MAIN_INFO_TABLE_HEIGHT,
-                                                        theme.background.light, TABLE_BORDER_RADIUS);
-  createMainInfoTableItem(this->natureTextBlock, 0, theme);
-  createMainInfoTableItem(this->mintedNatureTextBlock, 1, theme);
-  createMainInfoTableItem(this->abilityTextBlock, 2, theme);
+  m_mainInfoTableBackground = RoundedRectangle::New(MAIN_INFO_TABLE_BASE_X, MAIN_INFO_TABLE_BASE_Y, MAIN_INFO_TABLE_WIDTH, MAIN_INFO_TABLE_HEIGHT,
+                                                    theme.background.light, TABLE_BORDER_RADIUS);
+  createMainInfoTableItem(m_natureTextBlock, 0, theme);
+  createMainInfoTableItem(m_mintedNatureTextBlock, 1, theme);
+  createMainInfoTableItem(m_abilityTextBlock, 2, theme);
 
-  this->extraInfoTableBackground = RoundedRectangle::New(EXTRA_INFO_TABLE_BASE_X, EXTRA_INFO_TABLE_BASE_Y, EXTRA_INFO_TABLE_WIDTH,
-                                                         EXTRA_INFO_TABLE_HEIGHT, theme.background.light, TABLE_BORDER_RADIUS);
-  createExtraInfoTableItem(this->pidEcTextBlock, 0, theme);
-  createExtraInfoTableItem(this->shinyInfoTextBlock, 1, theme);
-  createExtraInfoTableItem(this->friendshipTextBlock, 2, theme);
+  m_extraInfoTableBackground = RoundedRectangle::New(EXTRA_INFO_TABLE_BASE_X, EXTRA_INFO_TABLE_BASE_Y, EXTRA_INFO_TABLE_WIDTH,
+                                                     EXTRA_INFO_TABLE_HEIGHT, theme.background.light, TABLE_BORDER_RADIUS);
+  createExtraInfoTableItem(m_pidEcTextBlock, 0, theme);
+  createExtraInfoTableItem(m_shinyInfoTextBlock, 1, theme);
+  createExtraInfoTableItem(m_friendshipTextBlock, 2, theme);
 
-  this->Add(this->outerStatPolygon);
+  this->Add(m_outerStatPolygon);
 
   for (u32 i = 0; i < points.size(); i++) {
     auto point1 = points[i];
@@ -171,34 +171,34 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
     this->Add(borderLine);
   }
 
-  this->Add(this->innerStatPolygon);
-  this->Add(this->hpStatTextBlock);
-  this->Add(this->atkStatTextBlock);
-  this->Add(this->defStatTextBlock);
-  this->Add(this->speStatTextBlock);
-  this->Add(this->spdStatTextBlock);
-  this->Add(this->spaStatTextBlock);
-  this->Add(this->statLabelBackground);
-  this->Add(this->statTextBlock);
-  this->Add(this->headerBackground);
-  this->Add(this->spriteImage);
-  this->Add(this->speciesNameTextBlock);
-  this->Add(this->titleTextBlock);
-  this->Add(this->moveTableBackground);
-  this->Add(this->move1TextBlock);
-  this->Add(this->move2TextBlock);
-  this->Add(this->move3TextBlock);
-  this->Add(this->move4TextBlock);
-  this->Add(this->mainInfoTableBackground);
-  this->Add(this->natureTextBlock);
-  this->Add(this->mintedNatureTextBlock);
-  this->Add(this->abilityTextBlock);
-  this->Add(this->extraInfoTableBackground);
-  this->Add(this->pidEcTextBlock);
-  this->Add(this->shinyInfoTextBlock);
-  this->Add(this->friendshipTextBlock);
-  this->Add(this->instructionLabelBackground);
-  this->Add(this->instructionsTextBlock);
+  this->Add(m_innerStatPolygon);
+  this->Add(m_hpStatTextBlock);
+  this->Add(m_atkStatTextBlock);
+  this->Add(m_defStatTextBlock);
+  this->Add(m_speStatTextBlock);
+  this->Add(m_spdStatTextBlock);
+  this->Add(m_spaStatTextBlock);
+  this->Add(m_statLabelBackground);
+  this->Add(m_statTextBlock);
+  this->Add(m_headerBackground);
+  this->Add(m_spriteImage);
+  this->Add(m_speciesNameTextBlock);
+  this->Add(m_titleTextBlock);
+  this->Add(m_moveTableBackground);
+  this->Add(m_move1TextBlock);
+  this->Add(m_move2TextBlock);
+  this->Add(m_move3TextBlock);
+  this->Add(m_move4TextBlock);
+  this->Add(m_mainInfoTableBackground);
+  this->Add(m_natureTextBlock);
+  this->Add(m_mintedNatureTextBlock);
+  this->Add(m_abilityTextBlock);
+  this->Add(m_extraInfoTableBackground);
+  this->Add(m_pidEcTextBlock);
+  this->Add(m_shinyInfoTextBlock);
+  this->Add(m_friendshipTextBlock);
+  this->Add(m_instructionLabelBackground);
+  this->Add(m_instructionsTextBlock);
 }
 
 void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<csight::PK8> pkm, bool isShowingExtraDetail) {
@@ -216,10 +216,10 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<csigh
   std::string pidEc = i18n->Translate("PID") + ": " + pidText + ", " + i18n->Translate("EC") + ": " + ecText;
   std::string friendshipTranslationKey = pkm->GetIsEgg() ? "Egg cycles" : "Friendship";
   std::string friendship = i18n->Translate(friendshipTranslationKey) + ": " + std::to_string(pkm->GetCurrentFriendship());
-  std::string statTypeText = i18n->Translate(this->statType == statType::ivs ? "IVs" : "EVs") + " - " + i18n->Translate("Switch (A)");
+  std::string statTypeText = i18n->Translate(m_statType == statType::ivs ? "IVs" : "EVs") + " - " + i18n->Translate("Switch (A)");
 
-  s32 maxStat = this->statType == statType::ivs ? 31 : 255;
-  auto stats = this->statType == statType::ivs ? pkm->GetIVs() : pkm->GetEVs();
+  s32 maxStat = m_statType == statType::ivs ? 31 : 255;
+  auto stats = m_statType == statType::ivs ? pkm->GetIVs() : pkm->GetEVs();
   auto hp = stats[0];
   auto atk = stats[1];
   auto def = stats[2];
@@ -233,35 +233,35 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<csigh
                                           {0, scaleStatPoint(100, spe, maxStat)},
                                           {scaleStatPoint(-86, spd, maxStat), scaleStatPoint(50, spd, maxStat)},
                                           {scaleStatPoint(-86, spa, maxStat), scaleStatPoint(-50, spa, maxStat)}};
-  this->innerStatPolygon->SetPoints(innerIVPoints);
+  m_innerStatPolygon->SetPoints(innerIVPoints);
 
-  setPokemonSprite(this->spriteImage, 4, pkm->GetSpecies(), pkm->GetIsEgg());
-  this->instructionsTextBlock->SetText(instructions);
-  this->speciesNameTextBlock->SetText(species);
-  this->statTextBlock->SetText(statTypeText);
-  this->hpStatTextBlock->SetText("HP: " + std::to_string(hp));
-  this->atkStatTextBlock->SetText("ATK: " + std::to_string(atk));
-  this->defStatTextBlock->SetText("DEF: " + std::to_string(def));
-  this->speStatTextBlock->SetText("SPE: " + std::to_string(spe));
-  this->spdStatTextBlock->SetText("SPD: " + std::to_string(spd));
-  this->spaStatTextBlock->SetText("SPA: " + std::to_string(spa));
-  this->titleTextBlock->SetText(title);
-  this->shinyInfoTextBlock->SetText(shiny);
-  this->move1TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(0)));
-  this->move2TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(1)));
-  this->move3TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(2)));
-  this->move4TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(3)));
-  this->natureTextBlock->SetText(nature);
-  this->mintedNatureTextBlock->SetText(mintedNature);
-  this->abilityTextBlock->SetText(ability);
-  this->friendshipTextBlock->SetText(friendship);
-  this->pidEcTextBlock->SetText(pidEc);
+  setPokemonSprite(m_spriteImage, 4, pkm->GetSpecies(), pkm->GetIsEgg());
+  m_instructionsTextBlock->SetText(instructions);
+  m_speciesNameTextBlock->SetText(species);
+  m_statTextBlock->SetText(statTypeText);
+  m_hpStatTextBlock->SetText("HP: " + std::to_string(hp));
+  m_atkStatTextBlock->SetText("ATK: " + std::to_string(atk));
+  m_defStatTextBlock->SetText("DEF: " + std::to_string(def));
+  m_speStatTextBlock->SetText("SPE: " + std::to_string(spe));
+  m_spdStatTextBlock->SetText("SPD: " + std::to_string(spd));
+  m_spaStatTextBlock->SetText("SPA: " + std::to_string(spa));
+  m_titleTextBlock->SetText(title);
+  m_shinyInfoTextBlock->SetText(shiny);
+  m_move1TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(0)));
+  m_move2TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(1)));
+  m_move3TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(2)));
+  m_move4TextBlock->SetText(i18n->Translate("moves", pkm->GetMoveString(3)));
+  m_natureTextBlock->SetText(nature);
+  m_mintedNatureTextBlock->SetText(mintedNature);
+  m_abilityTextBlock->SetText(ability);
+  m_friendshipTextBlock->SetText(friendship);
+  m_pidEcTextBlock->SetText(pidEc);
 }
 
 statType::StatType PokemonSummaryLayout::GetStatType() {
-  return this->statType;
+  return m_statType;
 }
 
 void PokemonSummaryLayout::SetStatType(statType::StatType _statType) {
-  this->statType = _statType;
+  m_statType = _statType;
 }

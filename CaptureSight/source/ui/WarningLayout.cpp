@@ -4,12 +4,12 @@
 extern Settings gsets;
 
 WarningLayout::WarningLayout() : Layout::Layout() {
-  this->warningTextBlock = pu::ui::elm::TextBlock::New(100, 200, "", 30);
-  this->warningTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_warningTextBlock = pu::ui::elm::TextBlock::New(100, 200, "", 30);
+  m_warningTextBlock->SetColor(gsets.GetTheme().text.light);
 
-  this->Add(this->warningTextBlock);
+  this->Add(m_warningTextBlock);
 }
 
 void WarningLayout::SetWarningText(std::string warning) {
-  this->warningTextBlock->SetText(warning);
+  m_warningTextBlock->SetText(warning);
 }

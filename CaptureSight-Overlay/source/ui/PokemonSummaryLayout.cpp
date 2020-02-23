@@ -4,7 +4,7 @@
 #include <ui/RaidSearchLayout.hpp>
 
 PokemonSummaryLayout::PokemonSummaryLayout(std::shared_ptr<csight::PK8> pkm) {
-  this->pkm = pkm;
+  m_pkm = pkm;
 }
 
 tsl::Element* PokemonSummaryLayout::createUI() {
@@ -24,21 +24,21 @@ tsl::Element* PokemonSummaryLayout::createUI() {
 }
 
 void PokemonSummaryLayout::AddBodyDrawer(u16 x, u16 y, tsl::Screen* screen) {
-  std::string shiny = this->pkm->GetIsShiny() ? "Shiny " : "";
-  std::string species = shiny + this->pkm->GetSpeciesString();
-  std::string formattedIVs = "IVs: " + csight::utils::joinNums(this->pkm->GetIVs(), "/");
-  std::string formattedEVs = "EVs: " + csight::utils::joinNums(this->pkm->GetEVs(), "/");
-  std::string nature = "Nature: " + this->pkm->GetNatureString();
-  std::string mintedNature = "Minted Nature: " + this->pkm->GetMintedNatureString();
-  std::string friendshipLabel = this->pkm->GetIsEgg() ? "Egg cycles: " : "Friendship: ";
-  std::string friendship = friendshipLabel + std::to_string(this->pkm->GetCurrentFriendship());
+  std::string shiny = m_pkm->GetIsShiny() ? "Shiny " : "";
+  std::string species = shiny + m_pkm->GetSpeciesString();
+  std::string formattedIVs = "IVs: " + csight::utils::joinNums(m_pkm->GetIVs(), "/");
+  std::string formattedEVs = "EVs: " + csight::utils::joinNums(m_pkm->GetEVs(), "/");
+  std::string nature = "Nature: " + m_pkm->GetNatureString();
+  std::string mintedNature = "Minted Nature: " + m_pkm->GetMintedNatureString();
+  std::string friendshipLabel = m_pkm->GetIsEgg() ? "Egg cycles: " : "Friendship: ";
+  std::string friendship = friendshipLabel + std::to_string(m_pkm->GetCurrentFriendship());
   std::string moves = "Moves:";
-  std::string move0 = "- " + this->pkm->GetMoveString(0);
-  std::string move1 = "- " + this->pkm->GetMoveString(1);
-  std::string move2 = "- " + this->pkm->GetMoveString(2);
-  std::string move3 = "- " + this->pkm->GetMoveString(3);
-  std::string pidEd = "PID: " + csight::utils::convertNumToHexString(this->pkm->GetPID()) +
-                      " EC: " + csight::utils::convertNumToHexString(this->pkm->GetEncryptionConstant());
+  std::string move0 = "- " + m_pkm->GetMoveString(0);
+  std::string move1 = "- " + m_pkm->GetMoveString(1);
+  std::string move2 = "- " + m_pkm->GetMoveString(2);
+  std::string move3 = "- " + m_pkm->GetMoveString(3);
+  std::string pidEd = "PID: " + csight::utils::convertNumToHexString(m_pkm->GetPID()) +
+                      " EC: " + csight::utils::convertNumToHexString(m_pkm->GetEncryptionConstant());
 
   screen->drawString(species.c_str(), false, 20, 50, 34, tsl::a(0xFFFF));
   screen->drawString(formattedIVs.c_str(), false, 20, 100, 24, tsl::a(0xFFFF));
@@ -56,11 +56,11 @@ void PokemonSummaryLayout::AddBodyDrawer(u16 x, u16 y, tsl::Screen* screen) {
 
 bool PokemonSummaryLayout::FindRaidSeed(s64 keys) {
   if (keys == KEY_A) {
-    auto seedFuture = this->pkm->GetRaidSeedAsync();
+    auto seedFuture = m_pkm->GetRaidSeedAsync();
     seedFuture.wait();
-    this->seed = seedFuture.get();
-    this->changeTo(new RaidSearchLayout(this->seed, 5));
-    this->shouldSearchForSeed = false;
+    m_seed = seedFuture.get();
+    this->changeTo(new RaidSearchLayout(m_seed, 5));
+
     return true;
   }
 

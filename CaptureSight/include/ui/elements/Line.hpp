@@ -15,10 +15,10 @@ class Line : public pu::ui::elm::Element {
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
 
  private:
-  s32 x1;
-  s32 y1;
-  s32 x2;
-  s32 y2;
-  pu::ui::render::NativeRenderer renderer;
-  pu::ui::Color clr;
+  s32 m_x1;
+  s32 m_y1;
+  s32 m_x2;
+  s32 m_y2;
+  pu::ui::render::NativeRenderer m_renderer;
+  pu::ui::Color m_clr;
 };

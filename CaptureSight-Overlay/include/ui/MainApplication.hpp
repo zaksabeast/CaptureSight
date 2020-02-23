@@ -16,6 +16,6 @@ class MainApplication : public tsl::Overlay {
   void ChangeViewMode(ViewMode mode);
 
  private:
-  MainLayout* mainLayout = new MainLayout();
-  std::shared_ptr<csight::GameReader> gameReader = std::make_shared<csight::GameReader>();
+  MainLayout* m_mainLayout = new MainLayout();
+  std::shared_ptr<csight::GameReader> m_gameReader = std::make_shared<csight::GameReader>();
 };

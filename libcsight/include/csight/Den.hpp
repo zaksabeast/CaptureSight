@@ -31,13 +31,14 @@ namespace csight::raid {
     std::shared_ptr<raid::RaidPokemon> GetPKM();
 
    private:
-    u8 size = 0x18;
-    u8* data = new u8[0x18];
-    u8 denId = 0;
-    u16 species = 0;
-    u8 flawlessIVs = 0;
-    u16 shinyFrame = 0;
-    shiny::ShinyType shineType = shiny::Star;
+    u8 m_size = 0x18;
+    u8* m_data = new u8[0x18];
+    u8 m_denId = 0;
+    u16 m_species = 0;
+    u8 m_flawlessIVs = 0;
+    u16 m_shinyFrame = 0;
+    shiny::ShinyType m_shineType = shiny::Star;
+
     raid::RaidEncounter FindSpawn(std::vector<raid::RaidEncounter> raidEncounters);
     void CalculateShinyDetails();
   };

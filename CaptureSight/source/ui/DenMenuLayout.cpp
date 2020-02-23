@@ -12,17 +12,17 @@ extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
 DenMenuLayout::DenMenuLayout() : Layout::Layout() {
-  this->headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
-  this->headerTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
+  m_headerTextBlock->SetColor(gsets.GetTheme().text.light);
 
-  this->menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
+  m_menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
 
-  this->Add(this->menu);
-  this->Add(this->headerTextBlock);
+  this->Add(m_menu);
+  this->Add(m_headerTextBlock);
 }
 
 void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>> dens) {
-  this->menu->ClearItems();
+  m_menu->ClearItems();
 
   for (auto denIterator = dens.begin(); denIterator != end(dens); ++denIterator) {
     auto den = *(denIterator);
@@ -37,20 +37,20 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>>
     menuItem->SetColor(gsets.GetTheme().text.light);
     menuItem->SetIcon(getPokemonIconPath(pkm->GetSpecies(), false));
     menuItem->AddOnClick(std::bind(&DenMenuLayout::ClickMenuItem, this, den->GetSeed()));
-    this->menu->AddItem(menuItem);
+    m_menu->AddItem(menuItem);
   }
 
-  this->menu->SetSelectedIndex(0);
+  m_menu->SetSelectedIndex(0);
 
   auto headerText = i18n->Translate("View upcoming frames (A)");
 
-  this->headerTextBlock->SetText(headerText);
+  m_headerTextBlock->SetText(headerText);
 }
 
 void DenMenuLayout::ClickMenuItem(u64 seed) {
-  this->onMenuItemInput(seed);
+  m_onMenuItemInput(seed);
 }
 
 void DenMenuLayout::SetOnInputMenuItem(std::function<void(u64)> onInput) {
-  this->onMenuItemInput = onInput;
+  m_onMenuItemInput = onInput;
 }

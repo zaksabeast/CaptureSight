@@ -14,7 +14,7 @@ class DenMenuLayout : public pu::ui::Layout {
   void ClickMenuItem(u64 seed);
 
  private:
-  pu::ui::elm::Menu::Ref menu;
-  pu::ui::elm::TextBlock::Ref headerTextBlock;
-  std::function<void(u64)> onMenuItemInput = [&](u64) {};
+  pu::ui::elm::Menu::Ref m_menu;
+  pu::ui::elm::TextBlock::Ref m_headerTextBlock;
+  std::function<void(u64)> m_onMenuItemInput = [&](u64) {};
 };

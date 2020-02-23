@@ -5,9 +5,9 @@ namespace csight::rng {
     u32 advance(u32 seed) { return seed * 0x41C64E6D + 0x6073; }
   }  // namespace lcrng
 
-  xoroshiro::xoroshiro(ulong seed) { this->prng = swsh_xoroshiro(seed, 0x82A2B175229D6A5B); }
+  xoroshiro::xoroshiro(ulong seed) { m_prng = swsh_xoroshiro(seed, 0x82A2B175229D6A5B); }
 
-  u64 xoroshiro::nextulong() { return this->prng(); }
+  u64 xoroshiro::nextulong() { return m_prng(); }
   u32 xoroshiro::nextuint() { return (u32)this->nextulong(); }
-  u32 xoroshiro::next(u32 mask) { return this->prng() & mask; }
+  u32 xoroshiro::next(u32 mask) { return m_prng() & mask; }
 }  // namespace csight::rng

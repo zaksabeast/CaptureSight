@@ -17,10 +17,10 @@ namespace csight::raid {
     std::vector<u8> GetIVs();
 
    private:
-    u32 EC;
-    u32 PID;
-    u16 species;
-    std::vector<u8> IVs;
-    shiny::ShinyType shineType;
+    u32 m_EC;
+    u32 m_PID;
+    u16 m_species;
+    std::vector<u8> m_IVs;
+    shiny::ShinyType m_shineType;
   };
 }  // namespace csight::raid

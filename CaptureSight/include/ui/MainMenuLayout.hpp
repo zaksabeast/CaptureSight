@@ -12,13 +12,13 @@ class MainMenuLayout : public pu::ui::Layout {
   void SetOnInputMenuItem(std::function<void(ViewMode)> onInput);
 
  private:
-  std::function<void(ViewMode)> onMenuItemInput;
-  pu::ui::elm::Menu::Ref menu;
-  pu::ui::elm::MenuItem::Ref wildMenuItem;
-  pu::ui::elm::MenuItem::Ref partyMenuItem;
-  pu::ui::elm::MenuItem::Ref boxMenuItem;
-  pu::ui::elm::MenuItem::Ref activeDenMenuItem;
-  pu::ui::elm::MenuItem::Ref allDensMenuItem;
-  void ClickMenuItem(ViewMode mode);
+  std::function<void(ViewMode)> m_onMenuItemInput;
+  pu::ui::elm::Menu::Ref m_menu;
+  pu::ui::elm::MenuItem::Ref m_wildMenuItem;
+  pu::ui::elm::MenuItem::Ref m_partyMenuItem;
+  pu::ui::elm::MenuItem::Ref m_boxMenuItem;
+  pu::ui::elm::MenuItem::Ref m_activeDenMenuItem;
+  pu::ui::elm::MenuItem::Ref m_allDensMenuItem;
+  void ClickMenuItem(ViewMode m_mode);
   void ClickWildPokemon();
 };

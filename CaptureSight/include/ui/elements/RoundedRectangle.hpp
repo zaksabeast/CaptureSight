@@ -37,10 +37,10 @@ class RoundedRectangle : public pu::ui::elm::Element {
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
 
  private:
-  s32 borderr;
-  s32 x;
-  s32 y;
-  s32 w;
-  s32 h;
-  pu::ui::Color clr;
+  s32 m_borderr;
+  s32 m_x;
+  s32 m_y;
+  s32 m_w;
+  s32 m_h;
+  pu::ui::Color m_clr;
 };

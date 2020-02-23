@@ -13,12 +13,12 @@ extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
 PokemonListLayout::PokemonListLayout() : Layout::Layout() {
-  this->menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
-  this->Add(this->menu);
+  m_menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
+  this->Add(m_menu);
 }
 
 void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<csight::PK8>> pk8s, std::function<std::string(u32)> GetTitle) {
-  this->menu->ClearItems();
+  m_menu->ClearItems();
 
   for (auto pk8 = pk8s.begin(); pk8 != end(pk8s); ++pk8) {
     auto pkm = *(pk8);
@@ -30,10 +30,10 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<csight::PK8>> p
                                           : i18n->Translate("Error") + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
 
-    this->menu->AddItem(menuItem);
+    m_menu->AddItem(menuItem);
   }
 
-  this->menu->SetSelectedIndex(0);
+  m_menu->SetSelectedIndex(0);
 }
 
 pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(std::shared_ptr<csight::PK8> pk8, u32 slot, std::string title) {
@@ -47,13 +47,13 @@ pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(std::shared_ptr<csi
 }
 
 void PokemonListLayout::ClickMenuItem(u32 slot) {
-  this->onMenuItemInput(slot);
+  m_onMenuItemInput(slot);
 }
 
 void PokemonListLayout::SetOnInputMenuItem(std::function<void(u32)> onInput) {
-  this->onMenuItemInput = onInput;
+  m_onMenuItemInput = onInput;
 }
 
 void PokemonListLayout::SetSelectedIndex(u32 index) {
-  this->menu->SetSelectedIndex(index);
+  m_menu->SetSelectedIndex(index);
 }

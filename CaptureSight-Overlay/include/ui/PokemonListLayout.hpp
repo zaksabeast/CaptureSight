@@ -12,8 +12,7 @@ class PokemonListLayout : public tsl::Gui {
   bool OnClickPKM(std::shared_ptr<csight::PK8> pkm, s64 keys);
 
  private:
-  std::string title = "Pokemon List";
-  std::vector<std::shared_ptr<csight::PK8>> pkms = {};
-  std::function<std::string(u32)> GetPKMTitle = [](u32) { return ""; };
-  std::function<void(std::shared_ptr<csight::PK8>)> SelectPKM = [](std::shared_ptr<csight::PK8>) {};
+  std::string m_title = "Pokemon List";
+  std::vector<std::shared_ptr<csight::PK8>> m_pkms = {};
+  std::function<std::string(u32)> m_GetPKMTitle = [](u32) { return ""; };
 };
