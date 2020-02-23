@@ -17,7 +17,8 @@
     "Active Den List": "有光柱坑列表",
     "All Dens List": "全坑列表",
     "Stars": "星数",
-    "More detail (X), Go back (B)\nRaid Searcher (Y)": "更多信息 (按X), 返回 (按B)\n查看seed (按Y)",
+    "More detail (X)": "更多信息 (按X)",
+    "Raid Searcher (Y)": "查看seed (按Y)",
     "Den Id": "坑ID",
     "Wild and Trade Pokemon": "野生与在交换的宝可梦",
     "Trade Pokemon": "交换中的宝可梦",
@@ -34,7 +35,15 @@
     "View upcoming frames (A)": "查看后续帧 (按A)",
     "Ability": "特性",
     "Empty": "无",
-    "Event": "活动"
+    "Event": "活动",
+    "HP": "HP",
+    "ATK": "ATK",
+    "DEF": "DEF",
+    "SPA": "SPA",
+    "SPD": "SPD",
+    "SPE": "SPE",
+    "Switch (A)": "Switch (A)",
+    "Hide detail (X)": "Hide detail (X)"
   },
   "natures": {
     "Hardy": "勤奋",

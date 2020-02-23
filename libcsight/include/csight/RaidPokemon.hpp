@@ -14,13 +14,13 @@ namespace csight::raid {
     std::string GetSpeciesString();
     bool GetIsShiny();
     shiny::ShinyType GetShineType();
-    std::vector<s8> GetIVs();
+    std::vector<u8> GetIVs();
 
    private:
     u32 EC;
     u32 PID;
     u16 species;
-    std::vector<s8> IVs;
+    std::vector<u8> IVs;
     shiny::ShinyType shineType;
   };
 }  // namespace csight::raid

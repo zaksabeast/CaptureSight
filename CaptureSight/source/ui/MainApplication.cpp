@@ -179,6 +179,10 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
     this->raidSearchLayout->SetSeed(this->pkms[this->slot]->GetRaidSeed());
     this->raidSearchLayout->UpdateValues();
     this->LoadLayout(this->raidSearchLayout);
+  } else if (Down & KEY_A) {
+    auto nextStatType = this->pokemonSummaryLayout->GetStatType() == statType::ivs ? statType::evs : statType::ivs;
+    this->pokemonSummaryLayout->SetStatType(nextStatType);
+    this->RefreshSummaryLayout();
   }
 }
 

@@ -6,6 +6,9 @@
 #include <csight/Utils.hpp>
 #include <csight/lookups/Species.hpp>
 
+// 255 is an unsighed integer hack
+#define EMPTY_IV 255
+
 namespace csight::raid {
   RaidPokemon::RaidPokemon(u64 seed, u32 flawlessIvs, u16 species) {
     this->species = species;
@@ -15,21 +18,21 @@ namespace csight::raid {
     this->PID = rng.next(0xFFFFFFFF);
     this->shineType = shiny::GetShinyType(PID, SIDTID);
 
-    this->IVs = {-1, -1, -1, -1, -1, -1};
+    this->IVs = {EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV};
 
     for (u32 i = 0; i < flawlessIvs; i++) {
       s32 ivIndex;
 
       do {
         ivIndex = (s32)rng.next(7);
-      } while (this->IVs[ivIndex] != -1);
+      } while (this->IVs[ivIndex] != EMPTY_IV);
 
       this->IVs[ivIndex] = 31;
     }
 
     for (s32 i = 0; i < 6; i++) {
-      if (this->IVs[i] == -1) {
-        this->IVs[i] = (s8)rng.next(31);
+      if (this->IVs[i] == EMPTY_IV) {
+        this->IVs[i] = (u8)rng.next(31);
       }
     }
   }
@@ -46,5 +49,5 @@ namespace csight::raid {
 
   shiny::ShinyType RaidPokemon::GetShineType() { return this->shineType; }
 
-  std::vector<s8> RaidPokemon::GetIVs() { return this->IVs; }
+  std::vector<u8> RaidPokemon::GetIVs() { return this->IVs; }
 }  // namespace csight::raid

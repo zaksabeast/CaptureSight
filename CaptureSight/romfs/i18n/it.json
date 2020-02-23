@@ -17,7 +17,8 @@
     "Active Den List": "Lista dei Den attivi",
     "All Dens List": "Lista di tutti i Den",
     "Stars": "Stelle",
-    "More detail (X), Go back (B)\nRaid Searcher (Y)": "Più Dettagli (X), Indietro (B)\nRicerca Raid (Y)",
+    "More detail (X)": "Più Dettagli (X)",
+    "Raid Searcher (Y)": "Ricerca Raid (Y)",
     "Den Id": "Id del Den",
     "Wild and Trade Pokemon": "Pokemon Selvatico e in Scambio",
     "Trade Pokemon": "Pokemon in Scambio",
@@ -34,7 +35,15 @@
     "View upcoming frames (A)": "Guarda i frames successivi (A)",
     "Ability": "Abilità",
     "Empty": "Vuoto",
-    "Event": "Evento"
+    "Event": "Evento",
+    "HP": "HP",
+    "ATK": "ATK",
+    "DEF": "DEF",
+    "SPA": "SPA",
+    "SPD": "SPD",
+    "SPE": "SPE",
+    "Switch (A)": "Switch (A)",
+    "Hide detail (X)": "Hide detail (X)"
   },
   "natures": {
     "Hardy": "Ardita",

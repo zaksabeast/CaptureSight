@@ -106,9 +106,9 @@ namespace csight {
 
   u32 PK8::GetIV32() { return *(u32*)(this->data + 0x8C); }
 
-  s8 PK8::GetIV(u8 stat) { return (s8)((this->GetIV32() >> 5 * stat) & 0x1F); }
+  u8 PK8::GetIV(u8 stat) { return (u8)((this->GetIV32() >> 5 * stat) & 0x1F); }
 
-  std::vector<s8> PK8::GetIVs() {
+  std::vector<u8> PK8::GetIVs() {
     return {
         this->GetIV(0), this->GetIV(1), this->GetIV(2), this->GetIV(4), this->GetIV(5), this->GetIV(3),
     };
