@@ -26,6 +26,7 @@ namespace csight::raid {
     bool GetIsEvent();
     bool GetIsActive();
     u8 GetDenId();
+    u8 GetDenDisplayId();
     bool GetIsRare();
     std::shared_ptr<raid::RaidPokemon> GetPKM();
 

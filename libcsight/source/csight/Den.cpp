@@ -19,7 +19,7 @@ namespace csight::raid {
       spawn = this->FindSpawn(eventEncounterTable->templates);
     } else {
       auto isRare = this->GetIsRare();
-      auto denHash = denHashes[denId - 1][isRare];
+      auto denHash = denHashes[denId][isRare];
       auto nest = std::find_if(encounterTables.begin(), encounterTables.end(),
                                [denHash](const RaidEncounterTable& encounterTable) { return encounterTable.hash == denHash; });
       spawn = this->FindSpawn(nest->templates);
@@ -83,6 +83,8 @@ namespace csight::raid {
   bool Den::GetIsActive() { return this->GetType() > 0; }
 
   u8 Den::GetDenId() { return this->denId; }
+
+  u8 Den::GetDenDisplayId() { return this->denId + 1; }
 
   std::shared_ptr<RaidPokemon> Den::GetPKM() { return std::make_shared<RaidPokemon>(this->GetSeed(), this->flawlessIVs, this->species); };
 

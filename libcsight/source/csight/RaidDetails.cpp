@@ -46,14 +46,11 @@ namespace csight::raid {
 
   std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
     u8* denBytes = new u8[0x18];
-    // Dens are zero-indexed in memory, but we omit 16 since it's for special encounters
-    // This is for consistency with the PKHeX Raid Plugin and RaidFinder
-    u8 readId = denId > 16 ? denId : denId - 1;
     bool isPlayingSword = this->GetTitleId() == SWORD_TITLE_ID;
     auto encounterTables = isPlayingSword ? swordEncounterTables : shieldEncounterTables;
     auto eventTemplateTable = this->ReadEventEncounterTable(isPlayingSword);
 
-    this->ReadHeap(this->denOffset + (readId * 0x18), denBytes, 0x18);
+    this->ReadHeap(this->denOffset + (denId * 0x18), denBytes, 0x18);
 
     auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable);
 
@@ -64,8 +61,7 @@ namespace csight::raid {
   std::vector<std::shared_ptr<Den>> RaidDetails::ReadDens(bool shouldReadAllDens) {
     std::vector<std::shared_ptr<Den>> dens;
 
-    // We don't treat den Ids as zero-indexed for consistency with the PKHeX Raid Plugin and RaidFinder
-    for (u32 i = 1; i < 100; i++) {
+    for (u32 i = 0; i < 100; i++) {
       auto den = this->ReadDen(i);
       if (shouldReadAllDens || den->GetIsActive()) {
         dens.push_back(den);
