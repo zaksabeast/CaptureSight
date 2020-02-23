@@ -1,4 +1,4 @@
-#include <ui/ErrorLayout.hpp>
+#include <ui/views/ErrorLayout.hpp>
 
 tsl::Element* ErrorLayout::createUI() {
   auto rootFrame = new tsl::element::Frame();

@@ -1,4 +1,4 @@
-#include <ui/WarningLayout.hpp>
+#include <ui/views/WarningLayout.hpp>
 #include <utils/Settings.hpp>
 
 extern Settings gsets;

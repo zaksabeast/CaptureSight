@@ -3,14 +3,14 @@
 #include <string>
 #include <functional>
 #include <pu/Plutonium>
-#include <ui/PokemonSummaryLayout.hpp>
-#include <ui/MainMenuLayout.hpp>
-#include <ui/PokemonListLayout.hpp>
-#include <ui/DenMenuLayout.hpp>
-#include <ui/RaidSearchLayout.hpp>
-#include <ui/PokemonViewMode.hpp>
-#include <ui/WarningLayout.hpp>
 #include <csight/core>
+#include <ui/views/PokemonSummaryLayout.hpp>
+#include <ui/views/MainMenuLayout.hpp>
+#include <ui/views/PokemonListLayout.hpp>
+#include <ui/views/DenMenuLayout.hpp>
+#include <ui/views/RaidSearchLayout.hpp>
+#include <ui/views/WarningLayout.hpp>
+#include <ui/PokemonViewMode.hpp>
 
 class MainApplication : public pu::ui::Application {
  public:

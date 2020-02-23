@@ -1,4 +1,4 @@
-#include <ui/MainLayout.hpp>
+#include <ui/views/MainLayout.hpp>
 #include <ui/MainApplication.hpp>
 
 extern MainApplication* mainApp;

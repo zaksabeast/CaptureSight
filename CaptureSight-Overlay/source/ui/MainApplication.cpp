@@ -1,11 +1,11 @@
 #include <functional>
 #include <tesla.hpp>
 #include <csight/core>
-#include <ui/ErrorLayout.hpp>
 #include <ui/MainApplication.hpp>
-#include <ui/PokemonSummaryLayout.hpp>
-#include <ui/PokemonListLayout.hpp>
-#include <ui/DenMenuLayout.hpp>
+#include <ui/views/ErrorLayout.hpp>
+#include <ui/views/PokemonSummaryLayout.hpp>
+#include <ui/views/PokemonListLayout.hpp>
+#include <ui/views/DenMenuLayout.hpp>
 
 MainApplication* mainApp;
 

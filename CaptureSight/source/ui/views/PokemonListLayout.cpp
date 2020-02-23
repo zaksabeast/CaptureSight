@@ -1,7 +1,7 @@
 #include <vector>
 #include <csight/core>
 #include <pu/Plutonium>
-#include <ui/PokemonListLayout.hpp>
+#include <ui/views/PokemonListLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>

@@ -1,6 +1,6 @@
 #include <csight/core>
 #include <tesla.hpp>
-#include <ui/RaidSearchLayout.hpp>
+#include <ui/views/RaidSearchLayout.hpp>
 
 RaidSearchLayout::RaidSearchLayout(u64 seed, u32 flawlessIVs) {
   m_seed = seed;

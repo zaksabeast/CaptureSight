@@ -1,7 +1,7 @@
 #include <tesla.hpp>
 #include <csight/core>
-#include <ui/DenMenuLayout.hpp>
-#include <ui/RaidSearchLayout.hpp>
+#include <ui/views/DenMenuLayout.hpp>
+#include <ui/views/RaidSearchLayout.hpp>
 
 DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> dens, std::string title) {
   m_dens = dens;

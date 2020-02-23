@@ -2,7 +2,7 @@
 #include <functional>
 #include <stratosphere.hpp>
 #include <pu/Plutonium>
-#include <ui/MainMenuLayout.hpp>
+#include <ui/views/MainMenuLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <utils/Settings.hpp>
 #include <utils/I18N.hpp>

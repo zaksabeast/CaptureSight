@@ -1,6 +1,6 @@
 #include <tesla.hpp>
-#include <ui/PokemonListLayout.hpp>
-#include <ui/PokemonSummaryLayout.hpp>
+#include <ui/views/PokemonListLayout.hpp>
+#include <ui/views/PokemonSummaryLayout.hpp>
 
 PokemonListLayout::PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::PK8>> pkms, std::function<std::string(u32)> GetPKMTitle) {
   m_title = title;

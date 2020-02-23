@@ -1,6 +1,6 @@
 #include <functional>
 #include <csight/core>
-#include <ui/DenMenuLayout.hpp>
+#include <ui/views/DenMenuLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>

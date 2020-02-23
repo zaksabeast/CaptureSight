@@ -3,7 +3,7 @@
 #include <stratosphere.hpp>
 #include <csight/core>
 #include <ui/PokemonSprite.hpp>
-#include <ui/PokemonSummaryLayout.hpp>
+#include <ui/views/PokemonSummaryLayout.hpp>
 #include <ui/elements/Polygon.hpp>
 #include <ui/elements/RoundedRectangle.hpp>
 #include <ui/elements/Line.hpp>

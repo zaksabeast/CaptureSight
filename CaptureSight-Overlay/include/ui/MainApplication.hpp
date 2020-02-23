@@ -3,7 +3,7 @@
 #include <tesla.hpp>
 #include <csight/core>
 #include <ui/PokemonViewMode.hpp>
-#include <ui/MainLayout.hpp>
+#include <ui/views/MainLayout.hpp>
 
 class MainApplication : public tsl::Overlay {
  public:

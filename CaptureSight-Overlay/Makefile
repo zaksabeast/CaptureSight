@@ -20,8 +20,8 @@ TARGET      := CaptureSight-Overlay
 ICON	    	:= icon.jpg
 
 BUILD       := build
-SOURCES     := source source/ui source/utils
-INCLUDES    := include include/ui include/utils ../Atmosphere-libs/libstratosphere/source/dmnt
+SOURCES     := source source/ui source/ui/views source/utils
+INCLUDES    := include include/ui include/ui/views include/utils ../Atmosphere-libs/libstratosphere/source/dmnt
 
 ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
 

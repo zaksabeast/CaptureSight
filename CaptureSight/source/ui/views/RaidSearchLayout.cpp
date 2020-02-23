@@ -1,5 +1,5 @@
 #include <csight/core>
-#include <ui/RaidSearchLayout.hpp>
+#include <ui/views/RaidSearchLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>
