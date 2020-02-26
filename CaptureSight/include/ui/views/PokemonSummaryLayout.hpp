@@ -15,11 +15,13 @@ class PokemonSummaryLayout : public pu::ui::Layout {
   PU_SMART_CTOR(PokemonSummaryLayout)
 
   void UpdateValues(std::string title, std::shared_ptr<csight::PK8> pkm, bool isShowingExtraDetail);
+  void Tick();
   statType::StatType GetStatType();
   void SetStatType(statType::StatType _statType);
 
  private:
   statType::StatType m_statType = statType::ivs;
+  int m_raidSearchCount = 0;
   RoundedRectangle::Ref m_instructionLabelBackground;
   pu::ui::elm::TextBlock::Ref m_instructionsTextBlock;
   RoundedRectangle::Ref m_statLabelBackground;

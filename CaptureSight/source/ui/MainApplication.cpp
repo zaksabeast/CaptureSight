@@ -176,7 +176,13 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
   } else if (Down & KEY_DRIGHT) {
     this->IncreaseSlot(1);
   } else if (Down & KEY_Y) {
-    m_raidSearchLayout->SetSeed(m_pkms[m_slot]->GetRaidSeed());
+    auto seedFuture = m_pkms[m_slot]->GetRaidSeedAsync();
+    while (csight::utils::waitingInterval(&seedFuture, 500)) {
+      m_pokemonSummaryLayout->Tick();
+      Application::CallForRender();
+    }
+
+    m_raidSearchLayout->SetSeed(seedFuture.get());
     m_raidSearchLayout->UpdateValues();
     this->LoadLayout(m_raidSearchLayout);
   } else if (Down & KEY_A) {
