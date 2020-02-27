@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <future>
 #include <switch.h>
 
 namespace csight::utils {
