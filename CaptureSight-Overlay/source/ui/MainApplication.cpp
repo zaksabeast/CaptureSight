@@ -64,6 +64,11 @@ void MainApplication::ChangeViewMode(ViewMode mode) {
       layout = new DenMenuLayout(dens, "Active Dens");
       m_mainLayout->changeTo(layout);
       return;
+    case allDens:
+      dens = m_gameReader->ReadDens(true);
+      layout = new DenMenuLayout(dens, "All Dens");
+      m_mainLayout->changeTo(layout);
+      return;
     case wild:
       guiTitle = "Wild/Trade/Party";
       pkms = {m_gameReader->ReadWild(), m_gameReader->ReadTrade(), m_gameReader->ReadRaid()};

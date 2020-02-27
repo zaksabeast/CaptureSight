@@ -25,6 +25,10 @@ tsl::Element* MainLayout::createUI() {
   activeDenItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, activeDens, std::placeholders::_1));
   menuList->addItem(activeDenItem);
 
+  auto allDenItem = new tsl::element::ListItem("All Dens");
+  allDenItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, allDens, std::placeholders::_1));
+  menuList->addItem(allDenItem);
+
   rootFrame->addElement(subHeader);
   rootFrame->addElement(menuList);
 
