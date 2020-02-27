@@ -258,6 +258,12 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<csigh
   m_pidEcTextBlock->SetText(pidEc);
 }
 
+void PokemonSummaryLayout::Tick() {
+  std::string instructions = i18n->Translate("Calculating seed") + std::string(m_raidSearchCount % 5, '.');
+  m_raidSearchCount++;
+  m_instructionsTextBlock->SetText(instructions);
+}
+
 statType::StatType PokemonSummaryLayout::GetStatType() {
   return m_statType;
 }

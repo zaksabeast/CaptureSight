@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <future>
 #include <switch.h>
 
 namespace csight::utils {
@@ -32,6 +33,11 @@ namespace csight::utils {
     }
 
     return accumulator;
+  }
+
+  template <typename T>
+  bool waitingInterval(std::future<T>* toWait, int interval_ms) {
+    return toWait->wait_for(std::chrono::milliseconds(interval_ms)) == std::future_status::timeout;
   }
 
   std::string getRaidShinyFrameText(u32 shinyFrame);
