@@ -35,18 +35,22 @@ class MainApplication : public pu::ui::Application {
   DenMenuLayout::Ref m_denMenuLayout;
   WarningLayout::Ref m_warningLayout;
   pu::ui::elm::TextBlock::Ref m_versionTextBlock;
+  std::vector<std::shared_ptr<pu::ui::Layout>> m_navigationHistory;
 
   void OnWarningInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputDenList(u64 seed);
+  void OnInputPokemonListLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void SelectPokemonSlot(u32 slot);
   void IncreaseSlot(u32 slotIncrease);
   void DecreaseSlot(u32 slotDecrease);
   void SetViewMode(ViewMode viewMode);
   void SetSlot(u32 slot);
   void RefreshSummaryLayout();
+  void NavigateTo(std::shared_ptr<pu::ui::Layout> layout);
+  void NavigateBack();
   std::string GetWildSummaryTitle(u32 slot);
   std::string GetBoxSummaryTitle(u32 slot);
   std::string GetPartySummaryTitle(u32 slot);
