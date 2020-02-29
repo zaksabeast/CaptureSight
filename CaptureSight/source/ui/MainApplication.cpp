@@ -71,6 +71,13 @@ void MainApplication::OnLoad() {
   SETUP_LAYOUT(DenMenuLayout, m_denMenuLayout);
   m_denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
 
+  SETUP_LAYOUT(RaidSearchSettingsLayout, m_raidSearchSettingsLayout);
+  m_raidSearchSettingsLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchSettingsLayout, this, std::placeholders::_1,
+                                                   std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+  m_raidSearchSettingsLayout->UpdateValues(m_raidSearchSettings);
+
+  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchSettingsLayout::UpdateValues, m_raidSearchSettingsLayout, m_raidSearchSettings));
+  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchLayout::UpdateValues, m_raidSearchLayout, m_raidSearchSettings));
   this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                              std::placeholders::_4));
   this->NavigateTo(m_mainMenuLayout);
@@ -96,8 +103,7 @@ void MainApplication::OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui:
 }
 
 void MainApplication::OnInputDenList(u64 seed) {
-  m_raidSearchLayout->SetSeed(seed);
-  m_raidSearchLayout->UpdateValues();
+  m_raidSearchSettings->SetSeed(seed);
   this->NavigateTo(m_raidSearchLayout);
 }
 
@@ -204,8 +210,7 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
       Application::CallForRender();
     }
 
-    m_raidSearchLayout->SetSeed(seedFuture.get());
-    m_raidSearchLayout->UpdateValues();
+    m_raidSearchSettings->SetSeed(seedFuture.get());
     this->NavigateTo(m_raidSearchLayout);
     // Resets state for when the user navigates back
     this->RefreshSummaryLayout();
@@ -217,12 +222,14 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
 }
 
 void MainApplication::OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
-  if (Down & KEY_L) {
-    m_raidSearchLayout->DecreaseFlawlessIVs();
-    m_raidSearchLayout->UpdateValues();
-  } else if (Down & KEY_R) {
-    m_raidSearchLayout->IncreaseFlawlessIVs();
-    m_raidSearchLayout->UpdateValues();
+  if (Down & KEY_A) {
+    this->NavigateTo(m_raidSearchSettingsLayout);
+  }
+}
+
+void MainApplication::OnInputRaidSearchSettingsLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
+  if (Down & KEY_A) {
+    this->NavigateBack();
   }
 }
 

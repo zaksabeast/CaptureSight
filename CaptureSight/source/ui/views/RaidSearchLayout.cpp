@@ -20,24 +20,25 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
   this->Add(m_menu);
 }
 
-void RaidSearchLayout::UpdateValues() {
+void RaidSearchLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSearchSettings> searchSettings) {
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
-  auto seedString = csight::utils::convertNumToHexString(m_seed);
+  auto seedString = csight::utils::convertNumToHexString(searchSettings->GetSeed());
+  m_menu->SetSelectedIndex(0);
   m_menu->ClearItems();
+  // Reset shiny frame
+  m_firstShinyFrame = MAX_DEN_SHINY_FRAME;
 
-  if (m_seed > 0) {
-    csight::raid::RaidSearchSettings searchSettings = {m_seed, m_flawlessIVs};
-    csight::raid::calculateRaidPKMList(&searchSettings,
+  if (searchSettings->GetSeed() > 0) {
+    csight::raid::calculateRaidPKMList(searchSettings,
                                        std::bind(&RaidSearchLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
     headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShineTypeText + i18n->Translate("Shiny") + " " +
-                 csight::utils::getRaidShinyFrameText(m_firstShinyFrame) + ", (-L) " + i18n->Translate("Flawless IVs") + " " +
-                 std::to_string(m_flawlessIVs) + " (+R)";
+                 csight::utils::getRaidShinyFrameText(m_firstShinyFrame) + " " + i18n->Translate("(A) to apply filters");
   }
 
   m_headerTextBlock->SetText(headerText);
 }
 
-void RaidSearchLayout::AddRaidMenuItem(csight::raid::RaidPokemon* raid, u32 frame) {
+void RaidSearchLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame) {
   auto isShiny = raid->GetIsShiny();
   std::string shinyText = "";
   std::string frameShineType = "";
@@ -59,16 +60,4 @@ void RaidSearchLayout::AddRaidMenuItem(csight::raid::RaidPokemon* raid, u32 fram
 
   menuItem->SetColor(gsets.GetTheme().text.light);
   m_menu->AddItem(menuItem);
-}
-
-void RaidSearchLayout::SetSeed(u64 seed) {
-  m_seed = seed;
-}
-
-void RaidSearchLayout::IncreaseFlawlessIVs() {
-  m_flawlessIVs = m_flawlessIVs >= 5 ? 1 : m_flawlessIVs + 1;
-}
-
-void RaidSearchLayout::DecreaseFlawlessIVs() {
-  m_flawlessIVs = m_flawlessIVs == 1 ? 5 : m_flawlessIVs - 1;
 }

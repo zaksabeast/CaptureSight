@@ -3,11 +3,7 @@
 #include <switch.h>
 
 namespace csight::shiny {
-  enum ShinyType {
-    None = 0,
-    Star = 1,
-    Square = 2,
-  };
+  enum ShinyType { None, Star, Square, Any };
 
   u32 GetShinyValue(u32 value);
   ShinyType GetShinyType(u32 PID, u32 SIDTID);

@@ -10,6 +10,7 @@
 #include <ui/views/DenMenuLayout.hpp>
 #include <ui/views/RaidSearchLayout.hpp>
 #include <ui/views/WarningLayout.hpp>
+#include <ui/views/RaidSearchSettingsLayout.hpp>
 #include <ui/PokemonViewMode.hpp>
 
 class MainApplication : public pu::ui::Application {
@@ -34,6 +35,8 @@ class MainApplication : public pu::ui::Application {
   RaidSearchLayout::Ref m_raidSearchLayout;
   DenMenuLayout::Ref m_denMenuLayout;
   WarningLayout::Ref m_warningLayout;
+  RaidSearchSettingsLayout::Ref m_raidSearchSettingsLayout;
+  std::shared_ptr<csight::raid::RaidSearchSettings> m_raidSearchSettings = std::make_shared<csight::raid::RaidSearchSettings>();
   pu::ui::elm::TextBlock::Ref m_versionTextBlock;
   std::vector<std::shared_ptr<pu::ui::Layout>> m_navigationHistory;
 
@@ -43,6 +46,7 @@ class MainApplication : public pu::ui::Application {
   void OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputDenList(u64 seed);
   void OnInputPokemonListLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void OnInputRaidSearchSettingsLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void SelectPokemonSlot(u32 slot);
   void IncreaseSlot(u32 slotIncrease);
   void DecreaseSlot(u32 slotDecrease);

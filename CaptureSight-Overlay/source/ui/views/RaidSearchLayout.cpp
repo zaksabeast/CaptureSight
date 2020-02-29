@@ -1,3 +1,4 @@
+#include <memory>
 #include <functional>
 #include <csight/core>
 #include <tesla.hpp>
@@ -11,10 +12,13 @@ RaidSearchLayout::RaidSearchLayout(u64 seed, u32 flawlessIVs) {
 tsl::Element* RaidSearchLayout::createUI() {
   auto rootFrame = new tsl::element::Frame();
   auto denList = new tsl::element::List();
+  auto searchSettings = std::make_shared<csight::raid::RaidSearchSettings>();
+
+  searchSettings->SetSeed(m_seed);
+  searchSettings->SetFlawlessIVs(m_flawlessIVs);
 
   if (m_seed > 0) {
-    csight::raid::RaidSearchSettings searchSettings = {m_seed, m_flawlessIVs};
-    csight::raid::calculateRaidPKMList(&searchSettings,
+    csight::raid::calculateRaidPKMList(searchSettings,
                                        std::bind(&RaidSearchLayout::AddRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
     m_title = csight::utils::convertNumToHexString(m_seed) + m_firstShinyTypeText + csight::utils::getRaidShinyFrameText(m_firstShinyFrame);
   } else {
@@ -31,7 +35,7 @@ tsl::Element* RaidSearchLayout::createUI() {
   return rootFrame;
 }
 
-void RaidSearchLayout::AddRaidMenuItem(tsl::element::List* denList, csight::raid::RaidPokemon* raid, u32 frame) {
+void RaidSearchLayout::AddRaidMenuItem(tsl::element::List* denList, std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame) {
   std::string shinyText = "";
 
   if (raid->GetIsShiny()) {
