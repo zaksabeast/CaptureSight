@@ -1,3 +1,4 @@
+#include <functional>
 #include <csight/core>
 #include <ui/views/RaidSearchLayout.hpp>
 #include <ui/MainApplication.hpp>
@@ -20,49 +21,44 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
 }
 
 void RaidSearchLayout::UpdateValues() {
-  uint firstShinyFrame = MAX_DEN_SHINY_FRAME;
-  // Assume shiny will be star in case no nearby shinies are found
-  std::string firstShineType = " ★ ";
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(m_seed);
-  u64 nextSeed = m_seed;
   m_menu->ClearItems();
 
   if (m_seed > 0) {
-    for (uint frame = 0; frame < MAX_DEN_SHINY_FRAME; frame++) {
-      auto raid = csight::raid::RaidPokemon(nextSeed, m_flawlessIVs, 0);
-      auto rng = csight::rng::xoroshiro(nextSeed);
-      nextSeed = rng.nextulong();
-
-      auto isShiny = raid.GetIsShiny();
-      std::string shinyText = "";
-      std::string frameShineType = "";
-
-      if (isShiny) {
-        frameShineType = raid.GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
-        shinyText = "Shiny";
-
-        if (firstShinyFrame == MAX_DEN_SHINY_FRAME) {
-          firstShinyFrame = frame;
-          firstShineType = frameShineType;
-        }
-      }
-
-      auto formattedIVs = csight::utils::joinNums(raid.GetIVs(), "/");
-      std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs +
-                          frameShineType + i18n->Translate(shinyText);
-      auto menuItem = pu::ui::elm::MenuItem::New(title);
-
-      menuItem->SetColor(gsets.GetTheme().text.light);
-      m_menu->AddItem(menuItem);
-    }
-
-    headerText = i18n->Translate("Seed") + ": " + seedString + firstShineType + i18n->Translate("Shiny") + " " +
-                 csight::utils::getRaidShinyFrameText(firstShinyFrame) + ", (-L) " + i18n->Translate("Flawless IVs") + " " +
+    csight::raid::RaidSearchSettings searchSettings = {m_seed, m_flawlessIVs};
+    csight::raid::calculateRaidPKMList(&searchSettings,
+                                       std::bind(&RaidSearchLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
+    headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShineTypeText + i18n->Translate("Shiny") + " " +
+                 csight::utils::getRaidShinyFrameText(m_firstShinyFrame) + ", (-L) " + i18n->Translate("Flawless IVs") + " " +
                  std::to_string(m_flawlessIVs) + " (+R)";
   }
 
   m_headerTextBlock->SetText(headerText);
+}
+
+void RaidSearchLayout::AddRaidMenuItem(csight::raid::RaidPokemon* raid, u32 frame) {
+  auto isShiny = raid->GetIsShiny();
+  std::string shinyText = "";
+  std::string frameShineType = "";
+
+  if (isShiny) {
+    frameShineType = raid->GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
+    shinyText = "Shiny";
+
+    if (m_firstShinyFrame == MAX_DEN_SHINY_FRAME) {
+      m_firstShinyFrame = frame;
+      m_firstShineTypeText = frameShineType;
+    }
+  }
+
+  auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
+  std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + frameShineType +
+                      i18n->Translate(shinyText);
+  auto menuItem = pu::ui::elm::MenuItem::New(title);
+
+  menuItem->SetColor(gsets.GetTheme().text.light);
+  m_menu->AddItem(menuItem);
 }
 
 void RaidSearchLayout::SetSeed(u64 seed) {

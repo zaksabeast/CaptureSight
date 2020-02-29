@@ -1,3 +1,4 @@
+#include <functional>
 #include <csight/core>
 #include <tesla.hpp>
 #include <ui/views/RaidSearchLayout.hpp>
@@ -8,37 +9,14 @@ RaidSearchLayout::RaidSearchLayout(u64 seed, u32 flawlessIVs) {
 }
 
 tsl::Element* RaidSearchLayout::createUI() {
-  u64 nextSeed = m_seed;
-  u32 firstShinyFrame = MAX_DEN_SHINY_FRAME;
-  // Assume shiny will be star in case no nearby shinies are found
-  std::string firstShinyType = " ★";
   auto rootFrame = new tsl::element::Frame();
   auto denList = new tsl::element::List();
 
   if (m_seed > 0) {
-    for (u32 frame = 0; frame < MAX_DEN_SHINY_FRAME; frame++) {
-      auto raid = csight::raid::RaidPokemon(nextSeed, m_flawlessIVs, 0);
-      auto rng = csight::rng::xoroshiro(nextSeed);
-      nextSeed = rng.nextulong();
-
-      std::string shinyText = "";
-
-      if (raid.GetIsShiny()) {
-        shinyText = raid.GetShineType() == csight::shiny::Square ? " ■ " : " ★";
-
-        if (firstShinyFrame == MAX_DEN_SHINY_FRAME) {
-          firstShinyFrame = frame;
-          firstShinyType = shinyText;
-        }
-      }
-
-      auto formattedIVs = csight::utils::joinNums(raid.GetIVs(), "/");
-      std::string denTitle = "Fr " + std::to_string(frame) + " - " + formattedIVs + shinyText;
-      auto menuItem = new tsl::element::ListItem(denTitle);
-
-      denList->addItem(menuItem);
-    }
-    m_title = csight::utils::convertNumToHexString(m_seed) + firstShinyType + csight::utils::getRaidShinyFrameText(firstShinyFrame);
+    csight::raid::RaidSearchSettings searchSettings = {m_seed, m_flawlessIVs};
+    csight::raid::calculateRaidPKMList(&searchSettings,
+                                       std::bind(&RaidSearchLayout::AddRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
+    m_title = csight::utils::convertNumToHexString(m_seed) + m_firstShinyTypeText + csight::utils::getRaidShinyFrameText(m_firstShinyFrame);
   } else {
     m_title = "Not a non-shiny raid Pokemon!";
   }
@@ -51,6 +29,25 @@ tsl::Element* RaidSearchLayout::createUI() {
   rootFrame->addElement(titleBlock);
 
   return rootFrame;
+}
+
+void RaidSearchLayout::AddRaidMenuItem(tsl::element::List* denList, csight::raid::RaidPokemon* raid, u32 frame) {
+  std::string shinyText = "";
+
+  if (raid->GetIsShiny()) {
+    shinyText = raid->GetShineType() == csight::shiny::Square ? " ■ " : " ★";
+
+    if (m_firstShinyFrame == MAX_DEN_SHINY_FRAME) {
+      m_firstShinyFrame = frame;
+      m_firstShinyTypeText = shinyText;
+    }
+  }
+
+  auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
+  std::string denTitle = "Fr " + std::to_string(frame) + " - " + formattedIVs + shinyText;
+  auto menuItem = new tsl::element::ListItem(denTitle);
+
+  denList->addItem(menuItem);
 }
 
 void RaidSearchLayout::AddTitleBlock(u16 x, u16 y, tsl::Screen* screen) {
