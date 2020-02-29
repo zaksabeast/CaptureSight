@@ -8,6 +8,10 @@ MainApplication::Ref mainApp;
 Settings gsets;
 std::shared_ptr<I18N> i18n;
 
+#define SETUP_LAYOUT(Class, m_layout) \
+  m_layout = Class::New();            \
+  m_layout->SetBackgroundColor(gsets.GetTheme().background.dark);
+
 void MainApplication::OnLoad() {
   // Change default font to load characters properly (chs cht ko)
   std::string language = GetTranslationCode();
@@ -45,30 +49,30 @@ void MainApplication::OnLoad() {
 
   m_versionTextBlock = pu::ui::elm::TextBlock::New(50, 50, CSIGHT_VERION, 25);
   m_versionTextBlock->SetColor(gsets.GetTheme().text.light);
-  m_pokemonSummaryLayout = PokemonSummaryLayout::New();
+
+  SETUP_LAYOUT(PokemonSummaryLayout, m_pokemonSummaryLayout);
   m_pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
                                                std::placeholders::_3, std::placeholders::_4));
-  m_pokemonSummaryLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  m_mainMenuLayout = MainMenuLayout::New();
+
+  SETUP_LAYOUT(MainMenuLayout, m_mainMenuLayout);
   m_mainMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::SetViewMode, this, std::placeholders::_1));
-  m_mainMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
   m_mainMenuLayout->Add(m_versionTextBlock);
-  m_pokemonListLayout = PokemonListLayout::New();
-  m_pokemonListLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+
+  SETUP_LAYOUT(PokemonListLayout, m_pokemonListLayout);
   m_pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));
   m_pokemonListLayout->UpdateValues(m_pkms, m_GetSummaryTitle);
   m_pokemonListLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonListLayout, this, std::placeholders::_1, std::placeholders::_2,
                                             std::placeholders::_3, std::placeholders::_4));
-  m_raidSearchLayout = RaidSearchLayout::New();
+
+  SETUP_LAYOUT(RaidSearchLayout, m_raidSearchLayout);
   m_raidSearchLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchLayout, this, std::placeholders::_1, std::placeholders::_2,
                                            std::placeholders::_3, std::placeholders::_4));
-  m_raidSearchLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  m_denMenuLayout = DenMenuLayout::New();
-  m_denMenuLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
+
+  SETUP_LAYOUT(DenMenuLayout, m_denMenuLayout);
   m_denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
+
   this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                              std::placeholders::_4));
-
   this->NavigateTo(m_mainMenuLayout);
 }
 
