@@ -64,9 +64,9 @@ void MainApplication::OnLoad() {
   m_pokemonListLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonListLayout, this, std::placeholders::_1, std::placeholders::_2,
                                             std::placeholders::_3, std::placeholders::_4));
 
-  SETUP_LAYOUT(RaidSearchLayout, m_raidSearchLayout);
-  m_raidSearchLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchLayout, this, std::placeholders::_1, std::placeholders::_2,
-                                           std::placeholders::_3, std::placeholders::_4));
+  SETUP_LAYOUT(RaidSearchResultLayout, m_raidSearchResultLayout);
+  m_raidSearchResultLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchResultLayout, this, std::placeholders::_1, std::placeholders::_2,
+                                                 std::placeholders::_3, std::placeholders::_4));
 
   SETUP_LAYOUT(DenMenuLayout, m_denMenuLayout);
   m_denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
@@ -77,7 +77,7 @@ void MainApplication::OnLoad() {
   m_raidSearchSettingsLayout->UpdateValues(m_raidSearchSettings);
 
   m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchSettingsLayout::UpdateValues, m_raidSearchSettingsLayout, m_raidSearchSettings));
-  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchLayout::UpdateValues, m_raidSearchLayout, m_raidSearchSettings));
+  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchResultLayout::UpdateValues, m_raidSearchResultLayout, m_raidSearchSettings));
   this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                              std::placeholders::_4));
   this->NavigateTo(m_mainMenuLayout);
@@ -104,7 +104,7 @@ void MainApplication::OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui:
 
 void MainApplication::OnInputDenList(u64 seed) {
   m_raidSearchSettings->SetSeed(seed);
-  this->NavigateTo(m_raidSearchLayout);
+  this->NavigateTo(m_raidSearchResultLayout);
 }
 
 void MainApplication::OnInputPokemonListLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
@@ -211,7 +211,7 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
     }
 
     m_raidSearchSettings->SetSeed(seedFuture.get());
-    this->NavigateTo(m_raidSearchLayout);
+    this->NavigateTo(m_raidSearchResultLayout);
     // Resets state for when the user navigates back
     this->RefreshSummaryLayout();
   } else if (Down & KEY_A) {
@@ -221,7 +221,7 @@ void MainApplication::OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu
   }
 }
 
-void MainApplication::OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
+void MainApplication::OnInputRaidSearchResultLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
   if (Down & KEY_A) {
     this->NavigateTo(m_raidSearchSettingsLayout);
   }

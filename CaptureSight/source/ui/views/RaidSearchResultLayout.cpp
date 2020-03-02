@@ -1,6 +1,6 @@
 #include <functional>
 #include <csight/core>
-#include <ui/views/RaidSearchLayout.hpp>
+#include <ui/views/RaidSearchResultLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
 #include <utils/Settings.hpp>
@@ -11,7 +11,7 @@ extern MainApplication::Ref mainApp;
 extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
-RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
+RaidSearchResultLayout::RaidSearchResultLayout() : Layout::Layout() {
   m_headerTextBlock = pu::ui::elm::TextBlock::New(50, 50, "", 25);
   m_headerTextBlock->SetColor(gsets.GetTheme().text.light);
   m_menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
@@ -20,7 +20,7 @@ RaidSearchLayout::RaidSearchLayout() : Layout::Layout() {
   this->Add(m_menu);
 }
 
-void RaidSearchLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSearchSettings> searchSettings) {
+void RaidSearchResultLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSearchSettings> searchSettings) {
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(searchSettings->GetSeed());
   m_menu->SetSelectedIndex(0);
@@ -30,7 +30,7 @@ void RaidSearchLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSearchSett
 
   if (searchSettings->GetSeed() > 0) {
     csight::raid::calculateRaidPKMList(searchSettings,
-                                       std::bind(&RaidSearchLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
+                                       std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
     headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShineTypeText + i18n->Translate("Shiny") + " " +
                  csight::utils::getRaidShinyFrameText(m_firstShinyFrame) + " " + i18n->Translate("(A) to apply filters");
   }
@@ -38,7 +38,7 @@ void RaidSearchLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSearchSett
   m_headerTextBlock->SetText(headerText);
 }
 
-void RaidSearchLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame) {
+void RaidSearchResultLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame) {
   auto isShiny = raid->GetIsShiny();
   std::string shinyText = "";
   std::string frameShineType = "";

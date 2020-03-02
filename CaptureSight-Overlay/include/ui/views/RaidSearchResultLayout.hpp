@@ -2,9 +2,9 @@
 
 #include <tesla.hpp>
 
-class RaidSearchLayout : public tsl::Gui {
+class RaidSearchResultLayout : public tsl::Gui {
  public:
-  RaidSearchLayout(u64 seed, u32 flawlessIVs);
+  RaidSearchResultLayout(u64 seed, u32 flawlessIVs);
   virtual tsl::Element* createUI();
   void AddTitleBlock(u16 x, u16 y, tsl::Screen* screen);
   void AddRaidMenuItem(tsl::element::List* denList, std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame);

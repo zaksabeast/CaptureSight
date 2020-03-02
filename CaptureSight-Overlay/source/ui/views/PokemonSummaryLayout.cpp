@@ -1,7 +1,7 @@
 #include <csight/core>
 #include <tesla.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
-#include <ui/views/RaidSearchLayout.hpp>
+#include <ui/views/RaidSearchResultLayout.hpp>
 
 PokemonSummaryLayout::PokemonSummaryLayout(std::shared_ptr<csight::PK8> pkm) {
   m_pkm = pkm;
@@ -59,7 +59,7 @@ bool PokemonSummaryLayout::FindRaidSeed(s64 keys) {
     auto seedFuture = m_pkm->GetRaidSeedAsync();
     seedFuture.wait();
     m_seed = seedFuture.get();
-    this->changeTo(new RaidSearchLayout(m_seed, 5));
+    this->changeTo(new RaidSearchResultLayout(m_seed, 5));
 
     return true;
   }

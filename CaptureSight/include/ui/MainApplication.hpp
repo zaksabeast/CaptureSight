@@ -8,7 +8,7 @@
 #include <ui/views/MainMenuLayout.hpp>
 #include <ui/views/PokemonListLayout.hpp>
 #include <ui/views/DenMenuLayout.hpp>
-#include <ui/views/RaidSearchLayout.hpp>
+#include <ui/views/RaidSearchResultLayout.hpp>
 #include <ui/views/WarningLayout.hpp>
 #include <ui/views/RaidSearchSettingsLayout.hpp>
 #include <ui/PokemonViewMode.hpp>
@@ -32,7 +32,7 @@ class MainApplication : public pu::ui::Application {
   PokemonSummaryLayout::Ref m_pokemonSummaryLayout;
   MainMenuLayout::Ref m_mainMenuLayout;
   PokemonListLayout::Ref m_pokemonListLayout;
-  RaidSearchLayout::Ref m_raidSearchLayout;
+  RaidSearchResultLayout::Ref m_raidSearchResultLayout;
   DenMenuLayout::Ref m_denMenuLayout;
   WarningLayout::Ref m_warningLayout;
   RaidSearchSettingsLayout::Ref m_raidSearchSettingsLayout;
@@ -43,7 +43,7 @@ class MainApplication : public pu::ui::Application {
   void OnWarningInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnMainApplicationInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputPokemonSummaryLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
-  void OnInputRaidSearchLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void OnInputRaidSearchResultLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputDenList(u64 seed);
   void OnInputPokemonListLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputRaidSearchSettingsLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);

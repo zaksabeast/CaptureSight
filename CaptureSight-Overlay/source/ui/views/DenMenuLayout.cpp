@@ -1,7 +1,7 @@
 #include <tesla.hpp>
 #include <csight/core>
 #include <ui/views/DenMenuLayout.hpp>
-#include <ui/views/RaidSearchLayout.hpp>
+#include <ui/views/RaidSearchResultLayout.hpp>
 
 DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> dens, std::string title) {
   m_dens = dens;
@@ -37,7 +37,7 @@ void DenMenuLayout::AddTitleBlock(u16 x, u16 y, tsl::Screen* screen) {
 
 bool DenMenuLayout::OnClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys) {
   if (keys == KEY_A) {
-    this->changeTo(new RaidSearchLayout(den->GetSeed(), 5));
+    this->changeTo(new RaidSearchResultLayout(den->GetSeed(), 5));
 
     return true;
   }

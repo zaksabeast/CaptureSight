@@ -4,10 +4,10 @@
 #include <pu/Plutonium>
 #include <csight/core>
 
-class RaidSearchLayout : public pu::ui::Layout {
+class RaidSearchResultLayout : public pu::ui::Layout {
  public:
-  RaidSearchLayout();
-  PU_SMART_CTOR(RaidSearchLayout)
+  RaidSearchResultLayout();
+  PU_SMART_CTOR(RaidSearchResultLayout)
 
   void UpdateValues(std::shared_ptr<csight::raid::RaidSearchSettings> searchSettings);
   void AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame);
