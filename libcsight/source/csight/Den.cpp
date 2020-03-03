@@ -38,7 +38,7 @@ namespace csight::raid {
 
   std::string Den::GetShinyFrameText() { return utils::getRaidShinyFrameText(m_shinyFrame); }
 
-  shiny::ShinyType Den::GetShineType() { return m_shineType; }
+  shiny::ShinyType Den::GetShinyType() { return m_shineType; }
 
   void Den::CalculateShinyDetails() {
     u64 seed = this->GetSeed();

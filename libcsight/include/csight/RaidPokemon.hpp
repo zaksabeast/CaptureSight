@@ -13,7 +13,7 @@ namespace csight::raid {
     u16 GetSpecies();
     std::string GetSpeciesString();
     bool GetIsShiny();
-    shiny::ShinyType GetShineType();
+    shiny::ShinyType GetShinyType();
     std::vector<u8> GetIVs();
 
    private:

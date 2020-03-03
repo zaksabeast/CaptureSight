@@ -47,7 +47,7 @@ namespace csight::raid {
 
   bool RaidPokemon::GetIsShiny() { return m_shineType > shiny::None; }
 
-  shiny::ShinyType RaidPokemon::GetShineType() { return m_shineType; }
+  shiny::ShinyType RaidPokemon::GetShinyType() { return m_shineType; }
 
   std::vector<u8> RaidPokemon::GetIVs() { return m_IVs; }
 }  // namespace csight::raid

@@ -16,7 +16,7 @@ namespace csight::raid {
     u64 GetSeed();
     u16 GetShinyFrame();
     std::string GetShinyFrameText();
-    shiny::ShinyType GetShineType();
+    shiny::ShinyType GetShinyType();
     u8 GetStars();
     u8 GetDisplayStars();
     u8 GetRandRoll();

@@ -14,7 +14,7 @@ class RaidSearchResultLayout : public pu::ui::Layout {
 
  private:
   // Assume shiny will be star in case no nearby shinies are found
-  std::string m_firstShineTypeText = " ★ ";
+  std::string m_firstShinyTypeText = " ★ ";
   u32 m_firstShinyFrame = MAX_RAID_ADVANCES;
   pu::ui::elm::Menu::Ref m_menu;
   pu::ui::elm::TextBlock::Ref m_headerTextBlock;

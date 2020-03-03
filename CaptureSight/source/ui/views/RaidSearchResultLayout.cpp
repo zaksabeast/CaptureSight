@@ -31,7 +31,7 @@ void RaidSearchResultLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSear
   if (searchSettings->GetSeed() > 0) {
     csight::raid::calculateRaidPKMList(searchSettings,
                                        std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
-    headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShineTypeText + i18n->Translate("Shiny") + " " +
+    headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShinyTypeText + i18n->Translate("Shiny") + " " +
                  csight::utils::getRaidShinyFrameText(m_firstShinyFrame) + " " + i18n->Translate("(A) to apply filters");
   }
 
@@ -41,20 +41,20 @@ void RaidSearchResultLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSear
 void RaidSearchResultLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame) {
   auto isShiny = raid->GetIsShiny();
   std::string shinyText = "";
-  std::string frameShineType = "";
+  std::string frameShinyType = "";
 
   if (isShiny) {
-    frameShineType = raid->GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
+    frameShinyType = raid->GetShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
     shinyText = "Shiny";
 
     if (m_firstShinyFrame == MAX_RAID_ADVANCES) {
       m_firstShinyFrame = frame;
-      m_firstShineTypeText = frameShineType;
+      m_firstShinyTypeText = frameShinyType;
     }
   }
 
   auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
-  std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + frameShineType +
+  std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + frameShinyType +
                       i18n->Translate(shinyText);
   auto menuItem = pu::ui::elm::MenuItem::New(title);
 

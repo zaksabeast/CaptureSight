@@ -18,7 +18,7 @@ namespace csight::raid {
   }
 
   bool checkShinyType(shiny::ShinyType shinyType, std::shared_ptr<RaidPokemon> raid) {
-    auto raidShinyType = raid->GetShineType();
+    auto raidShinyType = raid->GetShinyType();
 
     switch (shinyType) {
       case shiny::Any:

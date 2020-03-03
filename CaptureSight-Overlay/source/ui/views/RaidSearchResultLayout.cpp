@@ -39,7 +39,7 @@ void RaidSearchResultLayout::AddRaidMenuItem(tsl::element::List* denList, std::s
   std::string shinyText = "";
 
   if (raid->GetIsShiny()) {
-    shinyText = raid->GetShineType() == csight::shiny::Square ? " ■ " : " ★";
+    shinyText = raid->GetShinyType() == csight::shiny::Square ? " ■ " : " ★";
 
     if (m_firstShinyFrame == MAX_RAID_ADVANCES) {
       m_firstShinyFrame = frame;
