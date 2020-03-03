@@ -10,12 +10,12 @@ class RaidSearchResultLayout : public pu::ui::Layout {
   PU_SMART_CTOR(RaidSearchResultLayout)
 
   void UpdateValues(std::shared_ptr<csight::raid::RaidSearchSettings> searchSettings);
-  void AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame);
+  void AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 advance);
 
  private:
   // Assume shiny will be star in case no nearby shinies are found
   std::string m_firstShinyTypeText = " ★ ";
-  u32 m_firstShinyFrame = MAX_RAID_ADVANCES;
+  u32 m_firstShinyAdvance = MAX_RAID_ADVANCES;
   pu::ui::elm::Menu::Ref m_menu;
   pu::ui::elm::TextBlock::Ref m_headerTextBlock;
 };

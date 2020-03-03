@@ -40,5 +40,5 @@ namespace csight::utils {
     return toWait->wait_for(std::chrono::milliseconds(interval_ms)) == std::future_status::timeout;
   }
 
-  std::string getRaidShinyFrameText(u32 shinyFrame);
+  std::string getRaidShinyAdvanceText(u32 shinyAdvance);
 }  // namespace csight::utils

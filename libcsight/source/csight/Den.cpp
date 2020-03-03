@@ -34,18 +34,18 @@ namespace csight::raid {
 
   u64 Den::GetSeed() { return *(u64*)(m_data + 0x8); }
 
-  u16 Den::GetShinyFrame() { return m_shinyFrame; }
+  u16 Den::GetShinyAdvance() { return m_shinyAdvance; }
 
-  std::string Den::GetShinyFrameText() { return utils::getRaidShinyFrameText(m_shinyFrame); }
+  std::string Den::GetShinyAdvanceText() { return utils::getRaidShinyAdvanceText(m_shinyAdvance); }
 
   shiny::ShinyType Den::GetShinyType() { return m_shineType; }
 
   void Den::CalculateShinyDetails() {
     u64 seed = this->GetSeed();
-    u16 shinyFrame = 0;
+    u16 shinyAdvance = 0;
     shiny::ShinyType shineType = shiny::None;
 
-    while (shinyFrame < MAX_RAID_ADVANCES) {
+    while (shinyAdvance < MAX_RAID_ADVANCES) {
       auto rng = rng::xoroshiro(seed);
       seed = rng.nextulong();  // Also advance for EC
       u32 SIDTID = rng.nextuint();
@@ -54,10 +54,10 @@ namespace csight::raid {
       if (shineType > shiny::None)
         break;
       else
-        shinyFrame++;
+        shinyAdvance++;
     }
 
-    m_shinyFrame = shinyFrame;
+    m_shinyAdvance = shinyAdvance;
     m_shineType = shineType;
   }
 

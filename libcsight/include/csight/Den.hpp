@@ -14,8 +14,8 @@ namespace csight::raid {
     Den(u8* data, u8 denId, std::vector<RaidEncounterTable> encounterTables, std::shared_ptr<RaidEncounterTable> eventEncounterTable);
     ~Den();
     u64 GetSeed();
-    u16 GetShinyFrame();
-    std::string GetShinyFrameText();
+    u16 GetShinyAdvance();
+    std::string GetShinyAdvanceText();
     shiny::ShinyType GetShinyType();
     u8 GetStars();
     u8 GetDisplayStars();
@@ -36,7 +36,7 @@ namespace csight::raid {
     u8 m_denId = 0;
     u16 m_species = 0;
     u8 m_flawlessIVs = 0;
-    u16 m_shinyFrame = 0;
+    u16 m_shinyAdvance = 0;
     shiny::ShinyType m_shineType = shiny::Star;
 
     raid::RaidEncounter FindSpawn(std::vector<raid::RaidEncounter> raidEncounters);

@@ -20,7 +20,7 @@ tsl::Element* RaidSearchResultLayout::createUI() {
   if (m_seed > 0) {
     csight::raid::calculateRaidPKMList(
         searchSettings, std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
-    m_title = csight::utils::convertNumToHexString(m_seed) + m_firstShinyTypeText + csight::utils::getRaidShinyFrameText(m_firstShinyFrame);
+    m_title = csight::utils::convertNumToHexString(m_seed) + m_firstShinyTypeText + csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance);
   } else {
     m_title = "Not a non-shiny raid Pokemon!";
   }
@@ -35,20 +35,20 @@ tsl::Element* RaidSearchResultLayout::createUI() {
   return rootFrame;
 }
 
-void RaidSearchResultLayout::AddRaidMenuItem(tsl::element::List* denList, std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame) {
+void RaidSearchResultLayout::AddRaidMenuItem(tsl::element::List* denList, std::shared_ptr<csight::raid::RaidPokemon> raid, u32 advance) {
   std::string shinyText = "";
 
   if (raid->GetIsShiny()) {
     shinyText = raid->GetShinyType() == csight::shiny::Square ? " ■ " : " ★";
 
-    if (m_firstShinyFrame == MAX_RAID_ADVANCES) {
-      m_firstShinyFrame = frame;
+    if (m_firstShinyAdvance == MAX_RAID_ADVANCES) {
+      m_firstShinyAdvance = advance;
       m_firstShinyTypeText = shinyText;
     }
   }
 
   auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
-  std::string denTitle = "Fr " + std::to_string(frame) + " - " + formattedIVs + shinyText;
+  std::string denTitle = "Fr " + std::to_string(advance) + " - " + formattedIVs + shinyText;
   auto menuItem = new tsl::element::ListItem(denTitle);
 
   denList->addItem(menuItem);

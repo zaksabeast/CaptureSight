@@ -25,37 +25,37 @@ void RaidSearchResultLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSear
   auto seedString = csight::utils::convertNumToHexString(searchSettings->GetSeed());
   m_menu->SetSelectedIndex(0);
   m_menu->ClearItems();
-  // Reset shiny frame
-  m_firstShinyFrame = MAX_RAID_ADVANCES;
+  // Reset shiny advance
+  m_firstShinyAdvance = MAX_RAID_ADVANCES;
 
   if (searchSettings->GetSeed() > 0) {
     csight::raid::calculateRaidPKMList(searchSettings,
                                        std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
     headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShinyTypeText + i18n->Translate("Shiny") + " " +
-                 csight::utils::getRaidShinyFrameText(m_firstShinyFrame) + " " + i18n->Translate("(A) to apply filters");
+                 csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance) + " " + i18n->Translate("(A) to apply filters");
   }
 
   m_headerTextBlock->SetText(headerText);
 }
 
-void RaidSearchResultLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 frame) {
+void RaidSearchResultLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 advance) {
   auto isShiny = raid->GetIsShiny();
   std::string shinyText = "";
-  std::string frameShinyType = "";
+  std::string advanceShinyType = "";
 
   if (isShiny) {
-    frameShinyType = raid->GetShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
+    advanceShinyType = raid->GetShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
     shinyText = "Shiny";
 
-    if (m_firstShinyFrame == MAX_RAID_ADVANCES) {
-      m_firstShinyFrame = frame;
-      m_firstShinyTypeText = frameShinyType;
+    if (m_firstShinyAdvance == MAX_RAID_ADVANCES) {
+      m_firstShinyAdvance = advance;
+      m_firstShinyTypeText = advanceShinyType;
     }
   }
 
   auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
-  std::string title = i18n->Translate("Frame") + " " + std::to_string(frame) + " - " + i18n->Translate("IVs") + ": " + formattedIVs + frameShinyType +
-                      i18n->Translate(shinyText);
+  std::string title = i18n->Translate("Advance") + " " + std::to_string(advance) + " - " + i18n->Translate("IVs") + ": " + formattedIVs +
+                      advanceShinyType + i18n->Translate(shinyText);
   auto menuItem = pu::ui::elm::MenuItem::New(title);
 
   menuItem->SetColor(gsets.GetTheme().text.light);

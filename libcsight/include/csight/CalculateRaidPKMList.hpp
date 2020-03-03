@@ -47,5 +47,5 @@ namespace csight::raid {
 
   // Using a callback reduces memory consumption by only having one RaidPokemon in memory at a time
   void calculateRaidPKMList(std::shared_ptr<RaidSearchSettings> searchSettings,
-                            std::function<void(std::shared_ptr<RaidPokemon> raid, u32 frame)> callback);
+                            std::function<void(std::shared_ptr<RaidPokemon> raid, u32 advance)> callback);
 }  // namespace csight::raid

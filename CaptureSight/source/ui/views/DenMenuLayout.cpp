@@ -31,7 +31,7 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>>
     auto stars = std::to_string(den->GetDisplayStars());
     std::string eventText = den->GetIsEvent() ? " - " + i18n->Translate("Event") : "";
     std::string title = i18n->Translate("Den Id") + ": " + std::to_string(den->GetDenDisplayId()) + " - " + i18n->Translate("IVs") + ": " +
-                        formattedIVs + ", " + stars + "★ " + i18n->Translate("Shiny") + ": " + den->GetShinyFrameText() + eventText;
+                        formattedIVs + ", " + stars + "★ " + i18n->Translate("Shiny") + ": " + den->GetShinyAdvanceText() + eventText;
     auto menuItem = pu::ui::elm::MenuItem::New(title);
 
     menuItem->SetColor(gsets.GetTheme().text.light);
@@ -42,7 +42,7 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>>
 
   m_menu->SetSelectedIndex(0);
 
-  auto headerText = i18n->Translate("View upcoming frames (A)");
+  auto headerText = i18n->Translate("View upcoming advances (A)");
 
   m_headerTextBlock->SetText(headerText);
 }

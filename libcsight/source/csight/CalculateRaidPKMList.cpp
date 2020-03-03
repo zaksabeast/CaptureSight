@@ -38,15 +38,15 @@ namespace csight::raid {
   }
 
   void calculateRaidPKMList(std::shared_ptr<RaidSearchSettings> searchSettings,
-                            std::function<void(std::shared_ptr<RaidPokemon> raid, u32 frame)> callback) {
+                            std::function<void(std::shared_ptr<RaidPokemon> raid, u32 advance)> callback) {
     u64 nextSeed = searchSettings->GetSeed();
 
-    for (u32 frame = 0; frame < MAX_RAID_ADVANCES; frame++) {
+    for (u32 advance = 0; advance < MAX_RAID_ADVANCES; advance++) {
       auto raid = std::make_shared<RaidPokemon>(nextSeed, searchSettings->GetFlawlessIVs(), 0);
       nextSeed = rng::xoroshiro(nextSeed).nextulong();
 
       if (checkIfPassesFilters(searchSettings, raid))
-        callback(raid, frame);
+        callback(raid, advance);
     }
   }
 }  // namespace csight::raid
