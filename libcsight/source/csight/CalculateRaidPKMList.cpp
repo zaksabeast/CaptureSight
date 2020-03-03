@@ -41,7 +41,7 @@ namespace csight::raid {
                             std::function<void(std::shared_ptr<RaidPokemon> raid, u32 frame)> callback) {
     u64 nextSeed = searchSettings->GetSeed();
 
-    for (u32 frame = 0; frame < MAX_DEN_SHINY_FRAME; frame++) {
+    for (u32 frame = 0; frame < MAX_RAID_ADVANCES; frame++) {
       auto raid = std::make_shared<RaidPokemon>(nextSeed, searchSettings->GetFlawlessIVs(), 0);
       nextSeed = rng::xoroshiro(nextSeed).nextulong();
 

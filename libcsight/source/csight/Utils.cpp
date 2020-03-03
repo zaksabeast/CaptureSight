@@ -31,6 +31,5 @@ namespace csight::utils {
 
     return hex.str();
   }
-
-  std::string getRaidShinyFrameText(u32 shinyFrame) { return shinyFrame == MAX_DEN_SHINY_FRAME ? "10K+" : std::to_string(shinyFrame); }
+  std::string getRaidShinyFrameText(u32 shinyFrame) { return shinyFrame == MAX_RAID_ADVANCES ? "10K+" : std::to_string(shinyFrame); }
 }  // namespace csight::utils

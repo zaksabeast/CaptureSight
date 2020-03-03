@@ -1,3 +1,3 @@
 #pragma once
 
-#define MAX_DEN_SHINY_FRAME 9999
+#define MAX_RAID_ADVANCES 9999

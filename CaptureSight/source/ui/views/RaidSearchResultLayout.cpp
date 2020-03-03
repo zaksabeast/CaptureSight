@@ -26,7 +26,7 @@ void RaidSearchResultLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSear
   m_menu->SetSelectedIndex(0);
   m_menu->ClearItems();
   // Reset shiny frame
-  m_firstShinyFrame = MAX_DEN_SHINY_FRAME;
+  m_firstShinyFrame = MAX_RAID_ADVANCES;
 
   if (searchSettings->GetSeed() > 0) {
     csight::raid::calculateRaidPKMList(searchSettings,
@@ -47,7 +47,7 @@ void RaidSearchResultLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidP
     frameShineType = raid->GetShineType() == csight::shiny::Square ? " ■ " : " ★ ";
     shinyText = "Shiny";
 
-    if (m_firstShinyFrame == MAX_DEN_SHINY_FRAME) {
+    if (m_firstShinyFrame == MAX_RAID_ADVANCES) {
       m_firstShinyFrame = frame;
       m_firstShineTypeText = frameShineType;
     }

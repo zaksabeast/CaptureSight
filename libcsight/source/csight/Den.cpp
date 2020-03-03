@@ -45,7 +45,7 @@ namespace csight::raid {
     u16 shinyFrame = 0;
     shiny::ShinyType shineType = shiny::None;
 
-    while (shinyFrame < MAX_DEN_SHINY_FRAME) {
+    while (shinyFrame < MAX_RAID_ADVANCES) {
       auto rng = rng::xoroshiro(seed);
       seed = rng.nextulong();  // Also advance for EC
       u32 SIDTID = rng.nextuint();

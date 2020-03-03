@@ -18,8 +18,8 @@ tsl::Element* RaidSearchResultLayout::createUI() {
   searchSettings->SetFlawlessIVs(m_flawlessIVs);
 
   if (m_seed > 0) {
-    csight::raid::calculateRaidPKMList(searchSettings,
-                                       std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
+    csight::raid::calculateRaidPKMList(
+        searchSettings, std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
     m_title = csight::utils::convertNumToHexString(m_seed) + m_firstShinyTypeText + csight::utils::getRaidShinyFrameText(m_firstShinyFrame);
   } else {
     m_title = "Not a non-shiny raid Pokemon!";
@@ -41,7 +41,7 @@ void RaidSearchResultLayout::AddRaidMenuItem(tsl::element::List* denList, std::s
   if (raid->GetIsShiny()) {
     shinyText = raid->GetShineType() == csight::shiny::Square ? " ■ " : " ★";
 
-    if (m_firstShinyFrame == MAX_DEN_SHINY_FRAME) {
+    if (m_firstShinyFrame == MAX_RAID_ADVANCES) {
       m_firstShinyFrame = frame;
       m_firstShinyTypeText = shinyText;
     }

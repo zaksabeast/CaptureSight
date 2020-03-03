@@ -13,7 +13,7 @@ class RaidSearchResultLayout : public tsl::Gui {
   std::string m_title = "";
   u64 m_seed = 0;
   u8 m_flawlessIVs = 1;
-  u32 m_firstShinyFrame = MAX_DEN_SHINY_FRAME;
+  u32 m_firstShinyFrame = MAX_RAID_ADVANCES;
   // Assume shiny will be star in case no nearby shinies are found
   std::string m_firstShinyTypeText = " ★ ";
 };
