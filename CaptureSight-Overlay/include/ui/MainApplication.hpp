@@ -7,15 +7,15 @@
 
 class MainApplication : public tsl::Overlay {
  public:
-  tsl::Gui* onSetup();
-  void onDestroy();
   std::shared_ptr<csight::GameReader> GetGameReader();
   std::string GetPartyTitle(u32 slot);
   std::string GetWildTitle(u32 slot);
   std::string GetBoxTitle(u32 slot);
   void ChangeViewMode(ViewMode mode);
+  virtual void initServices() override;
+  virtual void exitServices() override;
+  virtual std::unique_ptr<tsl::Gui> loadInitialGui() override;
 
  private:
-  MainLayout* m_mainLayout = new MainLayout();
   std::shared_ptr<csight::GameReader> m_gameReader = std::make_shared<csight::GameReader>();
 };

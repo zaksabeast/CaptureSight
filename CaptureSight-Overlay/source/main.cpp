@@ -1,9 +1,7 @@
+#define TESLA_INIT_IMPL
 #include <tesla.hpp>
 #include <ui/MainApplication.hpp>
 
-extern MainApplication* mainApp;
-
-tsl::Overlay* overlayLoad() {
-  mainApp = new MainApplication();
-  return mainApp;
+int main(int argc, char** argv) {
+  return tsl::loop<MainApplication>(argc, argv);
 }

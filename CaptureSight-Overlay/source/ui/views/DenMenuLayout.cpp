@@ -8,36 +8,28 @@ DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> den
   m_title = title;
 }
 
-tsl::Element* DenMenuLayout::createUI() {
-  auto rootFrame = new tsl::element::Frame();
-  auto denList = new tsl::element::List();
-  auto titleBlock = new tsl::element::CustomDrawer(
-      100, FB_WIDTH, 200, FB_WIDTH,
-      std::bind(&DenMenuLayout::AddTitleBlock, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+tsl::elm::Element* DenMenuLayout::createUI() {
+  auto rootFrame = new tsl::elm::OverlayFrame(m_title, "");
+  auto denList = new tsl::elm::List(6);
 
   for (u32 i = 0; i < m_dens.size(); i++) {
     auto den = m_dens[i];
     std::string shinyTypeText = den->GetShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
     auto speciesText = den->GetPKM()->GetSpeciesString();
     auto title = "Id: " + std::to_string(den->GetDenDisplayId()) + shinyTypeText + den->GetShinyAdvanceText() + " " + speciesText;
-    auto listItem = new tsl::element::ListItem(title);
+    auto listItem = new tsl::elm::ListItem(title);
     listItem->setClickListener(std::bind(&DenMenuLayout::OnClickDen, this, den, std::placeholders::_1));
     denList->addItem(listItem);
   }
 
-  rootFrame->addElement(titleBlock);
-  rootFrame->addElement(denList);
+  rootFrame->setContent(denList);
 
   return rootFrame;
 }
 
-void DenMenuLayout::AddTitleBlock(u16 x, u16 y, tsl::Screen* screen) {
-  screen->drawString(m_title.c_str(), false, 20, 100, 20, tsl::a(0xFFFF));
-}
-
 bool DenMenuLayout::OnClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys) {
   if (keys == KEY_A) {
-    this->changeTo(new RaidSearchResultLayout(den->GetSeed(), 5));
+    tsl::changeTo<RaidSearchResultLayout>(den->GetSeed(), 5);
 
     return true;
   }

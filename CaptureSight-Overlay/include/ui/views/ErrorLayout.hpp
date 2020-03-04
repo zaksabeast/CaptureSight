@@ -4,5 +4,5 @@
 
 class ErrorLayout : public tsl::Gui {
  public:
-  tsl::Element* createUI();
+  tsl::elm::Element* createUI();
 };

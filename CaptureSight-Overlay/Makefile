@@ -30,12 +30,12 @@ CFLAGS	:=	-g -Wall -O2 -ffunction-sections \
 
 CFLAGS	+=	$(INCLUDE) -D__SWITCH__ -DCSIGHT_VERION=\"CaptureSight\ v$(VER_MAJOR).$(VER_MINOR).$(VER_MICRO)\"
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -std=gnu++17
+CXXFLAGS	:= $(CFLAGS) -std=gnu++17
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcsight -lstratosphere -lnx -ltesla -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
+LIBS	:= -lcsight -lstratosphere -lnx -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
 LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../libcsight $(CURDIR)/../libtesla $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))

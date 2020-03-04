@@ -1,3 +1,4 @@
+#include <memory>
 #include <functional>
 #include <tesla.hpp>
 #include <csight/core>
@@ -7,22 +8,23 @@
 #include <ui/views/PokemonListLayout.hpp>
 #include <ui/views/DenMenuLayout.hpp>
 
-MainApplication* mainApp;
+std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
+  if (R_FAILED(m_gameReader->Attach()))
+    return initially<ErrorLayout>();
 
-tsl::Gui* MainApplication::onSetup() {
+  auto mainLayout = initially<MainLayout>();
+  mainLayout->SetMenuItemClickCallback(std::bind(&MainApplication::ChangeViewMode, this, std::placeholders::_1));
+
+  return mainLayout;
+}
+
+void MainApplication::initServices() {
   smInitialize();
   dmntchtInitialize();
   dmntchtForceOpenCheatProcess();
-
-  if (R_FAILED(m_gameReader->Attach()))
-    return new ErrorLayout();
-
-  m_mainLayout->SetMenuItemClickCallback(std::bind(&MainApplication::ChangeViewMode, this, std::placeholders::_1));
-
-  return m_mainLayout;
 }
 
-void MainApplication::onDestroy() {
+void MainApplication::exitServices() {
   dmntchtExit();
   smExit();
 }
@@ -55,19 +57,17 @@ void MainApplication::ChangeViewMode(ViewMode mode) {
   std::string guiTitle = "Party Pokemon";
   std::vector<std::shared_ptr<csight::PK8>> pkms;
   std::vector<std::shared_ptr<csight::raid::Den>> dens;
-  tsl::Gui* layout;
+  std::unique_ptr<tsl::Gui> layout;
   std::function<std::string(u32)> getTitle = [](u32) { return ""; };
 
   switch (mode) {
     case activeDens:
       dens = m_gameReader->ReadDens(false);
-      layout = new DenMenuLayout(dens, "Active Dens");
-      m_mainLayout->changeTo(layout);
+      tsl::changeTo<DenMenuLayout>(dens, "Active Dens");
       return;
     case allDens:
       dens = m_gameReader->ReadDens(true);
-      layout = new DenMenuLayout(dens, "All Dens");
-      m_mainLayout->changeTo(layout);
+      tsl::changeTo<DenMenuLayout>(dens, "All Dens");
       return;
     case wild:
       guiTitle = "Wild/Trade/Party";
@@ -87,6 +87,5 @@ void MainApplication::ChangeViewMode(ViewMode mode) {
       break;
   }
 
-  layout = new PokemonListLayout(guiTitle, pkms, getTitle);
-  m_mainLayout->changeTo(layout);
+  tsl::changeTo<PokemonListLayout>(guiTitle, pkms, getTitle);
 }

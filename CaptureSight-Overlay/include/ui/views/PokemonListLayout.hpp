@@ -7,8 +7,7 @@
 class PokemonListLayout : public tsl::Gui {
  public:
   PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::PK8>> pkms, std::function<std::string(u32)> GetPKMTitle);
-  virtual tsl::Element* createUI();
-  void AddTitleBlock(u16 x, u16 y, tsl::Screen* screen);
+  virtual tsl::elm::Element* createUI();
   bool OnClickPKM(std::shared_ptr<csight::PK8> pkm, s64 keys);
 
  private:

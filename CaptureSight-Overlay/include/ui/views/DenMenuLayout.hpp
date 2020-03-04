@@ -6,8 +6,7 @@
 class DenMenuLayout : public tsl::Gui {
  public:
   DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> dens, std::string title);
-  virtual tsl::Element* createUI();
-  void AddTitleBlock(u16 x, u16 y, tsl::Screen* screen);
+  virtual tsl::elm::Element* createUI();
   bool OnClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys);
 
  private:
