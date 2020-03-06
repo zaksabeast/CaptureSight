@@ -29,7 +29,6 @@
     "Please start a Pokemon game before running CaptureSight": "Per favore, avvia un gioco Pokemon prima di usare CaptureSight",
     "Friendship": "Amicizia",
     "Egg cycles": "Cicli Uovo",
-    "Frame": "Frame",
     "No raid seed found!  This may not be a raid Pokemon": "Nessun seed di un raid trovato!  Questo potrebbe non essere un Pokemon di un raid",
     "Flawless IVs": "IVs perfette",
     "View upcoming frames (A)": "Guarda i frames successivi (A)",
@@ -42,8 +41,18 @@
     "SPA": "SPA",
     "SPD": "SPD",
     "SPE": "SPE",
-    "Switch (A)": "Switch (A)",
-    "Hide detail (X)": "Hide detail (X)"
+    "Switch (A)": "Cambia (A)",
+    "Hide detail (X)": "Nascondi dettagli (X)",
+    "Shiny filter": "Filtro shiny",
+    "Flawless IV filter": "Filtro IV perfette",
+    "Star": "Selle",
+    "Square": "Quadrati",
+    "Star or square": "Stelle o Quadrati",
+    "(A) or (B) to apply filters, (L) and (R) to change filters": "(A) o (B) per applicare i filtri, (L) e (R) per cambiare i filtri",
+    "(A) to apply filters": "(A) per applicare i filtri",
+    "Advance": "Avanza",
+    "Calculating seed": "Calcolo del Seed in corso",
+    "Raid Search Settings": "Impostazioni di ricerca del Raid"
   },
   "natures": {
     "Hardy": "Ardita",
