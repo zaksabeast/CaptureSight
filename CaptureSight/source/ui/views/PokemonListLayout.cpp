@@ -25,7 +25,7 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<csight::PK8>> p
     auto formattedIVs = csight::utils::joinNums(pkm->GetIVs(), "/");
     u32 slot = std::distance(pk8s.begin(), pk8);
     std::string species = i18n->Translate("species", pkm->GetSpeciesString());
-    std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not shiny";
+    std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
     std::string title = pkm->GetIsValid() ? species + " - " + formattedIVs + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot)
                                           : i18n->Translate("Empty") + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
