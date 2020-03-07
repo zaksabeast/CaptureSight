@@ -42,8 +42,18 @@
     "SPA": "SPA",
     "SPD": "SPD",
     "SPE": "SPE",
-    "Switch (A)": "Switch (A)",
-    "Hide detail (X)": "Hide detail (X)"
+    "Switch (A)": "Changer (A)",
+    "Hide detail (X)": "Cacher les détails (X)",
+    "Shiny filter": "Filtre Shiny",
+    "Flawless IV filter": "Filtre IVs Parfaits",
+    "Star": "Etoile",
+    "Square": "Carré",
+    "Star or square": "Étoile ou Carré",
+    "(A) or (B) to apply filters, (L) and (R) to change filters": "(A) ou (B) pour appliquer les filtres, (L) et (R) pour changer les filtres",
+    "(A) to apply filters": "(A) pour appliquer les filtres",
+    "Advance": "Avancer",
+    "Calculating seed": "Calculer la Seed",
+    "Raid Search Settings": "Paramètres de recherche de Raid"
   },
   "natures": {
     "Hardy": "Hardi",
