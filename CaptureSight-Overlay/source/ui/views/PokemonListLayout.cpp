@@ -21,7 +21,7 @@ tsl::elm::Element* PokemonListLayout::createUI() {
     auto pkm = m_pkms[i];
     auto title = pkm->GetSpeciesString() + " - " + m_GetPKMTitle(i);
     auto listItem = new tsl::elm::ListItem(title);
-    listItem->setClickListener(std::bind(&PokemonListLayout::OnClickPKM, this, listItem, pkm, std::placeholders::_1));
+    listItem->setClickListener(std::bind(&PokemonListLayout::OnClickPKM, this, listItem, title, pkm, std::placeholders::_1));
     pkmList->addItem(listItem);
   }
 
@@ -37,15 +37,17 @@ void PokemonListLayout::update() {
       this->seedCount++;
       this->waitingButton.value()->setText(waitingText);
     } else {
+      tsl::changeTo<RaidSearchResultLayout>(seedFuture.value().get(), 5);
+      this->waitingButton.value()->setText(this->waitingButtonText.value());
       this->waitingButton.reset();
+      this->waitingButtonText.reset();
       this->seedFuture.reset();
       this->seedCount = 0;
-      tsl::changeTo<RaidSearchResultLayout>(seedFuture.value().get(), 5);
     }
   }
 }
 
-bool PokemonListLayout::OnClickPKM(tsl::elm::ListItem* button, std::shared_ptr<csight::PK8> pkm, s64 keys) {
+bool PokemonListLayout::OnClickPKM(tsl::elm::ListItem* button, std::string buttonText, std::shared_ptr<csight::PK8> pkm, s64 keys) {
   if (this->seedFuture) {
     return true;
   } else if (keys == KEY_A) {
@@ -54,6 +56,7 @@ bool PokemonListLayout::OnClickPKM(tsl::elm::ListItem* button, std::shared_ptr<c
   } else if (keys == KEY_Y) {
     this->seedFuture = pkm->GetRaidSeedAsync();
     this->waitingButton = button;
+    this->waitingButtonText = buttonText;
     return true;
   }
 
