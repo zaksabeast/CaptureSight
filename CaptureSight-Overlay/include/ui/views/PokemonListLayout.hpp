@@ -3,15 +3,21 @@
 #include <functional>
 #include <csight/core>
 #include <tesla.hpp>
+#include <future>
+#include <optional>
 
 class PokemonListLayout : public tsl::Gui {
  public:
   PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::PK8>> pkms, std::function<std::string(u32)> GetPKMTitle);
   virtual tsl::elm::Element* createUI();
-  bool OnClickPKM(std::shared_ptr<csight::PK8> pkm, s64 keys);
+  virtual void update() override;
+  bool OnClickPKM(tsl::elm::ListItem* button, std::shared_ptr<csight::PK8> pkm, s64 keys);
 
  private:
   std::string m_title = "Pokemon List";
   std::vector<std::shared_ptr<csight::PK8>> m_pkms = {};
   std::function<std::string(u32)> m_GetPKMTitle = [](u32) { return ""; };
+  std::optional<tsl::elm::ListItem*> waitingButton;
+  std::optional<std::future<u64>> seedFuture;
+  int seedCount = 0;
 };
