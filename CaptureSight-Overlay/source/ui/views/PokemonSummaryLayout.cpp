@@ -22,6 +22,7 @@ void PokemonSummaryLayout::AddBodyDrawer(tsl::gfx::Renderer* screen, u16 x, u16 
   std::string formattedEVs = "EVs: " + csight::utils::joinNums(m_pkm->GetEVs(), "/");
   std::string nature = "Nature: " + m_pkm->GetNatureString();
   std::string mintedNature = "Minted Nature: " + m_pkm->GetMintedNatureString();
+  std::string ability = "Ability: " + m_pkm->GetAbilityString();
   std::string friendshipLabel = m_pkm->GetIsEgg() ? "Egg cycles: " : "Friendship: ";
   std::string friendship = friendshipLabel + std::to_string(m_pkm->GetCurrentFriendship());
   std::string moves = "Moves:";
@@ -37,10 +38,11 @@ void PokemonSummaryLayout::AddBodyDrawer(tsl::gfx::Renderer* screen, u16 x, u16 
   screen->drawString(nature.c_str(), false, 20, 180, 24, screen->a(0xFFFF));
   screen->drawString(mintedNature.c_str(), false, 20, 220, 24, screen->a(0xFFFF));
   screen->drawString(friendship.c_str(), false, 20, 260, 24, screen->a(0xFFFF));
-  screen->drawString(moves.c_str(), false, 20, 300, 24, screen->a(0xFFFF));
-  screen->drawString(move0.c_str(), false, 20, 340, 24, screen->a(0xFFFF));
-  screen->drawString(move1.c_str(), false, 20, 380, 24, screen->a(0xFFFF));
-  screen->drawString(move2.c_str(), false, 20, 420, 24, screen->a(0xFFFF));
-  screen->drawString(move3.c_str(), false, 20, 460, 24, screen->a(0xFFFF));
-  screen->drawString(pidEd.c_str(), false, 20, 500, 24, screen->a(0xFFFF));
+  screen->drawString(ability.c_str(), false, 20, 300, 24, screen->a(0xFFFF));
+  screen->drawString(moves.c_str(), false, 20, 340, 24, screen->a(0xFFFF));
+  screen->drawString(move0.c_str(), false, 20, 380, 24, screen->a(0xFFFF));
+  screen->drawString(move1.c_str(), false, 20, 420, 24, screen->a(0xFFFF));
+  screen->drawString(move2.c_str(), false, 20, 460, 24, screen->a(0xFFFF));
+  screen->drawString(move3.c_str(), false, 20, 500, 24, screen->a(0xFFFF));
+  screen->drawString(pidEd.c_str(), false, 20, 540, 24, screen->a(0xFFFF));
 }
