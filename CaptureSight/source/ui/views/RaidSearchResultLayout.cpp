@@ -20,7 +20,8 @@ RaidSearchResultLayout::RaidSearchResultLayout() : Layout::Layout() {
   this->Add(m_menu);
 }
 
-void RaidSearchResultLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSearchSettings> searchSettings) {
+void RaidSearchResultLayout::UpdateValues() {
+  auto searchSettings = mainApp->GetRaidSearchSettings();
   std::string headerText = i18n->Translate("No raid seed found!  This may not be a raid Pokemon");
   auto seedString = csight::utils::convertNumToHexString(searchSettings->GetSeed());
   m_menu->SetSelectedIndex(0);
@@ -32,7 +33,7 @@ void RaidSearchResultLayout::UpdateValues(std::shared_ptr<csight::raid::RaidSear
     csight::raid::calculateRaidPKMList(searchSettings,
                                        std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
     headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShinyTypeText + i18n->Translate("Shiny") + " " +
-                 csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance) + " " + i18n->Translate("(A) to apply filters");
+                 csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance, MAX_RAID_ADVANCES) + " " + i18n->Translate("(A) to apply filters");
   }
 
   m_headerTextBlock->SetText(headerText);
@@ -55,7 +56,7 @@ void RaidSearchResultLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidP
 
   auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
   std::string title = i18n->Translate("Advance") + " " + std::to_string(advance) + " - " + i18n->Translate("IVs") + ": " + formattedIVs +
-                      advanceShinyType + i18n->Translate(shinyText);
+                      advanceShinyType + i18n->Translate(shinyText) + ", " + i18n->Translate("Ability") + ": " + raid->GetAbilityString();
   auto menuItem = pu::ui::elm::MenuItem::New(title);
 
   menuItem->SetColor(gsets.GetTheme().text.light);

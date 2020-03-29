@@ -16,13 +16,16 @@ tsl::elm::Element* RaidSearchResultLayout::createUI() {
   std::string subTitle = "Not a non-shiny raid Pokemon!";
 
   searchSettings->SetSeed(m_seed);
-  searchSettings->SetFlawlessIVs(m_flawlessIVs);
+  searchSettings->SetAdvancesToSearch(ADVANCES_TO_SEARCH);
+  searchSettings->SetRaidEncounter(
+      csight::raid::
+      RaidEncounter{species : 0, flawlessIVs : m_flawlessIVs, ability : csight::ability::raid::FirstOrSecond, probabilities : {35, 0, 0, 0, 0}});
 
   if (m_seed > 0) {
     csight::raid::calculateRaidPKMList(
         searchSettings, std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
     title = csight::utils::convertNumToHexString(m_seed);
-    subTitle = "Next shiny frame: " + m_firstShinyTypeText + csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance);
+    subTitle = "Next shiny frame: " + m_firstShinyTypeText + csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance, ADVANCES_TO_SEARCH);
   }
 
   auto rootFrame = new tsl::elm::OverlayFrame(title, subTitle);
@@ -38,7 +41,7 @@ void RaidSearchResultLayout::AddRaidMenuItem(tsl::elm::List* denList, std::share
   if (raid->GetIsShiny()) {
     shinyText = raid->GetShinyType() == csight::shiny::Square ? " ■ " : " ★";
 
-    if (m_firstShinyAdvance == MAX_RAID_ADVANCES) {
+    if (m_firstShinyAdvance == ADVANCES_TO_SEARCH) {
       m_firstShinyAdvance = advance;
       m_firstShinyTypeText = shinyText;
     }

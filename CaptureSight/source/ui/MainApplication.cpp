@@ -18,8 +18,8 @@ void MainApplication::OnLoad() {
   if (language.compare("chs") == 0 || language.compare("cht") == 0)
     pu::ui::render::SetDefaultFontFromShared(pu::ui::render::SharedFont::ChineseSimplified);  // ChineseTraditional doesn't work for cht!?
 
-  m_save = std::make_unique<csight::GameReader>();
-  bool isDebugServiceRunning = m_save->GetIsServiceRunning();
+  m_gameReader = std::make_shared<csight::GameReader>();
+  bool isDebugServiceRunning = m_gameReader->GetIsServiceRunning();
 
   m_warningLayout = WarningLayout::New();
   m_warningLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
@@ -34,9 +34,9 @@ void MainApplication::OnLoad() {
     return;
   }
 
-  Result rc = m_save->Attach();
+  Result rc = m_gameReader->Attach();
 
-  if (R_FAILED(rc) || !m_save->GetIsPokemonRunning()) {
+  if (R_FAILED(rc) || !m_gameReader->GetIsPokemonRunning()) {
     std::string warningTranslationKey = "Please start a Pokemon game before running CaptureSight";
     std::string warningText = i18n->Translate(warningTranslationKey) + "\ndmnt:cht result: " + std::to_string(rc);
     m_warningLayout->SetWarningText(warningText);
@@ -44,8 +44,8 @@ void MainApplication::OnLoad() {
     return;
   }
 
-  m_pkms = m_save->ReadParty();
-  m_dens = m_save->ReadDens(false);
+  m_pkms = m_gameReader->ReadParty();
+  m_dens = m_gameReader->ReadDens(false);
 
   m_versionTextBlock = pu::ui::elm::TextBlock::New(50, 50, CSIGHT_VERION, 25);
   m_versionTextBlock->SetColor(gsets.GetTheme().text.light);
@@ -74,10 +74,10 @@ void MainApplication::OnLoad() {
   SETUP_LAYOUT(RaidSearchSettingsLayout, m_raidSearchSettingsLayout);
   m_raidSearchSettingsLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchSettingsLayout, this, std::placeholders::_1,
                                                    std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
-  m_raidSearchSettingsLayout->UpdateValues(m_raidSearchSettings);
+  m_raidSearchSettingsLayout->UpdateValues();
+  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchSettingsLayout::UpdateValues, m_raidSearchSettingsLayout));
+  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchResultLayout::UpdateValues, m_raidSearchResultLayout));
 
-  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchSettingsLayout::UpdateValues, m_raidSearchSettingsLayout, m_raidSearchSettings));
-  m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchResultLayout::UpdateValues, m_raidSearchResultLayout, m_raidSearchSettings));
   this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
                              std::placeholders::_4));
   this->NavigateTo(m_mainMenuLayout);
@@ -123,31 +123,31 @@ void MainApplication::SelectPokemonSlot(u32 slot) {
 void MainApplication::SetViewMode(ViewMode viewMode) {
   switch (viewMode) {
     case activeDens:
-      m_dens = m_save->ReadDens(false);
+      m_dens = m_gameReader->ReadDens(false);
       m_denMenuLayout->UpdateValues(m_dens);
       this->NavigateTo(m_denMenuLayout);
       return;
     case allDens:
-      m_dens = m_save->ReadDens(true);
+      m_dens = m_gameReader->ReadDens(true);
       m_denMenuLayout->UpdateValues(m_dens);
       this->NavigateTo(m_denMenuLayout);
       return;
     case wild:
       m_GetSummaryTitle = std::bind(&MainApplication::GetWildSummaryTitle, this, std::placeholders::_1);
       m_pkms = std::vector<std::shared_ptr<csight::PK8>>{
-          m_save->ReadWild(),
-          m_save->ReadRaid(),
-          m_save->ReadTrade(),
+          m_gameReader->ReadWild(),
+          m_gameReader->ReadRaid(),
+          m_gameReader->ReadTrade(),
       };
       break;
     case box:
       m_GetSummaryTitle = std::bind(&MainApplication::GetBoxSummaryTitle, this, std::placeholders::_1);
-      m_pkms = m_save->ReadBoxes();
+      m_pkms = m_gameReader->ReadBoxes();
       break;
     case party:
     default:
       m_GetSummaryTitle = std::bind(&MainApplication::GetPartySummaryTitle, this, std::placeholders::_1);
-      m_pkms = m_save->ReadParty();
+      m_pkms = m_gameReader->ReadParty();
       break;
   }
 
@@ -258,4 +258,12 @@ void MainApplication::DecreaseSlot(u32 slotDecrease) {
   u32 newSlot = m_slot - slotDecrease;
   u32 slot = newSlot >= m_maxSlot ? m_maxSlot : newSlot;
   this->SetSlot(slot);
+}
+
+std::shared_ptr<csight::GameReader> MainApplication::GetGameReader() {
+  return m_gameReader;
+}
+
+std::shared_ptr<csight::raid::RaidSearchSettings> MainApplication::GetRaidSearchSettings() {
+  return m_raidSearchSettings;
 }

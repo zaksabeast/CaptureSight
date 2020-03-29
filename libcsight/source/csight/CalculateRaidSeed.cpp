@@ -2,6 +2,7 @@
 #include <vector>
 #include <future>
 #include <csight/RaidPokemon.hpp>
+#include <csight/Ability.hpp>
 
 u64 rotateLeft(u64 first, u64 second) {
   return (first << second) | (first >> (64 - second));
@@ -50,7 +51,7 @@ namespace csight::raid {
 
             if (generatedPID == pid) {
               for (u32 flawlessIVs = 1; flawlessIVs <= 5; flawlessIVs++) {
-                auto ivsToCheck = RaidPokemon(seed, flawlessIVs, 0).GetIVs();
+                auto ivsToCheck = RaidPokemon(seed, flawlessIVs, 0, ability::raid::FirstOrSecond).GetIVs();
                 bool hasCorrectIVs = std::equal(ivs.begin(), ivs.end(), ivsToCheck.begin());
 
                 if (hasCorrectIVs)

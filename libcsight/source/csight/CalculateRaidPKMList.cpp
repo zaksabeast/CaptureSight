@@ -6,6 +6,7 @@
 #include <csight/Config.hpp>
 #include <csight/RaidPokemon.hpp>
 #include <csight/CalculateRaidPKMList.hpp>
+#include <csight/Ability.hpp>
 
 namespace csight::raid {
   bool checkFlawlessIV(u8 iv) { return iv == 31; }
@@ -33,16 +34,37 @@ namespace csight::raid {
     }
   }
 
+  bool checkAbility(ability::filter::AbilityFilter abilityFilter, std::shared_ptr<RaidPokemon> raid) {
+    auto ability = raid->GetAbility();
+
+    switch (abilityFilter) {
+      case ability::filter::None:
+      case ability::filter::Any:
+        return true;
+      case ability::filter::First:
+        return ability == ability::First;
+      case ability::filter::Second:
+        return ability == ability::Second;
+      case ability::filter::Hidden:
+        return ability == ability::Hidden;
+    }
+
+    return false;
+  }
+
   bool checkIfPassesFilters(std::shared_ptr<RaidSearchSettings> searchSettings, std::shared_ptr<RaidPokemon> raid) {
-    return checkFlawlessIVs(searchSettings->GetFlawlessIVFilter(), raid) && checkShinyType(searchSettings->GetShinyTypeFilter(), raid);
+    return checkFlawlessIVs(searchSettings->GetFlawlessIVFilter(), raid) && checkShinyType(searchSettings->GetShinyTypeFilter(), raid) &&
+           checkAbility(searchSettings->GetAbilityFilter(), raid);
   }
 
   void calculateRaidPKMList(std::shared_ptr<RaidSearchSettings> searchSettings,
                             std::function<void(std::shared_ptr<RaidPokemon> raid, u32 advance)> callback) {
     u64 nextSeed = searchSettings->GetSeed();
+    u32 advancesToSearch = searchSettings->GetAdvancesToSearch();
+    auto encounter = searchSettings->GetRaidEncounter();
 
-    for (u32 advance = 0; advance < MAX_RAID_ADVANCES; advance++) {
-      auto raid = std::make_shared<RaidPokemon>(nextSeed, searchSettings->GetFlawlessIVs(), 0);
+    for (u32 advance = 0; advance < advancesToSearch; advance++) {
+      auto raid = std::make_shared<RaidPokemon>(nextSeed, encounter.flawlessIVs, encounter.species, encounter.ability);
       nextSeed = rng::xoroshiro(nextSeed).nextulong();
 
       if (checkIfPassesFilters(searchSettings, raid))

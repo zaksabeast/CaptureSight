@@ -2,12 +2,14 @@
 
 #include <vector>
 #include <switch.h>
+#include <csight/Ability.hpp>
 
 namespace csight::raid {
   struct RaidEncounter {
     u32 species;
     u32 flawlessIVs;
-    u32 probabilities[5];
+    ability::raid::AbilityRaidSetting ability;
+    std::vector<u32> probabilities;
   };
 
   struct RaidEncounterTable {

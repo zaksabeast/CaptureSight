@@ -34,9 +34,8 @@ namespace csight::raid {
     u8 m_size = 0x18;
     u8* m_data = new u8[0x18];
     u8 m_denId = 0;
-    u16 m_species = 0;
-    u8 m_flawlessIVs = 0;
     u16 m_shinyAdvance = 0;
+    RaidEncounter m_spawn;
     shiny::ShinyType m_shineType = shiny::Star;
 
     raid::RaidEncounter FindSpawn(std::vector<raid::RaidEncounter> raidEncounters);

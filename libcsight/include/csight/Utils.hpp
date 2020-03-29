@@ -4,6 +4,7 @@
 #include <string>
 #include <future>
 #include <switch.h>
+#include <csight/RaidTemplateTables.hpp>
 
 namespace csight::utils {
   std::string convertNumToHexString(u32 num);
@@ -40,5 +41,9 @@ namespace csight::utils {
     return toWait->wait_for(std::chrono::milliseconds(interval_ms)) == std::future_status::timeout;
   }
 
-  std::string getRaidShinyAdvanceText(u32 shinyAdvance);
+  std::string getRaidShinyAdvanceText(u32 shinyAdvance, u32 maxAdvance);
+
+  std::string getSpeciesName(u32 species);
+
+  csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables, u32 denId, bool isRare);
 }  // namespace csight::utils

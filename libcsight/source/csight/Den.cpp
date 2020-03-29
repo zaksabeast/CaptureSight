@@ -6,6 +6,7 @@
 #include <csight/DenHashes.hpp>
 #include <csight/Utils.hpp>
 #include <csight/Config.hpp>
+#include <csight/Ability.hpp>
 
 namespace csight::raid {
   // Pass the den encounter tables to use since its responsibility is to parse the den data, not read/choose encounter tables
@@ -13,20 +14,14 @@ namespace csight::raid {
     std::copy(data, data + m_size, m_data);
 
     m_denId = denId > DEN_LIST_SIZE ? DEN_LIST_SIZE : denId;
-    RaidEncounter spawn;
 
     if (this->GetIsEvent()) {
-      spawn = this->FindSpawn(eventEncounterTable->templates);
+      m_spawn = this->FindSpawn(eventEncounterTable->templates);
     } else {
-      auto isRare = this->GetIsRare();
-      auto denHash = denHashes[denId][isRare];
-      auto nest = std::find_if(encounterTables.begin(), encounterTables.end(),
-                               [denHash](const RaidEncounterTable& encounterTable) { return encounterTable.hash == denHash; });
-      spawn = this->FindSpawn(nest->templates);
+      auto nest = utils::findRaidEncounterTable(encounterTables, denId, this->GetIsRare());
+      m_spawn = this->FindSpawn(nest.templates);
     }
 
-    m_species = spawn.species;
-    m_flawlessIVs = spawn.flawlessIVs;
     this->CalculateShinyDetails();
   }
 
@@ -36,7 +31,7 @@ namespace csight::raid {
 
   u16 Den::GetShinyAdvance() { return m_shinyAdvance; }
 
-  std::string Den::GetShinyAdvanceText() { return utils::getRaidShinyAdvanceText(m_shinyAdvance); }
+  std::string Den::GetShinyAdvanceText() { return utils::getRaidShinyAdvanceText(m_shinyAdvance, MAX_RAID_ADVANCES); }
 
   shiny::ShinyType Den::GetShinyType() { return m_shineType; }
 
@@ -86,7 +81,9 @@ namespace csight::raid {
 
   u8 Den::GetDenDisplayId() { return m_denId + 1; }
 
-  std::shared_ptr<RaidPokemon> Den::GetPKM() { return std::make_shared<RaidPokemon>(this->GetSeed(), m_flawlessIVs, m_species); };
+  std::shared_ptr<RaidPokemon> Den::GetPKM() {
+    return std::make_shared<RaidPokemon>(this->GetSeed(), m_spawn.flawlessIVs, m_spawn.species, m_spawn.ability);
+  };
 
   RaidEncounter Den::FindSpawn(std::vector<RaidEncounter> raidEncounters) {
     u32 userProbability = 0;
@@ -102,6 +99,11 @@ namespace csight::raid {
       }
     }
 
-    return {species : 0, flawlessIVs : 1, probabilities : {0, 0, 0, 0, 0}};
+    return {
+      species : 0,
+      flawlessIVs : 1,
+      ability : ability::raid::FirstOrSecond,
+      probabilities : {0, 0, 0, 0, 0},
+    };
   }
 }  // namespace csight::raid

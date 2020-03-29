@@ -3,7 +3,6 @@
 #include <csight/PK8.hpp>
 #include <csight/RNG.hpp>
 #include <csight/CalculateRaidSeed.hpp>
-#include <csight/lookups/Species.hpp>
 #include <csight/lookups/Natures.hpp>
 #include <csight/lookups/Moves.hpp>
 #include <csight/lookups/Abilities.hpp>
@@ -101,7 +100,7 @@ namespace csight {
     return *(u16*)(m_data + 8);
   }
 
-  std::string PK8::GetSpeciesString() { return utils::getIndex(SpeciesList, this->GetSpecies()); }
+  std::string PK8::GetSpeciesString() { return utils::getSpeciesName(this->GetSpecies()); }
 
   u32 PK8::GetIV32() { return *(u32*)(m_data + 0x8C); }
 

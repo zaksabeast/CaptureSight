@@ -5,7 +5,9 @@
 #include <functional>
 #include <switch.h>
 #include <csight/RaidPokemon.hpp>
+#include <csight/RaidTemplateTables.hpp>
 #include <csight/Shiny.hpp>
+#include <csight/Ability.hpp>
 
 namespace csight::raid {
   class RaidSearchSettings {
@@ -15,9 +17,9 @@ namespace csight::raid {
       m_seed = seed;
       this->OnUpdate();
     }
-    u8 GetFlawlessIVs() { return m_flawlessIVs; }
-    void SetFlawlessIVs(u8 flawlesIVs) {
-      m_flawlessIVs = flawlesIVs;
+    RaidEncounter GetRaidEncounter() { return m_raidEncounter; }
+    void SetRaidEncounter(RaidEncounter raidEncounter) {
+      m_raidEncounter = raidEncounter;
       this->OnUpdate();
     }
     u8 GetFlawlessIVFilter() { return m_flawlessIVFilter; }
@@ -30,12 +32,24 @@ namespace csight::raid {
       m_shinyTypeFilter = shinyTypeFilter;
       this->OnUpdate();
     }
+    ability::filter::AbilityFilter GetAbilityFilter() { return m_abilityFilter; }
+    void SetAbilityFilter(ability::filter::AbilityFilter abilityFilter) {
+      m_abilityFilter = abilityFilter;
+      this->OnUpdate();
+    }
+    u32 GetAdvancesToSearch() { return m_advancesToSearch; }
+    void SetAdvancesToSearch(u32 advancesToSearch) {
+      m_advancesToSearch = advancesToSearch;
+      this->OnUpdate();
+    }
     void AddUpdateCallback(std::function<void(void)> callback) { m_callbacks.push_back(callback); }
 
    private:
     std::vector<std::function<void(void)>> m_callbacks;
     u64 m_seed = 0;
-    u8 m_flawlessIVs = 1;
+    u32 m_advancesToSearch = MAX_RAID_ADVANCES;
+    RaidEncounter m_raidEncounter;
+    ability::filter::AbilityFilter m_abilityFilter = ability::filter::Any;
     u8 m_flawlessIVFilter = 1;
     shiny::ShinyType m_shinyTypeFilter = shiny::None;
     void OnUpdate() {

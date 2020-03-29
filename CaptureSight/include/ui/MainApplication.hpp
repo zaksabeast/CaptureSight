@@ -20,12 +20,14 @@ class MainApplication : public pu::ui::Application {
 
   void OnLoad() override;
   u32 GetSlot();
+  std::shared_ptr<csight::GameReader> GetGameReader();
+  std::shared_ptr<csight::raid::RaidSearchSettings> GetRaidSearchSettings();
 
  private:
   u32 m_slot = 0;
   u32 m_maxSlot = 0;
   std::function<std::string(u32 slot)> m_GetSummaryTitle = [&](u32) { return ""; };
-  std::unique_ptr<csight::GameReader> m_save;
+  std::shared_ptr<csight::GameReader> m_gameReader;
   std::vector<std::shared_ptr<csight::PK8>> m_pkms;
   std::vector<std::shared_ptr<csight::raid::Den>> m_dens;
   bool m_isShowingExtraDetail = false;

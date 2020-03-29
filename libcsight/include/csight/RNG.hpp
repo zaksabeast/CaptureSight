@@ -16,6 +16,7 @@ namespace csight::rng {
     u64 nextulong();
     u32 nextuint();
     uint next(uint mask);
+    u32 next(u32 compare, u32 mask);
 
    private:
     swsh_xoroshiro m_prng;

@@ -9,7 +9,7 @@ class RaidSearchResultLayout : public pu::ui::Layout {
   RaidSearchResultLayout();
   PU_SMART_CTOR(RaidSearchResultLayout)
 
-  void UpdateValues(std::shared_ptr<csight::raid::RaidSearchSettings> searchSettings);
+  void UpdateValues();
   void AddRaidMenuItem(std::shared_ptr<csight::raid::RaidPokemon> raid, u32 advance);
 
  private:
