@@ -86,7 +86,7 @@ namespace csight::raid {
   };
 
   RaidEncounter Den::FindSpawn(std::vector<RaidEncounter> raidEncounters) {
-    u32 userProbability = 0;
+    u32 userProbability = 1;
     auto stars = this->GetStars();
     auto randRoll = this->GetRandRoll();
 
