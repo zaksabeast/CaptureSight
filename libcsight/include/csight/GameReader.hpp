@@ -1,11 +1,11 @@
 #pragma once
 
-#include <vector>
-#include <switch.h>
-#include <stratosphere.hpp>
-#include <dmntcht.h>
 #include <csight/PK8.hpp>
 #include <csight/RaidDetails.hpp>
+#include <dmntcht.h>
+#include <stratosphere.hpp>
+#include <switch.h>
+#include <vector>
 
 namespace csight {
   class GameReader : public raid::RaidDetails {
@@ -31,7 +31,7 @@ namespace csight {
     u64 m_tradeOffset = 0x2E32206A;
     DmntCheatProcessMetadata m_metadata;
 
-    Result ReadHeap(u64 address, void* buffer, size_t size) override;
+    Result ReadHeap(u64 address, void *buffer, size_t size) override;
     std::shared_ptr<PK8> ReadPK8(u64 offset);
     std::vector<std::shared_ptr<PK8>> ReadPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon);
   };

@@ -1,16 +1,16 @@
 #pragma once
 
-#include <vector>
-#include <string>
-#include <future>
-#include <switch.h>
 #include <csight/RaidTemplateTables.hpp>
+#include <future>
+#include <string>
+#include <switch.h>
+#include <vector>
 
 namespace csight::utils {
   std::string convertNumToHexString(u32 num);
   std::string convertNumToHexString(u64 num);
 
-  bool checkIfServiceIsRunning(const char* serviceName);
+  bool checkIfServiceIsRunning(const char *serviceName);
 
   template <typename T>
   T getIndex(std::vector<T> arr, size_t index) {
@@ -37,7 +37,7 @@ namespace csight::utils {
   }
 
   template <typename T>
-  bool waitingInterval(std::future<T>* toWait, int interval_ms) {
+  bool waitingInterval(std::future<T> *toWait, int interval_ms) {
     return toWait->wait_for(std::chrono::milliseconds(interval_ms)) == std::future_status::timeout;
   }
 
@@ -45,5 +45,6 @@ namespace csight::utils {
 
   std::string getSpeciesName(u32 species);
 
-  csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables, u32 denId, bool isRare);
+  csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables,
+                                                          u32 denId, bool isRare);
 }  // namespace csight::utils

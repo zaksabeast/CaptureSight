@@ -7,8 +7,8 @@
 class RaidSearchResultLayout : public tsl::Gui {
  public:
   RaidSearchResultLayout(u64 seed, u32 flawlessIVs);
-  virtual tsl::elm::Element* createUI();
-  void AddRaidMenuItem(tsl::elm::List* denList, std::shared_ptr<csight::raid::RaidPokemon> raid, u32 advance);
+  virtual tsl::elm::Element *createUI();
+  void AddRaidMenuItem(tsl::elm::List *denList, std::shared_ptr<csight::raid::RaidPokemon> raid, u32 advance);
 
  private:
   u64 m_seed = 0;

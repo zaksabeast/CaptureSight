@@ -1,12 +1,12 @@
-#include <vector>
 #include <csight/core>
 #include <pu/Plutonium>
-#include <ui/views/PokemonListLayout.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
-#include <utils/Settings.hpp>
-#include <utils/I18N.hpp>
+#include <ui/views/PokemonListLayout.hpp>
 #include <utils/Constants.hpp>
+#include <utils/I18N.hpp>
+#include <utils/Settings.hpp>
+#include <vector>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -26,8 +26,9 @@ void PokemonListLayout::UpdateValues(std::vector<std::shared_ptr<csight::PK8>> p
     u32 slot = std::distance(pk8s.begin(), pk8);
     std::string species = i18n->Translate("species", pkm->GetSpeciesString());
     std::string shinyTranslationKey = pkm->GetIsShiny() ? "Shiny" : "Not Shiny";
-    std::string title = pkm->GetIsValid() ? species + " - " + formattedIVs + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot)
-                                          : i18n->Translate("Empty") + " - " + GetTitle(slot);
+    std::string title = pkm->GetIsValid()
+        ? species + " - " + formattedIVs + " - " + i18n->Translate(shinyTranslationKey) + " - " + GetTitle(slot)
+        : i18n->Translate("Empty") + " - " + GetTitle(slot);
     auto menuItem = this->CreateMenuItem(pkm, slot, title);
 
     m_menu->AddItem(menuItem);

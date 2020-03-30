@@ -1,9 +1,9 @@
 #include <fstream>
-#include <vector>
-#include <string>
 #include <stdio.h>
+#include <string>
 #include <switch.h>
 #include <utils/I18N.hpp>
+#include <vector>
 
 std::string GetTranslationCode() {
   u64 languageCode = 0;

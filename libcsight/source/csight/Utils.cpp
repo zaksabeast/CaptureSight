@@ -1,14 +1,14 @@
-#include <sstream>
-#include <ios>
-#include <csight/Utils.hpp>
 #include <csight/Config.hpp>
-#include <csight/lookups/Species.hpp>
-#include <csight/RaidTemplateTables.hpp>
 #include <csight/DenHashes.hpp>
+#include <csight/RaidTemplateTables.hpp>
+#include <csight/Utils.hpp>
+#include <csight/lookups/Species.hpp>
+#include <ios>
+#include <sstream>
 
 namespace csight::utils {
   // Thanks to https://github.com/WerWolv/EdiZon/blob/44a30ce9ad2571f46c3e420faec44d573a27ebbc/source/helpers/util.c#L31-L42
-  bool checkIfServiceIsRunning(const char* serviceName) {
+  bool checkIfServiceIsRunning(const char *serviceName) {
     Handle handle;
     SmServiceName service_name = smEncodeName(serviceName);
     bool running = R_FAILED(smRegisterService(&handle, service_name, false, 1));
@@ -42,7 +42,8 @@ namespace csight::utils {
 
   std::string getSpeciesName(u32 species) { return getIndex(SpeciesList, species); }
 
-  csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables, u32 denId, bool isRare) {
+  csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables,
+                                                          u32 denId, bool isRare) {
     auto denHash = denId > DEN_LIST_SIZE ? denHashes[0][isRare] : denHashes[denId][isRare];
     auto nest = encounterTables[0];
 

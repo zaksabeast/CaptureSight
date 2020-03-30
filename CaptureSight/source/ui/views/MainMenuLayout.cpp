@@ -1,12 +1,12 @@
-#include <string>
 #include <functional>
-#include <stratosphere.hpp>
 #include <pu/Plutonium>
-#include <ui/views/MainMenuLayout.hpp>
+#include <stratosphere.hpp>
+#include <string>
 #include <ui/MainApplication.hpp>
-#include <utils/Settings.hpp>
-#include <utils/I18N.hpp>
+#include <ui/views/MainMenuLayout.hpp>
 #include <utils/Constants.hpp>
+#include <utils/I18N.hpp>
+#include <utils/Settings.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;

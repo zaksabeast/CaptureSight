@@ -1,16 +1,17 @@
+#include <csight/Ability.hpp>
+#include <csight/Config.hpp>
+#include <csight/Den.hpp>
+#include <csight/DenHashes.hpp>
+#include <csight/RNG.hpp>
+#include <csight/Utils.hpp>
 #include <fstream>
 #include <stdio.h>
 #include <stratosphere.hpp>
-#include <csight/Den.hpp>
-#include <csight/RNG.hpp>
-#include <csight/DenHashes.hpp>
-#include <csight/Utils.hpp>
-#include <csight/Config.hpp>
-#include <csight/Ability.hpp>
 
 namespace csight::raid {
   // Pass the den encounter tables to use since its responsibility is to parse the den data, not read/choose encounter tables
-  Den::Den(u8* data, u8 denId, std::vector<RaidEncounterTable> encounterTables, std::shared_ptr<RaidEncounterTable> eventEncounterTable) {
+  Den::Den(u8 *data, u8 denId, std::vector<RaidEncounterTable> encounterTables,
+           std::shared_ptr<RaidEncounterTable> eventEncounterTable) {
     std::copy(data, data + m_size, m_data);
 
     m_denId = denId > DEN_LIST_SIZE ? DEN_LIST_SIZE : denId;
@@ -27,7 +28,7 @@ namespace csight::raid {
 
   Den::~Den() { delete[] m_data; }
 
-  u64 Den::GetSeed() { return *(u64*)(m_data + 0x8); }
+  u64 Den::GetSeed() { return *(u64 *)(m_data + 0x8); }
 
   u16 Den::GetShinyAdvance() { return m_shinyAdvance; }
 
@@ -56,20 +57,20 @@ namespace csight::raid {
     m_shineType = shineType;
   }
 
-  u8 Den::GetStars() { return *(u8*)(m_data + 0x10); }
+  u8 Den::GetStars() { return *(u8 *)(m_data + 0x10); }
 
   u8 Den::GetDisplayStars() { return this->GetStars() + 1; }
 
-  u8 Den::GetRandRoll() { return *(u8*)(m_data + 0x11); }
+  u8 Den::GetRandRoll() { return *(u8 *)(m_data + 0x11); }
 
-  u8 Den::GetType() { return *(u8*)(m_data + 0x12); }
+  u8 Den::GetType() { return *(u8 *)(m_data + 0x12); }
 
   bool Den::GetIsRare() {
     u8 type = this->GetType();
     return type > 0 && (type & 1) == 0;
   }
 
-  u8 Den::GetFlagByte() { return *(u8*)(m_data + 0x13); }
+  u8 Den::GetFlagByte() { return *(u8 *)(m_data + 0x13); }
 
   bool Den::GetHasWatts() { return (this->GetFlagByte() & 1) == 0; }
 
@@ -103,7 +104,7 @@ namespace csight::raid {
       species : 0,
       flawlessIVs : 1,
       ability : ability::raid::FirstOrSecond,
-      probabilities : {0, 0, 0, 0, 0},
+      probabilities : { 0, 0, 0, 0, 0 },
     };
   }
 }  // namespace csight::raid

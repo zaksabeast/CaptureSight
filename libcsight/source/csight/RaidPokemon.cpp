@@ -1,10 +1,9 @@
-#include <string>
+#include <csight/Ability.hpp>
+#include <csight/RNG.hpp>
 #include <csight/RaidPokemon.hpp>
 #include <csight/Shiny.hpp>
-#include <csight/RNG.hpp>
-#include <csight/Shiny.hpp>
 #include <csight/Utils.hpp>
-#include <csight/Ability.hpp>
+#include <string>
 
 // 255 is an unsighed integer hack
 #define EMPTY_IV 255
@@ -18,7 +17,7 @@ namespace csight::raid {
     m_PID = rng.next(0xFFFFFFFF);
     m_shineType = shiny::GetShinyType(m_PID, SIDTID);
 
-    m_IVs = {EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV};
+    m_IVs = { EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV };
 
     for (u32 i = 0; i < flawlessIvs; i++) {
       s32 ivIndex;
@@ -36,7 +35,8 @@ namespace csight::raid {
       }
     }
 
-    // Thanks to https://github.com/Leanny/leanny.github.io/blob/17916ebde2bc984f325f7b103865416f226492fb/seedchecker/common.js#L207
+    // Thanks to
+    // https://github.com/Leanny/leanny.github.io/blob/17916ebde2bc984f325f7b103865416f226492fb/seedchecker/common.js#L207
     switch (abilitySetting) {
       case ability::raid::First:
         m_ability = ability::First;

@@ -33,7 +33,7 @@ class RoundedRectangle : public pu::ui::elm::Element {
   void SetBorderRadius(s32 Radius);
   pu::ui::Color GetColor();
   void SetColor(pu::ui::Color RecColor);
-  void OnRender(pu::ui::render::Renderer::Ref& Drawer, s32 X, s32 Y);
+  void OnRender(pu::ui::render::Renderer::Ref &Drawer, s32 X, s32 Y);
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
 
  private:

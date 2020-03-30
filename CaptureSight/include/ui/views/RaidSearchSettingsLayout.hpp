@@ -1,8 +1,8 @@
 #pragma once
 
 #include <functional>
-#include <string>
 #include <pu/Plutonium>
+#include <string>
 
 class RaidSearchSettingsLayout : public pu::ui::Layout {
  public:

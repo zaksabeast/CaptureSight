@@ -26,7 +26,7 @@ s32 Line::GetHeight() {
   return 0;
 }
 
-void Line::OnRender(pu::ui::render::Renderer::Ref& Drawer, s32 X, s32 Y) {
+void Line::OnRender(pu::ui::render::Renderer::Ref &Drawer, s32 X, s32 Y) {
   lineRGBA(m_renderer, m_x1, m_y1, m_x2, m_y2, m_clr.R, m_clr.G, m_clr.B, m_clr.A);
   aalineRGBA(m_renderer, m_x1, m_y1, m_x2, m_y2, m_clr.R, m_clr.G, m_clr.B, m_clr.A);
 }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <tesla.hpp>
 #include <csight/core>
+#include <tesla.hpp>
 #include <ui/PokemonViewMode.hpp>
 #include <ui/views/MainLayout.hpp>
 

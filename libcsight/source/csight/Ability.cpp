@@ -1,5 +1,5 @@
-#include <string>
 #include <csight/Ability.hpp>
+#include <string>
 
 namespace csight::ability {
   std::string GetAbilityFilterString(filter::AbilityFilter filter) {

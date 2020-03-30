@@ -1,12 +1,12 @@
-#include <vector>
-#include <memory>
-#include <functional>
-#include <switch.h>
-#include <csight/RNG.hpp>
-#include <csight/Config.hpp>
-#include <csight/RaidPokemon.hpp>
-#include <csight/CalculateRaidPKMList.hpp>
 #include <csight/Ability.hpp>
+#include <csight/CalculateRaidPKMList.hpp>
+#include <csight/Config.hpp>
+#include <csight/RNG.hpp>
+#include <csight/RaidPokemon.hpp>
+#include <functional>
+#include <memory>
+#include <switch.h>
+#include <vector>
 
 namespace csight::raid {
   bool checkFlawlessIV(u8 iv) { return iv == 31; }
@@ -53,8 +53,8 @@ namespace csight::raid {
   }
 
   bool checkIfPassesFilters(std::shared_ptr<RaidSearchSettings> searchSettings, std::shared_ptr<RaidPokemon> raid) {
-    return checkFlawlessIVs(searchSettings->GetFlawlessIVFilter(), raid) && checkShinyType(searchSettings->GetShinyTypeFilter(), raid) &&
-           checkAbility(searchSettings->GetAbilityFilter(), raid);
+    return checkFlawlessIVs(searchSettings->GetFlawlessIVFilter(), raid)
+        && checkShinyType(searchSettings->GetShinyTypeFilter(), raid) && checkAbility(searchSettings->GetAbilityFilter(), raid);
   }
 
   void calculateRaidPKMList(std::shared_ptr<RaidSearchSettings> searchSettings,

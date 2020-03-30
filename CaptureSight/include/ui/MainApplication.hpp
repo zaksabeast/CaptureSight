@@ -1,17 +1,17 @@
 #pragma once
 
-#include <string>
+#include <csight/core>
 #include <functional>
 #include <pu/Plutonium>
-#include <csight/core>
-#include <ui/views/PokemonSummaryLayout.hpp>
+#include <string>
+#include <ui/PokemonViewMode.hpp>
+#include <ui/views/DenMenuLayout.hpp>
 #include <ui/views/MainMenuLayout.hpp>
 #include <ui/views/PokemonListLayout.hpp>
-#include <ui/views/DenMenuLayout.hpp>
+#include <ui/views/PokemonSummaryLayout.hpp>
 #include <ui/views/RaidSearchResultLayout.hpp>
-#include <ui/views/WarningLayout.hpp>
 #include <ui/views/RaidSearchSettingsLayout.hpp>
-#include <ui/PokemonViewMode.hpp>
+#include <ui/views/WarningLayout.hpp>
 
 class MainApplication : public pu::ui::Application {
  public:

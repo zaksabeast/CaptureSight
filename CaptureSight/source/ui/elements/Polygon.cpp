@@ -24,7 +24,7 @@ s32 Polygon::GetHeight() {
   return 0;
 }
 
-void Polygon::OnRender(pu::ui::render::Renderer::Ref& Drawer, s32 X, s32 Y) {
+void Polygon::OnRender(pu::ui::render::Renderer::Ref &Drawer, s32 X, s32 Y) {
   filledPolygonRGBA(m_renderer, m_pointsX.data(), m_pointsY.data(), m_pointsX.size(), m_clr.R, m_clr.G, m_clr.B, m_clr.A);
   aapolygonRGBA(m_renderer, m_pointsX.data(), m_pointsY.data(), m_pointsX.size(), m_clr.R, m_clr.G, m_clr.B, m_clr.A);
 }

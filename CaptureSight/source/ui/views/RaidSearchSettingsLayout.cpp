@@ -1,11 +1,11 @@
+#include <csight/core>
 #include <functional>
 #include <pu/Plutonium>
-#include <csight/core>
-#include <ui/views/RaidSearchSettingsLayout.hpp>
 #include <ui/MainApplication.hpp>
+#include <ui/views/RaidSearchSettingsLayout.hpp>
 #include <utils/Constants.hpp>
-#include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
+#include <utils/Settings.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -47,7 +47,8 @@ RaidSearchSettingsLayout::RaidSearchSettingsLayout() : Layout::Layout() {
                   RaidSearchSettingsLayout::DecrementFlawlessIVFilter);
   SETUP_MENU_ITEM(m_filterMenu, m_abilityFiltermenuItem, RaidSearchSettingsLayout::IncrementAbilityFilter,
                   RaidSearchSettingsLayout::DecrementAbilityFilter);
-  SETUP_MENU_ITEM(m_filterMenu, m_denIndexMenuItem, RaidSearchSettingsLayout::IncrementDenIndex, RaidSearchSettingsLayout::DecrementDenIndex);
+  SETUP_MENU_ITEM(m_filterMenu, m_denIndexMenuItem, RaidSearchSettingsLayout::IncrementDenIndex,
+                  RaidSearchSettingsLayout::DecrementDenIndex);
   SETUP_MENU_ITEM(m_filterMenu, m_spawnIndexMenuItem, RaidSearchSettingsLayout::IncrementEncounterIndex,
                   RaidSearchSettingsLayout::DecrementEncounterIndex);
   SETUP_MENU_ITEM(m_filterMenu, m_isRareDenFilterMenuItem, RaidSearchSettingsLayout::ToggleIsRareDenFilter,
@@ -63,10 +64,12 @@ RaidSearchSettingsLayout::RaidSearchSettingsLayout() : Layout::Layout() {
 
 void RaidSearchSettingsLayout::UpdateValues() {
   auto searchSettings = mainApp->GetRaidSearchSettings();
-  std::string shinyFilterText = i18n->Translate("Shiny filter") + " - " + i18n->Translate(GetShinyTypeName(searchSettings->GetShinyTypeFilter()));
-  std::string flawlessIVFilterText = i18n->Translate("Flawless IV filter") + " - " + std::to_string(searchSettings->GetFlawlessIVFilter());
-  std::string abilityFilterText =
-      i18n->Translate("Ability filter") + " - " + csight::ability::GetAbilityFilterString(searchSettings->GetAbilityFilter());
+  std::string shinyFilterText
+      = i18n->Translate("Shiny filter") + " - " + i18n->Translate(GetShinyTypeName(searchSettings->GetShinyTypeFilter()));
+  std::string flawlessIVFilterText
+      = i18n->Translate("Flawless IV filter") + " - " + std::to_string(searchSettings->GetFlawlessIVFilter());
+  std::string abilityFilterText
+      = i18n->Translate("Ability filter") + " - " + csight::ability::GetAbilityFilterString(searchSettings->GetAbilityFilter());
   std::string rareDenFilterText = m_isRareDenFilter ? i18n->Translate("Rare den") : i18n->Translate("Regular den");
   std::string denIndexText = i18n->Translate("Den Id filter") + " - " + std::to_string(m_denIndex + 1);
   auto nest = searchSettings->GetRaidEncounter();
@@ -82,8 +85,10 @@ void RaidSearchSettingsLayout::UpdateValues() {
     }
   }
 
-  std::string starText = lowestStar == highestStar ? std::to_string(lowestStar) : std::to_string(lowestStar) + "-" + std::to_string(highestStar);
-  std::string spawnText = i18n->Translate("Spawn filter") + " - " + csight::utils::getSpeciesName(nest.species) + " " + starText + "★";
+  std::string starText
+      = lowestStar == highestStar ? std::to_string(lowestStar) : std::to_string(lowestStar) + "-" + std::to_string(highestStar);
+  std::string spawnText
+      = i18n->Translate("Spawn filter") + " - " + csight::utils::getSpeciesName(nest.species) + " " + starText + "★";
 
   m_shinyFilterMenuItem->SetName(shinyFilterText);
   m_flawlessIVFilterMenuItem->SetName(flawlessIVFilterText);

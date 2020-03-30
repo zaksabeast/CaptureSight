@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <pu/Plutonium>
 #include <csight/core>
+#include <pu/Plutonium>
+#include <vector>
 
 class RaidSearchResultLayout : public pu::ui::Layout {
  public:

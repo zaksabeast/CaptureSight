@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector>
-#include <switch.h>
-#include <csight/Shiny.hpp>
 #include <csight/Ability.hpp>
+#include <csight/Shiny.hpp>
+#include <switch.h>
+#include <vector>
 
 namespace csight::raid {
   class RaidPokemon {

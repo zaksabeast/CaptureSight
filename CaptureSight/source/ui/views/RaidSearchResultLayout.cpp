@@ -1,11 +1,11 @@
-#include <functional>
 #include <csight/core>
-#include <ui/views/RaidSearchResultLayout.hpp>
+#include <functional>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
-#include <utils/Settings.hpp>
-#include <utils/I18N.hpp>
+#include <ui/views/RaidSearchResultLayout.hpp>
 #include <utils/Constants.hpp>
+#include <utils/I18N.hpp>
+#include <utils/Settings.hpp>
 
 extern MainApplication::Ref mainApp;
 extern Settings gsets;
@@ -30,10 +30,11 @@ void RaidSearchResultLayout::UpdateValues() {
   m_firstShinyAdvance = MAX_RAID_ADVANCES;
 
   if (searchSettings->GetSeed() > 0) {
-    csight::raid::calculateRaidPKMList(searchSettings,
-                                       std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
-    headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShinyTypeText + i18n->Translate("Shiny") + " " +
-                 csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance, MAX_RAID_ADVANCES) + " " + i18n->Translate("(A) to apply filters");
+    csight::raid::calculateRaidPKMList(
+        searchSettings, std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, std::placeholders::_1, std::placeholders::_2));
+    headerText = i18n->Translate("Seed") + ": " + seedString + m_firstShinyTypeText + i18n->Translate("Shiny") + " "
+        + csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance, MAX_RAID_ADVANCES) + " "
+        + i18n->Translate("(A) to apply filters");
   }
 
   m_headerTextBlock->SetText(headerText);
@@ -55,8 +56,9 @@ void RaidSearchResultLayout::AddRaidMenuItem(std::shared_ptr<csight::raid::RaidP
   }
 
   auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
-  std::string title = i18n->Translate("Advance") + " " + std::to_string(advance) + " - " + i18n->Translate("IVs") + ": " + formattedIVs +
-                      advanceShinyType + i18n->Translate(shinyText) + ", " + i18n->Translate("Ability") + ": " + raid->GetAbilityString();
+  std::string title = i18n->Translate("Advance") + " " + std::to_string(advance) + " - " + i18n->Translate("IVs") + ": "
+      + formattedIVs + advanceShinyType + i18n->Translate(shinyText) + ", " + i18n->Translate("Ability") + ": "
+      + raid->GetAbilityString();
   auto menuItem = pu::ui::elm::MenuItem::New(title);
 
   menuItem->SetColor(gsets.GetTheme().text.light);

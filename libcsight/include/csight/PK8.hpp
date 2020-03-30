@@ -1,14 +1,14 @@
 #pragma once
 
-#include <switch.h>
-#include <vector>
 #include <future>
 #include <string>
+#include <switch.h>
+#include <vector>
 
 namespace csight {
   class PK8 {
    public:
-    PK8(u8* data);
+    PK8(u8 *data);
     ~PK8();
 
     void Crypt();
@@ -52,7 +52,7 @@ namespace csight {
     std::future<ulong> GetRaidSeedAsync();
 
    private:
-    u8* m_data = new u8[0x148];
+    u8 *m_data = new u8[0x148];
     u32 m_blockSize = 80;
     u32 m_storedSize = 0x148;
     u32 m_partySize = 0x158;

@@ -70,7 +70,8 @@ namespace xoroshiro_detail {
     xoroshiro(itype s0 = itype(0xc1f651c67c62c6e0), itype s1 = itype(0x30d89576f866ac9f))
         // Easter-egg seed value for Xoroshiro128+ to remind users that
         // they should seed their PRNGs properly.
-        : s0_(s0), s1_((s0 || s1) ? s1 : 1) {
+        :
+        s0_(s0), s1_((s0 || s1) ? s1 : 1) {
       // Nothing (else) to do.
     }
 
@@ -80,9 +81,9 @@ namespace xoroshiro_detail {
       s1_ = rotl(s1_, c);
     }
 
-    bool operator==(const xoroshiro& rhs) { return (s0_ == rhs.s0_) && (s1_ == rhs.s1_); }
+    bool operator==(const xoroshiro &rhs) { return (s0_ == rhs.s0_) && (s1_ == rhs.s1_); }
 
-    bool operator!=(const xoroshiro& rhs) { return !operator==(rhs); }
+    bool operator!=(const xoroshiro &rhs) { return !operator==(rhs); }
 
     // Not (yet) implemented:
     //   - arbitrary jumpahead (doable, but annoying to write).
@@ -124,7 +125,8 @@ namespace xoroshiro_detail {
     }
   };
 
-  template <typename itype, typename rtype, unsigned int a, unsigned int b, unsigned int c, itype mult1, unsigned int orot, itype mult2>
+  template <typename itype, typename rtype, unsigned int a, unsigned int b, unsigned int c, itype mult1, unsigned int orot,
+            itype mult2>
   class xoroshiro_starstar : public xoroshiro<itype, rtype, a, b, c> {
    private:
     using base = xoroshiro<itype, rtype, a, b, c>;

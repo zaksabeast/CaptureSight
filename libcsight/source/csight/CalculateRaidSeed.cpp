@@ -1,8 +1,8 @@
+#include <csight/Ability.hpp>
+#include <csight/RaidPokemon.hpp>
+#include <future>
 #include <iostream>
 #include <vector>
-#include <future>
-#include <csight/RaidPokemon.hpp>
-#include <csight/Ability.hpp>
 
 u64 rotateLeft(u64 first, u64 second) {
   return (first << second) | (first >> (64 - second));
@@ -18,7 +18,7 @@ std::vector<u64> xoroshiro(u64 s0, u64 s1) {
   auto s0_2 = rotateLeft(s0, 24) ^ temp ^ (temp << 16);
   auto s1_2 = rotateLeft(temp, 37);
 
-  return {s0_2, s1_2};
+  return { s0_2, s1_2 };
 }
 
 namespace csight::raid {
@@ -38,15 +38,15 @@ namespace csight::raid {
         auto s0_high = (rotateRight(j ^ temp_low, 24) & 0xFFFFFFFF00000000) | (i << 32);
         auto partialTestSeed = s0_low | s0_high;
         auto res = xoroshiro((partialTestSeed & 0xffffffffffff), s1);  // ec
-        res = xoroshiro(res[0], res[1]);                               // sidtid
-        auto testPID = (res[0] + res[1]) & pidMask;                    // pid
+        res = xoroshiro(res[0], res[1]);  // sidtid
+        auto testPID = (res[0] + res[1]) & pidMask;  // pid
 
         // Only compare bits of the PID guaranteed with the missing seed bytes
         if (testPID == maskedPID) {
           for (u64 k = 0; k <= 0xffff; k++) {
             auto seed = (k << 48) + partialTestSeed;
-            res = xoroshiro(seed, s1);                           // ec
-            res = xoroshiro(res[0], res[1]);                     // sidtid
+            res = xoroshiro(seed, s1);  // ec
+            res = xoroshiro(res[0], res[1]);  // sidtid
             auto generatedPID = (res[0] + res[1]) & 0xFFFFFFFF;  // pid
 
             if (generatedPID == pid) {
@@ -66,5 +66,7 @@ namespace csight::raid {
     return 0;
   }
 
-  std::future<u64> CalculateRaidSeedAsync(u32 ec, u32 pid, std::vector<u8> ivs) { return std::async(&csight::raid::CalculateRaidSeed, ec, pid, ivs); }
+  std::future<u64> CalculateRaidSeedAsync(u32 ec, u32 pid, std::vector<u8> ivs) {
+    return std::async(&csight::raid::CalculateRaidSeed, ec, pid, ivs);
+  }
 }  // namespace csight::raid

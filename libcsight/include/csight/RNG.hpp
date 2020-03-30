@@ -1,7 +1,7 @@
 #pragma once
 
-#include <switch.h>
 #include <csight/XOROSHIRO.hpp>
+#include <switch.h>
 
 using swsh_xoroshiro = xoroshiro_detail::xoroshiro_plus<uint64_t, uint64_t, 24, 16, 37>;
 

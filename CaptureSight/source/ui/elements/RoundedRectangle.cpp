@@ -1,7 +1,8 @@
 #include <pu/Plutonium>
 #include <ui/elements/RoundedRectangle.hpp>
 
-RoundedRectangle::RoundedRectangle(s32 X, s32 Y, s32 Width, s32 Height, pu::ui::Color RecColor, s32 BorderRadius) : pu::ui::elm::Element::Element() {
+RoundedRectangle::RoundedRectangle(s32 X, s32 Y, s32 Width, s32 Height, pu::ui::Color RecColor, s32 BorderRadius) :
+    pu::ui::elm::Element::Element() {
   m_x = X;
   m_y = Y;
   m_w = Width;
@@ -58,7 +59,7 @@ void RoundedRectangle::SetColor(pu::ui::Color RecColor) {
   m_clr = RecColor;
 }
 
-void RoundedRectangle::OnRender(pu::ui::render::Renderer::Ref& Drawer, s32 X, s32 Y) {
+void RoundedRectangle::OnRender(pu::ui::render::Renderer::Ref &Drawer, s32 X, s32 Y) {
   Drawer->RenderRoundedRectangleFill(m_clr, X, Y, m_w, m_h, m_borderr);
 }
 

@@ -1,7 +1,7 @@
-#include <ui/views/MainLayout.hpp>
 #include <ui/MainApplication.hpp>
+#include <ui/views/MainLayout.hpp>
 
-tsl::elm::Element* MainLayout::createUI() {
+tsl::elm::Element *MainLayout::createUI() {
   auto rootFrame = new tsl::elm::OverlayFrame("Main Menu", "");
   auto menuList = new tsl::elm::List();
 

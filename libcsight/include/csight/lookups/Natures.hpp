@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
 extern std::vector<std::string> NatureList;

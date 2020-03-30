@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
 #include <string>
 #include <utils/json.hpp>
+#include <vector>
 
 std::string GetTranslationCode();
 

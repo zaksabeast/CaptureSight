@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <switch.h>
 #include <csight/Ability.hpp>
+#include <switch.h>
+#include <vector>
 
 namespace csight::raid {
   struct RaidEncounter {

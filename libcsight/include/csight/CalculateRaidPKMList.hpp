@@ -1,13 +1,13 @@
 #pragma once
 
-#include <vector>
-#include <memory>
-#include <functional>
-#include <switch.h>
+#include <csight/Ability.hpp>
 #include <csight/RaidPokemon.hpp>
 #include <csight/RaidTemplateTables.hpp>
 #include <csight/Shiny.hpp>
-#include <csight/Ability.hpp>
+#include <functional>
+#include <memory>
+#include <switch.h>
+#include <vector>
 
 namespace csight::raid {
   class RaidSearchSettings {

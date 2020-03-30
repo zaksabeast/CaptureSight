@@ -1,8 +1,8 @@
 #include <memory>
 #include <stratosphere.hpp>
 #include <ui/MainApplication.hpp>
-#include <utils/Settings.hpp>
 #include <utils/I18N.hpp>
+#include <utils/Settings.hpp>
 
 MainApplication::Ref mainApp;
 Settings gsets;
@@ -16,15 +16,16 @@ void MainApplication::OnLoad() {
   // Change default font to load characters properly (chs cht ko)
   std::string language = GetTranslationCode();
   if (language.compare("chs") == 0 || language.compare("cht") == 0)
-    pu::ui::render::SetDefaultFontFromShared(pu::ui::render::SharedFont::ChineseSimplified);  // ChineseTraditional doesn't work for cht!?
+    pu::ui::render::SetDefaultFontFromShared(
+        pu::ui::render::SharedFont::ChineseSimplified);  // ChineseTraditional doesn't work for cht!?
 
   m_gameReader = std::make_shared<csight::GameReader>();
   bool isDebugServiceRunning = m_gameReader->GetIsServiceRunning();
 
   m_warningLayout = WarningLayout::New();
   m_warningLayout->SetBackgroundColor(gsets.GetTheme().background.dark);
-  this->SetOnInput(
-      std::bind(&MainApplication::OnWarningInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+  this->SetOnInput(std::bind(&MainApplication::OnWarningInput, this, std::placeholders::_1, std::placeholders::_2,
+                             std::placeholders::_3, std::placeholders::_4));
 
   if (!isDebugServiceRunning) {
     std::string warningTranslationKey = "Atmosphere's dmnt:cht is not running";
@@ -51,8 +52,8 @@ void MainApplication::OnLoad() {
   m_versionTextBlock->SetColor(gsets.GetTheme().text.light);
 
   SETUP_LAYOUT(PokemonSummaryLayout, m_pokemonSummaryLayout);
-  m_pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1, std::placeholders::_2,
-                                               std::placeholders::_3, std::placeholders::_4));
+  m_pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1,
+                                               std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
   SETUP_LAYOUT(MainMenuLayout, m_mainMenuLayout);
   m_mainMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::SetViewMode, this, std::placeholders::_1));
@@ -61,12 +62,12 @@ void MainApplication::OnLoad() {
   SETUP_LAYOUT(PokemonListLayout, m_pokemonListLayout);
   m_pokemonListLayout->SetOnInputMenuItem(std::bind(&MainApplication::SelectPokemonSlot, this, std::placeholders::_1));
   m_pokemonListLayout->UpdateValues(m_pkms, m_GetSummaryTitle);
-  m_pokemonListLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonListLayout, this, std::placeholders::_1, std::placeholders::_2,
-                                            std::placeholders::_3, std::placeholders::_4));
+  m_pokemonListLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonListLayout, this, std::placeholders::_1,
+                                            std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
   SETUP_LAYOUT(RaidSearchResultLayout, m_raidSearchResultLayout);
-  m_raidSearchResultLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchResultLayout, this, std::placeholders::_1, std::placeholders::_2,
-                                                 std::placeholders::_3, std::placeholders::_4));
+  m_raidSearchResultLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchResultLayout, this, std::placeholders::_1,
+                                                 std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
   SETUP_LAYOUT(DenMenuLayout, m_denMenuLayout);
   m_denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
@@ -78,8 +79,8 @@ void MainApplication::OnLoad() {
   m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchSettingsLayout::UpdateValues, m_raidSearchSettingsLayout));
   m_raidSearchSettings->AddUpdateCallback(std::bind(&RaidSearchResultLayout::UpdateValues, m_raidSearchResultLayout));
 
-  this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3,
-                             std::placeholders::_4));
+  this->SetOnInput(std::bind(&MainApplication::OnMainApplicationInput, this, std::placeholders::_1, std::placeholders::_2,
+                             std::placeholders::_3, std::placeholders::_4));
   this->NavigateTo(m_mainMenuLayout);
 }
 
@@ -134,10 +135,10 @@ void MainApplication::SetViewMode(ViewMode viewMode) {
       return;
     case wild:
       m_GetSummaryTitle = std::bind(&MainApplication::GetWildSummaryTitle, this, std::placeholders::_1);
-      m_pkms = std::vector<std::shared_ptr<csight::PK8>>{
-          m_gameReader->ReadWild(),
-          m_gameReader->ReadRaid(),
-          m_gameReader->ReadTrade(),
+      m_pkms = std::vector<std::shared_ptr<csight::PK8>> {
+        m_gameReader->ReadWild(),
+        m_gameReader->ReadRaid(),
+        m_gameReader->ReadTrade(),
       };
       break;
     case box:

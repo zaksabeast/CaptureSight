@@ -1,19 +1,20 @@
-#include <tesla.hpp>
 #include <csight/core>
 #include <future>
 #include <optional>
 #include <string>
+#include <tesla.hpp>
 #include <ui/views/PokemonListLayout.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
 #include <ui/views/RaidSearchResultLayout.hpp>
 
-PokemonListLayout::PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::PK8>> pkms, std::function<std::string(u32)> GetPKMTitle) {
+PokemonListLayout::PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::PK8>> pkms,
+                                     std::function<std::string(u32)> GetPKMTitle) {
   m_title = title;
   m_pkms = pkms;
   m_GetPKMTitle = GetPKMTitle;
 }
 
-tsl::elm::Element* PokemonListLayout::createUI() {
+tsl::elm::Element *PokemonListLayout::createUI() {
   auto rootFrame = new tsl::elm::OverlayFrame(m_title, "Press (Y) to find raid seed");
   auto pkmList = new tsl::elm::List(6);
 
@@ -47,7 +48,8 @@ void PokemonListLayout::update() {
   }
 }
 
-bool PokemonListLayout::OnClickPKM(tsl::elm::ListItem* button, std::string buttonText, std::shared_ptr<csight::PK8> pkm, s64 keys) {
+bool PokemonListLayout::OnClickPKM(tsl::elm::ListItem *button, std::string buttonText, std::shared_ptr<csight::PK8> pkm,
+                                   s64 keys) {
   if (this->seedFuture) {
     return true;
   } else if (keys == KEY_A) {

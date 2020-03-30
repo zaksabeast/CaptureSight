@@ -1,6 +1,6 @@
 #pragma once
-#include <vector>
 #include <pu/Plutonium>
+#include <vector>
 
 class Line : public pu::ui::elm::Element {
  public:
@@ -11,7 +11,7 @@ class Line : public pu::ui::elm::Element {
   s32 GetY();
   s32 GetWidth();
   s32 GetHeight();
-  void OnRender(pu::ui::render::Renderer::Ref& Drawer, s32 X, s32 Y);
+  void OnRender(pu::ui::render::Renderer::Ref &Drawer, s32 X, s32 Y);
   void OnInput(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
 
  private:

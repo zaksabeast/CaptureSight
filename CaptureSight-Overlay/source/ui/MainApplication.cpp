@@ -1,12 +1,12 @@
-#include <memory>
-#include <functional>
-#include <tesla.hpp>
 #include <csight/core>
+#include <functional>
+#include <memory>
+#include <tesla.hpp>
 #include <ui/MainApplication.hpp>
-#include <ui/views/ErrorLayout.hpp>
-#include <ui/views/PokemonSummaryLayout.hpp>
-#include <ui/views/PokemonListLayout.hpp>
 #include <ui/views/DenMenuLayout.hpp>
+#include <ui/views/ErrorLayout.hpp>
+#include <ui/views/PokemonListLayout.hpp>
+#include <ui/views/PokemonSummaryLayout.hpp>
 
 std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
   if (R_FAILED(m_gameReader->Attach()))
@@ -71,7 +71,7 @@ void MainApplication::ChangeViewMode(ViewMode mode) {
       return;
     case wild:
       guiTitle = "Wild/Trade/Party";
-      pkms = {m_gameReader->ReadWild(), m_gameReader->ReadTrade(), m_gameReader->ReadRaid()};
+      pkms = { m_gameReader->ReadWild(), m_gameReader->ReadTrade(), m_gameReader->ReadRaid() };
       getTitle = std::bind(&MainApplication::GetWildTitle, this, std::placeholders::_1);
       break;
     case box:

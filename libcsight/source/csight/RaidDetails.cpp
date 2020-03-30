@@ -1,10 +1,10 @@
-#include <memory>
-#include <switch.h>
-#include <csight/RaidDetails.hpp>
-#include <csight/TitleIds.hpp>
+#include <csight/Ability.hpp>
 #include <csight/DenHashes.hpp>
 #include <csight/NestHoleDistributionEncounter8Archive_generated.h>
-#include <csight/Ability.hpp>
+#include <csight/RaidDetails.hpp>
+#include <csight/TitleIds.hpp>
+#include <memory>
+#include <switch.h>
 
 namespace csight::raid {
   u64 GetEventFlatbufferOffset() {
@@ -46,7 +46,7 @@ namespace csight::raid {
   RaidDetails::RaidDetails() { m_eventFlatbufferOffset = GetEventFlatbufferOffset(); }
 
   std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
-    u8* denBytes = new u8[0x18];
+    u8 *denBytes = new u8[0x18];
     auto encounterTables = this->GetEncounterTables();
     auto eventTemplateTable = this->ReadEventEncounterTable();
 
@@ -82,14 +82,14 @@ namespace csight::raid {
     bool isPlayingSword = this->GetTitleId() == SWORD_TITLE_ID;
     u32 gameVersion = isPlayingSword ? 1 : 2;
     std::vector<RaidEncounter> raidEncounters;
-    auto encounterTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable{eventHash, raidEncounters});
+    auto encounterTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { eventHash, raidEncounters });
     u32 eventFlatbufferInMemorySize = 0;
     this->ReadHeap(m_eventFlatbufferOffset + 0x10, &eventFlatbufferInMemorySize, sizeof(u32));
 
     if (eventFlatbufferInMemorySize + 4 != m_eventFlatbufferSize)
       return encounterTable;
 
-    u8* eventFlatbuffer = new u8[m_eventFlatbufferSize];
+    u8 *eventFlatbuffer = new u8[m_eventFlatbufferSize];
     this->ReadHeap(m_eventFlatbufferOffset + 0x20, eventFlatbuffer, m_eventFlatbufferSize);
     auto eventEncounterTables = pkNX::Structures::GetNestHoleDistributionEncounter8Archive(eventFlatbuffer)->Tables();
 
@@ -101,16 +101,16 @@ namespace csight::raid {
     for (auto eventEncounter = eventEncounters->begin(); eventEncounter != eventEncounters->end(); ++eventEncounter) {
       auto eventProbabilities = eventEncounter->Probabilities();
       RaidEncounter raidEncounter = {
-          eventEncounter->Species(),
-          (u32)eventEncounter->FlawlessIVs(),
-          (ability::raid::AbilityRaidSetting)eventEncounter->Ability(),
-          {
-              eventProbabilities->Get(0),
-              eventProbabilities->Get(1),
-              eventProbabilities->Get(2),
-              eventProbabilities->Get(3),
-              eventProbabilities->Get(4),
-          },
+        eventEncounter->Species(),
+        (u32)eventEncounter->FlawlessIVs(),
+        (ability::raid::AbilityRaidSetting)eventEncounter->Ability(),
+        {
+            eventProbabilities->Get(0),
+            eventProbabilities->Get(1),
+            eventProbabilities->Get(2),
+            eventProbabilities->Get(3),
+            eventProbabilities->Get(4),
+        },
       };
 
       encounterTable->templates.push_back(raidEncounter);

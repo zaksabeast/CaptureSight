@@ -1,5 +1,5 @@
-#include <tesla.hpp>
 #include <csight/core>
+#include <tesla.hpp>
 #include <ui/views/DenMenuLayout.hpp>
 #include <ui/views/RaidSearchResultLayout.hpp>
 
@@ -8,7 +8,7 @@ DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> den
   m_title = title;
 }
 
-tsl::elm::Element* DenMenuLayout::createUI() {
+tsl::elm::Element *DenMenuLayout::createUI() {
   auto rootFrame = new tsl::elm::OverlayFrame(m_title, "");
   auto denList = new tsl::elm::List(6);
 
