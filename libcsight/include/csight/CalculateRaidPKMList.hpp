@@ -1,5 +1,6 @@
 #pragma once
 
+#include <csight/Config.hpp>
 #include <csight/Ability.hpp>
 #include <csight/RaidPokemon.hpp>
 #include <csight/RaidTemplateTables.hpp>
