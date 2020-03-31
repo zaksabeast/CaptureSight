@@ -10,7 +10,7 @@ RaidSearchResultLayout::RaidSearchResultLayout(u64 seed, u32 flawlessIVs) {
 }
 
 tsl::elm::Element *RaidSearchResultLayout::createUI() {
-  auto denList = new tsl::elm::List(6);
+  auto denList = new tsl::elm::List();
   auto searchSettings = std::make_shared<csight::raid::RaidSearchSettings>();
   std::string title = "Oops!";
   std::string subTitle = "Not a non-shiny raid Pokemon!";

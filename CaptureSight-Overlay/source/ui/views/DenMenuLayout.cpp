@@ -10,7 +10,7 @@ DenMenuLayout::DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> den
 
 tsl::elm::Element *DenMenuLayout::createUI() {
   auto rootFrame = new tsl::elm::OverlayFrame(m_title, "");
-  auto denList = new tsl::elm::List(6);
+  auto denList = new tsl::elm::List();
 
   for (u32 i = 0; i < m_dens.size(); i++) {
     auto den = m_dens[i];

@@ -16,7 +16,7 @@ PokemonListLayout::PokemonListLayout(std::string title, std::vector<std::shared_
 
 tsl::elm::Element *PokemonListLayout::createUI() {
   auto rootFrame = new tsl::elm::OverlayFrame(m_title, "Press (Y) to find raid seed");
-  auto pkmList = new tsl::elm::List(6);
+  auto pkmList = new tsl::elm::List();
 
   for (u32 i = 0; i < m_pkms.size(); i++) {
     auto pkm = m_pkms[i];

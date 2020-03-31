@@ -34,16 +34,16 @@ void PokemonSummaryLayout::AddBodyDrawer(tsl::gfx::Renderer *screen, u16 x, u16 
   std::string pidEd = "PID: " + csight::utils::convertNumToHexString(m_pkm->GetPID())
       + " EC: " + csight::utils::convertNumToHexString(m_pkm->GetEncryptionConstant());
 
-  screen->drawString(formattedIVs.c_str(), false, 20, 100, 24, screen->a(0xFFFF));
-  screen->drawString(formattedEVs.c_str(), false, 20, 140, 24, screen->a(0xFFFF));
-  screen->drawString(nature.c_str(), false, 20, 180, 24, screen->a(0xFFFF));
-  screen->drawString(mintedNature.c_str(), false, 20, 220, 24, screen->a(0xFFFF));
-  screen->drawString(friendship.c_str(), false, 20, 260, 24, screen->a(0xFFFF));
-  screen->drawString(ability.c_str(), false, 20, 300, 24, screen->a(0xFFFF));
-  screen->drawString(moves.c_str(), false, 20, 340, 24, screen->a(0xFFFF));
-  screen->drawString(move0.c_str(), false, 20, 380, 24, screen->a(0xFFFF));
-  screen->drawString(move1.c_str(), false, 20, 420, 24, screen->a(0xFFFF));
-  screen->drawString(move2.c_str(), false, 20, 460, 24, screen->a(0xFFFF));
-  screen->drawString(move3.c_str(), false, 20, 500, 24, screen->a(0xFFFF));
-  screen->drawString(pidEd.c_str(), false, 20, 540, 24, screen->a(0xFFFF));
+  screen->drawString(formattedIVs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
+  screen->drawString(formattedEVs.c_str(), false, 50, 200, 24, screen->a(0xFFFF));
+  screen->drawString(nature.c_str(), false, 50, 240, 24, screen->a(0xFFFF));
+  screen->drawString(mintedNature.c_str(), false, 50, 280, 24, screen->a(0xFFFF));
+  screen->drawString(friendship.c_str(), false, 50, 320, 24, screen->a(0xFFFF));
+  screen->drawString(ability.c_str(), false, 50, 360, 24, screen->a(0xFFFF));
+  screen->drawString(moves.c_str(), false, 50, 400, 24, screen->a(0xFFFF));
+  screen->drawString(move0.c_str(), false, 50, 440, 24, screen->a(0xFFFF));
+  screen->drawString(move1.c_str(), false, 50, 480, 24, screen->a(0xFFFF));
+  screen->drawString(move2.c_str(), false, 50, 520, 24, screen->a(0xFFFF));
+  screen->drawString(move3.c_str(), false, 50, 560, 24, screen->a(0xFFFF));
+  screen->drawString(pidEd.c_str(), false, 50, 600, 24, screen->a(0xFFFF));
 }
