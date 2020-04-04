@@ -9,6 +9,7 @@
 #include <ui/views/MainMenuLayout.hpp>
 #include <ui/views/PokemonListLayout.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
+#include <ui/views/PokemonTypeLayout.hpp>
 #include <ui/views/RaidSearchResultLayout.hpp>
 #include <ui/views/RaidSearchSettingsLayout.hpp>
 #include <ui/views/WarningLayout.hpp>
@@ -32,6 +33,7 @@ class MainApplication : public pu::ui::Application {
   std::vector<std::shared_ptr<csight::raid::Den>> m_dens;
   bool m_isShowingExtraDetail = false;
   PokemonSummaryLayout::Ref m_pokemonSummaryLayout;
+  PokemonTypeLayout::Ref m_pokemonTypeLayout;
   MainMenuLayout::Ref m_mainMenuLayout;
   PokemonListLayout::Ref m_pokemonListLayout;
   RaidSearchResultLayout::Ref m_raidSearchResultLayout;
@@ -48,7 +50,9 @@ class MainApplication : public pu::ui::Application {
   void OnInputRaidSearchResultLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputDenList(u64 seed);
   void OnInputPokemonListLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void OnInputDenMenuLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
   void OnInputRaidSearchSettingsLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos);
+  void ShowPKMTypeMatchUps(std::shared_ptr<csight::PKM> pkm);
   void SelectPokemonSlot(u32 slot);
   void IncreaseSlot(u32 slotIncrease);
   void DecreaseSlot(u32 slotDecrease);

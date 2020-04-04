@@ -12,6 +12,7 @@ class DenMenuLayout : public pu::ui::Layout {
   void UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>> dens);
   void SetOnInputMenuItem(std::function<void(u64)> onInput);
   void ClickMenuItem(u64 seed);
+  s32 GetSelectedIndex();
 
  private:
   pu::ui::elm::Menu::Ref m_menu;

@@ -1,4 +1,5 @@
 #include <csight/Ability.hpp>
+#include <csight/PKM.hpp>
 #include <csight/RNG.hpp>
 #include <csight/RaidPokemon.hpp>
 #include <csight/Shiny.hpp>
@@ -9,9 +10,11 @@
 #define EMPTY_IV 255
 
 namespace csight::raid {
-  RaidPokemon::RaidPokemon(u64 seed, u32 flawlessIvs, u16 species, ability::raid::AbilityRaidSetting abilitySetting) {
+  RaidPokemon::RaidPokemon(u64 seed, u32 flawlessIvs, u16 species, ability::raid::AbilityRaidSetting abilitySetting) :
+      PKM::PKM() {
+    m_seed = seed;
     m_species = species;
-    auto rng = rng::xoroshiro(seed);
+    auto rng = rng::xoroshiro(m_seed);
     m_EC = rng.next(0xFFFFFFFF);
     u32 SIDTID = rng.next(0xFFFFFFFF);
     m_PID = rng.next(0xFFFFFFFF);
@@ -71,4 +74,8 @@ namespace csight::raid {
   ability::Ability RaidPokemon::GetAbility() { return m_ability; };
 
   std::string RaidPokemon::GetAbilityString() { return ability::GetAbilityString(m_ability); }
+
+  u64 RaidPokemon::GetRaidSeed() { return m_seed; }
+
+  u8 RaidPokemon::GetForm() { return 0; }
 }  // namespace csight::raid

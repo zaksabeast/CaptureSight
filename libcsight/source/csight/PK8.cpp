@@ -1,16 +1,17 @@
 #include <algorithm>
 #include <csight/CalculateRaidSeed.hpp>
 #include <csight/PK8.hpp>
+#include <csight/PKM.hpp>
 #include <csight/RNG.hpp>
 #include <csight/Utils.hpp>
 #include <csight/lookups/Abilities.hpp>
 #include <csight/lookups/Moves.hpp>
 #include <csight/lookups/Natures.hpp>
+#include <csight/lookups/Types.hpp>
 #include <future>
 
 namespace csight {
-
-  PK8::PK8(u8 *data) {
+  PK8::PK8(u8 *data) : PKM::PKM() {
     std::copy(data, data + m_storedSize, m_data);
 
     if (this->CheckEncrypted()) {
@@ -127,11 +128,6 @@ namespace csight {
 
   u32 PK8::GetPID() { return *(u32 *)(m_data + 0x1c); }
 
-  u32 PK8::GetPSV() {
-    u32 pid = this->GetPID();
-    return ((pid >> 16 ^ (pid & 0xFFFF)) >> 4);
-  }
-
   u32 PK8::GetTSV() { return ((this->GetTID() ^ this->GetSID()) >> 4); }
 
   bool PK8::GetIsShiny() { return this->GetPSV() == this->GetTSV(); }
@@ -164,7 +160,7 @@ namespace csight {
 
   bool PK8::GetIsEgg() { return this->GetIsValid() && ((this->GetIV32() >> 30) & 1) == 1; }
 
-  u8 PK8::GetAbility() { return *(u8 *)(m_data + 0x14); }
+  ability::Ability PK8::GetAbility() { return (ability::Ability) * (u8 *)(m_data + 0x14); }
 
   std::string PK8::GetAbilityString() { return utils::getIndex(Abilities, this->GetAbility()); }
 
@@ -200,9 +196,12 @@ namespace csight {
 
   u8 PK8::GetCurrentFriendship() { return this->GetCurrentHandler() == 0 ? this->GetOTFriendship() : this->GetHTFriendship(); }
 
-  ulong PK8::GetRaidSeed() { return raid::CalculateRaidSeed(this->GetEncryptionConstant(), this->GetPID(), this->GetIVs()); }
+  u64 PK8::GetRaidSeed() { return raid::CalculateRaidSeed(this->GetEncryptionConstant(), this->GetPID(), this->GetIVs()); }
 
-  std::future<ulong> PK8::GetRaidSeedAsync() {
+  std::future<u64> PK8::GetRaidSeedAsync() {
     return raid::CalculateRaidSeedAsync(this->GetEncryptionConstant(), this->GetPID(), this->GetIVs());
   }
+
+  // Currently stubbed
+  u8 PK8::GetForm() { return 0; }
 }  // namespace csight

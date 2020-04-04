@@ -3,8 +3,35 @@
 #include <csight/RaidTemplateTables.hpp>
 #include <csight/Utils.hpp>
 #include <csight/lookups/Species.hpp>
+#include <csight/lookups/Types.hpp>
+#include <iomanip>
 #include <ios>
 #include <sstream>
+
+// clang-format off
+std::vector<std::vector<float>> weaknessChart = {
+                // Defense
+/* Offsense */  { 1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1   },
+                { 1,   1,   2,   1,   1,   1,   1,   1,   0,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1   },
+                { 1,   1,   1,   2,   1,   1,   0.5, 0.5, 1,   1,   1,   1,   1,   1,   2,   1,   1,   0.5, 2   },
+                { 1,   1,   0.5, 1,   1,   0,   2,   0.5, 1,   1,   1,   1,   0.5, 2,   1,   2,   1,   1,   1   },
+                { 1,   1,   0.5, 1,   0.5, 2,   1,   0.5, 1,   1,   1,   1,   0.5, 1,   2,   1,   1,   1,   0.5 },
+                { 1,   1,   1,   1,   0.5, 1,   0.5, 1,   1,   1,   1,   2,   2,   0,   1,   2,   1,   1,   1   },
+                { 1,   0.5, 2,   0.5, 0.5, 2,   1,   1,   1,   2,   0.5, 2,   2,   1,   1,   1,   1,   1,   1   },
+                { 1,   1,   0.5, 2,   1,   0.5, 2,   1,   1,   1,   2,   1,   0.5, 1,   1,   1,   1,   1,   1   },
+                { 1,   0,   0,   1,   0.5, 1,   1,   0.5, 2,   1,   1,   1,   1,   1,   1,   1,   1,   2,   1   },
+                { 1,   0.5, 2,   0.5, 0,   2,   0.5, 0.5, 1,   0.5, 2,   1,   0.5, 1,   0.5, 0.5, 0.5, 1,   0.5 },
+                { 1,   1,   1,   1,   1,   2,   2,   0.5, 1,   0.5, 0.5, 2,   0.5, 1,   1,   0.5, 1,   1,   0.5 },
+                { 1,   1,   1,   1,   1,   1,   1,   1,   1,   0.5, 0.5, 0.5, 2,   2,   1,   0.5, 1,   1,   1   },
+                { 1,   1,   1,   2,   2,   0.5, 1,   2,   1,   1,   2,   0.5, 0.5, 0.5, 1,   2,   1,   1,   1   },
+                { 1,   1,   1,   0.5, 1,   2,   1,   1,   1,   0.5, 1,   1,   1,   0.5, 1,   1,   1,   1,   1   },
+                { 1,   1,   0.5, 1,   1,   1,   1,   2,   2,   1,   1,   1,   1,   1,   0.5, 1,   1,   2,   1   },
+                { 1,   1,   2,   1,   1,   1,   2,   1,   1,   2,   2,   1,   1,   1,   1,   0.5, 1,   1,   1   },
+                { 1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0.5, 0.5, 0.5, 0.5, 1,   2,   2,   1,   2   },
+                { 1,   1,   2,   1,   1,   1,   1,   0.5, 0.5, 1,   1,   1,   1,   1,   0,   1,   1,   0.5, 2   },
+                { 1,   1,   0.5, 1,   2,   1,   1,   1,   1,   2,   1,   1,   1,   1,   1,   1,   0,   0.5, 1   },
+};
+// clang-format on
 
 namespace csight::utils {
   // Thanks to https://github.com/WerWolv/EdiZon/blob/44a30ce9ad2571f46c3e420faec44d573a27ebbc/source/helpers/util.c#L31-L42
@@ -55,5 +82,49 @@ namespace csight::utils {
     }
 
     return nest;
+  }
+
+  std::string getTypeName(type::PokemonType type) { return getIndex(type::TypeNames, type); }
+
+  std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2) {
+    auto type1Weaknesses = weaknessChart[type1];
+    auto type2Weaknesses = weaknessChart[type2];
+    std::vector<type::TypeMultiplier> result = {};
+
+    for (u8 i = 0; i < type1Weaknesses.size(); i++) {
+      auto type1Multiplier = type1Weaknesses[i];
+      auto type2Multiplier = type2Weaknesses[i];
+      auto multiplier = type1Multiplier * type2Multiplier;
+
+      if (multiplier != 1) {
+        result.push_back({ (type::PokemonType)i, multiplier });
+      }
+    }
+
+    return result;
+  };
+
+  std::vector<type::TypeMultiplier> calculateStrengths(type::PokemonType type1, type::PokemonType type2) {
+    std::vector<type::TypeMultiplier> result = {};
+
+    for (u8 i = 0; i < weaknessChart.size(); i++) {
+      auto attackType = weaknessChart[i];
+      auto type1Multiplier = attackType[type1];
+      auto type2Multiplier = attackType[type2];
+      auto multiplier = type1Multiplier * type2Multiplier;
+
+      if (multiplier != 1) {
+        result.push_back({ (type::PokemonType)i, multiplier });
+      }
+    }
+
+    return result;
+  };
+
+  std::string convertFloatWithPrecision(float num, u32 precision) {
+    std::stringstream result;
+    result << std::fixed << std::setprecision(precision) << num;
+
+    return result.str();
   }
 }  // namespace csight::utils

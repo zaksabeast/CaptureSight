@@ -55,6 +55,8 @@ void MainApplication::OnLoad() {
   m_pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1,
                                                std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
+  SETUP_LAYOUT(PokemonTypeLayout, m_pokemonTypeLayout);
+
   SETUP_LAYOUT(MainMenuLayout, m_mainMenuLayout);
   m_mainMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::SetViewMode, this, std::placeholders::_1));
   m_mainMenuLayout->Add(m_versionTextBlock);
@@ -71,6 +73,9 @@ void MainApplication::OnLoad() {
 
   SETUP_LAYOUT(DenMenuLayout, m_denMenuLayout);
   m_denMenuLayout->SetOnInputMenuItem(std::bind(&MainApplication::OnInputDenList, this, std::placeholders::_1));
+  m_denMenuLayout->UpdateValues(m_dens);
+  m_denMenuLayout->SetOnInput(std::bind(&MainApplication::OnInputDenMenuLayout, this, std::placeholders::_1,
+                                        std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
 
   SETUP_LAYOUT(RaidSearchSettingsLayout, m_raidSearchSettingsLayout);
   m_raidSearchSettingsLayout->SetOnInput(std::bind(&MainApplication::OnInputRaidSearchSettingsLayout, this, std::placeholders::_1,
@@ -113,7 +118,26 @@ void MainApplication::OnInputPokemonListLayout(u64 Down, u64 Up, u64 Held, pu::u
     this->DecreaseSlot(30);
   } else if (Down & KEY_R) {
     this->IncreaseSlot(30);
+  } else if (Down & KEY_Y) {
+    auto slot = m_pokemonListLayout->GetSelectedIndex();
+    auto pkm = m_pkms[slot];
+    this->ShowPKMTypeMatchUps(pkm);
   }
+}
+
+void MainApplication::OnInputDenMenuLayout(u64 Down, u64 Up, u64 Held, pu::ui::Touch Pos) {
+  if (Down & KEY_Y) {
+    auto slot = m_denMenuLayout->GetSelectedIndex();
+    auto pkm = m_dens[slot]->GetPKM();
+    this->ShowPKMTypeMatchUps(pkm);
+  }
+}
+
+void MainApplication::ShowPKMTypeMatchUps(std::shared_ptr<csight::PKM> pkm) {
+  auto weaknesses = pkm->GetTypeMatchUps(true);
+  auto strengths = pkm->GetTypeMatchUps(false);
+  m_pokemonTypeLayout->SetTypeMatchUps(weaknesses, strengths);
+  this->NavigateTo(m_pokemonTypeLayout);
 }
 
 void MainApplication::SelectPokemonSlot(u32 slot) {

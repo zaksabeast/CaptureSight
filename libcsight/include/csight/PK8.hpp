@@ -1,12 +1,14 @@
 #pragma once
 
+#include <csight/PKM.hpp>
+#include <csight/lookups/Types.hpp>
 #include <future>
 #include <string>
 #include <switch.h>
 #include <vector>
 
 namespace csight {
-  class PK8 {
+  class PK8 : public PKM {
    public:
     PK8(u8 *data);
     ~PK8();
@@ -24,10 +26,9 @@ namespace csight {
     u8 GetEV(u8 stat);
     std::vector<u8> GetEVs();
     bool GetIsShiny();
-    u8 GetAbility();
+    ability::Ability GetAbility();
     std::string GetAbilityString();
     u32 GetTSV();
-    u32 GetPSV();
     u32 GetPID();
     u16 GetSID();
     u16 GetTID();
@@ -48,8 +49,9 @@ namespace csight {
     u8 GetHTFriendship();
     u8 GetOTFriendship();
     u8 GetCurrentFriendship();
-    ulong GetRaidSeed();
-    std::future<ulong> GetRaidSeedAsync();
+    u64 GetRaidSeed();
+    std::future<u64> GetRaidSeedAsync();
+    u8 GetForm();
 
    private:
     u8 *m_data = new u8[0x148];

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <csight/RaidTemplateTables.hpp>
+#include <csight/lookups/Types.hpp>
 #include <future>
 #include <string>
 #include <switch.h>
@@ -47,4 +48,12 @@ namespace csight::utils {
 
   csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables,
                                                           u32 denId, bool isRare);
+
+  std::string getTypeName(type::PokemonType type);
+
+  std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2);
+
+  std::vector<type::TypeMultiplier> calculateStrengths(type::PokemonType type1, type::PokemonType type2);
+
+  std::string convertFloatWithPrecision(float num, u32 precision);
 }  // namespace csight::utils

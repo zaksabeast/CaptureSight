@@ -1,12 +1,13 @@
 #pragma once
 
 #include <csight/Ability.hpp>
+#include <csight/PKM.hpp>
 #include <csight/Shiny.hpp>
 #include <switch.h>
 #include <vector>
 
 namespace csight::raid {
-  class RaidPokemon {
+  class RaidPokemon : public PKM {
    public:
     RaidPokemon(u64 seed, u32 flawlessIvs, u16 species, ability::raid::AbilityRaidSetting abilitySetting);
     u32 GetEC();
@@ -18,8 +19,11 @@ namespace csight::raid {
     std::vector<u8> GetIVs();
     ability::Ability GetAbility();
     std::string GetAbilityString();
+    u64 GetRaidSeed();
+    u8 GetForm();
 
    private:
+    u64 m_seed;
     u32 m_EC;
     u32 m_PID;
     u16 m_species;
