@@ -34,7 +34,7 @@ void DenMenuLayout::UpdateValues(std::vector<std::shared_ptr<csight::raid::Den>>
     auto menuItem = pu::ui::elm::MenuItem::New(title);
 
     menuItem->SetColor(gsets.GetTheme().text.light);
-    menuItem->SetIcon(getPokemonIconPath(pkm->GetSpecies(), false, pkm->GetIsShiny()));
+    menuItem->SetIcon(getPokemonIconPath(pkm));
     menuItem->AddOnClick(std::bind(&DenMenuLayout::ClickMenuItem, this, den->GetSeed()));
     m_menu->AddItem(menuItem);
   }

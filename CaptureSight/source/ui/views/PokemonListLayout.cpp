@@ -43,7 +43,7 @@ pu::ui::elm::MenuItem::Ref PokemonListLayout::CreateMenuItem(std::shared_ptr<csi
   auto menuItem = pu::ui::elm::MenuItem::New(title);
 
   menuItem->SetColor(gsets.GetTheme().text.light);
-  menuItem->SetIcon(getPokemonIconPath(pk8->GetSpecies(), pk8->GetIsEgg(), pk8->GetIsShiny()));
+  menuItem->SetIcon(getPokemonIconPath(pk8));
   menuItem->AddOnClick(std::bind(&PokemonListLayout::ClickMenuItem, this, slot));
 
   return menuItem;

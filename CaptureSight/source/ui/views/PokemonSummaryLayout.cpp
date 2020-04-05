@@ -246,7 +246,7 @@ void PokemonSummaryLayout::UpdateValues(std::string title, std::shared_ptr<csigh
                                            { scaleStatPoint(-86, spa, maxStat), scaleStatPoint(-50, spa, maxStat) } };
   m_innerStatPolygon->SetPoints(innerIVPoints);
 
-  setPokemonSprite(m_spriteImage, 4, pkm->GetSpecies(), pkm->GetIsEgg(), pkm->GetIsShiny());
+  setPokemonSprite(m_spriteImage, 4, pkm);
   m_instructionsTextBlock->SetText(instructions);
   m_speciesNameTextBlock->SetText(species);
   m_statTextBlock->SetText(statTypeText);

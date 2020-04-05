@@ -20,6 +20,7 @@ namespace csight {
     virtual u32 GetPID() = 0;
     virtual u64 GetRaidSeed() = 0;
     virtual u16 GetForm() = 0;
+    virtual bool GetIsEgg() { return false; }
     u32 GetPSV() {
       u32 pid = this->GetPID();
       return ((pid >> 16 ^ (pid & 0xFFFF)) >> 4);
