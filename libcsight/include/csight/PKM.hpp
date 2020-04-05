@@ -42,10 +42,9 @@ namespace csight {
 
       return std::make_pair(result.type1, result.type2);
     }
-    std::vector<type::TypeMultiplier> GetTypeMatchUps(bool shouldGetWeakness) {
+    std::vector<type::TypeMultiplier> GetWeaknesses() {
       auto types = this->GetTypes();
-      auto calculateTypeMatchUps = shouldGetWeakness ? utils::calculateWeakness : utils::calculateStrengths;
-      auto typeMatchUps = calculateTypeMatchUps(types.first, types.second);
+      auto typeMatchUps = utils::calculateWeakness(types.first, types.second);
       std::sort(typeMatchUps.begin(), typeMatchUps.end(),
                 [](auto type1, auto type2) { return type1.multiplier > type2.multiplier; });
 

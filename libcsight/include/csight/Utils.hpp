@@ -53,7 +53,5 @@ namespace csight::utils {
 
   std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2);
 
-  std::vector<type::TypeMultiplier> calculateStrengths(type::PokemonType type1, type::PokemonType type2);
-
   std::string convertFloatWithPrecision(float num, u32 precision);
 }  // namespace csight::utils

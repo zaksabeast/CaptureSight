@@ -134,9 +134,8 @@ void MainApplication::OnInputDenMenuLayout(u64 Down, u64 Up, u64 Held, pu::ui::T
 }
 
 void MainApplication::ShowPKMTypeMatchUps(std::shared_ptr<csight::PKM> pkm) {
-  auto weaknesses = pkm->GetTypeMatchUps(true);
-  auto strengths = pkm->GetTypeMatchUps(false);
-  m_pokemonTypeLayout->SetTypeMatchUps(weaknesses, strengths);
+  auto weaknesses = pkm->GetWeaknesses();
+  m_pokemonTypeLayout->SetTypeMatchUps(weaknesses);
   this->NavigateTo(m_pokemonTypeLayout);
 }
 

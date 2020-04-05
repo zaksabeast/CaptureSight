@@ -104,23 +104,6 @@ namespace csight::utils {
     return result;
   };
 
-  std::vector<type::TypeMultiplier> calculateStrengths(type::PokemonType type1, type::PokemonType type2) {
-    std::vector<type::TypeMultiplier> result = {};
-
-    for (u8 i = 0; i < weaknessChart.size(); i++) {
-      auto attackType = weaknessChart[i];
-      auto type1Multiplier = attackType[type1];
-      auto type2Multiplier = attackType[type2];
-      auto multiplier = type1Multiplier * type2Multiplier;
-
-      if (multiplier != 1) {
-        result.push_back({ (type::PokemonType)i, multiplier });
-      }
-    }
-
-    return result;
-  };
-
   std::string convertFloatWithPrecision(float num, u32 precision) {
     std::stringstream result;
     result << std::fixed << std::setprecision(precision) << num;
