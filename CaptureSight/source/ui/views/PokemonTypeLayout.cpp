@@ -27,8 +27,8 @@ void PokemonTypeLayout::SetTypeMatchUps(std::vector<csight::type::TypeMultiplier
   auto background = RoundedRectangle::New(baseX, baseY, 550, 600, theme.background.light, 5);
 
   this->Add(background);
-  this->AddMatchUpText(weaknessMatchUp, i18n->Translate("Weakness"), matchUpX, matchUpY);
-  this->AddMatchUpText(resistanceMatchUp, i18n->Translate("Resistance"), matchUpX + 250, matchUpY);
+  this->AddMatchUpText(weaknessMatchUp, i18n->Translate("Weaknesses"), matchUpX, matchUpY);
+  this->AddMatchUpText(resistanceMatchUp, i18n->Translate("Resistances"), matchUpX + 250, matchUpY);
 }
 
 void PokemonTypeLayout::AddMatchUpText(std::vector<csight::type::TypeMultiplier> matchUps, std::string matchUpName, u32 x,

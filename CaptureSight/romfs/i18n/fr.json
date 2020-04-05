@@ -32,7 +32,6 @@
     "Frame": "Frame",
     "No raid seed found!  This may not be a raid Pokemon": "Aucune Raid Seed n'a été trouvée ! Ce n'est peut-être pas un Pokemon de Raid",
     "Flawless IVs": "IVs Parfaits",
-    "View upcoming frames (A)": "Voir les prochaines frames (A)",
     "Ability": "Talent",
     "Empty": "Vide",
     "Event": "Evénement",
@@ -53,7 +52,13 @@
     "(A) to apply filters": "(A) pour appliquer les filtres",
     "Advance": "Avancer",
     "Calculating seed": "Calculer la Seed",
-    "Raid Search Settings": "Paramètres de recherche de Raid"
+    "Raid Search Settings": "Paramètres de recherche de Raid",
+    "View upcoming advances (A), View type matches (Y)": "Voir les prochaines frames (A), Voir l'efficacité des types (Y)",
+    "View details (A), View type matches (Y)": "Voir les détails, Voir l'efficacité des types (Y)",
+    "Weaknesses": "Faiblesses",
+    "Resistances": "Résistances",
+    "No Filter": "Pas de Filtre",
+    "None": "Aucun"
   },
   "natures": {
     "Hardy": "Hardi",
