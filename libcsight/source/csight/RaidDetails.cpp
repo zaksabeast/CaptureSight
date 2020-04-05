@@ -104,6 +104,7 @@ namespace csight::raid {
         eventEncounter->Species(),
         (u32)eventEncounter->FlawlessIVs(),
         (ability::raid::AbilityRaidSetting)eventEncounter->Ability(),
+        (u16)eventEncounter->AltForm(),
         {
             eventProbabilities->Get(0),
             eventProbabilities->Get(1),

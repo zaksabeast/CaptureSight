@@ -51,7 +51,7 @@ namespace csight {
     u8 GetCurrentFriendship();
     u64 GetRaidSeed();
     std::future<u64> GetRaidSeedAsync();
-    u8 GetForm();
+    u16 GetForm();
 
    private:
     u8 *m_data = new u8[0x148];

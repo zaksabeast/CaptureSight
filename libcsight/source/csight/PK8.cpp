@@ -203,5 +203,5 @@ namespace csight {
   }
 
   // Currently stubbed
-  u8 PK8::GetForm() { return 0; }
+  u16 PK8::GetForm() { return *(u16 *)(m_data + 0x24); }
 }  // namespace csight

@@ -9,6 +9,7 @@ namespace csight::raid {
     u32 species;
     u32 flawlessIVs;
     ability::raid::AbilityRaidSetting ability;
+    u16 form;
     std::vector<u32> probabilities;
   };
 

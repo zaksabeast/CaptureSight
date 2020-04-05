@@ -77,5 +77,5 @@ namespace csight::raid {
 
   u64 RaidPokemon::GetRaidSeed() { return m_seed; }
 
-  u8 RaidPokemon::GetForm() { return 0; }
+  u16 RaidPokemon::GetForm() { return 0; }
 }  // namespace csight::raid

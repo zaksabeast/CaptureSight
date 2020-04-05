@@ -20,7 +20,7 @@ namespace csight::raid {
     ability::Ability GetAbility();
     std::string GetAbilityString();
     u64 GetRaidSeed();
-    u8 GetForm();
+    u16 GetForm();
 
    private:
     u64 m_seed;
