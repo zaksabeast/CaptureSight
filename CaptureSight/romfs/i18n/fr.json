@@ -2016,5 +2016,26 @@
     "Zacian": "Zacian",
     "Zamazenta": "Zamazenta",
     "Eternatus": "Éthernatos"
+  },
+  "types": {
+    "None": "None",
+    "Normal": "Normal",
+    "Fighting": "Combat",
+    "Flying": "Vol",
+    "Poison": "Poison",
+    "Ground": "Sol",
+    "Rock": "Roche",
+    "Bug": "Insecte",
+    "Ghost": "Spectre",
+    "Steel": "Acier",
+    "Fire": "Feu",
+    "Water": "Eau",
+    "Grass": "Plante",
+    "Electric": "Électrik",
+    "Psychic": "Psy",
+    "Ice": "Glace",
+    "Dragon": "Dragon",
+    "Dark": "Ténèbres",
+    "Fairy": "Fée"
   }
 }

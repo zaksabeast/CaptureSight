@@ -2015,5 +2015,26 @@
     "Zacian": "Zacian",
     "Zamazenta": "Zamazenta",
     "Eternatus": "Eternatus"
+  },
+  "types": {
+    "None": "None",
+    "Normal": "Normale",
+    "Fighting": "Lotta",
+    "Flying": "Volante",
+    "Poison": "Veleno",
+    "Ground": "Terra",
+    "Rock": "Roccia",
+    "Bug": "Coleottero",
+    "Ghost": "Spettro",
+    "Steel": "Acciaio",
+    "Fire": "Fuoco",
+    "Water": "Acqua",
+    "Grass": "Erba",
+    "Electric": "Elettro",
+    "Psychic": "Psico",
+    "Ice": "Ghiaccio",
+    "Dragon": "Drago",
+    "Dark": "Buio",
+    "Fairy": "Folletto"
   }
 }

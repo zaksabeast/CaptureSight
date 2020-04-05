@@ -2016,5 +2016,26 @@
     "Zacian": "蒼響",
     "Zamazenta": "藏瑪然特",
     "Eternatus": "無極汰那"
+  },
+  "types": {
+    "None": "None",
+    "Normal": "一般",
+    "Fighting": "格斗",
+    "Flying": "飞行",
+    "Poison": "毒",
+    "Ground": "地面",
+    "Rock": "岩石",
+    "Bug": "虫",
+    "Ghost": "幽灵",
+    "Steel": "钢",
+    "Fire": "火",
+    "Water": "水",
+    "Grass": "草",
+    "Electric": "电",
+    "Psychic": "超能力",
+    "Ice": "冰",
+    "Dragon": "龙",
+    "Dark": "恶",
+    "Fairy": "妖精"
   }
 }
