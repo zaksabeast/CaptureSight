@@ -20,15 +20,15 @@ void PokemonTypeLayout::SetTypeMatchUps(std::vector<csight::type::TypeMultiplier
   u32 matchUpY = baseY + 25;
   u32 matchUpX = baseX + 25;
   auto theme = gsets.GetTheme();
-  auto secondMatchUpStart
+  auto resistanceMatchUpStart
       = std::find_if(matchUps.begin(), matchUps.end(), [](auto typeMatchUp) { return typeMatchUp.multiplier < 1; });
-  std::vector<csight::type::TypeMultiplier> firstMatchUp(matchUps.begin(), secondMatchUpStart);
-  std::vector<csight::type::TypeMultiplier> secondMatchUp(secondMatchUpStart, matchUps.end());
+  std::vector<csight::type::TypeMultiplier> weaknessMatchUp(matchUps.begin(), resistanceMatchUpStart);
+  std::vector<csight::type::TypeMultiplier> resistanceMatchUp(resistanceMatchUpStart, matchUps.end());
   auto background = RoundedRectangle::New(baseX, baseY, 550, 600, theme.background.light, 5);
 
   this->Add(background);
-  this->AddMatchUpText(firstMatchUp, "Weakness", matchUpX, matchUpY);
-  this->AddMatchUpText(secondMatchUp, "Resistance", matchUpX + 250, matchUpY);
+  this->AddMatchUpText(weaknessMatchUp, i18n->Translate("Weakness"), matchUpX, matchUpY);
+  this->AddMatchUpText(resistanceMatchUp, i18n->Translate("Resistance"), matchUpX + 250, matchUpY);
 }
 
 void PokemonTypeLayout::AddMatchUpText(std::vector<csight::type::TypeMultiplier> matchUps, std::string matchUpName, u32 x,
@@ -42,7 +42,8 @@ void PokemonTypeLayout::AddMatchUpText(std::vector<csight::type::TypeMultiplier>
 
   for (u32 i = 0; i < matchUps.size(); i++) {
     auto matchUp = matchUps[i];
-    auto typeName = csight::utils::getTypeName(matchUp.type);
+    auto typeNameTranslationKey = csight::utils::getTypeName(matchUp.type);
+    auto typeName = i18n->Translate("types", typeNameTranslationKey);
     auto matchUpText = typeName + " " + csight::utils::convertFloatWithPrecision(matchUp.multiplier, 2);
     u32 matchUpY = matchUpYOffset + (i * 40);
     auto matchUpTextBlock = pu::ui::elm::TextBlock::New(x, matchUpY, matchUpText, 20);
