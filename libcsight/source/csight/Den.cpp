@@ -82,9 +82,7 @@ namespace csight::raid {
 
   u8 Den::GetDenDisplayId() { return m_denId + 1; }
 
-  std::shared_ptr<RaidPokemon> Den::GetPKM() {
-    return std::make_shared<RaidPokemon>(this->GetSeed(), m_spawn.flawlessIVs, m_spawn.species, m_spawn.ability);
-  };
+  std::shared_ptr<RaidPokemon> Den::GetPKM() { return std::make_shared<RaidPokemon>(this->GetSeed(), m_spawn); };
 
   RaidEncounter Den::FindSpawn(std::vector<RaidEncounter> raidEncounters) {
     u32 userProbability = 1;
@@ -100,11 +98,6 @@ namespace csight::raid {
       }
     }
 
-    return {
-      species : 0,
-      flawlessIVs : 1,
-      ability : ability::raid::FirstOrSecond,
-      probabilities : { 0, 0, 0, 0, 0 },
-    };
+    return raidEncounters[0];
   }
 }  // namespace csight::raid

@@ -9,7 +9,7 @@
 namespace csight::raid {
   class RaidPokemon : public PKM {
    public:
-    RaidPokemon(u64 seed, u32 flawlessIvs, u16 species, ability::raid::AbilityRaidSetting abilitySetting);
+    RaidPokemon(u64 seed, RaidEncounter spawn);
     u32 GetEC();
     u32 GetPID();
     u16 GetSpecies();
@@ -26,7 +26,7 @@ namespace csight::raid {
     u64 m_seed;
     u32 m_EC;
     u32 m_PID;
-    u16 m_species;
+    RaidEncounter m_spawn;
     std::vector<u8> m_IVs;
     shiny::ShinyType m_shineType;
     ability::Ability m_ability = ability::First;

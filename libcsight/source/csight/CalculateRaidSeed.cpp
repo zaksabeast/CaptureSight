@@ -43,6 +43,8 @@ namespace csight::raid {
 
         // Only compare bits of the PID guaranteed with the missing seed bytes
         if (testPID == maskedPID) {
+          // tmp spawn for testing generated IVs
+          RaidEncounter spawn = { 1, 1, ability::raid::FirstOrSecond, 0, {} };
           for (u64 k = 0; k <= 0xffff; k++) {
             auto seed = (k << 48) + partialTestSeed;
             res = xoroshiro(seed, s1);  // ec
@@ -51,7 +53,8 @@ namespace csight::raid {
 
             if (generatedPID == pid) {
               for (u32 flawlessIVs = 1; flawlessIVs <= 5; flawlessIVs++) {
-                auto ivsToCheck = RaidPokemon(seed, flawlessIVs, 0, ability::raid::FirstOrSecond).GetIVs();
+                spawn.flawlessIVs = flawlessIVs;
+                auto ivsToCheck = RaidPokemon(seed, spawn).GetIVs();
                 bool hasCorrectIVs = std::equal(ivs.begin(), ivs.end(), ivsToCheck.begin());
 
                 if (hasCorrectIVs)

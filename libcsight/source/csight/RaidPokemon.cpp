@@ -10,10 +10,9 @@
 #define EMPTY_IV 255
 
 namespace csight::raid {
-  RaidPokemon::RaidPokemon(u64 seed, u32 flawlessIvs, u16 species, ability::raid::AbilityRaidSetting abilitySetting) :
-      PKM::PKM() {
+  RaidPokemon::RaidPokemon(u64 seed, RaidEncounter spawn) : PKM::PKM() {
     m_seed = seed;
-    m_species = species;
+    m_spawn = spawn;
     auto rng = rng::xoroshiro(m_seed);
     m_EC = rng.next(0xFFFFFFFF);
     u32 SIDTID = rng.next(0xFFFFFFFF);
@@ -22,7 +21,7 @@ namespace csight::raid {
 
     m_IVs = { EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV };
 
-    for (u32 i = 0; i < flawlessIvs; i++) {
+    for (u32 i = 0; i < m_spawn.flawlessIVs; i++) {
       s32 ivIndex;
 
       do {
@@ -40,7 +39,7 @@ namespace csight::raid {
 
     // Thanks to
     // https://github.com/Leanny/leanny.github.io/blob/17916ebde2bc984f325f7b103865416f226492fb/seedchecker/common.js#L207
-    switch (abilitySetting) {
+    switch (m_spawn.ability) {
       case ability::raid::First:
         m_ability = ability::First;
         break;
@@ -61,7 +60,7 @@ namespace csight::raid {
 
   u32 RaidPokemon::GetPID() { return m_PID; }
 
-  u16 RaidPokemon::GetSpecies() { return m_species; }
+  u16 RaidPokemon::GetSpecies() { return m_spawn.species; }
 
   std::string RaidPokemon::GetSpeciesString() { return utils::getSpeciesName(this->GetSpecies()); }
 
@@ -77,5 +76,5 @@ namespace csight::raid {
 
   u64 RaidPokemon::GetRaidSeed() { return m_seed; }
 
-  u16 RaidPokemon::GetForm() { return 0; }
+  u16 RaidPokemon::GetForm() { return m_spawn.form; }
 }  // namespace csight::raid

@@ -64,7 +64,7 @@ namespace csight::raid {
     auto encounter = searchSettings->GetRaidEncounter();
 
     for (u32 advance = 0; advance < advancesToSearch; advance++) {
-      auto raid = std::make_shared<RaidPokemon>(nextSeed, encounter.flawlessIVs, encounter.species, encounter.ability);
+      auto raid = std::make_shared<RaidPokemon>(nextSeed, encounter);
       nextSeed = rng::xoroshiro(nextSeed).nextulong();
 
       if (checkIfPassesFilters(searchSettings, raid))
