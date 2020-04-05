@@ -42,5 +42,5 @@ namespace csight::type {
 
   extern std::vector<std::string> TypeNames;
 
-  extern std::vector<PokemonTypeSet> PokemonTypeList;
+  extern std::vector<PokemonTypeSet> pokemonTypeList;
 }

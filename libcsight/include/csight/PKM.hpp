@@ -27,8 +27,16 @@ namespace csight {
     std::pair<type::PokemonType, type::PokemonType> GetTypes() {
       auto form = this->GetForm();
       auto species = this->GetSpecies();
-      auto resultIterator = std::find_if(type::PokemonTypeList.begin(), type::PokemonTypeList.end(),
-                                         [species, form](auto type) { return type.species == species && type.form == form; });
+
+      // Arceus and Silvally have the most forms with different types at 18
+      std::vector<csight::type::PokemonTypeSet> filteredList(18);
+      auto endIterator = std::copy_if(type::pokemonTypeList.begin(), type::pokemonTypeList.end(), filteredList.begin(),
+                                      [species](auto type) { return type.species == species; });
+
+      filteredList.resize(std::distance(filteredList.begin(), endIterator));
+
+      auto resultIterator
+          = std::find_if(filteredList.begin(), filteredList.end(), [form](auto type) { return type.form == form; });
       auto result = resultIterator[0];
 
       return std::make_pair(result.type1, result.type2);

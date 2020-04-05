@@ -8,7 +8,7 @@ namespace csight::type {
       = { "None", "Normal", "Fighting", "Flying",   "Poison",  "Ground", "Rock",   "Bug",  "Ghost", "Steel",
           "Fire", "Water",  "Grass",    "Electric", "Psychic", "Ice",    "Dragon", "Dark", "Fairy" };
 
-  std::vector<PokemonTypeSet> PokemonTypeList = { { species : 0, form : 0, type1 : None, type2 : None },
+  std::vector<PokemonTypeSet> pokemonTypeList = { { species : 0, form : 0, type1 : None, type2 : None },
                                                   { species : 1, form : 0, type1 : Grass, type2 : Poison },
                                                   { species : 2, form : 0, type1 : Grass, type2 : Poison },
                                                   { species : 3, form : 0, type1 : Grass, type2 : Poison },
@@ -577,7 +577,6 @@ namespace csight::type {
                                                   { species : 519, form : 0, type1 : Normal, type2 : Flying },
                                                   { species : 520, form : 0, type1 : Normal, type2 : Flying },
                                                   { species : 521, form : 0, type1 : Normal, type2 : Flying },
-                                                  { species : 521, form : 1, type1 : Normal, type2 : Flying },
                                                   { species : 522, form : 0, type1 : Electric, type2 : None },
                                                   { species : 523, form : 0, type1 : Electric, type2 : None },
                                                   { species : 524, form : 0, type1 : Rock, type2 : None },
@@ -655,9 +654,7 @@ namespace csight::type {
                                                   { species : 590, form : 0, type1 : Grass, type2 : Poison },
                                                   { species : 591, form : 0, type1 : Grass, type2 : Poison },
                                                   { species : 592, form : 0, type1 : Water, type2 : Ghost },
-                                                  { species : 592, form : 1, type1 : Water, type2 : Ghost },
                                                   { species : 593, form : 0, type1 : Water, type2 : Ghost },
-                                                  { species : 593, form : 1, type1 : Water, type2 : Ghost },
                                                   { species : 594, form : 0, type1 : Water, type2 : None },
                                                   { species : 595, form : 0, type1 : Bug, type2 : Electric },
                                                   { species : 596, form : 0, type1 : Bug, type2 : Electric },
