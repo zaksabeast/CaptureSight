@@ -31,7 +31,6 @@
     "Egg cycles": "Cicli Uovo",
     "No raid seed found!  This may not be a raid Pokemon": "Nessun seed di un raid trovato!  Questo potrebbe non essere un Pokemon di un raid",
     "Flawless IVs": "IVs perfette",
-    "View upcoming frames (A)": "Guarda i frames successivi (A)",
     "Ability": "Abilità",
     "Empty": "Vuoto",
     "Event": "Evento",
@@ -52,7 +51,12 @@
     "(A) to apply filters": "(A) per applicare i filtri",
     "Advance": "Avanza",
     "Calculating seed": "Calcolo del Seed in corso",
-    "Raid Search Settings": "Impostazioni di ricerca del Raid"
+    "Raid Search Settings": "Impostazioni di ricerca del Raid",
+    "View upcoming advances (A), View type matches (Y)": "Vedi i prossimi avanzamenti (A), Vedi debolezze/resistenze (Y)",
+    "View details (A), View type matches (Y)": "Vedi dettagli (A), Vedi debolezze/resistenze (Y)",
+    "Weaknesses": "Debolezze",
+    "Resistances": "Resistenze",
+    "None": "Nessuno"
   },
   "natures": {
     "Hardy": "Ardita",
