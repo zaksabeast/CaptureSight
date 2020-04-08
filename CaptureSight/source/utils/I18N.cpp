@@ -11,6 +11,8 @@ std::string GetTranslationCode() {
   setGetSystemLanguage(&languageCode);
   setMakeLanguage(languageCode, &language);
   switch (language) {
+    case SetLanguage_DE:
+      return "de";
     case SetLanguage_FR:
     case SetLanguage_FRCA:
       return "fr";
