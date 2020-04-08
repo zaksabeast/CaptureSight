@@ -98,6 +98,12 @@ namespace csight::raid {
       }
     }
 
-    return raidEncounters[0];
+    return {
+      species : 0,
+      flawlessIVs : 1,
+      ability : ability::raid::FirstOrSecond,
+      form : 0,
+      probabilities : { 0, 0, 0, 0, 0 },
+    };
   }
 }  // namespace csight::raid
