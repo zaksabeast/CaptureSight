@@ -17,5 +17,5 @@ class MainApplication : public tsl::Overlay {
   virtual std::unique_ptr<tsl::Gui> loadInitialGui() override;
 
  private:
-  std::shared_ptr<csight::GameReader> m_gameReader = std::make_shared<csight::GameReader>();
+  std::shared_ptr<csight::GameReader> m_gameReader;
 };

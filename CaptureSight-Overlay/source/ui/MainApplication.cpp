@@ -9,6 +9,8 @@
 #include <ui/views/PokemonSummaryLayout.hpp>
 
 std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
+  m_gameReader = std::make_shared<csight::GameReader>();
+
   if (R_FAILED(m_gameReader->Attach()))
     return initially<ErrorLayout>();
 
@@ -20,12 +22,14 @@ std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
 
 void MainApplication::initServices() {
   smInitialize();
+  setInitialize();
   dmntchtInitialize();
   dmntchtForceOpenCheatProcess();
 }
 
 void MainApplication::exitServices() {
   dmntchtExit();
+  setExit();
   smExit();
 }
 
