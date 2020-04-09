@@ -87,8 +87,8 @@ void RaidSearchSettingsLayout::UpdateValues() {
 
   std::string starText
       = lowestStar == highestStar ? std::to_string(lowestStar) : std::to_string(lowestStar) + "-" + std::to_string(highestStar);
-  std::string spawnText
-      = i18n->Translate("Spawn filter") + " - " + csight::utils::getSpeciesName(nest.species) + " " + starText + "★";
+  std::string speciesName = i18n->Translate("species", csight::utils::getSpeciesName(nest.species));
+  std::string spawnText = i18n->Translate("Spawn filter") + " - " + speciesName + " " + starText + "★";
 
   m_shinyFilterMenuItem->SetName(shinyFilterText);
   m_flawlessIVFilterMenuItem->SetName(flawlessIVFilterText);
