@@ -58,7 +58,13 @@
     "Weaknesses": "Faiblesses",
     "Resistances": "Résistances",
     "No Filter": "Pas de Filtre",
-    "None": "Aucun"
+    "None": "Aucun",
+    "Regular Den": "Antre Normal",
+    "Rare Den": "Antre Rare",
+    "Den id filter": "Filtrer par numéro d'Antre",
+    "Spawn filter": "Filtrer par Pokémon",
+    "Ability Filter": "Filtrer par capacité spéciale",
+    "Any": "Peu importe"
   },
   "natures": {
     "Hardy": "Hardi",
