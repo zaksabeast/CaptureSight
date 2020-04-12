@@ -4,7 +4,7 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
 
 ### Features:
 
-- View Pokemon species, attacks, IVs, etc. for
+- View Pokemon species, attacks, IVs, type matches, etc. for
   - Wild Pokemon
   - In-Trade Pokemon
   - Raid Pokemon
@@ -26,6 +26,7 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
   - Chinese
   - French
   - Italian
+  - German
 
 ## How do I use CaptureSight?
 
