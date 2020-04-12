@@ -19,7 +19,7 @@
     "Stars": "Stelle",
     "More detail (X)": "Più Dettagli (X)",
     "Raid Searcher (Y)": "Ricerca Raid (Y)",
-    "Den Id": "Id del Den",
+    "Den Id": "Den Id",
     "Wild and Trade Pokemon": "Pokemon Selvatico e in Scambio",
     "Trade Pokemon": "Pokemon in Scambio",
     "Minted Nature": "Natura modificata",
@@ -56,7 +56,14 @@
     "View details (A), View type matches (Y)": "Vedi dettagli (A), Vedi debolezze/resistenze (Y)",
     "Weaknesses": "Debolezze",
     "Resistances": "Resistenze",
-    "None": "Nessuno"
+    "No filter": "Nessun filtro",
+    "None": "Nessuno",
+    "Regular Den": "Den regolare",
+    "Rare Den": "Den raro",
+    "Den id filter": "Filtro Den id",
+    "Spawn filter": "Filtro incontro",
+    "Ability Filter": "Filtro abilità",
+    "Any": "Qualsiasi"
   },
   "natures": {
     "Hardy": "Ardita",
