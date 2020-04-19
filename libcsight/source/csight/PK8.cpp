@@ -132,6 +132,8 @@ namespace csight {
 
   bool PK8::GetIsShiny() { return this->GetPSV() == this->GetTSV(); }
 
+  bool PK8::GetIsGigantamax() { return (*(u16 *)(m_data + 0x16) & 16) != 0; }
+
   u16 PK8::GetMove(u8 slot) { return *(u16 *)(m_data + 0x72 + (slot * 2)); }
 
   std::string PK8::GetMoveString(u8 slot) { return utils::getIndex(MovesList, this->GetMove(slot)); }

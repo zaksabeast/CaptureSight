@@ -15,6 +15,7 @@ namespace csight {
     virtual std::string GetSpeciesString() = 0;
     virtual std::vector<u8> GetIVs() = 0;
     virtual bool GetIsShiny() = 0;
+    virtual book GetIsGigantamax() = 0;
     virtual ability::Ability GetAbility() = 0;
     virtual std::string GetAbilityString() = 0;
     virtual u32 GetPID() = 0;
@@ -41,7 +42,7 @@ namespace csight {
       auto result = resultIterator[0];
 
       return std::make_pair(result.type1, result.type2);
-    }
+    } 
     std::vector<type::TypeMultiplier> GetWeaknesses() {
       auto types = this->GetTypes();
       auto typeMatchUps = utils::calculateWeakness(types.first, types.second);

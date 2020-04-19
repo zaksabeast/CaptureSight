@@ -6,7 +6,7 @@
 #include <csight/Utils.hpp>
 #include <string>
 
-// 255 is an unsighed integer hack
+// 255 is an unsigned integer hack
 #define EMPTY_IV 255
 
 namespace csight::raid {
@@ -65,6 +65,9 @@ namespace csight::raid {
   std::string RaidPokemon::GetSpeciesString() { return utils::getSpeciesName(this->GetSpecies()); }
 
   bool RaidPokemon::GetIsShiny() { return m_shineType > shiny::None; }
+
+  // TODO: find how to obtain raid pokemon Gigantamax status
+  bool RaidPokemon::GetIsGigantamax() { return false; }
 
   shiny::ShinyType RaidPokemon::GetShinyType() { return m_shineType; }
 
