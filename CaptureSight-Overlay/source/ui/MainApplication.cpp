@@ -78,11 +78,6 @@ void MainApplication::ChangeViewMode(ViewMode mode) {
       pkms = { m_gameReader->ReadWild(), m_gameReader->ReadTrade(), m_gameReader->ReadRaid() };
       getTitle = std::bind(&MainApplication::GetWildTitle, this, std::placeholders::_1);
       break;
-    case box:
-      guiTitle = "Box";
-      pkms = m_gameReader->ReadBoxes();
-      getTitle = std::bind(&MainApplication::GetBoxTitle, this, std::placeholders::_1);
-      break;
     case party:
     default:
       guiTitle = "Party Pokemon";

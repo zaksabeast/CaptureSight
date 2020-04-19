@@ -13,10 +13,6 @@ tsl::elm::Element *MainLayout::createUI() {
   partyItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, party, std::placeholders::_1));
   menuList->addItem(partyItem);
 
-  auto boxItem = new tsl::elm::ListItem("Box");
-  boxItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, box, std::placeholders::_1));
-  menuList->addItem(boxItem);
-
   auto activeDenItem = new tsl::elm::ListItem("Active Dens");
   activeDenItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, activeDens, std::placeholders::_1));
   menuList->addItem(activeDenItem);
