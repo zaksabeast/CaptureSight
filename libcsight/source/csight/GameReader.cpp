@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace csight {
-  GameReader::GameReader() : raid::RaidDetails::RaidDetails() {
+  GameReader::GameReader(bool shouldUseSmallMemoryMode) : raid::RaidDetails::RaidDetails(shouldUseSmallMemoryMode) {
     m_isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht");
   }
 

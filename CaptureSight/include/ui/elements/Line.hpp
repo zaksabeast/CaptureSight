@@ -19,6 +19,6 @@ class Line : public pu::ui::elm::Element {
   s32 m_y1;
   s32 m_x2;
   s32 m_y2;
-  pu::ui::render::NativeRenderer m_renderer;
+  pu::sdl2::Renderer m_renderer;
   pu::ui::Color m_clr;
 };

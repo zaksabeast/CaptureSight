@@ -2,6 +2,7 @@
 #include <functional>
 #include <pu/Plutonium>
 #include <ui/MainApplication.hpp>
+#include <ui/elements/createTextBlock.hpp>
 #include <ui/views/RaidSearchSettingsLayout.hpp>
 #include <utils/Constants.hpp>
 #include <utils/I18N.hpp>
@@ -35,10 +36,8 @@ RaidSearchSettingsLayout::RaidSearchSettingsLayout() : Layout::Layout() {
   auto raidSearchSettingsText = i18n->Translate("Raid Search Settings");
   auto intructionsText = i18n->Translate("(A) or (B) to apply filters, (L) and (R) to change filters");
 
-  m_titleTextBlock = pu::ui::elm::TextBlock::New(100, 90, raidSearchSettingsText, 30);
-  m_titleTextBlock->SetColor(gsets.GetTheme().text.light);
-  m_instructionsTextBlock = pu::ui::elm::TextBlock::New(100, 150, intructionsText, 25);
-  m_instructionsTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_titleTextBlock = createTextBlock(100, 90, raidSearchSettingsText, 30);
+  m_instructionsTextBlock = createTextBlock(100, 150, intructionsText, 25);
   m_filterMenu = pu::ui::elm::Menu::New(100, 220, SCREEN_MAX_WIDTH / 2, gsets.GetTheme().active.dark, 80, 6);
 
   SETUP_MENU_ITEM(m_filterMenu, m_shinyFilterMenuItem, RaidSearchSettingsLayout::IncrementShinyTypeFilter,

@@ -10,7 +10,7 @@
 namespace csight {
   class GameReader : public raid::RaidDetails {
    public:
-    GameReader();
+    GameReader(bool shouldUseSmallMemoryMode);
     Result Attach();
     bool GetIsPokemonRunning();
     bool GetIsServiceRunning();

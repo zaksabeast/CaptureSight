@@ -2,6 +2,7 @@
 #include <pu/Plutonium>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
+#include <ui/elements/createTextBlock.hpp>
 #include <ui/views/PokemonListLayout.hpp>
 #include <utils/Constants.hpp>
 #include <utils/I18N.hpp>
@@ -14,8 +15,7 @@ extern std::shared_ptr<I18N> i18n;
 
 PokemonListLayout::PokemonListLayout() : Layout::Layout() {
   m_menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
-  m_instructionTextBlock = pu::ui::elm::TextBlock::New(50, 50, i18n->Translate("View details (A), View type matches (Y)"), 25);
-  m_instructionTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_instructionTextBlock = createTextBlock(50, 50, i18n->Translate("View details (A), View type matches (Y)"), 25);
   this->Add(m_menu);
   this->Add(m_instructionTextBlock);
 }

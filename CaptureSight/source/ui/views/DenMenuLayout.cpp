@@ -2,6 +2,7 @@
 #include <functional>
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
+#include <ui/elements/createTextBlock.hpp>
 #include <ui/views/DenMenuLayout.hpp>
 #include <utils/Constants.hpp>
 #include <utils/I18N.hpp>
@@ -12,9 +13,7 @@ extern Settings gsets;
 extern std::shared_ptr<I18N> i18n;
 
 DenMenuLayout::DenMenuLayout() : Layout::Layout() {
-  m_headerTextBlock
-      = pu::ui::elm::TextBlock::New(50, 50, i18n->Translate("View upcoming advances (A), View type matches (Y)"), 25);
-  m_headerTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_headerTextBlock = createTextBlock(50, 50, i18n->Translate("View upcoming advances (A), View type matches (Y)"), 25);
   m_menu = pu::ui::elm::Menu::New(0, 120, SCREEN_MAX_WIDTH, gsets.GetTheme().active.dark, 150, 4);
 
   this->Add(m_menu);

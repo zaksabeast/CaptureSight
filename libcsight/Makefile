@@ -24,7 +24,7 @@ INCLUDES	:= include include/csight include/csight/lookups ../Atmosphere-libs/lib
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIC -ftls-model=local-exec
+ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
 CFLAGS	:=	-g -Wall -Werror \
 			-ffunction-sections \
@@ -32,7 +32,7 @@ CFLAGS	:=	-g -Wall -Werror \
 			$(ARCH) \
 			$(BUILD_CFLAGS)
 
-CFLAGS	+=	$(INCLUDE) -DATMOSPHERE_BOARD_NINTENDO_SWITCH -DATMOSPHERE_IS_STRATOSPHERE -D__SWITCH__
+CFLAGS	+=	$(INCLUDE) -DATMOSPHERE_ARCH_ARM64 -DATMOSPHERE_OS_HORIZON -DATMOSPHERE_BOARD_NINTENDO_NX -DATMOSPHERE_BOARD_NINTENDO_SWITCH -DATMOSPHERE_IS_STRATOSPHERE -D__SWITCH__
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 

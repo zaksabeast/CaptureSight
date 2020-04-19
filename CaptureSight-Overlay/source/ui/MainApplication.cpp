@@ -9,7 +9,7 @@
 #include <ui/views/PokemonSummaryLayout.hpp>
 
 std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
-  m_gameReader = std::make_shared<csight::GameReader>();
+  m_gameReader = std::make_shared<csight::GameReader>(true);
 
   if (R_FAILED(m_gameReader->Attach()))
     return initially<ErrorLayout>();

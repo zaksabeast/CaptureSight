@@ -43,12 +43,45 @@ namespace csight::raid {
     }
   }
 
-  RaidDetails::RaidDetails() { m_eventFlatbufferOffset = GetEventFlatbufferOffset(); }
+  RaidDetails::RaidDetails(bool shouldUseSmallMemoryMode) {
+    m_shouldUseSmallMemoryMode = shouldUseSmallMemoryMode;
+    m_eventFlatbufferOffset = GetEventFlatbufferOffset();
+  }
 
   std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
     u8 *denBytes = new u8[0x18];
-    auto encounterTables = this->GetEncounterTables();
-    auto eventTemplateTable = this->ReadEventEncounterTable();
+    std::vector<RaidEncounterTable> encounterTables;
+    std::shared_ptr<RaidEncounterTable> eventTemplateTable;
+
+    if (m_shouldUseSmallMemoryMode) {
+      encounterTables = { {
+        hash : 0u,
+        templates : {
+            {
+              species : 0,
+              flawlessIVs : 1,
+              ability : ability::raid::FirstOrSecond,
+              form : 0,
+              probabilities : { 35, 0, 0, 0, 0 },
+            },
+        }
+      } };
+      eventTemplateTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable {
+        hash : 0u,
+        templates : {
+            {
+              species : 0,
+              flawlessIVs : 1,
+              ability : ability::raid::FirstOrSecond,
+              form : 0,
+              probabilities : { 35, 0, 0, 0, 0 },
+            },
+        }
+      });
+    } else {
+      encounterTables = this->GetEncounterTables();
+      eventTemplateTable = this->ReadEventEncounterTable();
+    }
 
     this->ReadHeap(m_denOffset + (denId * 0x18), denBytes, 0x18);
 
@@ -73,9 +106,10 @@ namespace csight::raid {
 
   std::vector<RaidEncounterTable> RaidDetails::GetEncounterTables() {
     if (this->GetTitleId() == SWORD_TITLE_ID) {
-      return swordEncounterTables;
+      return GetSwordEncounterTables();
     }
-    return shieldEncounterTables;
+
+    return GetShieldEncounterTables();
   }
 
   std::shared_ptr<RaidEncounterTable> RaidDetails::ReadEventEncounterTable() {

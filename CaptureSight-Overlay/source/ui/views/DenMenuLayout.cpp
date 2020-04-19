@@ -15,8 +15,8 @@ tsl::elm::Element *DenMenuLayout::createUI() {
   for (u32 i = 0; i < m_dens.size(); i++) {
     auto den = m_dens[i];
     std::string shinyTypeText = den->GetShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
-    auto speciesText = den->GetPKM()->GetSpeciesString();
-    auto title = "Id: " + std::to_string(den->GetDenDisplayId()) + shinyTypeText + den->GetShinyAdvanceText() + " " + speciesText;
+    std::string eventText = den->GetIsEvent() ? " (Event)" : "";
+    auto title = "Id: " + std::to_string(den->GetDenDisplayId()) + shinyTypeText + den->GetShinyAdvanceText() + eventText;
     auto listItem = new tsl::elm::ListItem(title);
     listItem->setClickListener(std::bind(&DenMenuLayout::OnClickDen, this, den, std::placeholders::_1));
     denList->addItem(listItem);

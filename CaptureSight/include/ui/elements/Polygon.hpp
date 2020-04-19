@@ -21,6 +21,6 @@ class Polygon : public pu::ui::elm::Element {
   s32 m_centerY;
   std::vector<s16> m_pointsX = {};
   std::vector<s16> m_pointsY = {};
-  pu::ui::render::NativeRenderer m_renderer;
+  pu::sdl2::Renderer m_renderer;
   pu::ui::Color m_clr;
 };

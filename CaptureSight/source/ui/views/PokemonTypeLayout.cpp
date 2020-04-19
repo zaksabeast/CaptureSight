@@ -3,6 +3,7 @@
 #include <ui/MainApplication.hpp>
 #include <ui/PokemonSprite.hpp>
 #include <ui/elements/RoundedRectangle.hpp>
+#include <ui/elements/createTextBlock.hpp>
 #include <ui/views/PokemonTypeLayout.hpp>
 #include <utils/Constants.hpp>
 #include <utils/I18N.hpp>
@@ -34,9 +35,7 @@ void PokemonTypeLayout::SetTypeMatchUps(std::vector<csight::type::TypeMultiplier
 void PokemonTypeLayout::AddMatchUpText(std::vector<csight::type::TypeMultiplier> matchUps, std::string matchUpName, u32 x,
                                        u32 y) {
   auto matchUpYOffset = y + 60;
-  auto theme = gsets.GetTheme();
-  auto matchUpNameTextBlock = pu::ui::elm::TextBlock::New(x, y, matchUpName, 30);
-  matchUpNameTextBlock->SetColor(theme.text.light);
+  auto matchUpNameTextBlock = createTextBlock(x, y, matchUpName, 30);
 
   this->Add(matchUpNameTextBlock);
 
@@ -46,8 +45,7 @@ void PokemonTypeLayout::AddMatchUpText(std::vector<csight::type::TypeMultiplier>
     auto typeName = i18n->Translate("types", typeNameTranslationKey);
     auto matchUpText = typeName + " " + csight::utils::convertFloatWithPrecision(matchUp.multiplier, 2);
     u32 matchUpY = matchUpYOffset + (i * 40);
-    auto matchUpTextBlock = pu::ui::elm::TextBlock::New(x, matchUpY, matchUpText, 20);
-    matchUpTextBlock->SetColor(theme.text.light);
+    auto matchUpTextBlock = createTextBlock(x, matchUpY, matchUpText, 20);
     this->Add(matchUpTextBlock);
   }
 }

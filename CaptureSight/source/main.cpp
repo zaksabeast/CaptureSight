@@ -10,8 +10,8 @@ int main() {
   dmntchtInitialize();
   dmntchtForceOpenCheatProcess();
 
-  auto renderer = pu::ui::render::Renderer::New(SDL_INIT_EVERYTHING, pu::ui::render::RendererInitOptions::RendererNoSound,
-                                                pu::ui::render::RendererHardwareFlags);
+  auto renderer = pu::ui::render::Renderer::New(
+      pu::ui::render::RendererInitOptions(SDL_INIT_EVERYTHING, pu::ui::render::RendererHardwareFlags));
   mainApp = MainApplication::New(renderer);
   i18n = std::make_shared<I18N>();
 

@@ -1,6 +1,7 @@
 #include <memory>
 #include <stratosphere.hpp>
 #include <ui/MainApplication.hpp>
+#include <ui/elements/createTextBlock.hpp>
 #include <utils/I18N.hpp>
 #include <utils/Settings.hpp>
 
@@ -13,13 +14,12 @@ std::shared_ptr<I18N> i18n;
   m_layout->SetBackgroundColor(gsets.GetTheme().background.dark);
 
 void MainApplication::OnLoad() {
-  // Change default font to load characters properly (chs cht ko)
-  std::string language = GetTranslationCode();
-  if (language.compare("chs") == 0 || language.compare("cht") == 0)
-    pu::ui::render::SetDefaultFontFromShared(
-        pu::ui::render::SharedFont::ChineseSimplified);  // ChineseTraditional doesn't work for cht!?
+  pu::ui::render::AddDefaultFontFromShared(20);
+  pu::ui::render::AddDefaultFontFromShared(25);
+  pu::ui::render::AddDefaultFontFromShared(30);
+  pu::ui::render::AddDefaultFontFromShared(36);
 
-  m_gameReader = std::make_shared<csight::GameReader>();
+  m_gameReader = std::make_shared<csight::GameReader>(false);
   bool isDebugServiceRunning = m_gameReader->GetIsServiceRunning();
 
   m_warningLayout = WarningLayout::New();
@@ -48,8 +48,7 @@ void MainApplication::OnLoad() {
   m_pkms = m_gameReader->ReadParty();
   m_dens = m_gameReader->ReadDens(false);
 
-  m_versionTextBlock = pu::ui::elm::TextBlock::New(50, 50, CSIGHT_VERION, 25);
-  m_versionTextBlock->SetColor(gsets.GetTheme().text.light);
+  m_versionTextBlock = createTextBlock(50, 50, CSIGHT_VERION, 25);
 
   SETUP_LAYOUT(PokemonSummaryLayout, m_pokemonSummaryLayout);
   m_pokemonSummaryLayout->SetOnInput(std::bind(&MainApplication::OnInputPokemonSummaryLayout, this, std::placeholders::_1,

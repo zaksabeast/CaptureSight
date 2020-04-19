@@ -18,7 +18,7 @@ namespace csight::raid {
     std::vector<RaidEncounter> templates;
   };
 
-  extern std::vector<RaidEncounterTable> swordEncounterTables;
+  std::vector<RaidEncounterTable> GetSwordEncounterTables();
 
-  extern std::vector<RaidEncounterTable> shieldEncounterTables;
+  std::vector<RaidEncounterTable> GetShieldEncounterTables();
 }  // namespace csight::raid

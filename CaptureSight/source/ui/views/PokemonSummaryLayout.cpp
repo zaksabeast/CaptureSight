@@ -6,6 +6,7 @@
 #include <ui/elements/Line.hpp>
 #include <ui/elements/Polygon.hpp>
 #include <ui/elements/RoundedRectangle.hpp>
+#include <ui/elements/createTextBlock.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
 #include <utils/Constants.hpp>
 #include <utils/I18N.hpp>
@@ -35,9 +36,8 @@ extern std::shared_ptr<I18N> i18n;
 #define getTableItemX(BASE_X) (BASE_X + TABLE_CONTENT_PADDING)
 #define getTableItemY(BASE_Y, ITEM_INDEX) \
   ((ITEM_INDEX * (TABLE_ITEM_PADDING + TABLE_ITEM_FONT_SIZE)) + BASE_Y + TABLE_CONTENT_PADDING)
-#define createTableItem(getTableItemY, ITEM_X, ITEM_REF, ITEM_INDEX, THEME)                            \
-  ITEM_REF = pu::ui::elm::TextBlock::New(ITEM_X, getTableItemY(ITEM_INDEX), "", TABLE_ITEM_FONT_SIZE); \
-  ITEM_REF->SetColor(THEME.text.light);
+#define createTableItem(getTableItemY, ITEM_X, ITEM_REF, ITEM_INDEX, THEME) \
+  ITEM_REF = createTextBlock(ITEM_X, getTableItemY(ITEM_INDEX), "", TABLE_ITEM_FONT_SIZE);
 
 #define LABEL_PADDING 10
 #define LABEL_FONT_SIZE TABLE_ITEM_FONT_SIZE
@@ -108,10 +108,8 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
 
   m_spriteImage = pu::ui::elm::Image::New(SPECIES_SPRITE_X, SPECIES_SPRITE_Y, "");
   m_headerBackground = pu::ui::elm::Rectangle::New(0, 0, SCREEN_MAX_WIDTH, HEADER_BACKGROUND_HEIGHT, theme.background.light, 50);
-  m_speciesNameTextBlock = pu::ui::elm::TextBlock::New(SPECIES_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
-  m_speciesNameTextBlock->SetColor(theme.text.light);
-  m_titleTextBlock = pu::ui::elm::TextBlock::New(TITLE_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
-  m_titleTextBlock->SetColor(theme.text.light);
+  m_speciesNameTextBlock = createTextBlock(SPECIES_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
+  m_titleTextBlock = createTextBlock(TITLE_TEXT_X, HEADER_TEXT_Y, "", HEADER_FONT_SIZE);
 
   SDL_Point hpPoint = { 0, -100 };
   SDL_Point atkPoint = { 86, -50 };
@@ -125,24 +123,12 @@ PokemonSummaryLayout::PokemonSummaryLayout() : Layout::Layout() {
                                                 theme.background.light, TABLE_BORDER_RADIUS);
   createStatLabelText(m_statTextBlock, theme);
 
-  m_hpStatTextBlock
-      = pu::ui::elm::TextBlock::New(hpPoint.x + STAT_WHEEL_CENTER_X - 30, hpPoint.y + STAT_WHEEL_CENTER_Y - 30, "", 20);
-  m_hpStatTextBlock->SetColor(theme.text.light);
-  m_atkStatTextBlock
-      = pu::ui::elm::TextBlock::New(atkPoint.x + STAT_WHEEL_CENTER_X + 20, atkPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
-  m_atkStatTextBlock->SetColor(theme.text.light);
-  m_defStatTextBlock
-      = pu::ui::elm::TextBlock::New(defPoint.x + STAT_WHEEL_CENTER_X + 20, defPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
-  m_defStatTextBlock->SetColor(theme.text.light);
-  m_speStatTextBlock
-      = pu::ui::elm::TextBlock::New(spePoint.x + STAT_WHEEL_CENTER_X - 40, spePoint.y + STAT_WHEEL_CENTER_Y + 10, "", 20);
-  m_speStatTextBlock->SetColor(theme.text.light);
-  m_spdStatTextBlock
-      = pu::ui::elm::TextBlock::New(spdPoint.x + STAT_WHEEL_CENTER_X - 90, spdPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
-  m_spdStatTextBlock->SetColor(theme.text.light);
-  m_spaStatTextBlock
-      = pu::ui::elm::TextBlock::New(spaPoint.x + STAT_WHEEL_CENTER_X - 90, spaPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
-  m_spaStatTextBlock->SetColor(theme.text.light);
+  m_hpStatTextBlock = createTextBlock(hpPoint.x + STAT_WHEEL_CENTER_X - 30, hpPoint.y + STAT_WHEEL_CENTER_Y - 30, "", 20);
+  m_atkStatTextBlock = createTextBlock(atkPoint.x + STAT_WHEEL_CENTER_X + 20, atkPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
+  m_defStatTextBlock = createTextBlock(defPoint.x + STAT_WHEEL_CENTER_X + 20, defPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
+  m_speStatTextBlock = createTextBlock(spePoint.x + STAT_WHEEL_CENTER_X - 40, spePoint.y + STAT_WHEEL_CENTER_Y + 10, "", 20);
+  m_spdStatTextBlock = createTextBlock(spdPoint.x + STAT_WHEEL_CENTER_X - 90, spdPoint.y + STAT_WHEEL_CENTER_Y, "", 20);
+  m_spaStatTextBlock = createTextBlock(spaPoint.x + STAT_WHEEL_CENTER_X - 90, spaPoint.y + STAT_WHEEL_CENTER_Y - 20, "", 20);
 
   m_outerStatPolygon = Polygon::New(STAT_WHEEL_CENTER_X, STAT_WHEEL_CENTER_Y, theme.background.light);
   m_outerStatPolygon->SetPoints(points);
