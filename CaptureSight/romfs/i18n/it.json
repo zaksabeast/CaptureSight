@@ -19,7 +19,7 @@
     "Stars": "Stelle",
     "More detail (X)": "Più Dettagli (X)",
     "Raid Searcher (Y)": "Ricerca Raid (Y)",
-    "Den Id": "Den Id",
+    "Den Id": "Id del Den",
     "Wild and Trade Pokemon": "Pokemon Selvatico e in Scambio",
     "Trade Pokemon": "Pokemon in Scambio",
     "Minted Nature": "Natura modificata",
@@ -60,7 +60,7 @@
     "None": "Nessuno",
     "Regular Den": "Den regolare",
     "Rare Den": "Den raro",
-    "Den id filter": "Filtro Den id",
+    "Den Id filter": "Filtro Den id",
     "Spawn filter": "Filtro incontro",
     "Ability Filter": "Filtro abilità",
     "Any": "Qualsiasi"
