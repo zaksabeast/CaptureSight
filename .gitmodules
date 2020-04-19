@@ -10,3 +10,6 @@
 [submodule "flatbuffers"]
 	path = flatbuffers
 	url = https://github.com/google/flatbuffers.git
+[submodule "pokesprite"]
+	path = pokesprite
+	url = https://github.com/msikma/pokesprite.git
