@@ -1,4 +1,3 @@
-#pragma once
 #include <pu/Plutonium>
 #include <string>
 #include <utils/Settings.hpp>
