@@ -23,10 +23,10 @@ namespace csight {
 
    private:
     bool m_isDebugServiceRunning = false;
-    u64 m_partyOffset = 0x4298E8E0;
-    u64 m_boxOffset = 0x4293D8B0;
-    u64 m_wildOffset = 0x8D45C648;
-    u64 m_raidOffset = 0x85C7AB08;
+    u64 m_partyOffset = 0x450BE8C0;
+    u64 m_boxOffset = 0x4506D890;
+    u64 m_wildOffset = 0x8FEA3358;
+    u64 m_raidOffset = 0x886C1BD8;
     u64 m_legendOffset = 0x85C74F88;
     u64 m_tradeOffset = 0x2E32206A;
     DmntCheatProcessMetadata m_metadata;
