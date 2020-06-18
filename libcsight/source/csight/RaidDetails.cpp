@@ -16,30 +16,31 @@ namespace csight::raid {
     switch (language) {
       case SetLanguage_ZHCN:
       case SetLanguage_ZHHANS:
-        return 0x2E5E4B08;
+        return 0x2F9EA3F0;
       case SetLanguage_ZHTW:
       case SetLanguage_ZHHANT:
-        return 0x2E5E4AA8;
+        return 0x2F9EA390;
       case SetLanguage_KO:
-        return 0x2E5E4EF8;
+        return 0x2F9EA7F0;
       case SetLanguage_IT:
-        return 0x2E5E5848;
+        return 0x2F9EB170;
       case SetLanguage_JA:
-        return 0x2E5E5A38;
+        return 0x2F9EB350;
       case SetLanguage_FR:
       case SetLanguage_FRCA:
+        return 0x2F9EB3E0;
       case SetLanguage_ES:
       case SetLanguage_ES419:
-        return 0x2E5E5A78;
+        return 0x2F9EB3B0;
       case SetLanguage_DE:
-        return 0x2E5E5B78;
+        return 0x2F9EB4C0;
       case SetLanguage_PT:
       case SetLanguage_RU:
       case SetLanguage_NL:
       case SetLanguage_ENUS:
       case SetLanguage_ENGB:
       default:
-        return 0x2E5E58B8;
+        return 0x2F9EB1F0;
     }
   }
 
