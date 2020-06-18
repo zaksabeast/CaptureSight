@@ -2,7 +2,7 @@
 
 #include <switch.h>
 
-#define DEN_LIST_SIZE 100
+#define DEN_LIST_SIZE 190
 
 extern u64 eventHash;
 

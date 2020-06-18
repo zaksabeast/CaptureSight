@@ -95,7 +95,7 @@ namespace csight::raid {
   std::vector<std::shared_ptr<Den>> RaidDetails::ReadDens(bool shouldReadAllDens) {
     std::vector<std::shared_ptr<Den>> dens;
 
-    for (u32 i = 0; i < 100; i++) {
+    for (u32 i = 0; i < DEN_LIST_SIZE; i++) {
       auto den = this->ReadDen(i);
       if (shouldReadAllDens || den->GetIsActive()) {
         dens.push_back(den);
