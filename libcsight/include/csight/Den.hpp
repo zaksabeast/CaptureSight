@@ -7,7 +7,14 @@
 #include <switch.h>
 #include <vector>
 
+#define FIRST_IOA_DEN_ID 100
+
 namespace csight::raid {
+  enum DenType {
+    Vanilla,
+    IsleOfArmor,
+  };
+
   class Den {
    public:
     Den(u8 *data, u8 denId, std::vector<RaidEncounterTable> encounterTables,
@@ -26,9 +33,11 @@ namespace csight::raid {
     bool GetIsEvent();
     bool GetIsActive();
     u8 GetDenId();
-    u8 GetDenDisplayId();
+    std::string GetDenDisplayId();
+    std::string GetDenDisplayName();
     bool GetIsRare();
     std::shared_ptr<raid::RaidPokemon> GetPKM();
+    DenType GetDenType();
 
    private:
     u8 m_size = 0x18;

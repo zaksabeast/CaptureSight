@@ -18,7 +18,7 @@ namespace csight::raid {
     if (this->GetIsEvent()) {
       m_spawn = this->FindSpawn(eventEncounterTable->templates);
     } else {
-      auto nest = utils::findRaidEncounterTable(encounterTables, denId, this->GetIsRare());
+      auto nest = utils::findRaidEncounterTable(encounterTables, m_denId, this->GetIsRare());
       m_spawn = this->FindSpawn(nest.templates);
     }
 
@@ -79,9 +79,18 @@ namespace csight::raid {
 
   u8 Den::GetDenId() { return m_denId; }
 
-  u8 Den::GetDenDisplayId() { return m_denId + 1; }
+  std::string Den::GetDenDisplayName() {
+    u8 displayId = m_denId + 1;
+    if (this->GetDenType() == Vanilla) {
+      return "[Vanilla] " + std::to_string(displayId);
+    } else {
+      return "[IoA] " + std::to_string(displayId - FIRST_IOA_DEN_ID);
+    }
+  }
 
   std::shared_ptr<RaidPokemon> Den::GetPKM() { return std::make_shared<RaidPokemon>(this->GetSeed(), m_spawn); };
+
+  DenType Den::GetDenType() { return m_denId >= FIRST_IOA_DEN_ID ? IsleOfArmor : Vanilla; }
 
   RaidEncounter Den::FindSpawn(std::vector<RaidEncounter> raidEncounters) {
     u32 userProbability = 1;

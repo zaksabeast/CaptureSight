@@ -84,7 +84,9 @@ namespace csight::raid {
       eventTemplateTable = this->ReadEventEncounterTable();
     }
 
-    this->ReadHeap(m_denOffset + (denId * 0x18), denBytes, 0x18);
+    // Account for Isle of Armor offset
+    u64 shiftedDenId = denId >= FIRST_IOA_DEN_ID ? denId + 11 : denId;
+    this->ReadHeap(m_denOffset + (shiftedDenId * 0x18), denBytes, 0x18);
 
     auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable);
 
