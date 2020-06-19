@@ -113,4 +113,4 @@ std::vector<std::string> SpeciesList
         "Cursola",    "Sirfetch’d", "Mr. Rime",    "Runerigus",   "Milcery",      "Alcremie",   "Falinks",     "Pincurchin",
         "Snom",       "Frosmoth",   "Stonjourner", "Eiscue",      "Indeedee",     "Morpeko",    "Cufant",      "Copperajah",
         "Dracozolt",  "Arctozolt",  "Dracovish",   "Arctovish",   "Duraludon",    "Dreepy",     "Drakloak",    "Dragapult",
-        "Zacian",     "Zamazenta",  "Eternatus" };
+        "Zacian",     "Zamazenta",  "Eternatus",   "Kubfu",       "Urshifu",      "Zarude" };
