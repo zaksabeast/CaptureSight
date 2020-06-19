@@ -3,7 +3,6 @@
 #include <csight/RaidPokemon.hpp>
 #include <csight/RaidTemplateTables.hpp>
 #include <memory>
-#include <stratosphere.hpp>
 #include <string>
 #include <switch.h>
 #include <vector>

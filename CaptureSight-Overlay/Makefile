@@ -1,5 +1,3 @@
-include $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../Atmosphere-libs/config/templates/stratosphere.mk
-
 ifeq ($(strip $(DEVKITPRO)),)
 $(error "Please set DEVKITPRO in your environment. export DEVKITPRO=<path to>/devkitpro")
 endif
@@ -21,7 +19,7 @@ ICON	    	:= icon.jpg
 
 BUILD       := build
 SOURCES     := source source/ui source/ui/views source/utils
-INCLUDES    := include include/ui include/ui/views include/utils ../Atmosphere-libs/libstratosphere/source/dmnt
+INCLUDES    := include include/ui include/ui/views include/utils
 
 ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
 
@@ -35,8 +33,8 @@ CXXFLAGS	:= $(CFLAGS) -std=gnu++20
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcsight -lstratosphere -lnx -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
-LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../libcsight $(CURDIR)/../libtesla $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
+LIBS	:= -lcsight -lnx -lfreetype -lSDL2_mixer -lopusfile -lopus -lmodplug -lmpg123 -lvorbisidec -lSDL2 -lc -logg -lSDL2_ttf -lSDL2_gfx -lSDL2_image -lwebp -lpng -ljpeg `sdl2-config --libs` `freetype-config --libs`
+LIBDIRS	:= $(PORTLIBS) $(LIBNX) $(CURDIR)/../libcsight $(CURDIR)/../libtesla 
 
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 

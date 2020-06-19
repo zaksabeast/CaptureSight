@@ -1,6 +1,5 @@
 #include <functional>
 #include <pu/Plutonium>
-#include <stratosphere.hpp>
 #include <string>
 #include <ui/MainApplication.hpp>
 #include <ui/views/MainMenuLayout.hpp>

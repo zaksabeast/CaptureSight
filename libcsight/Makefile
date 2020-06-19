@@ -1,5 +1,3 @@
-include $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/../Atmosphere-libs/config/templates/stratosphere.mk
-
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
@@ -17,7 +15,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 # INCLUDES is a list of directories containing header files
 #---------------------------------------------------------------------------------
 TARGET		:=	csight
-SOURCES		:=	source source/csight source/csight/lookups
+SOURCES		:=	source source/csight source/csight/lookups ../Atmosphere-libs/libstratosphere/source/dmnt
 DATA		:=	data
 INCLUDES	:= include include/csight include/csight/lookups ../Atmosphere-libs/libstratosphere/source/dmnt ../flatbuffers/include
 
@@ -26,13 +24,13 @@ INCLUDES	:= include include/csight include/csight/lookups ../Atmosphere-libs/lib
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
 
-CFLAGS	:=	-g -Wall -Werror \
+CFLAGS	:=	-g -Wall -Wno-error \
 			-ffunction-sections \
 			-fdata-sections \
 			$(ARCH) \
 			$(BUILD_CFLAGS)
 
-CFLAGS	+=	$(INCLUDE) -DATMOSPHERE_ARCH_ARM64 -DATMOSPHERE_OS_HORIZON -DATMOSPHERE_BOARD_NINTENDO_NX -DATMOSPHERE_BOARD_NINTENDO_SWITCH -DATMOSPHERE_IS_STRATOSPHERE -D__SWITCH__
+CFLAGS	+=	$(INCLUDE) -D__SWITCH__
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++20
 
@@ -42,7 +40,7 @@ ASFLAGS	:=	-g $(ARCH)
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS := $(PORTLIBS) $(LIBNX) $(CURDIR)/../Atmosphere-libs/libstratosphere $(CURDIR)/../Atmosphere-libs/libvapours
+LIBDIRS := $(PORTLIBS) $(LIBNX)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional

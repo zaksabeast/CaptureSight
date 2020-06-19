@@ -6,7 +6,6 @@
 #include <csight/Utils.hpp>
 #include <fstream>
 #include <stdio.h>
-#include <stratosphere.hpp>
 
 namespace csight::raid {
   // Pass the den encounter tables to use since its responsibility is to parse the den data, not read/choose encounter tables

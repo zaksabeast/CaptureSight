@@ -1,6 +1,5 @@
 #include <csight/core>
 #include <functional>
-#include <stratosphere.hpp>
 #include <string>
 #include <ui/PokemonSprite.hpp>
 #include <ui/elements/Line.hpp>

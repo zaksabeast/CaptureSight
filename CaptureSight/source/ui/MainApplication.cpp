@@ -1,5 +1,4 @@
 #include <memory>
-#include <stratosphere.hpp>
 #include <ui/MainApplication.hpp>
 #include <ui/elements/createTextBlock.hpp>
 #include <utils/I18N.hpp>

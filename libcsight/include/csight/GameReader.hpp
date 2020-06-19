@@ -1,9 +1,8 @@
 #pragma once
 
+#include "../../../Atmosphere-libs/libstratosphere/source/dmnt/dmntcht.h"
 #include <csight/PK8.hpp>
 #include <csight/RaidDetails.hpp>
-#include <dmntcht.h>
-#include <stratosphere.hpp>
 #include <switch.h>
 #include <vector>
 
