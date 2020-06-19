@@ -213,15 +213,11 @@ void RaidSearchSettingsLayout::DecrementFlawlessIVFilter() {
 }
 
 void RaidSearchSettingsLayout::IncrementDenIndex() {
-  auto encounterTables = mainApp->GetGameReader()->GetEncounterTables();
-  auto nests = encounterTables;
   m_denIndex = m_denIndex >= DEN_LIST_SIZE - 1 ? 0 : m_denIndex + 1;
   this->SetEncounterIndex(0);
 }
 
 void RaidSearchSettingsLayout::DecrementDenIndex() {
-  auto encounterTables = mainApp->GetGameReader()->GetEncounterTables();
-  auto nests = encounterTables;
   m_denIndex = m_denIndex <= 0 ? DEN_LIST_SIZE - 1 : m_denIndex - 1;
   this->SetEncounterIndex(0);
 }
