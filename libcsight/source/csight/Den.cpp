@@ -82,9 +82,9 @@ namespace csight::raid {
   std::string Den::GetDenDisplayName() {
     u8 displayId = m_denId + 1;
     if (this->GetDenType() == Vanilla) {
-      return "[Vanilla] " + std::to_string(displayId);
+      return "[Vanilla " + std::to_string(displayId) + "]";
     } else {
-      return "[IoA] " + std::to_string(displayId - FIRST_IOA_DEN_ID);
+      return "[IoA " + std::to_string(displayId - FIRST_IOA_DEN_ID) + "]";
     }
   }
 
