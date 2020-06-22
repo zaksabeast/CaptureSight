@@ -11,6 +11,7 @@
 #include <future>
 
 namespace csight {
+  PK8::PK8() : PKM::PKM() {}
   PK8::PK8(u8 *data) : PKM::PKM() {
     std::copy(data, data + m_storedSize, m_data);
 

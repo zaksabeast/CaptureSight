@@ -10,6 +10,7 @@
 namespace csight {
   class PK8 : public PKM {
    public:
+    PK8();
     PK8(u8 *data);
     ~PK8();
 

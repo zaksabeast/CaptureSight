@@ -39,7 +39,9 @@ namespace csight {
     u8 pkmBytes[0x148];
 
     this->ReadHeap(offset, pkmBytes, 0x148);
-    return std::make_shared<PK8>(pkmBytes);
+    auto pkm = std::make_shared<PK8>(pkmBytes);
+
+    return pkm->GetIsValid() ? pkm : std::make_shared<PK8>();
   }
 
   std::vector<std::shared_ptr<PK8>> GameReader::ReadPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon) {
