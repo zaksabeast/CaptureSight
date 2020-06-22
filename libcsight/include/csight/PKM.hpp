@@ -50,5 +50,18 @@ namespace csight {
 
       return typeMatchUps;
     }
+    std::string GetDisplayIVs() { return csight::utils::joinNums(this->GetIVs(), "/"); }
+    u8 GetFlawlessIVCount() {
+      u8 flawlessIVs = 0;
+      auto ivs = this->GetIVs();
+
+      for (u8 i = 0; i < 6; i++) {
+        if (ivs[i] == 31) {
+          flawlessIVs++;
+        }
+      }
+
+      return flawlessIVs;
+    }
   };
 }  // namespace csight

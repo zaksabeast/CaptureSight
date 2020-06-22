@@ -1,6 +1,7 @@
 #pragma once
 
 #include <csight/RaidTemplateTables.hpp>
+#include <csight/Shiny.hpp>
 #include <csight/lookups/Types.hpp>
 #include <future>
 #include <string>
@@ -50,6 +51,8 @@ namespace csight::utils {
                                                           u32 denId, bool isRare);
 
   std::string getTypeName(type::PokemonType type);
+
+  std::string getShinyTypeString(shiny::ShinyType type);
 
   std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2);
 

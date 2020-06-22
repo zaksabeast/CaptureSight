@@ -17,12 +17,6 @@ tsl::elm::Element *RaidSearchResultLayout::createUI() {
 
   searchSettings->SetSeed(m_seed);
   searchSettings->SetAdvancesToSearch(ADVANCES_TO_SEARCH);
-  searchSettings->SetRaidEncounter(csight::raid::RaidEncounter {
-    species : 0,
-    flawlessIVs : m_flawlessIVs,
-    ability : csight::ability::raid::FirstOrSecond,
-    probabilities : { 35, 0, 0, 0, 0 }
-  });
 
   if (m_seed > 0) {
     csight::raid::calculateRaidPKMList(

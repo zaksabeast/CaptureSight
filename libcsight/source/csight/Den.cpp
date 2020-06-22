@@ -22,7 +22,10 @@ namespace csight::raid {
       m_spawn = this->FindSpawn(nest.templates);
     }
 
-    this->CalculateShinyDetails();
+    auto shinyDetails = csight::shiny::CalculateShinyDetails(this->GetSeed(), MAX_RAID_ADVANCES);
+
+    m_shinyAdvance = shinyDetails->advances;
+    m_shineType = shinyDetails->type;
   }
 
   Den::~Den() { delete[] m_data; }
@@ -34,27 +37,6 @@ namespace csight::raid {
   std::string Den::GetShinyAdvanceText() { return utils::getRaidShinyAdvanceText(m_shinyAdvance, MAX_RAID_ADVANCES); }
 
   shiny::ShinyType Den::GetShinyType() { return m_shineType; }
-
-  void Den::CalculateShinyDetails() {
-    u64 seed = this->GetSeed();
-    u16 shinyAdvance = 0;
-    shiny::ShinyType shineType = shiny::None;
-
-    while (shinyAdvance < MAX_RAID_ADVANCES) {
-      auto rng = rng::xoroshiro(seed);
-      seed = rng.nextulong();  // Also advance for EC
-      u32 SIDTID = rng.nextuint();
-      u32 PID = rng.nextuint();
-      shineType = shiny::GetShinyType(PID, SIDTID);
-      if (shineType > shiny::None)
-        break;
-      else
-        shinyAdvance++;
-    }
-
-    m_shinyAdvance = shinyAdvance;
-    m_shineType = shineType;
-  }
 
   u8 Den::GetStars() { return *(u8 *)(m_data + 0x10); }
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <csight/Config.hpp>
 #include <csight/Ability.hpp>
+#include <csight/Config.hpp>
 #include <csight/RaidPokemon.hpp>
 #include <csight/RaidTemplateTables.hpp>
 #include <csight/Shiny.hpp>
@@ -13,14 +13,30 @@
 namespace csight::raid {
   class RaidSearchSettings {
    public:
+    RaidSearchSettings() : m_encounterTables {} {}
+    RaidSearchSettings(const std::vector<RaidEncounterTable> &encounterTables) : m_encounterTables(encounterTables) {
+      this->UpdateRaidEncounter();
+    }
+
     u64 GetSeed() { return m_seed; }
     void SetSeed(u64 seed) {
       m_seed = seed;
       this->OnUpdate();
     }
     RaidEncounter GetRaidEncounter() { return m_raidEncounter; }
-    void SetRaidEncounter(RaidEncounter raidEncounter) {
-      m_raidEncounter = raidEncounter;
+    void SetSpawnIndex(u32 spawnIndex) {
+      m_spawnIndex = spawnIndex;
+      this->UpdateRaidEncounter();
+      this->OnUpdate();
+    }
+    void SetDenIndex(u32 denIndex) {
+      m_denIndex = denIndex;
+      this->UpdateRaidEncounter();
+      this->OnUpdate();
+    }
+    void SetIsRareDen(bool isRareDen) {
+      m_isRareDen = isRareDen;
+      this->UpdateRaidEncounter();
       this->OnUpdate();
     }
     u8 GetFlawlessIVFilter() { return m_flawlessIVFilter; }
@@ -49,13 +65,30 @@ namespace csight::raid {
     std::vector<std::function<void(void)>> m_callbacks;
     u64 m_seed = 0;
     u32 m_advancesToSearch = MAX_RAID_ADVANCES;
-    RaidEncounter m_raidEncounter;
     ability::filter::AbilityFilter m_abilityFilter = ability::filter::Any;
     u8 m_flawlessIVFilter = 1;
     shiny::ShinyType m_shinyTypeFilter = shiny::None;
+    u32 m_spawnIndex = 0;
+    u32 m_denIndex = 0;
+    bool m_isRareDen = false;
+    const std::vector<RaidEncounterTable> &m_encounterTables;
+    RaidEncounter m_raidEncounter = {
+      species : 0,
+      flawlessIVs : 5,
+      ability : ability::raid::AbilityRaidSetting::FirstOrSecond,
+      form : 0,
+      probabilities : { 35, 0, 0, 0, 0 }
+    };
     void OnUpdate() {
       for (auto callback : m_callbacks) {
         callback();
+      }
+    }
+    void UpdateRaidEncounter() {
+      if (m_encounterTables.size() > 0) {
+        auto nests = csight::utils::findRaidEncounterTable(m_encounterTables, m_denIndex, m_isRareDen);
+        auto encounter = nests.templates[m_spawnIndex];
+        m_raidEncounter = encounter;
       }
     }
   };

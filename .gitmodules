@@ -10,3 +10,6 @@
 [submodule "flatbuffers"]
 	path = flatbuffers
 	url = https://github.com/google/flatbuffers.git
+[submodule "borealis"]
+	path = borealis
+	url = https://github.com/natinusala/borealis.git

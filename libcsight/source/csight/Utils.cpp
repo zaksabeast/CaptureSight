@@ -86,6 +86,20 @@ namespace csight::utils {
 
   std::string getTypeName(type::PokemonType type) { return getIndex(type::TypeNames, type); }
 
+  std::string getShinyTypeString(shiny::ShinyType type) {
+    switch (type) {
+      case shiny::ShinyType::None:
+        return "None";
+      case shiny::ShinyType::Star:
+        return "Star";
+      case shiny::ShinyType::Square:
+        return "Square";
+      case shiny::ShinyType::Any:
+      default:
+        return "Any";
+    }
+  }
+
   std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2) {
     auto type1Weaknesses = weaknessChart[type1];
     auto type2Weaknesses = weaknessChart[type2];

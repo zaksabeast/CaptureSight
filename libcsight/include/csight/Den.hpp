@@ -48,6 +48,5 @@ namespace csight::raid {
     shiny::ShinyType m_shineType = shiny::Star;
 
     raid::RaidEncounter FindSpawn(std::vector<raid::RaidEncounter> raidEncounters);
-    void CalculateShinyDetails();
   };
 }  // namespace csight::raid
