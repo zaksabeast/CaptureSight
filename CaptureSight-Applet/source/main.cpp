@@ -27,11 +27,11 @@ int main(int argc, char *argv[]) {
 
   g_i18n = std::make_shared<I18N>();
   g_gameReader = std::make_shared<csight::GameReader>(false);
-  bool isDebugServiceRunning = g_gameReader->GetIsServiceRunning();
+  bool isDebugServiceRunning = g_gameReader->getIsServiceRunning();
 
   if (!isDebugServiceRunning) {
     brls::Application::crash("Atmosphere's dmnt:cht is not running");
-  } else if (R_FAILED(g_gameReader->Attach()) || !g_gameReader->GetIsPokemonRunning()) {
+  } else if (R_FAILED(g_gameReader->attach()) || !g_gameReader->getIsPokemonRunning()) {
     brls::Application::crash("Please start a Pokemon game before running CaptureSight");
   } else {
     brls::Application::pushView(new ui::MainView());

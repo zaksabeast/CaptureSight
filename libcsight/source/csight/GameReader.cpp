@@ -8,48 +8,48 @@ namespace csight {
     m_isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht");
   }
 
-  Result GameReader::Attach() { return dmntchtGetCheatProcessMetadata(&m_metadata); }
+  Result GameReader::attach() { return dmntchtGetCheatProcessMetadata(&m_metadata); }
 
-  bool GameReader::GetIsPokemonRunning() {
+  bool GameReader::getIsPokemonRunning() {
     return (m_metadata.title_id == SWORD_TITLE_ID) || (m_metadata.title_id == SHIELD_TITLE_ID);
   }
 
-  bool GameReader::GetIsServiceRunning() { return m_isDebugServiceRunning; }
+  bool GameReader::getIsServiceRunning() { return m_isDebugServiceRunning; }
 
-  Result GameReader::ReadHeap(u64 offset, void *buffer, size_t size) {
+  Result GameReader::readHeap(u64 offset, void *buffer, size_t size) {
     return dmntchtReadCheatProcessMemory(m_metadata.heap_extents.base + offset, buffer, size);
   }
 
-  std::vector<std::shared_ptr<PK8>> GameReader::ReadParty() { return this->ReadPK8s(m_partyOffset, 6, 0x158); }
+  std::vector<std::shared_ptr<PK8>> GameReader::readParty() { return this->readPK8s(m_partyOffset, 6, 0x158); }
 
-  std::vector<std::shared_ptr<PK8>> GameReader::ReadBoxes() { return this->ReadPK8s(m_boxOffset, 960, 0x158); }
+  std::vector<std::shared_ptr<PK8>> GameReader::readBoxes() { return this->readPK8s(m_boxOffset, 960, 0x158); }
 
-  std::shared_ptr<PK8> GameReader::ReadWild() {
-    auto pkm = this->ReadPK8(m_wildOffset);
-    return pkm->GetIsValid() ? pkm : this->ReadPK8(m_legendOffset);
+  std::shared_ptr<PK8> GameReader::readWild() {
+    auto pkm = this->readPK8(m_wildOffset);
+    return pkm->getIsValid() ? pkm : this->readPK8(m_legendOffset);
   }
 
-  std::shared_ptr<PK8> GameReader::ReadRaid() { return this->ReadPK8(m_raidOffset); }
+  std::shared_ptr<PK8> GameReader::readRaid() { return this->readPK8(m_raidOffset); }
 
-  std::shared_ptr<PK8> GameReader::ReadTrade() { return this->ReadPK8(m_tradeOffset); }
+  std::shared_ptr<PK8> GameReader::readTrade() { return this->readPK8(m_tradeOffset); }
 
-  u64 GameReader::GetTitleId() { return m_metadata.title_id; }
+  u64 GameReader::getTitleId() { return m_metadata.title_id; }
 
-  std::shared_ptr<PK8> GameReader::ReadPK8(u64 offset) {
+  std::shared_ptr<PK8> GameReader::readPK8(u64 offset) {
     u8 pkmBytes[0x148];
 
-    this->ReadHeap(offset, pkmBytes, 0x148);
+    this->readHeap(offset, pkmBytes, 0x148);
     auto pkm = std::make_shared<PK8>(pkmBytes);
 
-    return pkm->GetIsValid() ? pkm : std::make_shared<PK8>();
+    return pkm->getIsValid() ? pkm : std::make_shared<PK8>();
   }
 
-  std::vector<std::shared_ptr<PK8>> GameReader::ReadPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon) {
+  std::vector<std::shared_ptr<PK8>> GameReader::readPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon) {
     std::vector<std::shared_ptr<PK8>> pk8s;
     u32 size = bytesBetweenPokemon * amount;
     u8 *pkmBytes = new u8[size];
 
-    this->ReadHeap(offset, pkmBytes, size);
+    this->readHeap(offset, pkmBytes, size);
 
     for (u32 i = 0; i < amount; i++) {
       pk8s.push_back(std::make_shared<PK8>(pkmBytes + (i * bytesBetweenPokemon)));

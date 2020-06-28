@@ -17,7 +17,7 @@ namespace csight::raid {
     m_EC = rng.next(0xFFFFFFFF);
     u32 SIDTID = rng.next(0xFFFFFFFF);
     m_PID = rng.next(0xFFFFFFFF);
-    m_shineType = shiny::GetShinyType(m_PID, SIDTID);
+    m_shineType = shiny::getShinyType(m_PID, SIDTID);
 
     m_IVs = { EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV };
 
@@ -56,25 +56,25 @@ namespace csight::raid {
     }
   }
 
-  u32 RaidPokemon::GetEC() { return m_EC; }
+  u32 RaidPokemon::getEC() { return m_EC; }
 
-  u32 RaidPokemon::GetPID() { return m_PID; }
+  u32 RaidPokemon::getPID() { return m_PID; }
 
-  u16 RaidPokemon::GetSpecies() { return m_spawn.species; }
+  u16 RaidPokemon::getSpecies() { return m_spawn.species; }
 
-  std::string RaidPokemon::GetSpeciesString() { return utils::getSpeciesName(this->GetSpecies()); }
+  std::string RaidPokemon::getSpeciesString() { return utils::getSpeciesName(this->getSpecies()); }
 
-  bool RaidPokemon::GetIsShiny() { return m_shineType > shiny::None; }
+  bool RaidPokemon::getIsShiny() { return m_shineType > shiny::None; }
 
-  shiny::ShinyType RaidPokemon::GetShinyType() { return m_shineType; }
+  shiny::ShinyType RaidPokemon::getShinyType() { return m_shineType; }
 
-  std::vector<u8> RaidPokemon::GetIVs() { return m_IVs; }
+  std::vector<u8> RaidPokemon::getIVs() { return m_IVs; }
 
-  ability::Ability RaidPokemon::GetAbility() { return m_ability; };
+  ability::Ability RaidPokemon::getAbility() { return m_ability; };
 
-  std::string RaidPokemon::GetAbilityString() { return ability::GetAbilityString(m_ability); }
+  std::string RaidPokemon::getAbilityString() { return ability::getAbilityString(m_ability); }
 
-  u64 RaidPokemon::GetRaidSeed() { return m_seed; }
+  u64 RaidPokemon::getRaidSeed() { return m_seed; }
 
-  u16 RaidPokemon::GetForm() { return m_spawn.form; }
+  u16 RaidPokemon::getForm() { return m_spawn.form; }
 }  // namespace csight::raid

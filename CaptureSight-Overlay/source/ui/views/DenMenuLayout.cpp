@@ -14,11 +14,11 @@ tsl::elm::Element *DenMenuLayout::createUI() {
 
   for (u32 i = 0; i < m_dens.size(); i++) {
     auto den = m_dens[i];
-    std::string shinyTypeText = den->GetShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
-    std::string eventText = den->GetIsEvent() ? " (Event)" : "";
-    auto title = den->GetDenDisplayName() + shinyTypeText + den->GetShinyAdvanceText() + eventText;
+    std::string shinyTypeText = den->getShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
+    std::string eventText = den->getIsEvent() ? " (Event)" : "";
+    auto title = den->getDenDisplayName() + shinyTypeText + den->getShinyAdvanceText() + eventText;
     auto listItem = new tsl::elm::ListItem(title);
-    listItem->setClickListener(std::bind(&DenMenuLayout::OnClickDen, this, den, std::placeholders::_1));
+    listItem->setClickListener(std::bind(&DenMenuLayout::onClickDen, this, den, std::placeholders::_1));
     denList->addItem(listItem);
   }
 
@@ -27,9 +27,9 @@ tsl::elm::Element *DenMenuLayout::createUI() {
   return rootFrame;
 }
 
-bool DenMenuLayout::OnClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys) {
+bool DenMenuLayout::onClickDen(std::shared_ptr<csight::raid::Den> den, s64 keys) {
   if (keys == KEY_A) {
-    tsl::changeTo<RaidSearchResultLayout>(den->GetSeed(), 5);
+    tsl::changeTo<RaidSearchResultLayout>(den->getSeed(), 5);
 
     return true;
   }

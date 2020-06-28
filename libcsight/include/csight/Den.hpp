@@ -20,24 +20,24 @@ namespace csight::raid {
     Den(u8 *data, u8 denId, std::vector<RaidEncounterTable> encounterTables,
         std::shared_ptr<RaidEncounterTable> eventEncounterTable);
     ~Den();
-    u64 GetSeed();
-    u16 GetShinyAdvance();
-    std::string GetShinyAdvanceText();
-    shiny::ShinyType GetShinyType();
-    u8 GetStars();
-    u8 GetDisplayStars();
-    u8 GetRandRoll();
-    u8 GetType();
-    u8 GetFlagByte();
-    bool GetHasWatts();
-    bool GetIsEvent();
-    bool GetIsActive();
-    u8 GetDenId();
-    std::string GetDenDisplayId();
-    std::string GetDenDisplayName();
-    bool GetIsRare();
-    std::shared_ptr<raid::RaidPokemon> GetPKM();
-    DenType GetDenType();
+    u64 getSeed();
+    u16 getShinyAdvance();
+    std::string getShinyAdvanceText();
+    shiny::ShinyType getShinyType();
+    u8 getStars();
+    u8 getDisplayStars();
+    u8 getRandRoll();
+    u8 getType();
+    u8 getFlagByte();
+    bool getHasWatts();
+    bool getIsEvent();
+    bool getIsActive();
+    u8 getDenId();
+    std::string getDenDisplayId();
+    std::string getDenDisplayName();
+    bool getIsRare();
+    std::shared_ptr<raid::RaidPokemon> getPKM();
+    DenType getDenType();
 
    private:
     u8 m_size = 0x18;
@@ -47,6 +47,6 @@ namespace csight::raid {
     RaidEncounter m_spawn;
     shiny::ShinyType m_shineType = shiny::Star;
 
-    raid::RaidEncounter FindSpawn(std::vector<raid::RaidEncounter> raidEncounters);
+    raid::RaidEncounter findSpawn(std::vector<raid::RaidEncounter> raidEncounters);
   };
 }  // namespace csight::raid

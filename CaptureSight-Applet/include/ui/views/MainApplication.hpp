@@ -17,6 +17,6 @@ namespace ui {
     brls::List *m_activeDenList;
     brls::List *m_allDenList;
 
-    void AddTranslatedTab(std::string label, brls::View *view);
+    void addTranslatedTab(std::string label, brls::View *view);
   };
 }

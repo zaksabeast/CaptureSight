@@ -11,11 +11,11 @@
 std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
   m_gameReader = std::make_shared<csight::GameReader>(true);
 
-  if (R_FAILED(m_gameReader->Attach()))
+  if (R_FAILED(m_gameReader->attach()))
     return initially<ErrorLayout>();
 
   auto mainLayout = initially<MainLayout>();
-  mainLayout->SetMenuItemClickCallback(std::bind(&MainApplication::ChangeViewMode, this, std::placeholders::_1));
+  mainLayout->setMenuItemClickCallback(std::bind(&MainApplication::changeViewMode, this, std::placeholders::_1));
 
   return mainLayout;
 }
@@ -33,15 +33,15 @@ void MainApplication::exitServices() {
   smExit();
 }
 
-std::shared_ptr<csight::GameReader> MainApplication::GetGameReader() {
+std::shared_ptr<csight::GameReader> MainApplication::getGameReader() {
   return m_gameReader;
 }
 
-std::string MainApplication::GetPartyTitle(u32 slot) {
+std::string MainApplication::getPartyTitle(u32 slot) {
   return "P" + std::to_string(slot + 1);
 }
 
-std::string MainApplication::GetWildTitle(u32 slot) {
+std::string MainApplication::getWildTitle(u32 slot) {
   if (slot == 0) {
     return "Wild";
   } else if (slot == 1) {
@@ -51,13 +51,13 @@ std::string MainApplication::GetWildTitle(u32 slot) {
   return "Raid";
 }
 
-std::string MainApplication::GetBoxTitle(u32 slot) {
+std::string MainApplication::getBoxTitle(u32 slot) {
   u32 box = (slot / 30) + 1;
   u32 boxSlot = (slot % 30) + 1;
   return "B" + std::to_string(box) + "S" + std::to_string(boxSlot);
 }
 
-void MainApplication::ChangeViewMode(ViewMode mode) {
+void MainApplication::changeViewMode(ViewMode mode) {
   std::string guiTitle = "Party Pokemon";
   std::vector<std::shared_ptr<csight::PK8>> pkms;
   std::vector<std::shared_ptr<csight::raid::Den>> dens;
@@ -66,23 +66,23 @@ void MainApplication::ChangeViewMode(ViewMode mode) {
 
   switch (mode) {
     case activeDens:
-      dens = m_gameReader->ReadDens(false);
+      dens = m_gameReader->readDens(false);
       tsl::changeTo<DenMenuLayout>(dens, "Active Dens");
       return;
     case allDens:
-      dens = m_gameReader->ReadDens(true);
+      dens = m_gameReader->readDens(true);
       tsl::changeTo<DenMenuLayout>(dens, "All Dens");
       return;
     case wild:
       guiTitle = "Wild/Trade/Party";
-      pkms = { m_gameReader->ReadWild(), m_gameReader->ReadTrade(), m_gameReader->ReadRaid() };
-      getTitle = std::bind(&MainApplication::GetWildTitle, this, std::placeholders::_1);
+      pkms = { m_gameReader->readWild(), m_gameReader->readTrade(), m_gameReader->readRaid() };
+      getTitle = std::bind(&MainApplication::getWildTitle, this, std::placeholders::_1);
       break;
     case party:
     default:
       guiTitle = "Party Pokemon";
-      pkms = m_gameReader->ReadParty();
-      getTitle = std::bind(&MainApplication::GetPartyTitle, this, std::placeholders::_1);
+      pkms = m_gameReader->readParty();
+      getTitle = std::bind(&MainApplication::getPartyTitle, this, std::placeholders::_1);
       break;
   }
 

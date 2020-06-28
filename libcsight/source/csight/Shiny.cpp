@@ -3,11 +3,11 @@
 #include <memory>
 
 namespace csight::shiny {
-  u32 GetShinyValue(u32 value) { return (value >> 16) ^ (value & 0xFFFF); }
+  u32 getShinyValue(u32 value) { return (value >> 16) ^ (value & 0xFFFF); }
 
-  ShinyType GetShinyType(u32 PID, u32 SIDTID) {
-    u32 PSV = GetShinyValue(PID);
-    u32 TSV = GetShinyValue(SIDTID);
+  ShinyType getShinyType(u32 PID, u32 SIDTID) {
+    u32 PSV = getShinyValue(PID);
+    u32 TSV = getShinyValue(SIDTID);
 
     if (PSV == TSV) {
       return Square;
@@ -20,7 +20,7 @@ namespace csight::shiny {
     return None;
   }
 
-  std::shared_ptr<ShinyAdvance> CalculateShinyDetails(u64 seed, u32 maxAdvances) {
+  std::shared_ptr<ShinyAdvance> calculateShinyDetails(u64 seed, u32 maxAdvances) {
     u16 shinyAdvance = 0;
     csight::shiny::ShinyType shineType = csight::shiny::ShinyType::None;
 
@@ -29,7 +29,7 @@ namespace csight::shiny {
       seed = rng.nextulong();  // Also advance for EC
       u32 SIDTID = rng.nextuint();
       u32 PID = rng.nextuint();
-      shineType = csight::shiny::GetShinyType(PID, SIDTID);
+      shineType = csight::shiny::getShinyType(PID, SIDTID);
       if (shineType > csight::shiny::None)
         break;
       else

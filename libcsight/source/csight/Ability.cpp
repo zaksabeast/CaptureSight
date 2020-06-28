@@ -2,7 +2,7 @@
 #include <string>
 
 namespace csight::ability {
-  std::string GetAbilityFilterString(filter::AbilityFilter filter) {
+  std::string getAbilityFilterString(filter::AbilityFilter filter) {
     switch (filter) {
       case filter::First:
         return "1";
@@ -18,7 +18,7 @@ namespace csight::ability {
     }
   }
 
-  std::string GetAbilityRaidSettingString(raid::AbilityRaidSetting setting) {
+  std::string getAbilityRaidSettingString(raid::AbilityRaidSetting setting) {
     switch (setting) {
       case raid::First:
         return "1";
@@ -32,7 +32,7 @@ namespace csight::ability {
     }
   }
 
-  std::string GetAbilityString(Ability ability) {
+  std::string getAbilityString(Ability ability) {
     switch (ability) {
       case Hidden:
         return "H";

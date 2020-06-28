@@ -7,11 +7,11 @@
 
 class MainApplication : public tsl::Overlay {
  public:
-  std::shared_ptr<csight::GameReader> GetGameReader();
-  std::string GetPartyTitle(u32 slot);
-  std::string GetWildTitle(u32 slot);
-  std::string GetBoxTitle(u32 slot);
-  void ChangeViewMode(ViewMode mode);
+  std::shared_ptr<csight::GameReader> getGameReader();
+  std::string getPartyTitle(u32 slot);
+  std::string getWildTitle(u32 slot);
+  std::string getBoxTitle(u32 slot);
+  void changeViewMode(ViewMode mode);
   virtual void initServices() override;
   virtual void exitServices() override;
   virtual std::unique_ptr<tsl::Gui> loadInitialGui() override;

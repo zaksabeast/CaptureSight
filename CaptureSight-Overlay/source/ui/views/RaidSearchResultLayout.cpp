@@ -15,13 +15,13 @@ tsl::elm::Element *RaidSearchResultLayout::createUI() {
   std::string title = "Oops!";
   std::string subTitle = "Not a non-shiny raid Pokemon!";
 
-  searchSettings->SetSeed(m_seed);
-  searchSettings->SetAdvancesToSearch(ADVANCES_TO_SEARCH);
+  searchSettings->setSeed(m_seed);
+  searchSettings->setAdvancesToSearch(ADVANCES_TO_SEARCH);
 
   if (m_seed > 0) {
     csight::raid::calculateRaidPKMList(
         searchSettings,
-        std::bind(&RaidSearchResultLayout::AddRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
+        std::bind(&RaidSearchResultLayout::addRaidMenuItem, this, denList, std::placeholders::_1, std::placeholders::_2));
     title = csight::utils::convertNumToHexString(m_seed);
     subTitle = "Next shiny frame: " + m_firstShinyTypeText
         + csight::utils::getRaidShinyAdvanceText(m_firstShinyAdvance, ADVANCES_TO_SEARCH);
@@ -34,12 +34,12 @@ tsl::elm::Element *RaidSearchResultLayout::createUI() {
   return rootFrame;
 }
 
-void RaidSearchResultLayout::AddRaidMenuItem(tsl::elm::List *denList, std::shared_ptr<csight::raid::RaidPokemon> raid,
+void RaidSearchResultLayout::addRaidMenuItem(tsl::elm::List *denList, std::shared_ptr<csight::raid::RaidPokemon> raid,
                                              u32 advance) {
   std::string shinyText = "";
 
-  if (raid->GetIsShiny()) {
-    shinyText = raid->GetShinyType() == csight::shiny::Square ? " ■ " : " ★";
+  if (raid->getIsShiny()) {
+    shinyText = raid->getShinyType() == csight::shiny::Square ? " ■ " : " ★";
 
     if (m_firstShinyAdvance == ADVANCES_TO_SEARCH) {
       m_firstShinyAdvance = advance;
@@ -47,7 +47,7 @@ void RaidSearchResultLayout::AddRaidMenuItem(tsl::elm::List *denList, std::share
     }
   }
 
-  auto formattedIVs = csight::utils::joinNums(raid->GetIVs(), "/");
+  auto formattedIVs = csight::utils::joinNums(raid->getIVs(), "/");
   std::string denTitle = "Fr " + std::to_string(advance) + " - " + formattedIVs + shinyText;
   auto menuItem = new tsl::elm::ListItem(denTitle);
 

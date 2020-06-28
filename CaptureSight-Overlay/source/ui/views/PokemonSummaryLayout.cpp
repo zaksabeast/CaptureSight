@@ -8,8 +8,8 @@ PokemonSummaryLayout::PokemonSummaryLayout(std::shared_ptr<csight::PK8> pkm) {
 }
 
 tsl::elm::Element *PokemonSummaryLayout::createUI() {
-  auto rootFrame = new tsl::elm::OverlayFrame(m_pkm->GetSpeciesString(), "");
-  auto bodyDrawer = new tsl::elm::CustomDrawer(std::bind(&PokemonSummaryLayout::AddBodyDrawer, this, std::placeholders::_1,
+  auto rootFrame = new tsl::elm::OverlayFrame(m_pkm->getSpeciesString(), "");
+  auto bodyDrawer = new tsl::elm::CustomDrawer(std::bind(&PokemonSummaryLayout::addBodyDrawer, this, std::placeholders::_1,
                                                          std::placeholders::_2, std::placeholders::_3, std::placeholders::_4,
                                                          std::placeholders::_5));
 
@@ -17,22 +17,22 @@ tsl::elm::Element *PokemonSummaryLayout::createUI() {
   return rootFrame;
 }
 
-void PokemonSummaryLayout::AddBodyDrawer(tsl::gfx::Renderer *screen, u16 x, u16 y, u16 w, u16 h) {
-  std::string shiny = m_pkm->GetIsShiny() ? "Shiny " : "";
-  std::string formattedIVs = "IVs: " + csight::utils::joinNums(m_pkm->GetIVs(), "/");
-  std::string formattedEVs = "EVs: " + csight::utils::joinNums(m_pkm->GetEVs(), "/");
-  std::string nature = "Nature: " + m_pkm->GetNatureString();
-  std::string mintedNature = "Minted Nature: " + m_pkm->GetMintedNatureString();
-  std::string ability = "Ability: " + m_pkm->GetAbilityString();
-  std::string friendshipLabel = m_pkm->GetIsEgg() ? "Egg cycles: " : "Friendship: ";
-  std::string friendship = friendshipLabel + std::to_string(m_pkm->GetCurrentFriendship());
+void PokemonSummaryLayout::addBodyDrawer(tsl::gfx::Renderer *screen, u16 x, u16 y, u16 w, u16 h) {
+  std::string shiny = m_pkm->getIsShiny() ? "Shiny " : "";
+  std::string formattedIVs = "IVs: " + csight::utils::joinNums(m_pkm->getIVs(), "/");
+  std::string formattedEVs = "EVs: " + csight::utils::joinNums(m_pkm->getEVs(), "/");
+  std::string nature = "Nature: " + m_pkm->getNatureString();
+  std::string mintedNature = "Minted Nature: " + m_pkm->getMintedNatureString();
+  std::string ability = "Ability: " + m_pkm->getAbilityString();
+  std::string friendshipLabel = m_pkm->getIsEgg() ? "Egg cycles: " : "Friendship: ";
+  std::string friendship = friendshipLabel + std::to_string(m_pkm->getCurrentFriendship());
   std::string moves = "Moves:";
-  std::string move0 = "- " + m_pkm->GetMoveString(0);
-  std::string move1 = "- " + m_pkm->GetMoveString(1);
-  std::string move2 = "- " + m_pkm->GetMoveString(2);
-  std::string move3 = "- " + m_pkm->GetMoveString(3);
-  std::string pidEd = "PID: " + csight::utils::convertNumToHexString(m_pkm->GetPID())
-      + " EC: " + csight::utils::convertNumToHexString(m_pkm->GetEncryptionConstant());
+  std::string move0 = "- " + m_pkm->getMoveString(0);
+  std::string move1 = "- " + m_pkm->getMoveString(1);
+  std::string move2 = "- " + m_pkm->getMoveString(2);
+  std::string move3 = "- " + m_pkm->getMoveString(3);
+  std::string pidEd = "PID: " + csight::utils::convertNumToHexString(m_pkm->getPID())
+      + " EC: " + csight::utils::convertNumToHexString(m_pkm->getEncryptionConstant());
 
   screen->drawString(formattedIVs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
   screen->drawString(formattedEVs.c_str(), false, 50, 200, 24, screen->a(0xFFFF));

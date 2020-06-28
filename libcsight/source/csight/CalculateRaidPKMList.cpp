@@ -12,14 +12,14 @@ namespace csight::raid {
   bool checkFlawlessIV(u8 iv) { return iv == 31; }
 
   bool checkFlawlessIVs(u8 flawlessIVFilter, std::shared_ptr<RaidPokemon> raid) {
-    auto ivs = raid->GetIVs();
+    auto ivs = raid->getIVs();
     u8 flawlessIVCount = std::count_if(ivs.begin(), ivs.end(), checkFlawlessIV);
 
     return flawlessIVCount >= flawlessIVFilter;
   }
 
   bool checkShinyType(shiny::ShinyType shinyType, std::shared_ptr<RaidPokemon> raid) {
-    auto raidShinyType = raid->GetShinyType();
+    auto raidShinyType = raid->getShinyType();
 
     switch (shinyType) {
       case shiny::Any:
@@ -35,7 +35,7 @@ namespace csight::raid {
   }
 
   bool checkAbility(ability::filter::AbilityFilter abilityFilter, std::shared_ptr<RaidPokemon> raid) {
-    auto ability = raid->GetAbility();
+    auto ability = raid->getAbility();
 
     switch (abilityFilter) {
       case ability::filter::None:
@@ -53,15 +53,15 @@ namespace csight::raid {
   }
 
   bool checkIfPassesFilters(std::shared_ptr<RaidSearchSettings> searchSettings, std::shared_ptr<RaidPokemon> raid) {
-    return checkFlawlessIVs(searchSettings->GetFlawlessIVFilter(), raid)
-        && checkShinyType(searchSettings->GetShinyTypeFilter(), raid) && checkAbility(searchSettings->GetAbilityFilter(), raid);
+    return checkFlawlessIVs(searchSettings->getFlawlessIVFilter(), raid)
+        && checkShinyType(searchSettings->getShinyTypeFilter(), raid) && checkAbility(searchSettings->getAbilityFilter(), raid);
   }
 
   void calculateRaidPKMList(std::shared_ptr<RaidSearchSettings> searchSettings,
                             std::function<void(std::shared_ptr<RaidPokemon> raid, u32 advance)> callback) {
-    u64 nextSeed = searchSettings->GetSeed();
-    u32 advancesToSearch = searchSettings->GetAdvancesToSearch();
-    auto encounter = searchSettings->GetRaidEncounter();
+    u64 nextSeed = searchSettings->getSeed();
+    u32 advancesToSearch = searchSettings->getAdvancesToSearch();
+    auto encounter = searchSettings->getRaidEncounter();
 
     for (u32 advance = 0; advance < advancesToSearch; advance++) {
       auto raid = std::make_shared<RaidPokemon>(nextSeed, encounter);

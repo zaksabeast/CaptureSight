@@ -15,51 +15,51 @@ namespace csight::raid {
    public:
     RaidSearchSettings() : m_encounterTables {} {}
     RaidSearchSettings(const std::vector<RaidEncounterTable> &encounterTables) : m_encounterTables(encounterTables) {
-      this->UpdateRaidEncounter();
+      this->updateRaidEncounter();
     }
 
-    u64 GetSeed() { return m_seed; }
-    void SetSeed(u64 seed) {
+    u64 getSeed() { return m_seed; }
+    void setSeed(u64 seed) {
       m_seed = seed;
-      this->OnUpdate();
+      this->onUpdate();
     }
-    RaidEncounter GetRaidEncounter() { return m_raidEncounter; }
-    void SetSpawnIndex(u32 spawnIndex) {
+    RaidEncounter getRaidEncounter() { return m_raidEncounter; }
+    void setSpawnIndex(u32 spawnIndex) {
       m_spawnIndex = spawnIndex;
-      this->UpdateRaidEncounter();
-      this->OnUpdate();
+      this->updateRaidEncounter();
+      this->onUpdate();
     }
-    void SetDenIndex(u32 denIndex) {
+    void setDenIndex(u32 denIndex) {
       m_denIndex = denIndex;
-      this->UpdateRaidEncounter();
-      this->OnUpdate();
+      this->updateRaidEncounter();
+      this->onUpdate();
     }
-    void SetIsRareDen(bool isRareDen) {
+    void setIsRareDen(bool isRareDen) {
       m_isRareDen = isRareDen;
-      this->UpdateRaidEncounter();
-      this->OnUpdate();
+      this->updateRaidEncounter();
+      this->onUpdate();
     }
-    u8 GetFlawlessIVFilter() { return m_flawlessIVFilter; }
-    void SetFlawlessIVFilter(u8 flawlessIVFilter) {
+    u8 getFlawlessIVFilter() { return m_flawlessIVFilter; }
+    void setFlawlessIVFilter(u8 flawlessIVFilter) {
       m_flawlessIVFilter = flawlessIVFilter;
-      this->OnUpdate();
+      this->onUpdate();
     }
-    shiny::ShinyType GetShinyTypeFilter() { return m_shinyTypeFilter; }
-    void SetShinyTypeFilter(shiny::ShinyType shinyTypeFilter) {
+    shiny::ShinyType getShinyTypeFilter() { return m_shinyTypeFilter; }
+    void setShinyTypeFilter(shiny::ShinyType shinyTypeFilter) {
       m_shinyTypeFilter = shinyTypeFilter;
-      this->OnUpdate();
+      this->onUpdate();
     }
-    ability::filter::AbilityFilter GetAbilityFilter() { return m_abilityFilter; }
-    void SetAbilityFilter(ability::filter::AbilityFilter abilityFilter) {
+    ability::filter::AbilityFilter getAbilityFilter() { return m_abilityFilter; }
+    void setAbilityFilter(ability::filter::AbilityFilter abilityFilter) {
       m_abilityFilter = abilityFilter;
-      this->OnUpdate();
+      this->onUpdate();
     }
-    u32 GetAdvancesToSearch() { return m_advancesToSearch; }
-    void SetAdvancesToSearch(u32 advancesToSearch) {
+    u32 getAdvancesToSearch() { return m_advancesToSearch; }
+    void setAdvancesToSearch(u32 advancesToSearch) {
       m_advancesToSearch = advancesToSearch;
-      this->OnUpdate();
+      this->onUpdate();
     }
-    void AddUpdateCallback(std::function<void(void)> callback) { m_callbacks.push_back(callback); }
+    void addUpdateCallback(std::function<void(void)> callback) { m_callbacks.push_back(callback); }
 
    private:
     std::vector<std::function<void(void)>> m_callbacks;
@@ -79,12 +79,12 @@ namespace csight::raid {
       form : 0,
       probabilities : { 35, 0, 0, 0, 0 }
     };
-    void OnUpdate() {
+    void onUpdate() {
       for (auto callback : m_callbacks) {
         callback();
       }
     }
-    void UpdateRaidEncounter() {
+    void updateRaidEncounter() {
       if (m_encounterTables.size() > 0) {
         auto nests = csight::utils::findRaidEncounterTable(m_encounterTables, m_denIndex, m_isRareDen);
         auto encounter = nests.templates[m_spawnIndex];

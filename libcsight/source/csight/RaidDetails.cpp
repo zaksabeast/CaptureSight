@@ -49,7 +49,7 @@ namespace csight::raid {
     m_eventFlatbufferOffset = GetEventFlatbufferOffset();
   }
 
-  std::shared_ptr<Den> RaidDetails::ReadDen(u8 denId) {
+  std::shared_ptr<Den> RaidDetails::readDen(u8 denId) {
     u8 *denBytes = new u8[0x18];
     std::vector<RaidEncounterTable> encounterTables;
     std::shared_ptr<RaidEncounterTable> eventTemplateTable;
@@ -80,13 +80,13 @@ namespace csight::raid {
         }
       });
     } else {
-      encounterTables = this->GetEncounterTables();
-      eventTemplateTable = this->ReadEventEncounterTable();
+      encounterTables = this->getEncounterTables();
+      eventTemplateTable = this->readEventEncounterTable();
     }
 
     // Account for Isle of Armor offset
     u64 shiftedDenId = denId >= FIRST_IOA_DEN_ID ? denId + 11 : denId;
-    this->ReadHeap(m_denOffset + (shiftedDenId * 0x18), denBytes, 0x18);
+    this->readHeap(m_denOffset + (shiftedDenId * 0x18), denBytes, 0x18);
 
     auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable);
 
@@ -94,12 +94,12 @@ namespace csight::raid {
     return den;
   }
 
-  std::vector<std::shared_ptr<Den>> RaidDetails::ReadDens(bool shouldReadAllDens) {
+  std::vector<std::shared_ptr<Den>> RaidDetails::readDens(bool shouldReadAllDens) {
     std::vector<std::shared_ptr<Den>> dens;
 
     for (u32 i = 0; i < DEN_LIST_SIZE; i++) {
-      auto den = this->ReadDen(i);
-      if (shouldReadAllDens || den->GetIsActive()) {
+      auto den = this->readDen(i);
+      if (shouldReadAllDens || den->getIsActive()) {
         dens.push_back(den);
       }
     }
@@ -107,27 +107,27 @@ namespace csight::raid {
     return dens;
   }
 
-  std::vector<RaidEncounterTable> RaidDetails::GetEncounterTables() {
-    if (this->GetTitleId() == SWORD_TITLE_ID) {
-      return GetSwordEncounterTables();
+  std::vector<RaidEncounterTable> RaidDetails::getEncounterTables() {
+    if (this->getTitleId() == SWORD_TITLE_ID) {
+      return getSwordEncounterTables();
     }
 
-    return GetShieldEncounterTables();
+    return getShieldEncounterTables();
   }
 
-  std::shared_ptr<RaidEncounterTable> RaidDetails::ReadEventEncounterTable() {
-    bool isPlayingSword = this->GetTitleId() == SWORD_TITLE_ID;
+  std::shared_ptr<RaidEncounterTable> RaidDetails::readEventEncounterTable() {
+    bool isPlayingSword = this->getTitleId() == SWORD_TITLE_ID;
     u32 gameVersion = isPlayingSword ? 1 : 2;
     std::vector<RaidEncounter> raidEncounters;
     auto encounterTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { eventHash, raidEncounters });
     u32 eventFlatbufferInMemorySize = 0;
-    this->ReadHeap(m_eventFlatbufferOffset + 0x10, &eventFlatbufferInMemorySize, sizeof(u32));
+    this->readHeap(m_eventFlatbufferOffset + 0x10, &eventFlatbufferInMemorySize, sizeof(u32));
 
     if (eventFlatbufferInMemorySize + 4 != m_eventFlatbufferSize)
       return encounterTable;
 
     u8 *eventFlatbuffer = new u8[m_eventFlatbufferSize];
-    this->ReadHeap(m_eventFlatbufferOffset + 0x20, eventFlatbuffer, m_eventFlatbufferSize);
+    this->readHeap(m_eventFlatbufferOffset + 0x20, eventFlatbuffer, m_eventFlatbufferSize);
     auto eventEncounterTables = pkNX::Structures::GetNestHoleDistributionEncounter8Archive(eventFlatbuffer)->Tables();
 
     // Don't assume Sword will always be first

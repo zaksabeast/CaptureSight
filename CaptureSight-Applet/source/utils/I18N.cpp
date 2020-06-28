@@ -7,7 +7,7 @@
 
 nlohmann::json g_translations;
 
-std::string GetTranslationCode() {
+std::string getTranslationCode() {
   u64 languageCode = 0;
   SetLanguage language = SetLanguage_ENUS;
   setGetSystemLanguage(&languageCode);
@@ -34,11 +34,11 @@ std::string GetTranslationCode() {
 }
 
 I18N::I18N() {
-  this->LoadTranslations();
+  this->loadTranslations();
 }
 
-void I18N::LoadTranslations() {
-  std::ifstream translations("romfs:/i18n/" + GetTranslationCode() + ".json");
+void I18N::loadTranslations() {
+  std::ifstream translations("romfs:/i18n/" + getTranslationCode() + ".json");
 
   if (translations.good()) {
     translations >> g_translations;
@@ -47,10 +47,10 @@ void I18N::LoadTranslations() {
   translations.close();
 }
 
-std::string I18N::Translate(std::string word) {
+std::string I18N::translate(std::string word) {
   return g_translations["app"].value(word, word);
 }
 
-std::string I18N::Translate(std::string category, std::string word) {
+std::string I18N::translate(std::string category, std::string word) {
   return g_translations.at(category).value(word, word);
 }

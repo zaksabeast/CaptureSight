@@ -5,6 +5,6 @@
 #include <vector>
 
 namespace csight::raid {
-  std::future<ulong> CalculateRaidSeedAsync(uint ec, uint pid, std::vector<u8> ivs);
-  ulong CalculateRaidSeed(uint ec, uint pid, std::vector<u8> ivs);
+  std::future<ulong> calculateRaidSeedAsync(uint ec, uint pid, std::vector<u8> ivs);
+  ulong calculateRaidSeed(uint ec, uint pid, std::vector<u8> ivs);
 }  // namespace csight::raid

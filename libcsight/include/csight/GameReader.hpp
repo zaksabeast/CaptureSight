@@ -10,15 +10,15 @@ namespace csight {
   class GameReader : public raid::RaidDetails {
    public:
     GameReader(bool shouldUseSmallMemoryMode);
-    Result Attach();
-    bool GetIsPokemonRunning();
-    bool GetIsServiceRunning();
-    std::vector<std::shared_ptr<PK8>> ReadParty();
-    std::vector<std::shared_ptr<PK8>> ReadBoxes();
-    std::shared_ptr<PK8> ReadWild();
-    std::shared_ptr<PK8> ReadRaid();
-    std::shared_ptr<PK8> ReadTrade();
-    u64 GetTitleId() override;
+    Result attach();
+    bool getIsPokemonRunning();
+    bool getIsServiceRunning();
+    std::vector<std::shared_ptr<PK8>> readParty();
+    std::vector<std::shared_ptr<PK8>> readBoxes();
+    std::shared_ptr<PK8> readWild();
+    std::shared_ptr<PK8> readRaid();
+    std::shared_ptr<PK8> readTrade();
+    u64 getTitleId() override;
 
    private:
     bool m_isDebugServiceRunning = false;
@@ -30,8 +30,8 @@ namespace csight {
     u64 m_tradeOffset = 0xAF285F68;
     DmntCheatProcessMetadata m_metadata;
 
-    Result ReadHeap(u64 address, void *buffer, size_t size) override;
-    std::shared_ptr<PK8> ReadPK8(u64 offset);
-    std::vector<std::shared_ptr<PK8>> ReadPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon);
+    Result readHeap(u64 address, void *buffer, size_t size) override;
+    std::shared_ptr<PK8> readPK8(u64 offset);
+    std::vector<std::shared_ptr<PK8>> readPK8s(u64 offset, u32 amount, u32 bytesBetweenPokemon);
   };
 }  // namespace csight

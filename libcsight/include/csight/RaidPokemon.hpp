@@ -10,17 +10,17 @@ namespace csight::raid {
   class RaidPokemon : public PKM {
    public:
     RaidPokemon(u64 seed, RaidEncounter spawn);
-    u32 GetEC();
-    u32 GetPID();
-    u16 GetSpecies();
-    std::string GetSpeciesString();
-    bool GetIsShiny();
-    shiny::ShinyType GetShinyType();
-    std::vector<u8> GetIVs();
-    ability::Ability GetAbility();
-    std::string GetAbilityString();
-    u64 GetRaidSeed();
-    u16 GetForm();
+    u32 getEC();
+    u32 getPID();
+    u16 getSpecies();
+    std::string getSpeciesString();
+    bool getIsShiny();
+    shiny::ShinyType getShinyType();
+    std::vector<u8> getIVs();
+    ability::Ability getAbility();
+    std::string getAbilityString();
+    u64 getRaidSeed();
+    u16 getForm();
 
    private:
     u64 m_seed;

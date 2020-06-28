@@ -22,7 +22,7 @@ std::vector<u64> xoroshiro(u64 s0, u64 s1) {
 }
 
 namespace csight::raid {
-  u64 CalculateRaidSeed(u32 ec, u32 pid, std::vector<u8> ivs) {
+  u64 calculateRaidSeed(u32 ec, u32 pid, std::vector<u8> ivs) {
     u64 s1 = 0x82A2B175229D6A5B;
     u32 pidMask = 0x3FC000;
     u32 maskedPID = pid & pidMask;
@@ -54,7 +54,7 @@ namespace csight::raid {
             if (generatedPID == pid) {
               for (u32 flawlessIVs = 1; flawlessIVs <= 5; flawlessIVs++) {
                 spawn.flawlessIVs = flawlessIVs;
-                auto ivsToCheck = RaidPokemon(seed, spawn).GetIVs();
+                auto ivsToCheck = RaidPokemon(seed, spawn).getIVs();
                 bool hasCorrectIVs = std::equal(ivs.begin(), ivs.end(), ivsToCheck.begin());
 
                 if (hasCorrectIVs)
@@ -69,7 +69,7 @@ namespace csight::raid {
     return 0;
   }
 
-  std::future<u64> CalculateRaidSeedAsync(u32 ec, u32 pid, std::vector<u8> ivs) {
-    return std::async(&csight::raid::CalculateRaidSeed, ec, pid, ivs);
+  std::future<u64> calculateRaidSeedAsync(u32 ec, u32 pid, std::vector<u8> ivs) {
+    return std::async(&csight::raid::calculateRaidSeed, ec, pid, ivs);
   }
 }  // namespace csight::raid

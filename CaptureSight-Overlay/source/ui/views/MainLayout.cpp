@@ -6,19 +6,19 @@ tsl::elm::Element *MainLayout::createUI() {
   auto menuList = new tsl::elm::List();
 
   auto wildTradeRaidItem = new tsl::elm::ListItem("Wild/Trade/Raid");
-  wildTradeRaidItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, wild, std::placeholders::_1));
+  wildTradeRaidItem->setClickListener(std::bind(&MainLayout::onMenuItemClick, this, wild, std::placeholders::_1));
   menuList->addItem(wildTradeRaidItem);
 
   auto partyItem = new tsl::elm::ListItem("Party");
-  partyItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, party, std::placeholders::_1));
+  partyItem->setClickListener(std::bind(&MainLayout::onMenuItemClick, this, party, std::placeholders::_1));
   menuList->addItem(partyItem);
 
   auto activeDenItem = new tsl::elm::ListItem("Active Dens");
-  activeDenItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, activeDens, std::placeholders::_1));
+  activeDenItem->setClickListener(std::bind(&MainLayout::onMenuItemClick, this, activeDens, std::placeholders::_1));
   menuList->addItem(activeDenItem);
 
   auto allDenItem = new tsl::elm::ListItem("All Dens");
-  allDenItem->setClickListener(std::bind(&MainLayout::OnMenuItemClick, this, allDens, std::placeholders::_1));
+  allDenItem->setClickListener(std::bind(&MainLayout::onMenuItemClick, this, allDens, std::placeholders::_1));
   menuList->addItem(allDenItem);
 
   rootFrame->setContent(menuList);
@@ -26,7 +26,7 @@ tsl::elm::Element *MainLayout::createUI() {
   return rootFrame;
 }
 
-bool MainLayout::OnMenuItemClick(ViewMode mode, s64 keys) {
+bool MainLayout::onMenuItemClick(ViewMode mode, s64 keys) {
   if (keys == KEY_A) {
     m_menuItemClickCallback(mode);
     return true;
@@ -35,6 +35,6 @@ bool MainLayout::OnMenuItemClick(ViewMode mode, s64 keys) {
   return false;
 }
 
-void MainLayout::SetMenuItemClickCallback(std::function<void(ViewMode)> callback) {
+void MainLayout::setMenuItemClickCallback(std::function<void(ViewMode)> callback) {
   m_menuItemClickCallback = callback;
 }

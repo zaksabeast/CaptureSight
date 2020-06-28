@@ -3,7 +3,7 @@
 
 namespace csight::raid {
   // In the future, this should be read from the game's memory
-  std::vector<RaidEncounterTable> GetSwordEncounterTables() {
+  std::vector<RaidEncounterTable> getSwordEncounterTables() {
     std::vector<RaidEncounterTable> swordEncounterTables = {
       {
         hash : 1676046420423018998u,

@@ -11,9 +11,9 @@ namespace csight::shiny {
     ShinyType type;
   };
 
-  u32 GetShinyValue(u32 value);
+  u32 getShinyValue(u32 value);
 
-  ShinyType GetShinyType(u32 PID, u32 SIDTID);
+  ShinyType getShinyType(u32 PID, u32 SIDTID);
 
-  std::shared_ptr<ShinyAdvance> CalculateShinyDetails(u64 seed, u32 maxAdvances);
+  std::shared_ptr<ShinyAdvance> calculateShinyDetails(u64 seed, u32 maxAdvances);
 }  // namespace csight::shiny

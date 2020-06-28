@@ -27,7 +27,7 @@ namespace csight::ability {
     };
   }  // namespace raid
 
-  std::string GetAbilityString(Ability ability);
-  std::string GetAbilityFilterString(filter::AbilityFilter filter);
-  std::string GetAbilityRaidSettingString(raid::AbilityRaidSetting setting);
+  std::string getAbilityString(Ability ability);
+  std::string getAbilityFilterString(filter::AbilityFilter filter);
+  std::string getAbilityRaidSettingString(raid::AbilityRaidSetting setting);
 }  // namespace csight::ability
