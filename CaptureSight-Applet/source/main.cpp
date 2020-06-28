@@ -9,8 +9,6 @@
 #include <vector>
 
 std::shared_ptr<csight::GameReader> g_gameReader;
-std::vector<csight::raid::RaidEncounterTable> g_raidEncounterTable;
-std::shared_ptr<csight::raid::RaidSearchSettings> g_raidSearchSettings;
 
 int main(int argc, char *argv[]) {
   // Init the app
@@ -33,8 +31,6 @@ int main(int argc, char *argv[]) {
   } else if (R_FAILED(g_gameReader->Attach()) || !g_gameReader->GetIsPokemonRunning()) {
     brls::Application::crash("Please start a Pokemon game before running CaptureSight");
   } else {
-    g_raidEncounterTable = g_gameReader->GetEncounterTables();
-    g_raidSearchSettings = std::make_shared<csight::raid::RaidSearchSettings>(g_raidEncounterTable);
     brls::Application::pushView(new ui::MainView());
   }
 
