@@ -5,10 +5,12 @@
 #include <switch.h>
 #include <ui/views/MainApplication.hpp>
 #include <ui/views/PokemonSummaryView.hpp>
+#include <utils/I18N.hpp>
 #include <utils/Utils.hpp>
 #include <vector>
 
 extern std::shared_ptr<csight::GameReader> g_gameReader;
+extern std::shared_ptr<I18N> g_i18n;
 
 #define ADD_POKEMON_TO_VIEW(container, pokemonList, GET_TITLE)                                      \
   for (size_t i = 0; i < pokemonList.size(); i++) {                                                 \
@@ -37,25 +39,27 @@ extern std::shared_ptr<csight::GameReader> g_gameReader;
   }
 
 std::vector<std::string> miscTitles = {
-  "[Wild] ",
-  "[Raid] ",
-  "[Trade] ",
+  g_i18n->Translate("[Wild] "),
+  g_i18n->Translate("[Raid] "),
+  g_i18n->Translate("[Trade] "),
 };
 
 #define GET_POKEMON_TITLE(pokemon) \
-  (pokemon->GetIsShiny() ? "Shiny " : "") + pokemon->GetSpeciesString() + ", " + pokemon->GetDisplayIVs()
+  (pokemon->GetIsShiny() ? g_i18n->Translate("Shiny") + " " : "") + pokemon->GetSpeciesString() + ", " + pokemon->GetDisplayIVs()
 
-#define GET_PARTY_TITLE(pokemon, index) "[Party " + std::to_string(index + 1) + "] " + GET_POKEMON_TITLE(pokemon);
+#define GET_PARTY_TITLE(pokemon, index) \
+  "[" + g_i18n->Translate("Party") + " " + std::to_string(index + 1) + "] " + GET_POKEMON_TITLE(pokemon);
 
 #define GET_BOX_TITLE(pokemon, index) \
   "[B" + std::to_string((index / 30) + 1) + "S" + std::to_string((index % 30) + 1) + "] " + GET_POKEMON_TITLE(pokemon);
 
 #define GET_MISC_TITLE(pokemon, index) miscTitles[index] + GET_POKEMON_TITLE(pokemon);
 
-#define GET_DEN_TITLE(den, pokemon, index)                                                                    \
-  den->GetDenDisplayName() + ", " + std::to_string(pokemon->GetFlawlessIVCount()) + "IV, "                    \
-      + std::to_string(den->GetDisplayStars()) + "★, Shiny: " + std::to_string(den->GetShinyAdvance()) + " (" \
-      + csight::utils::getShinyTypeString(den->GetShinyType()) + ")" + (den->GetIsEvent() ? ", Event" : "")
+#define GET_DEN_TITLE(den, pokemon, index)                                                                           \
+  den->GetDenDisplayName() + ", " + std::to_string(pokemon->GetFlawlessIVCount()) + "IV, "                           \
+      + std::to_string(den->GetDisplayStars()) + "★, " + g_i18n->Translate("Shiny") + ": "                           \
+      + std::to_string(den->GetShinyAdvance()) + " (" + csight::utils::getShinyTypeString(den->GetShinyType()) + ")" \
+      + (den->GetIsEvent() ? ", " + g_i18n->Translate("Event") : "")
 
 namespace ui {
   MainView::MainView() {
@@ -86,13 +90,15 @@ namespace ui {
     auto allDens = g_gameReader->ReadDens(true);
     ADD_DENS_TO_VIEW(m_allDenList, allDens, GET_DEN_TITLE);
 
-    this->addTab("Wild/Raid/Trade", m_miscPokemonList);
-    this->addTab("Party Pokemon", m_partyPokemonList);
-    this->addTab("Box Pokemon", m_boxPokemonList);
+    this->AddTranslatedTab("Wild/Raid/Trade", m_miscPokemonList);
+    this->AddTranslatedTab("Party Pokemon", m_partyPokemonList);
+    this->AddTranslatedTab("Box Pokemon", m_boxPokemonList);
     this->addSeparator();
-    this->addTab("Active dens", m_activeDenList);
-    this->addTab("All dens", m_allDenList);
+    this->AddTranslatedTab("Active dens", m_activeDenList);
+    this->AddTranslatedTab("All dens", m_allDenList);
   }
 
   MainView::~MainView() {}
+
+  void MainView::AddTranslatedTab(std::string label, brls::View *view) { this->addTab(g_i18n->Translate(label), view); }
 }

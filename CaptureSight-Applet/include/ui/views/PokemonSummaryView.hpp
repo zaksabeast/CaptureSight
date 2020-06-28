@@ -19,5 +19,6 @@ namespace ui {
     brls::Table *m_weaknessTable;
 
     void OnClickFindRaidSeed(std::shared_ptr<csight::PK8> pkm, brls::View *view);
+    void AddTranslatedTab(std::string label, brls::View *view);
   };
 }

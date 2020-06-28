@@ -16,5 +16,7 @@ namespace ui {
     brls::List *m_boxPokemonList;
     brls::List *m_activeDenList;
     brls::List *m_allDenList;
+
+    void AddTranslatedTab(std::string label, brls::View *view);
   };
 }
