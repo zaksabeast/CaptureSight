@@ -27,12 +27,13 @@ namespace ui {
                         "console will appear frozen while searching (this will be fixed in the future).",
                         true));
 
+    std::string friendshipTranslationKey = pkm->GetIsEgg() ? "Egg cycles" : "Friendship";
     m_miscTable = new brls::Table();
     m_miscTable->addRow(brls::TableRowType::HEADER, "Misc");
     ADD_BODY_ROW(m_miscTable, "Nature", "natures", pkm->GetNatureString());
     ADD_BODY_ROW(m_miscTable, "Minted Nature", "natures", pkm->GetMintedNatureString());
     ADD_BODY_ROW(m_miscTable, "Ability", "abilities", pkm->GetAbilityString());
-    ADD_BODY_ROW(m_miscTable, "Friendship", "", std::to_string(pkm->GetCurrentFriendship()));
+    ADD_BODY_ROW(m_miscTable, friendshipTranslationKey, "", std::to_string(pkm->GetCurrentFriendship()));
     ADD_BODY_ROW(m_miscTable, "EC", "", csight::utils::convertNumToHexString(pkm->GetEncryptionConstant()));
     ADD_BODY_ROW(m_miscTable, "PID", "", csight::utils::convertNumToHexString(pkm->GetPID()));
 
