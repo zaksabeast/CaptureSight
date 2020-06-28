@@ -38,12 +38,6 @@ extern std::shared_ptr<I18N> g_i18n;
     container->addView(denItem);                           \
   }
 
-std::vector<std::string> miscTitles = {
-  g_i18n->translate("[Wild] "),
-  g_i18n->translate("[Raid] "),
-  g_i18n->translate("[Trade] "),
-};
-
 #define GET_POKEMON_TITLE(pokemon) \
   (pokemon->getIsShiny() ? g_i18n->translate("Shiny") + " " : "") + pokemon->getSpeciesString() + ", " + pokemon->getDisplayIVs()
 
@@ -53,7 +47,7 @@ std::vector<std::string> miscTitles = {
 #define GET_BOX_TITLE(pokemon, index) \
   "[B" + std::to_string((index / 30) + 1) + "S" + std::to_string((index % 30) + 1) + "] " + GET_POKEMON_TITLE(pokemon);
 
-#define GET_MISC_TITLE(pokemon, index) miscTitles[index] + GET_POKEMON_TITLE(pokemon);
+#define GET_MISC_TITLE(pokemon, index) m_miscTitles[index] + GET_POKEMON_TITLE(pokemon);
 
 #define GET_DEN_TITLE(den, pokemon, index)                                                                           \
   den->getDenDisplayName() + ", " + std::to_string(pokemon->getFlawlessIVCount()) + "IV, "                           \
@@ -65,6 +59,12 @@ namespace ui {
   MainView::MainView() {
     this->setTitle("CaptureSight");
     this->setIcon(BOREALIS_ASSET("icon/app.jpg"));
+
+    m_miscTitles = {
+      g_i18n->translate("[Wild] "),
+      g_i18n->translate("[Raid] "),
+      g_i18n->translate("[Trade] "),
+    };
 
     m_partyPokemonList = new brls::List();
     auto partyPokemon = g_gameReader->readParty();

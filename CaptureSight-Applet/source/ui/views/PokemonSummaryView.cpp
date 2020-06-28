@@ -6,10 +6,8 @@
 #include <utils/I18N.hpp>
 #include <utils/Utils.hpp>
 
-extern std::shared_ptr<I18N> g_i18n;
-
 #define ADD_BODY_ROW(table, label, valueTranslationCategory, value) \
-  table->addRow(brls::TableRowType::BODY, g_i18n->translate(label), g_i18n->translate(valueTranslationCategory, value));
+  table->addRow(brls::TableRowType::BODY, I18N::translate(label), I18N::translate(valueTranslationCategory, value));
 
 namespace ui {
   PokemonSummaryView::PokemonSummaryView(std::shared_ptr<csight::PK8> pkm) {
@@ -17,7 +15,7 @@ namespace ui {
     this->setIcon(utils::getPokemonIconPath(pkm));
 
     m_raidSeedView = new brls::List();
-    auto findRaidSeedButton = new brls::ListItem(g_i18n->translate("Find raid seed"));
+    auto findRaidSeedButton = new brls::ListItem(I18N::translate("Find raid seed"));
     findRaidSeedButton->getClickEvent()->subscribe(
         std::bind(&PokemonSummaryView::onClickFindRaidSeed, this, pkm, std::placeholders::_1));
     m_raidSeedView->addView(findRaidSeedButton);
@@ -93,10 +91,10 @@ namespace ui {
                                             + "\nAdvances to next shiny: " + std::to_string(shinyDetails->advances)
                                             + "\nShiny type: " + csight::utils::getShinyTypeString(shinyDetails->type));
 
-    dialog->addButton(g_i18n->translate("Continue"), [dialog](brls::View *view) { dialog->close(); });
+    dialog->addButton(I18N::translate("Continue"), [dialog](brls::View *view) { dialog->close(); });
     dialog->setCancelable(false);
     dialog->open();
   }
 
-  void PokemonSummaryView::addTranslatedTab(std::string label, brls::View *view) { this->addTab(g_i18n->translate(label), view); }
+  void PokemonSummaryView::addTranslatedTab(std::string label, brls::View *view) { this->addTab(I18N::translate(label), view); }
 }

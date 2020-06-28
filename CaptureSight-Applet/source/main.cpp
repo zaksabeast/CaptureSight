@@ -10,7 +10,6 @@
 #include <vector>
 
 std::shared_ptr<csight::GameReader> g_gameReader;
-std::shared_ptr<I18N> g_i18n;
 
 int main(int argc, char *argv[]) {
   // Init the app
@@ -25,7 +24,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  g_i18n = std::make_shared<I18N>();
+  I18N::loadTranslations();
   g_gameReader = std::make_shared<csight::GameReader>(false);
   bool isDebugServiceRunning = g_gameReader->getIsServiceRunning();
 
