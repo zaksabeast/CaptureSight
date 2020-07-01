@@ -31,27 +31,27 @@ namespace ui {
     ADD_BODY_ROW(m_miscTable, "Nature", "natures", pkm->getNatureString());
     ADD_BODY_ROW(m_miscTable, "Minted Nature", "natures", pkm->getMintedNatureString());
     ADD_BODY_ROW(m_miscTable, "Ability", "abilities", pkm->getAbilityString());
-    ADD_BODY_ROW(m_miscTable, friendshipTranslationKey, "", std::to_string(pkm->getCurrentFriendship()));
-    ADD_BODY_ROW(m_miscTable, "EC", "", csight::utils::convertNumToHexString(pkm->getEncryptionConstant()));
-    ADD_BODY_ROW(m_miscTable, "PID", "", csight::utils::convertNumToHexString(pkm->getPID()));
+    ADD_BODY_ROW(m_miscTable, friendshipTranslationKey, "app", std::to_string(pkm->getCurrentFriendship()));
+    ADD_BODY_ROW(m_miscTable, "EC", "app", csight::utils::convertNumToHexString(pkm->getEncryptionConstant()));
+    ADD_BODY_ROW(m_miscTable, "PID", "app", csight::utils::convertNumToHexString(pkm->getPID()));
 
     m_ivTable = new brls::Table();
     m_ivTable->addRow(brls::TableRowType::HEADER, "IVs");
-    ADD_BODY_ROW(m_ivTable, "HP", "", std::to_string(pkm->getIV(0)));
-    ADD_BODY_ROW(m_ivTable, "ATK", "", std::to_string(pkm->getIV(1)));
-    ADD_BODY_ROW(m_ivTable, "DEF", "", std::to_string(pkm->getIV(2)));
-    ADD_BODY_ROW(m_ivTable, "SPE", "", std::to_string(pkm->getIV(4)));
-    ADD_BODY_ROW(m_ivTable, "SPA", "", std::to_string(pkm->getIV(5)));
-    ADD_BODY_ROW(m_ivTable, "SPD", "", std::to_string(pkm->getIV(3)));
+    ADD_BODY_ROW(m_ivTable, "HP", "app", std::to_string(pkm->getIV(0)));
+    ADD_BODY_ROW(m_ivTable, "ATK", "app", std::to_string(pkm->getIV(1)));
+    ADD_BODY_ROW(m_ivTable, "DEF", "app", std::to_string(pkm->getIV(2)));
+    ADD_BODY_ROW(m_ivTable, "SPE", "app", std::to_string(pkm->getIV(4)));
+    ADD_BODY_ROW(m_ivTable, "SPA", "app", std::to_string(pkm->getIV(5)));
+    ADD_BODY_ROW(m_ivTable, "SPD", "app", std::to_string(pkm->getIV(3)));
 
     m_evTable = new brls::Table();
     m_evTable->addRow(brls::TableRowType::HEADER, "EVs");
-    ADD_BODY_ROW(m_evTable, "HP", "", std::to_string(pkm->getEV(0)));
-    ADD_BODY_ROW(m_evTable, "ATK", "", std::to_string(pkm->getEV(1)));
-    ADD_BODY_ROW(m_evTable, "DEF", "", std::to_string(pkm->getEV(2)));
-    ADD_BODY_ROW(m_evTable, "SPE", "", std::to_string(pkm->getEV(4)));
-    ADD_BODY_ROW(m_evTable, "SPA", "", std::to_string(pkm->getEV(5)));
-    ADD_BODY_ROW(m_evTable, "SPD", "", std::to_string(pkm->getEV(3)));
+    ADD_BODY_ROW(m_evTable, "HP", "app", std::to_string(pkm->getEV(0)));
+    ADD_BODY_ROW(m_evTable, "ATK", "app", std::to_string(pkm->getEV(1)));
+    ADD_BODY_ROW(m_evTable, "DEF", "app", std::to_string(pkm->getEV(2)));
+    ADD_BODY_ROW(m_evTable, "SPE", "app", std::to_string(pkm->getEV(4)));
+    ADD_BODY_ROW(m_evTable, "SPA", "app", std::to_string(pkm->getEV(5)));
+    ADD_BODY_ROW(m_evTable, "SPD", "app", std::to_string(pkm->getEV(3)));
 
     m_moveTable = new brls::Table();
     m_moveTable->addRow(brls::TableRowType::HEADER, "Moves");
