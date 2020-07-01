@@ -8,15 +8,6 @@ namespace csight::ability {
     Second = 1,
     Hidden = 2,
   };
-  namespace filter {
-    enum AbilityFilter {
-      First,
-      Second,
-      Hidden,
-      None,
-      Any,
-    };
-  }  // namespace filter
 
   namespace raid {
     enum AbilityRaidSetting {
@@ -28,6 +19,4 @@ namespace csight::ability {
   }  // namespace raid
 
   std::string getAbilityString(Ability ability);
-  std::string getAbilityFilterString(filter::AbilityFilter filter);
-  std::string getAbilityRaidSettingString(raid::AbilityRaidSetting setting);
 }  // namespace csight::ability

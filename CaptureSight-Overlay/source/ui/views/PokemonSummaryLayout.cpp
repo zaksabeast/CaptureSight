@@ -1,7 +1,6 @@
 #include <csight/core>
 #include <tesla.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
-#include <ui/views/RaidSearchResultLayout.hpp>
 
 PokemonSummaryLayout::PokemonSummaryLayout(std::shared_ptr<csight::PK8> pkm) {
   m_pkm = pkm;

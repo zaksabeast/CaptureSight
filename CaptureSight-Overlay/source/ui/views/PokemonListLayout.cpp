@@ -5,7 +5,6 @@
 #include <tesla.hpp>
 #include <ui/views/PokemonListLayout.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
-#include <ui/views/RaidSearchResultLayout.hpp>
 
 PokemonListLayout::PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::PK8>> pkms,
                                      std::function<std::string(u32)> GetPKMTitle) {
@@ -38,8 +37,8 @@ void PokemonListLayout::update() {
       m_seedCount++;
       m_waitingButton.value()->setText(waitingText);
     } else {
-      tsl::changeTo<RaidSearchResultLayout>(m_seedFuture.value().get(), 5);
-      m_waitingButton.value()->setText(m_waitingButtonText.value());
+      u64 seed = m_seedFuture.value().get();
+      m_waitingButton.value()->setText(csight::utils::convertNumToHexString(seed));
       m_waitingButton.reset();
       m_waitingButtonText.reset();
       m_seedFuture.reset();
