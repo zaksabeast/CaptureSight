@@ -26,7 +26,7 @@ namespace csight {
     u64 m_boxOffset = 0x4506D890;
     u64 m_wildOffset = 0x8FEA3358;
     u64 m_raidOffset = 0x886C1BD8;
-    u64 m_legendOffset = 0x85C74F88;
+    u64 m_legendOffset = 0x886BC058;
     u64 m_tradeOffset = 0xAF285F68;
     DmntCheatProcessMetadata m_metadata;
 
