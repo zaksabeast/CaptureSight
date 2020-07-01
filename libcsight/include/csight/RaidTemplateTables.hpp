@@ -1,6 +1,7 @@
 #pragma once
 
 #include <csight/Ability.hpp>
+#include <csight/Shiny.hpp>
 #include <switch.h>
 #include <vector>
 
@@ -11,6 +12,7 @@ namespace csight::raid {
     ability::raid::AbilityRaidSetting ability;
     u16 form;
     std::vector<u32> probabilities;
+    csight::shiny::ShinyRaidSetting shinyType;
   };
 
   struct RaidEncounterTable {

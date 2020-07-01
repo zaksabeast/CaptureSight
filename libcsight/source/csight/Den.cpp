@@ -22,7 +22,7 @@ namespace csight::raid {
       m_spawn = this->findSpawn(nest.templates);
     }
 
-    auto shinyDetails = csight::shiny::calculateShinyDetails(this->getSeed(), MAX_RAID_ADVANCES);
+    auto shinyDetails = csight::shiny::calculateShinyDetails(this->getSeed(), MAX_RAID_ADVANCES, m_spawn.shinyType);
 
     m_shinyAdvance = shinyDetails->advances;
     m_shineType = shinyDetails->type;
@@ -94,6 +94,7 @@ namespace csight::raid {
       ability : ability::raid::FirstOrSecond,
       form : 0,
       probabilities : { 0, 0, 0, 0, 0 },
+      shinyType : csight::shiny::ShinyRaidSetting::Random
     };
   }
 }  // namespace csight::raid

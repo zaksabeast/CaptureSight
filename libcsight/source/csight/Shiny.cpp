@@ -20,20 +20,29 @@ namespace csight::shiny {
     return None;
   }
 
-  std::shared_ptr<ShinyAdvance> calculateShinyDetails(u64 seed, u32 maxAdvances) {
+  std::shared_ptr<ShinyAdvance> calculateShinyDetails(u64 seed, u32 maxAdvances, ShinyRaidSetting raidShinyType) {
     u16 shinyAdvance = 0;
-    csight::shiny::ShinyType shineType = csight::shiny::ShinyType::None;
+    ShinyType shineType = ShinyType::None;
 
     while (shinyAdvance < maxAdvances) {
       auto rng = csight::rng::xoroshiro(seed);
       seed = rng.nextulong();  // Also advance for EC
       u32 SIDTID = rng.nextuint();
       u32 PID = rng.nextuint();
-      shineType = csight::shiny::getShinyType(PID, SIDTID);
-      if (shineType > csight::shiny::None)
+      shineType = getShinyType(PID, SIDTID);
+      if (shineType > None)
         break;
       else
         shinyAdvance++;
+    }
+
+    // Thanks to
+    // https://github.com/Leanny/PKHeX_Raid_Plugin/blob/8383d8ed7a51e9fe86a80d45c56386137c67380c/PKHeX_Raid_Plugin/Raid/RaidTemplate.cs#L151
+    if (raidShinyType == ShinyRaidSetting::ForcedShiny && shineType == ShinyType::None) {
+      shineType = ShinyType::Square;
+    } else if (raidShinyType == ShinyRaidSetting::ForcedNonShiny) {
+      shineType = ShinyType::None;
+      shinyAdvance = maxAdvances;
     }
 
     return std::make_shared<ShinyAdvance>(ShinyAdvance { advances : shinyAdvance, type : shineType });

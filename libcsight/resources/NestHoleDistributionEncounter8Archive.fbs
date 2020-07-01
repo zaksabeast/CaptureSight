@@ -33,7 +33,7 @@ table NestHoleDistributionEncounter8 {
     Probabilities:[uint];
     Gender:byte;
     FlawlessIVs:byte;
-    Field_12:byte;
+    ShinyForced:byte;
     Field_13:byte;
     Field_14:byte;
     Nature:byte;

@@ -2,6 +2,7 @@
 #include <csight/DenHashes.hpp>
 #include <csight/NestHoleDistributionEncounter8Archive_generated.h>
 #include <csight/RaidDetails.hpp>
+#include <csight/Shiny.hpp>
 #include <csight/TitleIds.hpp>
 #include <memory>
 #include <switch.h>
@@ -53,32 +54,20 @@ namespace csight::raid {
     u8 *denBytes = new u8[0x18];
     std::vector<RaidEncounterTable> encounterTables;
     std::shared_ptr<RaidEncounterTable> eventTemplateTable;
+    std::vector<RaidEncounter> templates = {
+      {
+        species : 0,
+        flawlessIVs : 1,
+        ability : ability::raid::FirstOrSecond,
+        form : 0,
+        probabilities : { 35, 0, 0, 0, 0 },
+        shinyType : csight::shiny::ShinyRaidSetting::Random
+      },
+    };
 
     if (m_shouldUseSmallMemoryMode) {
-      encounterTables = { {
-        hash : 0u,
-        templates : {
-            {
-              species : 0,
-              flawlessIVs : 1,
-              ability : ability::raid::FirstOrSecond,
-              form : 0,
-              probabilities : { 35, 0, 0, 0, 0 },
-            },
-        }
-      } };
-      eventTemplateTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable {
-        hash : 0u,
-        templates : {
-            {
-              species : 0,
-              flawlessIVs : 1,
-              ability : ability::raid::FirstOrSecond,
-              form : 0,
-              probabilities : { 35, 0, 0, 0, 0 },
-            },
-        }
-      });
+      encounterTables = { { hash : 0u, templates : templates } };
+      eventTemplateTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { hash : 0u, templates : templates });
     } else {
       encounterTables = this->getEncounterTables();
       eventTemplateTable = this->readEventEncounterTable();
@@ -138,17 +127,18 @@ namespace csight::raid {
     for (auto eventEncounter = eventEncounters->begin(); eventEncounter != eventEncounters->end(); ++eventEncounter) {
       auto eventProbabilities = eventEncounter->Probabilities();
       RaidEncounter raidEncounter = {
-        eventEncounter->Species(),
-        (u32)eventEncounter->FlawlessIVs(),
-        (ability::raid::AbilityRaidSetting)eventEncounter->Ability(),
-        (u16)eventEncounter->AltForm(),
-        {
+        species : eventEncounter->Species(),
+        flawlessIVs : (u32)eventEncounter->FlawlessIVs(),
+        ability : (ability::raid::AbilityRaidSetting)eventEncounter->Ability(),
+        form : (u16)eventEncounter->AltForm(),
+        probabilities : {
             eventProbabilities->Get(0),
             eventProbabilities->Get(1),
             eventProbabilities->Get(2),
             eventProbabilities->Get(3),
             eventProbabilities->Get(4),
         },
+        shinyType : (csight::shiny::ShinyRaidSetting)eventEncounter->ShinyForced(),
       };
 
       encounterTable->templates.push_back(raidEncounter);

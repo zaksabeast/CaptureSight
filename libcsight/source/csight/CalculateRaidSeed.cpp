@@ -44,7 +44,14 @@ namespace csight::raid {
         // Only compare bits of the PID guaranteed with the missing seed bytes
         if (testPID == maskedPID) {
           // tmp spawn for testing generated IVs
-          RaidEncounter spawn = { 1, 1, ability::raid::FirstOrSecond, 0, {} };
+          RaidEncounter spawn = {
+            species : 1,
+            flawlessIVs : 1,
+            ability : ability::raid::FirstOrSecond,
+            form : 0,
+            probabilities : {},
+            shinyType : csight::shiny::ShinyRaidSetting::Random
+          };
           for (u64 k = 0; k <= 0xffff; k++) {
             auto seed = (k << 48) + partialTestSeed;
             res = xoroshiro(seed, s1);  // ec

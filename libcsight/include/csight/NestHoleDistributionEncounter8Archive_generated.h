@@ -46,7 +46,6 @@ struct NestHoleDistributionEncounter8ArchiveBuilder {
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  NestHoleDistributionEncounter8ArchiveBuilder &operator=(const NestHoleDistributionEncounter8ArchiveBuilder &);
   flatbuffers::Offset<NestHoleDistributionEncounter8Archive> Finish() {
     const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<NestHoleDistributionEncounter8Archive>(end);
@@ -131,7 +130,6 @@ struct NestHoleDistributionEncounter8TableBuilder {
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  NestHoleDistributionEncounter8TableBuilder &operator=(const NestHoleDistributionEncounter8TableBuilder &);
   flatbuffers::Offset<NestHoleDistributionEncounter8Table> Finish() {
     const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<NestHoleDistributionEncounter8Table>(end);
@@ -193,7 +191,7 @@ struct NestHoleDistributionEncounter8 FLATBUFFERS_FINAL_CLASS : private flatbuff
     VT_PROBABILITIES = 34,
     VT_GENDER = 36,
     VT_FLAWLESSIVS = 38,
-    VT_FIELD_12 = 40,
+    VT_SHINYFORCED = 40,
     VT_FIELD_13 = 42,
     VT_FIELD_14 = 44,
     VT_NATURE = 46,
@@ -267,8 +265,8 @@ struct NestHoleDistributionEncounter8 FLATBUFFERS_FINAL_CLASS : private flatbuff
   int8_t FlawlessIVs() const {
     return GetField<int8_t>(VT_FLAWLESSIVS, 0);
   }
-  int8_t Field_12() const {
-    return GetField<int8_t>(VT_FIELD_12, 0);
+  int8_t ShinyForced() const {
+    return GetField<int8_t>(VT_SHINYFORCED, 0);
   }
   int8_t Field_13() const {
     return GetField<int8_t>(VT_FIELD_13, 0);
@@ -345,7 +343,7 @@ struct NestHoleDistributionEncounter8 FLATBUFFERS_FINAL_CLASS : private flatbuff
            verifier.VerifyVector(Probabilities()) &&
            VerifyField<int8_t>(verifier, VT_GENDER) &&
            VerifyField<int8_t>(verifier, VT_FLAWLESSIVS) &&
-           VerifyField<int8_t>(verifier, VT_FIELD_12) &&
+           VerifyField<int8_t>(verifier, VT_SHINYFORCED) &&
            VerifyField<int8_t>(verifier, VT_FIELD_13) &&
            VerifyField<int8_t>(verifier, VT_FIELD_14) &&
            VerifyField<int8_t>(verifier, VT_NATURE) &&
@@ -426,8 +424,8 @@ struct NestHoleDistributionEncounter8Builder {
   void add_FlawlessIVs(int8_t FlawlessIVs) {
     fbb_.AddElement<int8_t>(NestHoleDistributionEncounter8::VT_FLAWLESSIVS, FlawlessIVs, 0);
   }
-  void add_Field_12(int8_t Field_12) {
-    fbb_.AddElement<int8_t>(NestHoleDistributionEncounter8::VT_FIELD_12, Field_12, 0);
+  void add_ShinyForced(int8_t ShinyForced) {
+    fbb_.AddElement<int8_t>(NestHoleDistributionEncounter8::VT_SHINYFORCED, ShinyForced, 0);
   }
   void add_Field_13(int8_t Field_13) {
     fbb_.AddElement<int8_t>(NestHoleDistributionEncounter8::VT_FIELD_13, Field_13, 0);
@@ -487,7 +485,6 @@ struct NestHoleDistributionEncounter8Builder {
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  NestHoleDistributionEncounter8Builder &operator=(const NestHoleDistributionEncounter8Builder &);
   flatbuffers::Offset<NestHoleDistributionEncounter8> Finish() {
     const auto end = fbb_.EndTable(start_);
     auto o = flatbuffers::Offset<NestHoleDistributionEncounter8>(end);
@@ -515,7 +512,7 @@ inline flatbuffers::Offset<NestHoleDistributionEncounter8> CreateNestHoleDistrib
     flatbuffers::Offset<flatbuffers::Vector<uint32_t>> Probabilities = 0,
     int8_t Gender = 0,
     int8_t FlawlessIVs = 0,
-    int8_t Field_12 = 0,
+    int8_t ShinyForced = 0,
     int8_t Field_13 = 0,
     int8_t Field_14 = 0,
     int8_t Nature = 0,
@@ -567,7 +564,7 @@ inline flatbuffers::Offset<NestHoleDistributionEncounter8> CreateNestHoleDistrib
   builder_.add_Nature(Nature);
   builder_.add_Field_14(Field_14);
   builder_.add_Field_13(Field_13);
-  builder_.add_Field_12(Field_12);
+  builder_.add_ShinyForced(ShinyForced);
   builder_.add_FlawlessIVs(FlawlessIVs);
   builder_.add_Gender(Gender);
   builder_.add_IsGigantamax(IsGigantamax);
@@ -595,7 +592,7 @@ inline flatbuffers::Offset<NestHoleDistributionEncounter8> CreateNestHoleDistrib
     const std::vector<uint32_t> *Probabilities = nullptr,
     int8_t Gender = 0,
     int8_t FlawlessIVs = 0,
-    int8_t Field_12 = 0,
+    int8_t ShinyForced = 0,
     int8_t Field_13 = 0,
     int8_t Field_14 = 0,
     int8_t Nature = 0,
@@ -635,7 +632,7 @@ inline flatbuffers::Offset<NestHoleDistributionEncounter8> CreateNestHoleDistrib
       Probabilities__,
       Gender,
       FlawlessIVs,
-      Field_12,
+      ShinyForced,
       Field_13,
       Field_14,
       Nature,
