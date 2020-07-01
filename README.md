@@ -10,7 +10,7 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
   - Raid Pokemon
   - Party Pokemon
   - Box Pokemon
-- View all Active Dens
+- View all active dens
   - Current seed for Raid RNG
   - The number of advances until a Shiny Pokemon
   - Species of a den
@@ -18,7 +18,6 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
   - Stars of a den
 - Find the raid seed that created a Pokemon
   - Join a trade or raid with a person who doesn't have custom firmware and use CaptureSight to get their raid seed
-  - View upcoming IVs for any den or Pokemon raid seed
 - Since CaptureSight can show the next shiny frame, upcoming IVs, and seed that created a Pokemon, no external tools are needed for Raid RNG
   - With raid and trade views, anyone without custom firmware only needs to know someone with custom firmware to do Raid RNG
 - The Applet has translations for multiple langues based on the Switch language setting
@@ -59,7 +58,7 @@ Two downloads are available for CaptureSight:
 
 ## Building
 
-All libraries [listed in Plutonium's readme](https://github.com/XorTroll/Plutonium#what-is-plutonium), devkitPro, and libnx will be needed to build this tool.
+DevkitPro and libnx will be needed to build this tool.
 
 After installing those, run `make`.
 
@@ -74,10 +73,10 @@ Thanks to the following for helping make this app:
 - Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) and [pkNX](https://github.com/kwsch/pkNX) which have resource including Pokemon icons, i18n for Pokemon, and great documentation
 - imneme for their [cpp xoroshiro gist](https://gist.github.com/imneme/f76f4bb7b7f67ff0850199ab7c077bf7) which is used in CaptureSight
 - nlohmann for their [c++ JSON library](https://github.com/nlohmann/json)
-- XorTroll for [Plutonium](https://github.com/XorTroll/Plutonium/tree/master/Plutonium)
+- natinusala for [borealis](https://github.com/natinusala/borealis)
 - WerWolv for [libtesla](https://github.com/WerWolv/libtesla) and EdiZon's `isServiceRunning` code
 - Flagbrew for [PKSM](https://github.com/FlagBrew/PKSM) which gave guidance for c++ Pokemon code organization
-- RichardPaulAstley for French translations
-- Leanny, Admiral Fish, wwwwwwzx, Kaphotics, and Vladcik for helping look into raid RNG
+- All translators and the translations they provide
+- Leanny, Admiral Fish, wwwwwwzx, Kaphotics, and Vladcik for looking into raid RNG
 - Leanny and Kaphotics for the PKHeX Raid Plugin, which CaptureSight borrows raid logic from
 - All Pokemon researchers and contributors
