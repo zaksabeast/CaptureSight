@@ -32,7 +32,7 @@ namespace ui {
     ADD_BODY_ROW(m_miscTable, "Minted Nature", "natures", pkm->getMintedNatureString());
     ADD_BODY_ROW(m_miscTable, "Ability", "abilities", pkm->getAbilityString());
     ADD_BODY_ROW(m_miscTable, friendshipTranslationKey, "app", std::to_string(pkm->getCurrentFriendship()));
-    ADD_BODY_ROW(m_miscTable, "EC", "app", csight::utils::convertNumToHexString(pkm->getEncryptionConstant()));
+    ADD_BODY_ROW(m_miscTable, "EC", "app", csight::utils::convertNumToHexString(pkm->getEC()));
     ADD_BODY_ROW(m_miscTable, "PID", "app", csight::utils::convertNumToHexString(pkm->getPID()));
     ADD_BODY_ROW(m_miscTable, "OT Gender", "app", pkm->getOTGenderString());
 

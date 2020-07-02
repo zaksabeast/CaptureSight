@@ -77,7 +77,7 @@ namespace csight::raid {
     u64 shiftedDenId = denId >= FIRST_IOA_DEN_ID ? denId + 11 : denId;
     this->readHeap(m_denOffset + (shiftedDenId * 0x18), denBytes, 0x18);
 
-    auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable);
+    auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable, this->getTrainerSIDTID());
 
     delete[] denBytes;
     return den;

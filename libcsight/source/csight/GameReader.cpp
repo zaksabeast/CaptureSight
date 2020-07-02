@@ -59,4 +59,11 @@ namespace csight {
 
     return pk8s;
   }
+
+  u32 GameReader::getTrainerSIDTID() {
+    u32 sidtid = 0;
+
+    this->readHeap(m_trainerBlockOffset + 0xA0, &sidtid, sizeof(u32));
+    return sidtid;
+  }
 }  // namespace csight

@@ -61,7 +61,7 @@ namespace csight::raid {
             if (generatedPID == pid) {
               for (u32 flawlessIVs = 1; flawlessIVs <= 5; flawlessIVs++) {
                 spawn.flawlessIVs = flawlessIVs;
-                auto ivsToCheck = RaidPokemon(seed, spawn).getIVs();
+                auto ivsToCheck = RaidPokemon(seed, spawn, 0).getIVs();
                 bool hasCorrectIVs = std::equal(ivs.begin(), ivs.end(), ivsToCheck.begin());
 
                 if (hasCorrectIVs)

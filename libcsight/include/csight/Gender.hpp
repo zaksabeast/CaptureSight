@@ -1,3 +1,5 @@
+#pragma once
+
 namespace csight {
   enum Gender {
     Male = 0,

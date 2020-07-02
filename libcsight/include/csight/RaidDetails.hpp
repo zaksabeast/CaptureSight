@@ -13,6 +13,7 @@ namespace csight::raid {
     std::vector<RaidEncounterTable> getEncounterTables();
     std::shared_ptr<RaidEncounterTable> readEventEncounterTable();
     virtual u64 getTitleId() = 0;
+    virtual u32 getTrainerSIDTID() = 0;
 
    private:
     bool m_shouldUseSmallMemoryMode = true;

@@ -10,9 +10,10 @@
 namespace csight::raid {
   // Pass the den encounter tables to use since its responsibility is to parse the den data, not read/choose encounter tables
   Den::Den(u8 *data, u8 denId, std::vector<RaidEncounterTable> encounterTables,
-           std::shared_ptr<RaidEncounterTable> eventEncounterTable) {
+           std::shared_ptr<RaidEncounterTable> eventEncounterTable, u32 playerSIDTID) {
     std::copy(data, data + m_size, m_data);
 
+    m_playerSIDTID = playerSIDTID;
     m_denId = denId > DEN_LIST_SIZE ? DEN_LIST_SIZE : denId;
 
     if (this->getIsEvent()) {
@@ -70,7 +71,7 @@ namespace csight::raid {
     }
   }
 
-  std::shared_ptr<RaidPokemon> Den::getPKM() { return std::make_shared<RaidPokemon>(this->getSeed(), m_spawn); };
+  std::shared_ptr<RaidPokemon> Den::getPKM() { return std::make_shared<RaidPokemon>(this->getSeed(), m_spawn, m_playerSIDTID); };
 
   DenType Den::getDenType() { return m_denId >= FIRST_IOA_DEN_ID ? IsleOfArmor : Vanilla; }
 

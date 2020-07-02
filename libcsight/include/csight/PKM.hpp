@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <csight/Utils.hpp>
+#include <csight/lookups/Abilities.hpp>
 #include <csight/lookups/Types.hpp>
 #include <future>
 #include <string>
@@ -12,20 +13,24 @@ namespace csight {
   class PKM {
    public:
     virtual u16 getSpecies() = 0;
-    virtual std::string getSpeciesString() = 0;
     virtual std::vector<u8> getIVs() = 0;
-    virtual bool getIsShiny() = 0;
     virtual ability::Ability getAbility() = 0;
-    virtual std::string getAbilityString() = 0;
     virtual u32 getPID() = 0;
+    virtual u32 getSIDTID() = 0;
     virtual u64 getRaidSeed() = 0;
     virtual u16 getForm() = 0;
+
+    u16 getTSV() { return shiny::getShinyValue(this->getSIDTID()); }
+
+    shiny::ShinyType getShinyType() { return shiny::getShinyType(this->getPID(), this->getSIDTID()); }
+
+    bool getIsShiny() { return this->getShinyType() != shiny::ShinyType::None; }
+
     virtual bool getIsEgg() { return false; }
 
-    u32 getPSV() {
-      u32 pid = this->getPID();
-      return ((pid >> 16 ^ (pid & 0xFFFF)) >> 4);
-    }
+    std::string getSpeciesString() { return utils::getSpeciesName(this->getSpecies()); }
+
+    std::string getAbilityString() { return utils::getIndex(Abilities, this->getAbility()); }
 
     std::pair<type::PokemonType, type::PokemonType> getTypes() {
       auto form = this->getForm();

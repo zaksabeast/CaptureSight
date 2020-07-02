@@ -31,7 +31,7 @@ void PokemonSummaryLayout::addBodyDrawer(tsl::gfx::Renderer *screen, u16 x, u16 
   std::string move2 = "- " + m_pkm->getMoveString(2);
   std::string move3 = "- " + m_pkm->getMoveString(3);
   std::string pidEd = "PID: " + csight::utils::convertNumToHexString(m_pkm->getPID())
-      + " EC: " + csight::utils::convertNumToHexString(m_pkm->getEncryptionConstant());
+      + " EC: " + csight::utils::convertNumToHexString(m_pkm->getEC());
 
   screen->drawString(formattedIVs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
   screen->drawString(formattedEVs.c_str(), false, 50, 200, 24, screen->a(0xFFFF));

@@ -10,14 +10,23 @@
 #define EMPTY_IV 255
 
 namespace csight::raid {
-  RaidPokemon::RaidPokemon(u64 seed, RaidEncounter spawn) : PKM::PKM() {
+  RaidPokemon::RaidPokemon(u64 seed, RaidEncounter spawn, u32 playerSIDTID) : PKM::PKM() {
     m_seed = seed;
     m_spawn = spawn;
+    m_SIDTID = playerSIDTID;
     auto rng = rng::xoroshiro(m_seed);
     m_EC = rng.next(0xFFFFFFFF);
-    u32 SIDTID = rng.next(0xFFFFFFFF);
+    // Shininess is determined with a fake SIDTID
+    u32 fakeSIDTID = rng.next(0xFFFFFFFF);
     m_PID = rng.next(0xFFFFFFFF);
-    m_shineType = shiny::getShinyType(m_PID, SIDTID);
+    auto naturalShinyType = shiny::getShinyType(m_PID, fakeSIDTID);
+
+    if (m_spawn.shinyType == shiny::ShinyRaidSetting::ForcedNonShiny) {
+      m_PID ^= 0x10000000;
+    } else if (m_spawn.shinyType == shiny::ShinyRaidSetting::ForcedShiny && naturalShinyType == shiny::ShinyType::None) {
+      u16 high = (m_PID & 0xffff) ^ this->getTSV();
+      m_PID = (high << 16) | (m_PID & 0xffff);
+    }
 
     m_IVs = { EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV, EMPTY_IV };
 
@@ -60,19 +69,13 @@ namespace csight::raid {
 
   u32 RaidPokemon::getPID() { return m_PID; }
 
+  u32 RaidPokemon::getSIDTID() { return m_SIDTID; }
+
   u16 RaidPokemon::getSpecies() { return m_spawn.species; }
-
-  std::string RaidPokemon::getSpeciesString() { return utils::getSpeciesName(this->getSpecies()); }
-
-  bool RaidPokemon::getIsShiny() { return m_shineType > shiny::None; }
-
-  shiny::ShinyType RaidPokemon::getShinyType() { return m_shineType; }
 
   std::vector<u8> RaidPokemon::getIVs() { return m_IVs; }
 
   ability::Ability RaidPokemon::getAbility() { return m_ability; };
-
-  std::string RaidPokemon::getAbilityString() { return ability::getAbilityString(m_ability); }
 
   u64 RaidPokemon::getRaidSeed() { return m_seed; }
 

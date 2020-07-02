@@ -13,6 +13,7 @@ tsl::elm::Element *DenMenuLayout::createUI() {
 
   for (u32 i = 0; i < m_dens.size(); i++) {
     auto den = m_dens[i];
+    auto pkm = den->getPKM();
     std::string shinyTypeText = den->getShinyType() == csight::shiny::Square ? " ■ " : " ★ ";
     std::string eventText = den->getIsEvent() ? " (Event)" : "";
     auto title = den->getDenDisplayName() + shinyTypeText + den->getShinyAdvanceText() + eventText;

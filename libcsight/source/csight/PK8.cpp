@@ -17,7 +17,7 @@ namespace csight {
     std::copy(data, data + m_storedSize, m_data);
 
     if (this->checkEncrypted()) {
-      u8 shuffleValue = (this->getEncryptionConstant() >> 13) & 31;
+      u8 shuffleValue = (this->getEC() >> 13) & 31;
       this->crypt();
       this->shuffleArray(shuffleValue);
     }
@@ -29,7 +29,7 @@ namespace csight {
 
   void PK8::crypt(void) {
     u16 *pkmWord;
-    u32 seed = this->getEncryptionConstant();
+    u32 seed = this->getEC();
 
     for (u32 i = 8; i < m_storedSize; i += 2) {
       seed = rng::lcrng::advance(seed);
@@ -94,7 +94,7 @@ namespace csight {
     }
   }
 
-  u32 PK8::getEncryptionConstant() { return *(u32 *)m_data; }
+  u32 PK8::getEC() { return *(u32 *)m_data; }
 
   u16 PK8::getSpecies() {
     if (*(u16 *)(m_data + 8) > 891) {
@@ -103,8 +103,6 @@ namespace csight {
 
     return *(u16 *)(m_data + 8);
   }
-
-  std::string PK8::getSpeciesString() { return utils::getSpeciesName(this->getSpecies()); }
 
   u32 PK8::getIV32() { return *(u32 *)(m_data + 0x8C); }
 
@@ -124,15 +122,9 @@ namespace csight {
     };
   }
 
-  u16 PK8::getTID() { return *(u16 *)(m_data + 0xc); }
-
-  u16 PK8::getSID() { return *(u16 *)(m_data + 0xe); }
+  u32 PK8::getSIDTID() { return *(u32 *)(m_data + 0xc); }
 
   u32 PK8::getPID() { return *(u32 *)(m_data + 0x1c); }
-
-  u32 PK8::getTSV() { return ((this->getTID() ^ this->getSID()) >> 4); }
-
-  bool PK8::getIsShiny() { return this->getPSV() == this->getTSV(); }
 
   u16 PK8::getMove(u8 slot) { return *(u16 *)(m_data + 0x72 + (slot * 2)); }
 
@@ -163,8 +155,6 @@ namespace csight {
   bool PK8::getIsEgg() { return this->getIsValid() && ((this->getIV32() >> 30) & 1) == 1; }
 
   ability::Ability PK8::getAbility() { return (ability::Ability) * (u8 *)(m_data + 0x14); }
-
-  std::string PK8::getAbilityString() { return utils::getIndex(Abilities, this->getAbility()); }
 
   u8 PK8::getNature() { return *(u8 *)(m_data + 0x20); }
 
@@ -205,11 +195,9 @@ namespace csight {
 
   std::string PK8::getOTGenderString() { return utils::getGenderString(this->getOTGender()); }
 
-  u64 PK8::getRaidSeed() { return raid::calculateRaidSeed(this->getEncryptionConstant(), this->getPID(), this->getIVs()); }
+  u64 PK8::getRaidSeed() { return raid::calculateRaidSeed(this->getEC(), this->getPID(), this->getIVs()); }
 
-  std::future<u64> PK8::getRaidSeedAsync() {
-    return raid::calculateRaidSeedAsync(this->getEncryptionConstant(), this->getPID(), this->getIVs());
-  }
+  std::future<u64> PK8::getRaidSeedAsync() { return raid::calculateRaidSeedAsync(this->getEC(), this->getPID(), this->getIVs()); }
 
   // Currently stubbed
   u16 PK8::getForm() { return *(u16 *)(m_data + 0x24); }

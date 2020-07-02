@@ -19,9 +19,11 @@ namespace csight {
     std::shared_ptr<PK8> readRaid();
     std::shared_ptr<PK8> readTrade();
     u64 getTitleId() override;
+    u32 getTrainerSIDTID() override;
 
    private:
     bool m_isDebugServiceRunning = false;
+    u64 m_trainerBlockOffset = 0x45061108;
     u64 m_partyOffset = 0x450BE8C0;
     u64 m_boxOffset = 0x4506D890;
     u64 m_wildOffset = 0x8FEA3358;
