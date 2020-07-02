@@ -1,5 +1,6 @@
 #pragma once
 
+#include <csight/Gender.hpp>
 #include <csight/RaidTemplateTables.hpp>
 #include <csight/Shiny.hpp>
 #include <csight/lookups/Types.hpp>
@@ -53,6 +54,8 @@ namespace csight::utils {
   std::string getTypeName(type::PokemonType type);
 
   std::string getShinyTypeString(shiny::ShinyType type);
+
+  std::string getGenderString(Gender gender);
 
   std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2);
 

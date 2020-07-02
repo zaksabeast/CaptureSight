@@ -5,6 +5,7 @@
 #include <csight/Den.hpp>
 #include <csight/DenHashes.hpp>
 #include <csight/GameReader.hpp>
+#include <csight/Gender.hpp>
 #include <csight/PK8.hpp>
 #include <csight/RNG.hpp>
 #include <csight/RaidDetails.hpp>

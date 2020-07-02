@@ -34,6 +34,7 @@ namespace ui {
     ADD_BODY_ROW(m_miscTable, friendshipTranslationKey, "app", std::to_string(pkm->getCurrentFriendship()));
     ADD_BODY_ROW(m_miscTable, "EC", "app", csight::utils::convertNumToHexString(pkm->getEncryptionConstant()));
     ADD_BODY_ROW(m_miscTable, "PID", "app", csight::utils::convertNumToHexString(pkm->getPID()));
+    ADD_BODY_ROW(m_miscTable, "OT Gender", "app", pkm->getOTGenderString());
 
     m_ivTable = new brls::Table();
     m_ivTable->addRow(brls::TableRowType::HEADER, "IVs");

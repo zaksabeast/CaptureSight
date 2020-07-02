@@ -50,6 +50,8 @@ namespace csight {
     u8 getHTFriendship();
     u8 getOTFriendship();
     u8 getCurrentFriendship();
+    Gender getOTGender();
+    std::string PK8::getOTGenderString();
     u64 getRaidSeed();
     std::future<u64> getRaidSeedAsync();
     u16 getForm();

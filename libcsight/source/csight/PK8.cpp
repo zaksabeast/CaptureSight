@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <csight/CalculateRaidSeed.hpp>
+#include <csight/Gender.hpp>
 #include <csight/PK8.hpp>
 #include <csight/PKM.hpp>
 #include <csight/RNG.hpp>
@@ -196,6 +197,13 @@ namespace csight {
   u8 PK8::getOTFriendship() { return *(u8 *)(m_data + 0x112); }
 
   u8 PK8::getCurrentFriendship() { return this->getCurrentHandler() == 0 ? this->getOTFriendship() : this->getHTFriendship(); }
+
+  Gender PK8::getOTGender() {
+    u8 genderByte = *(u8 *)(m_data + 0x125) >> 7;
+    return genderByte < 2 ? (Gender)genderByte : Gender::Genderless;
+  }
+
+  std::string PK8::getOTGenderString() { return utils::getGenderString(this->getOTGender()); }
 
   u64 PK8::getRaidSeed() { return raid::calculateRaidSeed(this->getEncryptionConstant(), this->getPID(), this->getIVs()); }
 

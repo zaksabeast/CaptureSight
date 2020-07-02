@@ -100,6 +100,18 @@ namespace csight::utils {
     }
   }
 
+  std::string getGenderString(Gender gender) {
+    switch (gender) {
+      case Gender::Male:
+        return "Male";
+      case Gender::Female:
+        return "Female";
+      case Gender::Genderless:
+      default:
+        return "Genderless";
+    }
+  }
+
   std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2) {
     auto type1Weaknesses = weaknessChart[type1];
     auto type2Weaknesses = weaknessChart[type2];
