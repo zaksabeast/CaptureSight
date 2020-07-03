@@ -40,6 +40,7 @@ namespace csight::shiny {
     // https://github.com/Leanny/PKHeX_Raid_Plugin/blob/8383d8ed7a51e9fe86a80d45c56386137c67380c/PKHeX_Raid_Plugin/Raid/RaidTemplate.cs#L151
     if (raidShinyType == ShinyRaidSetting::ForcedShiny && shineType == ShinyType::None) {
       shineType = ShinyType::Square;
+      shinyAdvance = 0;
     } else if (raidShinyType == ShinyRaidSetting::ForcedNonShiny) {
       shineType = ShinyType::None;
       shinyAdvance = maxAdvances;
