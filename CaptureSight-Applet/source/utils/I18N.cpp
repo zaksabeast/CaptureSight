@@ -39,7 +39,7 @@ I18N::I18N() {
 }
 
 void I18N::loadTranslations() {
-  std::ifstream translations("romfs:/i18n/" + getTranslationCode() + ".json");
+  std::ifstream translations(BOREALIS_ASSET("i18n/" + getTranslationCode() + ".json"));
 
   if (translations.good()) {
     translations >> g_translations;

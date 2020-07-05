@@ -1,3 +1,4 @@
+#include <borealis.hpp>
 #include <csight/core>
 #include <memory>
 #include <string>
@@ -11,6 +12,6 @@ namespace utils {
     std::string form = formNum > 0 ? "-" + std::to_string(formNum) : "";
     std::string shiny = (pkm->getIsShiny() && !isEgg && speciesNum != 0) ? "s" : "";
 
-    return "romfs:/pokemon-sprites/b_" + species + form + shiny + ".png";
+    return BOREALIS_ASSET("pokemon-sprites/b_" + species + form + shiny + ".png");
   }
-}  // utilsstd::string getPokemonIconPath(std::shared_ptr<csight::PKM> pkm)
+}  // utils
