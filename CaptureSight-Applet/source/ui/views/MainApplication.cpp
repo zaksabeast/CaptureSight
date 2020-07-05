@@ -27,15 +27,22 @@ extern std::shared_ptr<I18N> g_i18n;
     container->addView(pokemonItem);                                                                \
   }
 
-#define ADD_DENS_TO_VIEW(container, denList, GET_TITLE)    \
-  for (size_t i = 0; i < denList.size(); i++) {            \
-    auto den = denList[i];                                 \
-    auto pkm = den->getPKM();                              \
-    auto title = GET_TITLE(den, pkm, i);                   \
-    auto denItem = new brls::ListItem(title);              \
-                                                           \
-    denItem->setThumbnail(utils::getPokemonIconPath(pkm)); \
-    container->addView(denItem);                           \
+#define ADD_DENS_TO_VIEW(container, denList, GET_TITLE)                                                                    \
+  for (size_t i = 0; i < denList.size(); i++) {                                                                            \
+    auto den = denList[i];                                                                                                 \
+    auto pkm = den->getPKM();                                                                                              \
+    auto title = GET_TITLE(den, pkm, i);                                                                                   \
+    auto denItem = new brls::ListItem(title);                                                                              \
+                                                                                                                           \
+    denItem->setThumbnail(utils::getPokemonIconPath(pkm));                                                                 \
+    denItem->getClickEvent()->subscribe([den](brls::View *view) {                                                          \
+      brls::Dialog *dialog                                                                                                 \
+          = new brls::Dialog(g_i18n->translate("Raid seed") + " " + csight::utils::convertNumToHexString(den->getSeed())); \
+      dialog->addButton(I18N::translate("Continue"), [dialog](brls::View *view) { dialog->close(); });                     \
+      dialog->setCancelable(false);                                                                                        \
+      dialog->open();                                                                                                      \
+    });                                                                                                                    \
+    container->addView(denItem);                                                                                           \
   }
 
 #define GET_POKEMON_TITLE(pokemon) \
@@ -82,11 +89,15 @@ namespace ui {
     auto boxPokemon = g_gameReader->readBoxes();
     ADD_POKEMON_TO_VIEW(m_boxPokemonList, boxPokemon, GET_BOX_TITLE);
 
+    std::string denTabHeader = g_i18n->translate("Press A to view raid seed");
+
     m_activeDenList = new brls::List();
+    m_activeDenList->addView(new brls::Header(denTabHeader));
     auto activeDens = g_gameReader->readDens(false);
     ADD_DENS_TO_VIEW(m_activeDenList, activeDens, GET_DEN_TITLE);
 
     m_allDenList = new brls::List();
+    m_allDenList->addView(new brls::Header(denTabHeader));
     auto allDens = g_gameReader->readDens(true);
     ADD_DENS_TO_VIEW(m_allDenList, allDens, GET_DEN_TITLE);
 
