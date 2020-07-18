@@ -22,10 +22,12 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
   - With raid and trade views, anyone without custom firmware only needs to know someone with custom firmware to do Raid RNG
 - The Applet has translations for multiple langues based on the Switch language setting
   - English
-  - Chinese
   - French
   - Italian
-  - German
+  - Spanish
+  - Partial support for:
+    - Chinese
+    - German
 
 ## How do I use CaptureSight?
 
