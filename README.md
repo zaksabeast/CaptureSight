@@ -25,8 +25,8 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon Sword and Shield data
   - French
   - Italian
   - Spanish
+  - Chinese
   - Partial support for:
-    - Chinese
     - German
 
 ## How do I use CaptureSight?
