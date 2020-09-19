@@ -1,9 +1,9 @@
 #pragma once
 
-#include <csight/Gender.hpp>
-#include <csight/RaidTemplateTables.hpp>
-#include <csight/Shiny.hpp>
-#include <csight/lookups/Types.hpp>
+#include <csight/Enums/Ability.hpp>
+#include <csight/Enums/Gender.hpp>
+#include <csight/Enums/ShinyType.hpp>
+#include <csight/Enums/Types.hpp>
 #include <future>
 #include <string>
 #include <switch.h>
@@ -48,16 +48,19 @@ namespace csight::utils {
 
   std::string getSpeciesName(u32 species);
 
-  csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables,
-                                                          u32 denId, bool isRare);
+  std::string getTypeName(enums::PokemonType type);
 
-  std::string getTypeName(type::PokemonType type);
+  std::string getShinyTypeString(enums::ShinyType type);
 
-  std::string getShinyTypeString(shiny::ShinyType type);
+  std::string getGenderString(enums::Gender gender);
 
-  std::string getGenderString(Gender gender);
-
-  std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2);
+  std::vector<enums::TypeMultiplier> calculateWeakness(enums::PokemonType type1, enums::PokemonType type2);
 
   std::string convertFloatWithPrecision(float num, u32 precision);
-}  // namespace csight::utils
+
+  std::string getAbilityString(enums::Ability ability);
+
+  u32 getShinyValue(u32 value);
+
+  enums::ShinyType getShinyType(u32 PID, u32 SIDTID);
+}

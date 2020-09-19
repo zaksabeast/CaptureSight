@@ -7,7 +7,7 @@
 
 class MainApplication : public tsl::Overlay {
  public:
-  std::shared_ptr<csight::GameReader> getGameReader();
+  std::shared_ptr<csight::game::swsh::SWSHGame> getGameReader();
   std::string getPartyTitle(u32 slot);
   std::string getWildTitle(u32 slot);
   std::string getBoxTitle(u32 slot);
@@ -17,5 +17,5 @@ class MainApplication : public tsl::Overlay {
   virtual std::unique_ptr<tsl::Gui> loadInitialGui() override;
 
  private:
-  std::shared_ptr<csight::GameReader> m_gameReader;
+  std::shared_ptr<csight::game::swsh::SWSHGame> m_gameReader;
 };

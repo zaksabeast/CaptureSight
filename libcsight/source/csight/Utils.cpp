@@ -1,9 +1,11 @@
-#include <csight/Config.hpp>
-#include <csight/DenHashes.hpp>
-#include <csight/RaidTemplateTables.hpp>
+#include <csight/Enums/Ability.hpp>
+#include <csight/Enums/ShinyType.hpp>
+#include <csight/Enums/Types.hpp>
+#include <csight/Game/SWSH/DenHashes.hpp>
+#include <csight/Game/SWSH/RaidTemplateTables.hpp>
+#include <csight/Resources/Species.hpp>
+#include <csight/Resources/Types.hpp>
 #include <csight/Utils.hpp>
-#include <csight/lookups/Species.hpp>
-#include <csight/lookups/Types.hpp>
 #include <iomanip>
 #include <ios>
 #include <sstream>
@@ -67,55 +69,40 @@ namespace csight::utils {
     return shinyAdvance == maxAdvance ? maxAdvanceString : std::to_string(shinyAdvance);
   }
 
-  std::string getSpeciesName(u32 species) { return getIndex(SpeciesList, species); }
+  std::string getSpeciesName(u32 species) { return getIndex(resources::SpeciesList, species); }
 
-  csight::raid::RaidEncounterTable findRaidEncounterTable(std::vector<csight::raid::RaidEncounterTable> encounterTables,
-                                                          u32 denId, bool isRare) {
-    auto denHash = denId > DEN_LIST_SIZE ? denHashes[0][isRare] : denHashes[denId][isRare];
-    auto nest = encounterTables[0];
+  std::string getTypeName(enums::PokemonType type) { return getIndex(resources::TypeNames, type); }
 
-    for (auto encounterTable : encounterTables) {
-      if (encounterTable.hash == denHash) {
-        nest = encounterTable;
-        break;
-      }
-    }
-
-    return nest;
-  }
-
-  std::string getTypeName(type::PokemonType type) { return getIndex(type::TypeNames, type); }
-
-  std::string getShinyTypeString(shiny::ShinyType type) {
+  std::string getShinyTypeString(enums::ShinyType type) {
     switch (type) {
-      case shiny::ShinyType::None:
+      case enums::ShinyType::None:
         return "None";
-      case shiny::ShinyType::Star:
+      case enums::ShinyType::Star:
         return "Star";
-      case shiny::ShinyType::Square:
+      case enums::ShinyType::Square:
         return "Square";
-      case shiny::ShinyType::Any:
+      case enums::ShinyType::Any:
       default:
         return "Any";
     }
   }
 
-  std::string getGenderString(Gender gender) {
+  std::string getGenderString(enums::Gender gender) {
     switch (gender) {
-      case Gender::Male:
+      case enums::Gender::Male:
         return "Male";
-      case Gender::Female:
+      case enums::Gender::Female:
         return "Female";
-      case Gender::Genderless:
+      case enums::Gender::Genderless:
       default:
         return "Genderless";
     }
   }
 
-  std::vector<type::TypeMultiplier> calculateWeakness(type::PokemonType type1, type::PokemonType type2) {
+  std::vector<enums::TypeMultiplier> calculateWeakness(enums::PokemonType type1, enums::PokemonType type2) {
     auto type1Weaknesses = weaknessChart[type1];
     auto type2Weaknesses = weaknessChart[type2];
-    std::vector<type::TypeMultiplier> result = {};
+    std::vector<enums::TypeMultiplier> result = {};
 
     for (u8 i = 0; i < type1Weaknesses.size(); i++) {
       auto type1Multiplier = type1Weaknesses[i];
@@ -123,7 +110,7 @@ namespace csight::utils {
       auto multiplier = type1Multiplier * type2Multiplier;
 
       if (multiplier != 1) {
-        result.push_back({ (type::PokemonType)i, multiplier });
+        result.push_back({ (enums::PokemonType)i, multiplier });
       }
     }
 
@@ -136,4 +123,33 @@ namespace csight::utils {
 
     return result.str();
   }
-}  // namespace csight::utils
+
+  std::string getAbilityString(enums::Ability ability) {
+    switch (ability) {
+      case enums::Ability::Hidden:
+        return "H";
+      case enums::Ability::Second:
+        return "2";
+      default:
+      case enums::Ability::First:
+        return "1";
+    }
+  }
+
+  u32 getShinyValue(u32 value) { return (value >> 16) ^ (value & 0xFFFF); }
+
+  enums::ShinyType getShinyType(u32 PID, u32 SIDTID) {
+    u32 PSV = getShinyValue(PID);
+    u32 TSV = getShinyValue(SIDTID);
+
+    if (PSV == TSV) {
+      return enums::ShinyType::Square;
+    }
+
+    if ((PSV ^ TSV) < 0x10) {
+      return enums::ShinyType::Star;
+    }
+
+    return enums::ShinyType::None;
+  }
+}

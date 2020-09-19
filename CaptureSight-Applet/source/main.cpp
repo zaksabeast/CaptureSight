@@ -9,7 +9,7 @@
 #include <utils/I18N.hpp>
 #include <vector>
 
-std::shared_ptr<csight::GameReader> g_gameReader;
+std::shared_ptr<csight::game::swsh::SWSHGame> g_gameReader;
 
 int main(int argc, char *argv[]) {
   // Init the app
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
   }
 
   I18N::loadTranslations();
-  g_gameReader = std::make_shared<csight::GameReader>(false);
+  g_gameReader = std::make_shared<csight::game::swsh::SWSHGame>(false);
   bool isDebugServiceRunning = g_gameReader->getIsServiceRunning();
 
   if (!isDebugServiceRunning) {

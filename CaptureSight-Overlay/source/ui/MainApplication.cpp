@@ -9,7 +9,7 @@
 #include <ui/views/PokemonSummaryLayout.hpp>
 
 std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
-  m_gameReader = std::make_shared<csight::GameReader>(true);
+  m_gameReader = std::make_shared<csight::game::swsh::SWSHGame>(true);
 
   if (R_FAILED(m_gameReader->attach()))
     return initially<ErrorLayout>();
@@ -33,7 +33,7 @@ void MainApplication::exitServices() {
   smExit();
 }
 
-std::shared_ptr<csight::GameReader> MainApplication::getGameReader() {
+std::shared_ptr<csight::game::swsh::SWSHGame> MainApplication::getGameReader() {
   return m_gameReader;
 }
 
@@ -59,8 +59,8 @@ std::string MainApplication::getBoxTitle(u32 slot) {
 
 void MainApplication::changeViewMode(ViewMode mode) {
   std::string guiTitle = "Party Pokemon";
-  std::vector<std::shared_ptr<csight::PK8>> pkms;
-  std::vector<std::shared_ptr<csight::raid::Den>> dens;
+  std::vector<std::shared_ptr<csight::pkm::PK8>> pkms;
+  std::vector<std::shared_ptr<csight::game::swsh::Den>> dens;
   std::unique_ptr<tsl::Gui> layout;
   std::function<std::string(u32)> getTitle = [](u32) { return ""; };
 

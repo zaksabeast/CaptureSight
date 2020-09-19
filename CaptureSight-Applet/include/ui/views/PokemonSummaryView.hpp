@@ -7,7 +7,7 @@
 namespace ui {
   class PokemonSummaryView : public brls::TabFrame {
    public:
-    PokemonSummaryView(std::shared_ptr<csight::PK8> pkm);
+    PokemonSummaryView(std::shared_ptr<csight::pkm::PK8> pkm);
     virtual ~PokemonSummaryView();
 
    private:
@@ -18,7 +18,7 @@ namespace ui {
     brls::Table *m_moveTable;
     brls::Table *m_weaknessTable;
 
-    void onClickFindRaidSeed(std::shared_ptr<csight::PK8> pkm, brls::View *view);
+    void onClickFindRaidSeed(std::shared_ptr<csight::pkm::PK8> pkm, brls::View *view);
     void addTranslatedTab(std::string label, brls::View *view);
   };
 }

@@ -5,10 +5,10 @@
 
 class DenMenuLayout : public tsl::Gui {
  public:
-  DenMenuLayout(std::vector<std::shared_ptr<csight::raid::Den>> dens, std::string title);
+  DenMenuLayout(std::vector<std::shared_ptr<csight::game::swsh::Den>> dens, std::string title);
   virtual tsl::elm::Element *createUI();
 
  private:
   std::string m_title = "Den List";
-  std::vector<std::shared_ptr<csight::raid::Den>> m_dens = {};
+  std::vector<std::shared_ptr<csight::game::swsh::Den>> m_dens = {};
 };

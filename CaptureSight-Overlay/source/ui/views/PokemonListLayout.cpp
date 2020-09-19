@@ -6,7 +6,7 @@
 #include <ui/views/PokemonListLayout.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
 
-PokemonListLayout::PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::PK8>> pkms,
+PokemonListLayout::PokemonListLayout(std::string title, std::vector<std::shared_ptr<csight::pkm::PK8>> pkms,
                                      std::function<std::string(u32)> GetPKMTitle) {
   m_title = title;
   m_pkms = pkms;
@@ -47,7 +47,7 @@ void PokemonListLayout::update() {
   }
 }
 
-bool PokemonListLayout::onClickPKM(tsl::elm::ListItem *button, std::string buttonText, std::shared_ptr<csight::PK8> pkm,
+bool PokemonListLayout::onClickPKM(tsl::elm::ListItem *button, std::string buttonText, std::shared_ptr<csight::pkm::PK8> pkm,
                                    s64 keys) {
   if (m_seedFuture) {
     return true;

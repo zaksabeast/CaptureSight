@@ -9,7 +9,7 @@
 #include <utils/Utils.hpp>
 #include <vector>
 
-extern std::shared_ptr<csight::GameReader> g_gameReader;
+extern std::shared_ptr<csight::game::swsh::SWSHGame> g_gameReader;
 
 #define ADD_POKEMON_TO_VIEW(container, pokemonList, GET_TITLE)                                      \
   for (size_t i = 0; i < pokemonList.size(); i++) {                                                 \
@@ -78,7 +78,7 @@ namespace ui {
     ADD_POKEMON_TO_VIEW(m_partyPokemonList, partyPokemon, GET_PARTY_TITLE);
 
     m_miscPokemonList = new brls::List();
-    auto miscPokemon = std::vector<std::shared_ptr<csight::PK8>> {
+    auto miscPokemon = std::vector<std::shared_ptr<csight::pkm::PK8>> {
       g_gameReader->readWild(),
       g_gameReader->readRaid(),
       g_gameReader->readTrade(),
@@ -109,7 +109,7 @@ namespace ui {
     this->addTranslatedTab("All dens", m_allDenList);
   }
 
-  MainView::~MainView() {}
+  MainView::~MainView() { }
 
   void MainView::addTranslatedTab(std::string label, brls::View *view) { this->addTab(I18N::translate(label), view); }
 }

@@ -1,0 +1,66 @@
+#pragma once
+
+#include <algorithm>
+#include <csight/Enums/ShinyType.hpp>
+#include <csight/Enums/Types.hpp>
+#include <csight/PKM/PKM.hpp>
+#include <csight/Resources/Abilities.hpp>
+#include <csight/Resources/Types.hpp>
+#include <csight/Utils.hpp>
+#include <future>
+#include <string>
+#include <switch.h>
+#include <vector>
+
+namespace csight::pkm {
+  u16 PKM::getTSV() { return utils::getShinyValue(this->getSIDTID()); }
+
+  enums::ShinyType PKM::getShinyType() { return utils::getShinyType(this->getPID(), this->getSIDTID()); }
+
+  bool PKM::getIsShiny() { return this->getShinyType() != enums::ShinyType::None; }
+
+  std::string PKM::getSpeciesString() { return utils::getSpeciesName(this->getSpecies()); }
+
+  std::string PKM::getAbilityString() { return utils::getIndex(resources::Abilities, this->getAbility()); }
+
+  std::pair<enums::PokemonType, enums::PokemonType> PKM::getTypes() {
+    auto form = this->getForm();
+    auto species = this->getSpecies();
+
+    // Arceus and Silvally have the most forms with different types at 18
+    std::vector<csight::enums::PokemonTypeSet> filteredList(18);
+    auto endIterator = std::copy_if(resources::pokemonTypeList.begin(), resources::pokemonTypeList.end(), filteredList.begin(),
+                                    [species](auto type) { return type.species == species; });
+
+    filteredList.resize(std::distance(filteredList.begin(), endIterator));
+
+    auto resultIterator = std::find_if(filteredList.begin(), filteredList.end(), [form](auto type) { return type.form == form; });
+    auto result = resultIterator[0];
+
+    return std::make_pair(result.type1, result.type2);
+  }
+
+  std::vector<enums::TypeMultiplier> PKM::getWeaknesses() {
+    auto types = this->getTypes();
+    auto typeMatchUps = utils::calculateWeakness(types.first, types.second);
+    std::sort(typeMatchUps.begin(), typeMatchUps.end(),
+              [](auto type1, auto type2) { return type1.multiplier > type2.multiplier; });
+
+    return typeMatchUps;
+  }
+
+  std::string PKM::getDisplayIVs() { return utils::joinNums(this->getIVs(), "/"); }
+
+  u8 PKM::getFlawlessIVCount() {
+    u8 flawlessIVs = 0;
+    auto ivs = this->getIVs();
+
+    for (u8 i = 0; i < 6; i++) {
+      if (ivs[i] == 31) {
+        flawlessIVs++;
+      }
+    }
+
+    return flawlessIVs;
+  }
+}

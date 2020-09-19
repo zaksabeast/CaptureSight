@@ -12,7 +12,7 @@
   table->addRow(brls::TableRowType::BODY, I18N::translate(label), I18N::translate(valueTranslationCategory, value));
 
 namespace ui {
-  PokemonSummaryView::PokemonSummaryView(std::shared_ptr<csight::PK8> pkm) {
+  PokemonSummaryView::PokemonSummaryView(std::shared_ptr<csight::pkm::PK8> pkm) {
     this->setTitle(I18N::translate("species", pkm->getSpeciesString()));
     this->setIcon(utils::getPokemonIconPath(pkm));
 
@@ -81,15 +81,16 @@ namespace ui {
     this->addTranslatedTab("Weaknesses", m_weaknessTable);
   }
 
-  PokemonSummaryView::~PokemonSummaryView() {}
+  PokemonSummaryView::~PokemonSummaryView() { }
 
-  void PokemonSummaryView::onClickFindRaidSeed(std::shared_ptr<csight::PK8> pkm, brls::View *view) {
+  void PokemonSummaryView::onClickFindRaidSeed(std::shared_ptr<csight::pkm::PK8> pkm, brls::View *view) {
     auto seedFuture = pkm->getRaidSeedAsync();
 
     // Show indicator here
 
     u64 seed = seedFuture.get();
-    auto shinyDetails = csight::shiny::calculateShinyDetails(seed, MAX_RAID_ADVANCES);
+    auto shinyDetails
+        = csight::game::swsh::calculateShinyDetails(seed, MAX_RAID_ADVANCES, csight::game::swsh::ShinyRaidSetting::Random);
 
     brls::Dialog *dialog = new brls::Dialog(I18N::translate("Seed found") + ": " + csight::utils::convertNumToHexString(seed)
                                             + "\n" + I18N::translate("Advances to next shiny") + ": "

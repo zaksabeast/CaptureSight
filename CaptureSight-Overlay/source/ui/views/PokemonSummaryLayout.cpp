@@ -2,7 +2,7 @@
 #include <tesla.hpp>
 #include <ui/views/PokemonSummaryLayout.hpp>
 
-PokemonSummaryLayout::PokemonSummaryLayout(std::shared_ptr<csight::PK8> pkm) {
+PokemonSummaryLayout::PokemonSummaryLayout(std::shared_ptr<csight::pkm::PK8> pkm) {
   m_pkm = pkm;
 }
 
