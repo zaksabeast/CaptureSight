@@ -48,13 +48,15 @@ extern std::shared_ptr<csight::game::swsh::SWSHGame> g_gameReader;
   (pokemon->getIsShiny() ? I18N::translate("Shiny") + " " : "") + I18N::translate("species", pokemon->getSpeciesString()) + ", " \
       + pokemon->getDisplayIVs()
 
+#define GET_POKEMON_TITLE_IF_VALID(pokemon) (pokemon->getIsValid() ? GET_POKEMON_TITLE(pokemon) : I18N::translate("None"))
+
 #define GET_PARTY_TITLE(pokemon, index) \
-  "[" + I18N::translate("Party") + " " + std::to_string(index + 1) + "] " + GET_POKEMON_TITLE(pokemon);
+  "[" + I18N::translate("Party") + " " + std::to_string(index + 1) + "] " + GET_POKEMON_TITLE_IF_VALID(pokemon);
 
 #define GET_BOX_TITLE(pokemon, index) \
-  "[B" + std::to_string((index / 30) + 1) + "S" + std::to_string((index % 30) + 1) + "] " + GET_POKEMON_TITLE(pokemon);
+  "[B" + std::to_string((index / 30) + 1) + "S" + std::to_string((index % 30) + 1) + "] " + GET_POKEMON_TITLE_IF_VALID(pokemon);
 
-#define GET_MISC_TITLE(pokemon, index) m_miscTitles[index] + GET_POKEMON_TITLE(pokemon);
+#define GET_MISC_TITLE(pokemon, index) m_miscTitles[index] + GET_POKEMON_TITLE_IF_VALID(pokemon);
 
 #define GET_DEN_TITLE(den, pokemon, index)                                                                                      \
   den->getDenDisplayName() + ", " + std::to_string(pokemon->getFlawlessIVCount()) + "IV, "                                      \
