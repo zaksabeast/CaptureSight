@@ -8,7 +8,7 @@ namespace csight::resources {
       = { "None", "Normal", "Fighting", "Flying",   "Poison",  "Ground", "Rock",   "Bug",  "Ghost", "Steel",
           "Fire", "Water",  "Grass",    "Electric", "Psychic", "Ice",    "Dragon", "Dark", "Fairy" };
 
-  std::vector<enums::PokemonTypeSet> pokemonTypeList = {
+  std::vector<enums::PokemonTypeSet> pokemonTypeMap = {
     { species : 0, form : 0, type1 : enums::PokemonType::NoType, type2 : enums::PokemonType::NoType },
     { species : 1, form : 0, type1 : enums::PokemonType::Grass, type2 : enums::PokemonType::Poison },
     { species : 2, form : 0, type1 : enums::PokemonType::Grass, type2 : enums::PokemonType::Poison },

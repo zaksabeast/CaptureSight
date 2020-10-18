@@ -5,7 +5,7 @@
 #include <csight/Utils.hpp>
 #include <string>
 
-// 255 is an unsighed integer hack
+// 255 is an unsigned integer hack
 #define EMPTY_IV 255
 
 namespace csight::pkm {
@@ -49,17 +49,17 @@ namespace csight::pkm {
     // https://github.com/Leanny/leanny.github.io/blob/17916ebde2bc984f325f7b103865416f226492fb/seedchecker/common.js#L207
     switch (m_spawn.ability) {
       case game::swsh::AbilityRaidSetting::First:
-        m_ability = enums::Ability::First;
+        m_abilitySlot = enums::Ability::First;
         break;
       case game::swsh::AbilityRaidSetting::Second:
-        m_ability = enums::Ability::Second;
+        m_abilitySlot = enums::Ability::Second;
         break;
       case game::swsh::AbilityRaidSetting::FirstOrSecond:
-        m_ability = (enums::Ability)rng.next(2, 1);
+        m_abilitySlot = (enums::Ability)rng.next(2, 1);
         break;
       default:
       case game::swsh::AbilityRaidSetting::Any:
-        m_ability = (enums::Ability)rng.next(3, 3);
+        m_abilitySlot = (enums::Ability)rng.next(3, 3);
         break;
     }
   }
@@ -74,11 +74,23 @@ namespace csight::pkm {
 
   std::vector<u8> RaidPokemon::getIVs() { return m_IVs; }
 
-  enums::Ability RaidPokemon::getAbility() { return m_ability; };
+  enums::Ability RaidPokemon::getAbilitySlot() { return m_abilitySlot; };
+
+  u16 RaidPokemon::getAbility() {
+    return utils::getAbilityOfPokemon(this->getSpecies(), this->getForm(), this->getAbilitySlot());
+  }
 
   u64 RaidPokemon::getRaidSeed() { return m_seed; }
 
   u16 RaidPokemon::getForm() { return m_spawn.form; }
 
   bool RaidPokemon::getIsEgg() { return false; }
+
+  // Stub for the moment
+  u16 RaidPokemon::getMove(u8 slot) { return 0; }
+
+  // Stub for the moment
+  u8 RaidPokemon::getNature() { return 0; }
+
+  bool RaidPokemon::getIsValid() { return this->getSpecies() > 0; }
 }

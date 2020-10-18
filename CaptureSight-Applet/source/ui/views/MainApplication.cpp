@@ -1,5 +1,6 @@
 #include <borealis.hpp>
 #include <csight/core>
+#include <functional>
 #include <memory>
 #include <string>
 #include <switch.h>
@@ -11,73 +12,98 @@
 
 extern std::shared_ptr<csight::game::swsh::SWSHGame> g_gameReader;
 
-#define ADD_POKEMON_TO_VIEW(container, pokemonList, GET_TITLE)                                      \
-  for (size_t i = 0; i < pokemonList.size(); i++) {                                                 \
-    auto pkm = pokemonList[i];                                                                      \
-    auto title = GET_TITLE(pkm, i);                                                                 \
-    auto pokemonItem = new brls::ListItem(title);                                                   \
-                                                                                                    \
-    if (pkm->getIsValid()) {                                                                        \
-      pokemonItem->setThumbnail(utils::getPokemonIconPath(pkm));                                    \
-    }                                                                                               \
-                                                                                                    \
-    pokemonItem->getClickEvent()->subscribe(                                                        \
-        [pkm](brls::View *view) { brls::Application::pushView(new ui::PokemonSummaryView(pkm)); }); \
-    container->addView(pokemonItem);                                                                \
-  }
-
-#define ADD_DENS_TO_VIEW(container, denList, GET_TITLE)                                                                   \
-  for (size_t i = 0; i < denList.size(); i++) {                                                                           \
-    auto den = denList[i];                                                                                                \
-    auto pkm = den->getPKM();                                                                                             \
-    auto title = GET_TITLE(den, pkm, i);                                                                                  \
-    auto denItem = new brls::ListItem(title);                                                                             \
-                                                                                                                          \
-    denItem->setThumbnail(utils::getPokemonIconPath(pkm));                                                                \
-    denItem->getClickEvent()->subscribe([den](brls::View *view) {                                                         \
-      brls::Dialog *dialog                                                                                                \
-          = new brls::Dialog(I18N::translate("Raid Seed") + ": " + csight::utils::convertNumToHexString(den->getSeed())); \
-      dialog->addButton(I18N::translate("Continue"), [dialog](brls::View *view) { dialog->close(); });                    \
-      dialog->setCancelable(false);                                                                                       \
-      dialog->open();                                                                                                     \
-    });                                                                                                                   \
-    container->addView(denItem);                                                                                          \
-  }
-
-#define GET_POKEMON_TITLE(pokemon)                                                                                               \
-  (pokemon->getIsShiny() ? I18N::translate("Shiny") + " " : "") + I18N::translate("species", pokemon->getSpeciesString()) + ", " \
-      + pokemon->getDisplayIVs()
-
-#define GET_POKEMON_TITLE_IF_VALID(pokemon) (pokemon->getIsValid() ? GET_POKEMON_TITLE(pokemon) : I18N::translate("None"))
-
-#define GET_PARTY_TITLE(pokemon, index) \
-  "[" + I18N::translate("Party") + " " + std::to_string(index + 1) + "] " + GET_POKEMON_TITLE_IF_VALID(pokemon);
-
-#define GET_BOX_TITLE(pokemon, index) \
-  "[B" + std::to_string((index / 30) + 1) + "S" + std::to_string((index % 30) + 1) + "] " + GET_POKEMON_TITLE_IF_VALID(pokemon);
-
-#define GET_MISC_TITLE(pokemon, index) m_miscTitles[index] + GET_POKEMON_TITLE_IF_VALID(pokemon);
-
-#define GET_DEN_TITLE(den, pokemon, index)                                                                                      \
-  den->getDenDisplayName() + ", " + std::to_string(pokemon->getFlawlessIVCount()) + "IV, "                                      \
-      + std::to_string(den->getDisplayStars()) + "★, " + I18N::translate("Shiny") + ": "                                        \
-      + std::to_string(den->getShinyAdvance()) + " (" + I18N::translate(csight::utils::getShinyTypeString(den->getShinyType())) \
-      + ")" + (den->getIsEvent() ? ", " + I18N::translate("Event") : "")
-
 namespace ui {
-  MainView::MainView() {
-    this->setTitle("CaptureSight");
-    this->setIcon(BOREALIS_ASSET("icon/app.jpg"));
+  std::string getDenTitle(std::shared_ptr<csight::game::swsh::Den> den, std::shared_ptr<csight::pkm::RaidPokemon> pkm,
+                          size_t index) {
+    auto denName = den->getDenDisplayName();
+    auto flawlessIVCount = std::to_string(pkm->getFlawlessIVCount());
+    auto stars = std::to_string(den->getDisplayStars());
+    auto shinyAdvance = std::to_string(den->getShinyAdvance());
+    auto shinyType = I18N::translate(csight::utils::getShinyTypeString(den->getShinyType()));
+    auto eventText = den->getIsEvent() ? ", " + I18N::translate("Event") : "";
 
-    m_miscTitles = {
+    return denName + ", " + flawlessIVCount + "IV, " + stars + "★, " + I18N::translate("Shiny") + ": " + shinyAdvance + " ("
+        + shinyType + ")" + eventText;
+  }
+
+  void addDensToView(brls::List *container, std::vector<std::shared_ptr<csight::game::swsh::Den>> denList) {
+    for (size_t i = 0; i < denList.size(); i++) {
+      auto den = denList[i];
+      auto pkm = den->getPKM();
+      auto title = getDenTitle(den, pkm, i);
+      auto denItem = new brls::ListItem(title);
+
+      denItem->setThumbnail(utils::getPokemonIconPath(pkm));
+      denItem->getClickEvent()->subscribe([den, pkm](brls::View *view) {
+        auto ability = I18N::translate("Ability") + ": " + pkm->getAbilityString() + " (" + pkm->getAbilitySlotString() + ")";
+        auto displayIVs = I18N::translate("IVs") + ": " + pkm->getDisplayIVs();
+        auto raidSeed = I18N::translate("Raid Seed") + ": " + csight::utils::convertNumToHexString(den->getSeed());
+
+        brls::Dialog *dialog = new brls::Dialog(raidSeed + "\n" + ability + "\n" + displayIVs);
+
+        dialog->addButton(I18N::translate("Continue"), [dialog](brls::View *view) { dialog->close(); });
+        dialog->setCancelable(false);
+        dialog->open();
+      });
+
+      container->addView(denItem);
+    }
+  }
+
+  std::string getPokemonTitle(std::shared_ptr<csight::pkm::PKM> pkm) {
+    auto shiny = pkm->getIsShiny() ? I18N::translate("Shiny") + " " : "";
+    auto species = I18N::translate("species", pkm->getSpeciesString());
+    auto displayIVs = pkm->getDisplayIVs();
+
+    return shiny + species + ", " + displayIVs;
+  }
+
+  std::string getPokemonTitleIfValid(std::shared_ptr<csight::pkm::PKM> pkm) {
+    return pkm->getIsValid() ? getPokemonTitle(pkm) : I18N::translate("None");
+  }
+
+  std::string getPartyTitle(std::shared_ptr<csight::pkm::PKM> pkm, size_t index) {
+    return "[" + I18N::translate("Party") + " " + std::to_string(index + 1) + "] " + getPokemonTitleIfValid(pkm);
+  }
+
+  std::string getBoxTitle(std::shared_ptr<csight::pkm::PKM> pkm, size_t index) {
+    return "[B" + std::to_string((index / 30) + 1) + "S" + std::to_string((index % 30) + 1) + "] " + getPokemonTitleIfValid(pkm);
+  }
+
+  std::string getMiscTitle(std::shared_ptr<csight::pkm::PKM> pkm, size_t index) {
+    std::vector<std::string> MISC_TITLES = {
       "[" + I18N::translate("Wild") + "] ",
       "[" + I18N::translate("Raid") + "] ",
       "[" + I18N::translate("Trade") + "] ",
     };
 
+    return MISC_TITLES[index] + getPokemonTitleIfValid(pkm);
+  }
+
+  void addPokemonToView(brls::List *container, std::vector<std::shared_ptr<csight::pkm::PK8>> pokemonList,
+                        std::function<std::string(std::shared_ptr<csight::pkm::PK8>, size_t)> getTitle) {
+    for (size_t i = 0; i < pokemonList.size(); i++) {
+      auto pkm = pokemonList[i];
+      auto title = getTitle(pkm, i);
+      auto pokemonItem = new brls::ListItem(title);
+
+      if (pkm->getIsValid()) {
+        pokemonItem->setThumbnail(utils::getPokemonIconPath(pkm));
+      }
+
+      pokemonItem->getClickEvent()->subscribe(
+          [pkm](brls::View *view) { brls::Application::pushView(new ui::PokemonSummaryView(pkm)); });
+      container->addView(pokemonItem);
+    }
+  }
+
+  MainView::MainView() {
+    this->setTitle("CaptureSight");
+    this->setIcon(BOREALIS_ASSET("icon/app.jpg"));
+
     m_partyPokemonList = new brls::List();
     auto partyPokemon = g_gameReader->readParty();
-    ADD_POKEMON_TO_VIEW(m_partyPokemonList, partyPokemon, GET_PARTY_TITLE);
+    addPokemonToView(m_partyPokemonList, partyPokemon, getPartyTitle);
 
     m_miscPokemonList = new brls::List();
     auto miscPokemon = std::vector<std::shared_ptr<csight::pkm::PK8>> {
@@ -85,23 +111,23 @@ namespace ui {
       g_gameReader->readRaid(),
       g_gameReader->readTrade(),
     };
-    ADD_POKEMON_TO_VIEW(m_miscPokemonList, miscPokemon, GET_MISC_TITLE);
+    addPokemonToView(m_miscPokemonList, miscPokemon, getMiscTitle);
 
     m_boxPokemonList = new brls::List();
     auto boxPokemon = g_gameReader->readBoxes();
-    ADD_POKEMON_TO_VIEW(m_boxPokemonList, boxPokemon, GET_BOX_TITLE);
+    addPokemonToView(m_boxPokemonList, boxPokemon, getBoxTitle);
 
     std::string denTabHeader = I18N::translate("Press A to view raid seed");
 
     m_activeDenList = new brls::List();
     m_activeDenList->addView(new brls::Header(denTabHeader));
     auto activeDens = g_gameReader->readDens(false);
-    ADD_DENS_TO_VIEW(m_activeDenList, activeDens, GET_DEN_TITLE);
+    addDensToView(m_activeDenList, activeDens);
 
     m_allDenList = new brls::List();
     m_allDenList->addView(new brls::Header(denTabHeader));
     auto allDens = g_gameReader->readDens(true);
-    ADD_DENS_TO_VIEW(m_allDenList, allDens, GET_DEN_TITLE);
+    addDensToView(m_allDenList, allDens);
 
     this->addTranslatedTab("Misc Pokemon", m_miscPokemonList);
     this->addTranslatedTab("Party Pokemon", m_partyPokemonList);

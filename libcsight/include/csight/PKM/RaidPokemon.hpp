@@ -15,10 +15,14 @@ namespace csight::pkm {
     u32 getSIDTID();
     u16 getSpecies();
     std::vector<u8> getIVs();
-    enums::Ability getAbility();
+    u16 getAbility();
+    enums::Ability getAbilitySlot();
     u64 getRaidSeed();
     u16 getForm();
     bool getIsEgg();
+    u16 getMove(u8 slot);
+    u8 getNature();
+    bool getIsValid();
 
    private:
     u64 m_seed;
@@ -27,6 +31,6 @@ namespace csight::pkm {
     u32 m_SIDTID;
     game::swsh::RaidEncounter m_spawn;
     std::vector<u8> m_IVs;
-    enums::Ability m_ability = enums::Ability::First;
+    enums::Ability m_abilitySlot = enums::Ability::First;
   };
 }

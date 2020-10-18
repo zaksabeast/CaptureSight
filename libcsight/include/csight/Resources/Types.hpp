@@ -7,5 +7,5 @@
 namespace csight::resources {
   extern std::vector<std::string> TypeNames;
 
-  extern std::vector<csight::enums::PokemonTypeSet> pokemonTypeList;
+  extern std::vector<csight::enums::PokemonTypeSet> pokemonTypeMap;
 }

@@ -5,8 +5,6 @@
 #include <csight/PKM/PK8.hpp>
 #include <csight/PKM/PKM.hpp>
 #include <csight/RNG/RNG.hpp>
-#include <csight/Resources/Abilities.hpp>
-#include <csight/Resources/Moves.hpp>
 #include <csight/Resources/Natures.hpp>
 #include <csight/Utils.hpp>
 #include <future>
@@ -128,8 +126,6 @@ namespace csight::pkm {
 
   u16 PK8::getMove(u8 slot) { return *(u16 *)(m_data + 0x72 + (slot * 2)); }
 
-  std::string PK8::getMoveString(u8 slot) { return utils::getIndex(resources::MovesList, this->getMove(slot)); }
-
   std::vector<u16> PK8::getMoves() {
     std::vector<u16> result;
 
@@ -154,11 +150,23 @@ namespace csight::pkm {
 
   bool PK8::getIsEgg() { return this->getIsValid() && ((this->getIV32() >> 30) & 1) == 1; }
 
-  enums::Ability PK8::getAbility() { return (enums::Ability) * (u8 *)(m_data + 0x14); }
+  enums::Ability PK8::getAbilitySlot() {
+    u8 abilitySlot = *(u8 *)(m_data + 0x16);
+
+    switch (abilitySlot) {
+      case 1:
+        return enums::Ability::First;
+      case 2:
+        return enums::Ability::Second;
+      default:
+      case 4:
+        return enums::Ability::Hidden;
+    }
+  }
+
+  u16 PK8::getAbility() { return *(u16 *)(m_data + 0x14); }
 
   u8 PK8::getNature() { return *(u8 *)(m_data + 0x20); }
-
-  std::string PK8::getNatureString() { return utils::getIndex(resources::NatureList, this->getNature()); }
 
   u8 PK8::getMintedNature() { return *(u8 *)(m_data + 0x21); }
 

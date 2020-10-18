@@ -1,10 +1,10 @@
-#pragma once
-
 #include <algorithm>
 #include <csight/Enums/ShinyType.hpp>
 #include <csight/Enums/Types.hpp>
 #include <csight/PKM/PKM.hpp>
 #include <csight/Resources/Abilities.hpp>
+#include <csight/Resources/Moves.hpp>
+#include <csight/Resources/Natures.hpp>
 #include <csight/Resources/Types.hpp>
 #include <csight/Utils.hpp>
 #include <future>
@@ -23,13 +23,29 @@ namespace csight::pkm {
 
   std::string PKM::getAbilityString() { return utils::getIndex(resources::Abilities, this->getAbility()); }
 
+  std::string PKM::getMoveString(u8 slot) { return utils::getIndex(resources::MovesList, this->getMove(slot)); }
+
+  std::string PKM::getNatureString() { return utils::getIndex(resources::NatureList, this->getNature()); }
+
+  std::string PKM::getAbilitySlotString() {
+    switch (this->getAbilitySlot()) {
+      case enums::Ability::First:
+        return "1";
+      case enums::Ability::Second:
+        return "2";
+      default:
+      case enums::Ability::Hidden:
+        return "H";
+    }
+  }
+
   std::pair<enums::PokemonType, enums::PokemonType> PKM::getTypes() {
     auto form = this->getForm();
     auto species = this->getSpecies();
 
     // Arceus and Silvally have the most forms with different types at 18
     std::vector<csight::enums::PokemonTypeSet> filteredList(18);
-    auto endIterator = std::copy_if(resources::pokemonTypeList.begin(), resources::pokemonTypeList.end(), filteredList.begin(),
+    auto endIterator = std::copy_if(resources::pokemonTypeMap.begin(), resources::pokemonTypeMap.end(), filteredList.begin(),
                                     [species](auto type) { return type.species == species; });
 
     filteredList.resize(std::distance(filteredList.begin(), endIterator));

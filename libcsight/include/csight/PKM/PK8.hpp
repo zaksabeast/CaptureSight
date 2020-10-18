@@ -30,16 +30,15 @@ namespace csight::pkm {
     std::vector<u8> getIVs();
     u8 getEV(u8 stat);
     std::vector<u8> getEVs();
-    enums::Ability getAbility();
+    u16 getAbility();
+    enums::Ability getAbilitySlot();
     u32 getPID();
     u32 getSIDTID();
     u16 getMove(u8 slot);
-    std::string getMoveString(u8 slot);
     std::vector<u16> getMoves();
     std::vector<std::string> getMoveStrings(u8 slot);
     u8 getMovePP(u8 slot);
     u8 getNature();
-    std::string getNatureString();
     u8 getMintedNature();
     std::string getMintedNatureString();
     u16 getChecksum();

@@ -3,6 +3,7 @@
 #include <csight/Enums/Types.hpp>
 #include <csight/Game/SWSH/DenHashes.hpp>
 #include <csight/Game/SWSH/RaidTemplateTables.hpp>
+#include <csight/Resources/Abilities.hpp>
 #include <csight/Resources/Species.hpp>
 #include <csight/Resources/Types.hpp>
 #include <csight/Utils.hpp>
@@ -151,5 +152,20 @@ namespace csight::utils {
     }
 
     return enums::ShinyType::None;
+  }
+
+  u16 getAbilityOfPokemon(u16 species, u8 form, enums::Ability ability) {
+    auto speciesAbilities = getIndex(resources::pokemonAbilityMap, species);
+    auto formAbilities = getIndex(speciesAbilities, form);
+
+    switch (ability) {
+      case enums::Ability::Second:
+        return formAbilities[1];
+      case enums::Ability::Hidden:
+        return formAbilities[2];
+      default:
+      case enums::Ability::First:
+        return formAbilities[0];
+    }
   }
 }
