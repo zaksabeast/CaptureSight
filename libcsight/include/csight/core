@@ -16,7 +16,6 @@
 #include <csight/PKM/PKM.hpp>
 #include <csight/PKM/RaidPokemon.hpp>
 #include <csight/RNG/RNG.hpp>
-#include <csight/RNG/XOROSHIRO.hpp>
 #include <csight/Resources/Abilities.hpp>
 #include <csight/Resources/Moves.hpp>
 #include <csight/Resources/Natures.hpp>
