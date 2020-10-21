@@ -31,7 +31,7 @@ namespace csight::rng {
 
     u32 next(u32 mask) { return nextulong() & mask; }
 
-    u32 next(u32 compare, u32 mask) {
+    u32 next(u32 max, u32 mask) {
       u32 rand = nextulong() & mask;
 
       while (rand >= max) {
