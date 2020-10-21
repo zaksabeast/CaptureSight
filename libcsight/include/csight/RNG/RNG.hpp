@@ -27,7 +27,7 @@ namespace csight::rng {
       return result;
     }
 
-    u32 nextuint() { return (u32)nextulong() };
+    u32 nextuint() { return (u32)nextulong(); };
 
     u32 next(u32 mask) { return nextulong() & mask; }
 
