@@ -21,8 +21,4 @@ namespace csight::game::swsh {
   };
 
   RaidEncounterTable findRaidEncounterTable(std::vector<RaidEncounterTable> encounterTables, u32 denId, bool isRare);
-
-  std::vector<RaidEncounterTable> getSwordEncounterTables();
-
-  std::vector<RaidEncounterTable> getShieldEncounterTables();
 }

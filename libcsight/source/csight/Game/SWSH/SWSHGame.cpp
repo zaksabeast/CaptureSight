@@ -1,6 +1,7 @@
 #include <csight/Enums/Ability.hpp>
 #include <csight/Game/GameReader.hpp>
 #include <csight/Game/SWSH/DenHashes.hpp>
+#include <csight/Game/SWSH/EncounterNest8Archive_generated.h>
 #include <csight/Game/SWSH/NestHoleDistributionEncounter8Archive_generated.h>
 #include <csight/Game/SWSH/RaidSettings.hpp>
 #include <csight/Game/SWSH/SWSHGame.hpp>
@@ -19,31 +20,31 @@ namespace csight::game::swsh {
     switch (language) {
       case SetLanguage_ZHCN:
       case SetLanguage_ZHHANS:
-        return 0x2F9EA3F0;
+        return 0x2F9EA410;
       case SetLanguage_ZHTW:
       case SetLanguage_ZHHANT:
-        return 0x2F9EA390;
+        return 0x2F9EA3B0;
       case SetLanguage_KO:
-        return 0x2F9EA7F0;
+        return 0x2F9EA810;
       case SetLanguage_IT:
-        return 0x2F9EB170;
+        return 0x2F9EB190;
       case SetLanguage_JA:
-        return 0x2F9EB350;
+        return 0x2F9EB370;
       case SetLanguage_FR:
       case SetLanguage_FRCA:
-        return 0x2F9EB3E0;
+        return 0x2F9EB400;
       case SetLanguage_ES:
       case SetLanguage_ES419:
-        return 0x2F9EB3B0;
+        return 0x2F9EB3D0;
       case SetLanguage_DE:
-        return 0x2F9EB4C0;
+        return 0x2F9EB4E0;
       case SetLanguage_PT:
       case SetLanguage_RU:
       case SetLanguage_NL:
       case SetLanguage_ENUS:
       case SetLanguage_ENGB:
       default:
-        return 0x2F9EB1F0;
+        return 0x2F9EB210;
     }
   }
 
@@ -71,7 +72,7 @@ namespace csight::game::swsh {
       encounterTables = { { hash : 0u, templates : templates } };
       eventTemplateTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { hash : 0u, templates : templates });
     } else {
-      encounterTables = this->getEncounterTables();
+      encounterTables = this->readEncounterTables();
       eventTemplateTable = this->readEventEncounterTable();
     }
 
@@ -98,36 +99,95 @@ namespace csight::game::swsh {
     return dens;
   }
 
-  std::vector<RaidEncounterTable> SWSHGame::getEncounterTables() {
-    if (this->getTitleId() == SWORD_TITLE_ID) {
-      return getSwordEncounterTables();
-    }
+  bool SWSHGame::checkSanity(u64 offset, size_t size) {
+    u32 readSize = 0;
 
-    return getShieldEncounterTables();
+    this->readHeap(offset, &readSize, sizeof(u32));
+
+    return readSize == size;
   }
 
+  // Unfortunately this is mostly a duplicate of readEventEncounterTable.
+  // The flatbuffer classes should be unmodified after being generated, so they don't have a shared interface.
+  // The good thing is both functions have the same return, so this is the only duplicate code.
+  std::vector<RaidEncounterTable> SWSHGame::readEncounterTables() {
+    bool isValidSize = this->checkSanity(m_encounterFlatbufferOffset + 0x20, m_encounterFlatbufferSanityValue);
+    std::vector<RaidEncounterTable> result = { { hash : 0, templates : {} } };
+
+    if (!isValidSize) {
+      return result;
+    }
+
+    u8 *encounterFlatbuffer = new u8[m_encounterFlatbufferSize];
+    this->readHeap(m_encounterFlatbufferOffset, encounterFlatbuffer, m_encounterFlatbufferSize);
+    auto nestTables = pkNX::Structures::GetEncounterNest8Archive(encounterFlatbuffer)->Tables();
+
+    // Don't assume Sword will always be first
+    u32 gameVersion = this->getTitleId() == SWORD_TITLE_ID ? 1 : 2;
+
+    for (auto nestTable = nestTables->begin(); nestTable != nestTables->end(); ++nestTable) {
+      if (nestTable->GameVersion() != gameVersion) {
+        continue;
+      }
+
+      std::vector<RaidEncounter> templates;
+      auto encounters = nestTable->Entries();
+
+      for (auto encounter = encounters->begin(); encounter != encounters->end(); ++encounter) {
+        auto probabilities = encounter->Probabilities();
+
+        RaidEncounter raidEncounter = {
+          species : encounter->Species(),
+          flawlessIVs : (u32)encounter->FlawlessIVs(),
+          ability : (csight::game::swsh::AbilityRaidSetting)encounter->Ability(),
+          form : (u16)encounter->AltForm(),
+          probabilities : {
+              probabilities->Get(0),
+              probabilities->Get(1),
+              probabilities->Get(2),
+              probabilities->Get(3),
+              probabilities->Get(4),
+          },
+          shinyType : ShinyRaidSetting::Random,
+        };
+
+        templates.push_back(raidEncounter);
+      }
+
+      result.push_back({ hash : nestTable->TableID(), templates : templates });
+    }
+
+    delete[] encounterFlatbuffer;
+
+    return result;
+  }
+
+  // Unfortunately this is mostly a duplicate of readEncounterTable.
+  // The flatbuffer classes should be unmodified after being generated, so they don't have a shared interface.
+  // The good thing is both functions have the same return, so this is the only duplicate code.
   std::shared_ptr<RaidEncounterTable> SWSHGame::readEventEncounterTable() {
-    bool isPlayingSword = this->getTitleId() == SWORD_TITLE_ID;
-    u32 gameVersion = isPlayingSword ? 1 : 2;
     std::vector<RaidEncounter> raidEncounters;
     auto encounterTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { eventHash, raidEncounters });
-    u32 eventFlatbufferInMemorySize = 0;
-    this->readHeap(m_eventFlatbufferOffset + 0x10, &eventFlatbufferInMemorySize, sizeof(u32));
 
-    if (eventFlatbufferInMemorySize + 4 != m_eventFlatbufferSize)
+    bool isValid = this->checkSanity(m_eventFlatbufferOffset - 0x10, m_eventFlatbufferSize - 4);
+
+    if (!isValid) {
       return encounterTable;
+    }
 
     u8 *eventFlatbuffer = new u8[m_eventFlatbufferSize];
-    this->readHeap(m_eventFlatbufferOffset + 0x20, eventFlatbuffer, m_eventFlatbufferSize);
+    this->readHeap(m_eventFlatbufferOffset, eventFlatbuffer, m_eventFlatbufferSize);
     auto eventEncounterTables = pkNX::Structures::GetNestHoleDistributionEncounter8Archive(eventFlatbuffer)->Tables();
 
     // Don't assume Sword will always be first
+    u32 gameVersion = this->getTitleId() == SWORD_TITLE_ID ? 1 : 2;
     auto tableIndex = gameVersion == eventEncounterTables->Get(0)->GameVersion() ? 0 : 1;
     auto eventTable = eventEncounterTables->Get(tableIndex);
     auto eventEncounters = eventTable->Entries();
 
     for (auto eventEncounter = eventEncounters->begin(); eventEncounter != eventEncounters->end(); ++eventEncounter) {
       auto eventProbabilities = eventEncounter->Probabilities();
+
       RaidEncounter raidEncounter = {
         species : eventEncounter->Species(),
         flawlessIVs : (u32)eventEncounter->FlawlessIVs(),
