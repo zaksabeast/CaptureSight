@@ -14,7 +14,7 @@ namespace csight::game::swsh {
     std::vector<std::shared_ptr<Den>> readDens(bool shouldReadAllDens);
     std::vector<RaidEncounterTable> readEncounterTables();
     std::shared_ptr<RaidEncounterTable> readEventEncounterTable();
-    bool checkSanity(u64 offset, size_t size);
+    bool checkSanity(u64 offset, u32 size);
     std::vector<std::shared_ptr<pkm::PK8>> readParty();
     std::vector<std::shared_ptr<pkm::PK8>> readBoxes();
     std::shared_ptr<pkm::PK8> readWild();

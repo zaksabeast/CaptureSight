@@ -99,7 +99,7 @@ namespace csight::game::swsh {
     return dens;
   }
 
-  bool SWSHGame::checkSanity(u64 offset, size_t size) {
+  bool SWSHGame::checkSanity(u64 offset, u32 size) {
     u32 readSize = 0;
 
     this->readHeap(offset, &readSize, sizeof(u32));
