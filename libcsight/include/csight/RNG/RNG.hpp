@@ -4,7 +4,7 @@
 
 namespace csight::rng {
   namespace lcrng {
-    u32 advance(u32 seed) { return seed * 0x41C64E6D + 0x6073; }
+    inline u32 advance(u32 seed) { return seed * 0x41C64E6D + 0x6073; }
   }
 
   class xoroshiro {
