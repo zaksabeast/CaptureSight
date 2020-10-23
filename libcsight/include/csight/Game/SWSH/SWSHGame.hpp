@@ -29,7 +29,7 @@ namespace csight::game::swsh {
     u64 m_trainerBlockOffset = 0x45061108;
     u64 m_raidOffset = 0x886C1BD8;
     u64 m_legendOffset = 0x886BC058;
-    u64 m_tradeOffset = 0xAF285F68;
+    u64 m_tradeOffset = 0xaf286078;
     u64 m_partyOffset = 0x450BE8C0;
     u64 m_wildOffset = 0x8FEA3358;
     u64 m_boxOffset = 0x4506D890;
