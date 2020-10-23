@@ -44,7 +44,7 @@ namespace csight::game::swsh {
       case SetLanguage_ENUS:
       case SetLanguage_ENGB:
       default:
-        return 0x2F9EB210;
+        return 0x2F9EB350;
     }
   }
 
@@ -53,7 +53,7 @@ namespace csight::game::swsh {
     m_eventFlatbufferOffset = GetEventFlatbufferOffset();
   }
 
-  std::shared_ptr<Den> SWSHGame::readDen(u8 denId) {
+  std::shared_ptr<Den> SWSHGame::readDen(u16 denId) {
     u8 *denBytes = new u8[0x18];
     std::vector<RaidEncounterTable> encounterTables;
     std::shared_ptr<RaidEncounterTable> eventTemplateTable;
@@ -76,9 +76,15 @@ namespace csight::game::swsh {
       eventTemplateTable = this->readEventEncounterTable();
     }
 
-    // Account for Isle of Armor offset
-    u64 shiftedDenId = denId >= FIRST_IOA_DEN_ID ? denId + 11 : denId;
-    this->readHeap(m_denOffset + (shiftedDenId * 0x18), denBytes, 0x18);
+    u64 shiftedOffset = m_denOffset;
+
+    if (denId >= FIRST_CT_DEN_ID) {
+      shiftedOffset += 0x300;
+    } else if (denId >= FIRST_IOA_DEN_ID) {
+      shiftedOffset += 0x108;
+    }
+
+    this->readHeap(shiftedOffset + (denId * 0x18), denBytes, 0x18);
 
     auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable, this->getTrainerSIDTID());
 
@@ -111,15 +117,15 @@ namespace csight::game::swsh {
   // The flatbuffer classes should be unmodified after being generated, so they don't have a shared interface.
   // The good thing is both functions have the same return, so this is the only duplicate code.
   std::vector<RaidEncounterTable> SWSHGame::readEncounterTables() {
-    bool isValidSize = this->checkSanity(m_encounterFlatbufferOffset + 0x20, m_encounterFlatbufferSanityValue);
+    bool isValidSize = this->checkSanity(m_nestFlatbufferSanityOffset, m_nestFlatbufferSanityValue);
     std::vector<RaidEncounterTable> result = { { hash : 0, templates : {} } };
 
     if (!isValidSize) {
       return result;
     }
 
-    u8 *encounterFlatbuffer = new u8[m_encounterFlatbufferSize];
-    this->readHeap(m_encounterFlatbufferOffset, encounterFlatbuffer, m_encounterFlatbufferSize);
+    u8 *encounterFlatbuffer = new u8[m_nestFlatbufferSize];
+    this->readHeap(m_nestFlatbufferOffset, encounterFlatbuffer, m_nestFlatbufferSize);
     auto nestTables = pkNX::Structures::GetEncounterNest8Archive(encounterFlatbuffer)->Tables();
 
     // Don't assume Sword will always be first

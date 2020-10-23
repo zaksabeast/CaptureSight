@@ -6,7 +6,7 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
 VER_MAJOR	:= 0
-VER_MINOR	:= 8
+VER_MINOR	:= 9
 VER_MICRO	:= 0
 
 APP_TITLE   := CaptureSight

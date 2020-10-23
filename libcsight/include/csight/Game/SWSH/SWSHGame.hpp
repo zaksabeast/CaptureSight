@@ -10,7 +10,7 @@ namespace csight::game::swsh {
   class SWSHGame : public GameReader<pkm::PK8> {
    public:
     SWSHGame(bool shouldUseSmallMemoryMode);
-    std::shared_ptr<Den> readDen(u8 denId);
+    std::shared_ptr<Den> readDen(u16 denId);
     std::vector<std::shared_ptr<Den>> readDens(bool shouldReadAllDens);
     std::vector<RaidEncounterTable> readEncounterTables();
     std::shared_ptr<RaidEncounterTable> readEventEncounterTable();
@@ -23,21 +23,22 @@ namespace csight::game::swsh {
     u32 getTrainerSIDTID();
 
    private:
-    u64 m_denOffset = 0x450C0A80;
-    u64 m_eventFlatbufferOffset = 0x2E5E58B8;
-    u64 m_encounterFlatbufferOffset = 0x40b7d600;
-    u64 m_trainerBlockOffset = 0x45061108;
-    u64 m_raidOffset = 0x886C1BD8;
-    u64 m_legendOffset = 0x886BC058;
+    u64 m_denOffset = 0x450c8a70;
+    u64 m_eventFlatbufferOffset = 0x2f9eb350;
+    u64 m_nestFlatbufferOffset = 0x40bc5b50;
+    u64 m_nestFlatbufferSanityOffset = 0x40bc5b70;
+    u64 m_trainerBlockOffset = 0x45068fb8;
+    u64 m_raidOffset = 0x886c1ec8;
+    u64 m_legendOffset = 0x886bc058;
     u64 m_tradeOffset = 0xaf286078;
-    u64 m_partyOffset = 0x450BE8C0;
-    u64 m_wildOffset = 0x8FEA3358;
-    u64 m_boxOffset = 0x4506D890;
+    u64 m_partyOffset = 0x450c68b0;
+    u64 m_wildOffset = 0x8fea3158;
+    u64 m_boxOffset = 0x45075880;
 
     bool m_shouldUseSmallMemoryMode = true;
     u32 m_eventFlatbufferSize = 0x23D4;
-    u32 m_encounterFlatbufferSize = 0x48410;
-    // This is a value within the flatbuffer to enusre it's there
-    u32 m_encounterFlatbufferSanityValue = 0x47c6c;
+    u32 m_nestFlatbufferSize = 0x5AB00;
+    // This is a u32 to enusre the flatbuffer is there
+    u32 m_nestFlatbufferSanityValue = 0x5a35c;
   };
 }
