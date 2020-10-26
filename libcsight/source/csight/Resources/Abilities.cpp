@@ -265,6 +265,13 @@ namespace csight::resources {
     "Hunger Switch",
     "Quick Draw",
     "Unseen Fist",
+    "Curious Medicine",
+    "Transistor",
+    "Dragon’s Maw",
+    "Chilling Neigh",
+    "Grim Neigh",
+    "As One",
+    "As One",
   };
 
   std::vector<std::vector<std::vector<u16>>> pokemonAbilityMap
