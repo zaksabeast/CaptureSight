@@ -32,7 +32,7 @@ namespace csight::game::swsh {
     u64 m_legendOffset = 0x886bc058;
     u64 m_tradeOffset = 0xaf286078;
     u64 m_partyOffset = 0x450c68b0;
-    u64 m_wildOffset = 0x8fea3158;
+    u64 m_wildOffset = 0x8fea3648;
     u64 m_boxOffset = 0x45075880;
 
     bool m_shouldUseSmallMemoryMode = true;
