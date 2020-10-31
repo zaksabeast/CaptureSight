@@ -13,7 +13,8 @@ namespace csight::game::swsh {
     SWSHGame();
     SWSHGame(std::string swordFlatbufferFile, std::string shieldFlatbufferFile);
     std::shared_ptr<Den> readDen(u16 denId);
-    std::vector<std::shared_ptr<Den>> readDens(bool shouldReadAllDens);
+    std::vector<std::shared_ptr<Den>> readDens(u32 start = 0, u32 end = DEN_LIST_SIZE, bool filterActiveDens = false);
+    std::vector<std::shared_ptr<Den>> readDens(DenType filterDenType, bool filterActiveDens = false);
     std::vector<RaidEncounterTable> readEncounterTables(std::string swordFlatbufferFile, std::string shieldFlatbufferFile);
     std::shared_ptr<RaidEncounterTable> readEventEncounterTable();
     bool checkSanity(u64 offset, u32 size);

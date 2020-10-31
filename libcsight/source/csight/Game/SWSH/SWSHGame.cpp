@@ -95,17 +95,36 @@ namespace csight::game::swsh {
     return den;
   }
 
-  std::vector<std::shared_ptr<Den>> SWSHGame::readDens(bool shouldReadAllDens) {
+  std::vector<std::shared_ptr<Den>> SWSHGame::readDens(u32 start, u32 end, bool filterActiveDens) {
     std::vector<std::shared_ptr<Den>> dens;
 
-    for (u32 i = 0; i < DEN_LIST_SIZE; i++) {
+    for (u32 i = start; i < end; i++) {
       auto den = this->readDen(i);
-      if (shouldReadAllDens || den->getIsActive()) {
+      if (!filterActiveDens || den->getIsActive()) {
         dens.push_back(den);
       }
     }
 
     return dens;
+  }
+
+  std::vector<std::shared_ptr<Den>> SWSHGame::readDens(DenType filterDenType, bool filterActiveDens) {
+    std::pair<u32, u32> denRange(0, 0);
+
+    switch (filterDenType) {
+      case DenType::IsleOfArmor:
+        denRange = std::make_pair(100, 190);
+        break;
+      case DenType::CrownTundra:
+        denRange = std::make_pair(190, DEN_LIST_SIZE);
+        break;
+      default:
+      case DenType::Vanilla:
+        denRange = std::make_pair(0, 100);
+        break;
+    }
+
+    return this->readDens(denRange.first, denRange.second, filterActiveDens);
   }
 
   bool SWSHGame::checkSanity(u64 offset, u32 size) {

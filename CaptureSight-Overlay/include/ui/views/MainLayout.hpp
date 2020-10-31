@@ -7,6 +7,7 @@
 class MainLayout : public tsl::Gui {
  public:
   virtual tsl::elm::Element *createUI();
+  void addNavigationButton(tsl::elm::List *container, std::string title, ViewMode viewMode);
   bool onMenuItemClick(ViewMode mode, s64 keys);
   void setMenuItemClickCallback(std::function<void(ViewMode)>);
 

@@ -1,3 +1,13 @@
 #pragma once
 
-enum ViewMode { party, box, wild, activeDens, allDens };
+enum ViewMode {
+  party,
+  box,
+  wild,
+  vanillaActiveDens,
+  vanillaAllDens,
+  ioaActiveDens,
+  ioaAllDens,
+  ctActiveDens,
+  ctAllDens,
+};
