@@ -64,9 +64,9 @@ DevkitPro and libnx will be needed to build this tool.
 
 After installing those, run `make`.
 
-Optional: To build the raid event flatbuffer headers, install [flatc](https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html) and run `flatc --cpp -o libcsight/include/csight/ libcsight/resources/NestHoleDistributionEncounter8Archive.fbs` for each `fbs`. Alternatively, use a docker image with `flatc`, such as [neomantra/flatbuffers](https://hub.docker.com/r/neomantra/flatbuffers).
+Optional: To build the raid event flatbuffer headers, install [flatc](https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html) and run `flatc --cpp -o libcsight/include/csight/ Resources/NestHoleDistributionEncounter8Archive.fbs` for each `fbs`. Alternatively, use a docker image with `flatc`, such as [neomantra/flatbuffers](https://hub.docker.com/r/neomantra/flatbuffers).
 
-Optional: To build the data files, use `flatc -b libcsight/resources/EncounterNest8Archive.fbs libcsight/resources/shield-encounters.json` for both encounter files.
+Optional: To build the data files, use `flatc -b Resources/EncounterNest8Archive.fbs libcsight/resources/shield-encounters.json` for both encounter files.
 
 Flatbuffers are used to:
 
