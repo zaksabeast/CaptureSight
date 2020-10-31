@@ -11,7 +11,7 @@ namespace csight::game {
   template <class PKMType>
   class GameReader {
    public:
-    GameReader(bool shouldUseSmallMemoryMode) { m_isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht"); }
+    GameReader() { m_isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht"); }
 
     Result attach() { return dmntchtGetCheatProcessMetadata(&m_metadata); }
 

@@ -25,7 +25,9 @@ int main(int argc, char *argv[]) {
   }
 
   I18N::loadTranslations();
-  g_gameReader = std::make_shared<csight::game::swsh::SWSHGame>(false);
+  auto swordEncounterFlatbuffer = BOREALIS_ASSET("flatbuffers/sword-encounters.bin");
+  auto shieldEncounterFlatbuffer = BOREALIS_ASSET("flatbuffers/shield-encounters.bin");
+  g_gameReader = std::make_shared<csight::game::swsh::SWSHGame>(swordEncounterFlatbuffer, shieldEncounterFlatbuffer);
   bool isDebugServiceRunning = g_gameReader->getIsServiceRunning();
 
   if (!isDebugServiceRunning) {

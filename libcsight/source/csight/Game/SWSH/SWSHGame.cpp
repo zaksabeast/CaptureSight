@@ -9,6 +9,7 @@
 #include <csight/PKM/PK8.hpp>
 #include <csight/RNG/RNG.hpp>
 #include <csight/TitleIds.hpp>
+#include <fstream>
 #include <memory>
 #include <switch.h>
 
@@ -50,15 +51,9 @@ namespace csight::game::swsh {
     }
   }
 
-  SWSHGame::SWSHGame(bool shouldUseSmallMemoryMode) : GameReader<pkm::PK8>(shouldUseSmallMemoryMode) {
-    m_shouldUseSmallMemoryMode = shouldUseSmallMemoryMode;
+  SWSHGame::SWSHGame() : GameReader<pkm::PK8>() {
     m_eventFlatbufferOffset = GetEventFlatbufferOffset();
-  }
 
-  std::shared_ptr<Den> SWSHGame::readDen(u16 denId) {
-    u8 *denBytes = new u8[0x18];
-    std::vector<RaidEncounterTable> encounterTables;
-    std::shared_ptr<RaidEncounterTable> eventTemplateTable;
     std::vector<RaidEncounter> templates = {
       {
         species : 0,
@@ -70,13 +65,19 @@ namespace csight::game::swsh {
       },
     };
 
-    if (m_shouldUseSmallMemoryMode) {
-      encounterTables = { { hash : 0u, templates : templates } };
-      eventTemplateTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { hash : 0u, templates : templates });
-    } else {
-      encounterTables = this->readEncounterTables();
-      eventTemplateTable = this->readEventEncounterTable();
-    }
+    m_encounterTables = { { hash : 0u, templates : templates } };
+    m_eventTemplateTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { hash : 0u, templates : templates });
+  }
+
+  SWSHGame::SWSHGame(std::string swordFlatbufferFile, std::string shieldFlatbufferFile) : GameReader<pkm::PK8>() {
+    m_eventFlatbufferOffset = GetEventFlatbufferOffset();
+
+    m_encounterTables = this->readEncounterTables(swordFlatbufferFile, shieldFlatbufferFile);
+    m_eventTemplateTable = this->readEventEncounterTable();
+  }
+
+  std::shared_ptr<Den> SWSHGame::readDen(u16 denId) {
+    u8 *denBytes = new u8[0x18];
 
     u64 shiftedOffset = m_denOffset;
 
@@ -88,7 +89,7 @@ namespace csight::game::swsh {
 
     this->readHeap(shiftedOffset + (denId * 0x18), denBytes, 0x18);
 
-    auto den = std::make_shared<Den>(denBytes, denId, encounterTables, eventTemplateTable, this->getTrainerSIDTID());
+    auto den = std::make_shared<Den>(denBytes, denId, m_encounterTables, m_eventTemplateTable, this->getTrainerSIDTID());
 
     delete[] denBytes;
     return den;
@@ -118,26 +119,19 @@ namespace csight::game::swsh {
   // Unfortunately this is mostly a duplicate of readEventEncounterTable.
   // The flatbuffer classes should be unmodified after being generated, so they don't have a shared interface.
   // The good thing is both functions have the same return, so this is the only duplicate code.
-  std::vector<RaidEncounterTable> SWSHGame::readEncounterTables() {
-    bool isValidSize = this->checkSanity(m_nestFlatbufferSanityOffset, m_nestFlatbufferSanityValue);
-    std::vector<RaidEncounterTable> result = { { hash : 0, templates : {} } };
+  std::vector<RaidEncounterTable> SWSHGame::readEncounterTables(std::string swordFlatbufferFile,
+                                                                std::string shieldFlatbufferFile) {
+    bool isSword = this->getTitleId() == SWORD_TITLE_ID;
+    auto encounterFile = isSword ? swordFlatbufferFile : shieldFlatbufferFile;
 
-    if (!isValidSize) {
-      return result;
-    }
+    std::ifstream stream(encounterFile, std::ios::in | std::ios::binary);
+    std::vector<u8> encounterFlatbuffer((std::istreambuf_iterator<char>(stream)), std::istreambuf_iterator<char>());
 
-    u8 *encounterFlatbuffer = new u8[m_nestFlatbufferSize];
-    this->readHeap(m_nestFlatbufferOffset, encounterFlatbuffer, m_nestFlatbufferSize);
-    auto nestTables = pkNX::Structures::GetEncounterNest8Archive(encounterFlatbuffer)->Tables();
+    auto nestTables = pkNX::Structures::GetEncounterNest8Archive(encounterFlatbuffer.data())->Tables();
 
-    // Don't assume Sword will always be first
-    u32 gameVersion = this->getTitleId() == SWORD_TITLE_ID ? 1 : 2;
+    std::vector<RaidEncounterTable> result = {};
 
     for (auto nestTable = nestTables->begin(); nestTable != nestTables->end(); ++nestTable) {
-      if (nestTable->GameVersion() != gameVersion) {
-        continue;
-      }
-
       std::vector<RaidEncounter> templates;
       auto encounters = nestTable->Entries();
 
@@ -164,8 +158,6 @@ namespace csight::game::swsh {
 
       result.push_back({ hash : nestTable->TableID(), templates : templates });
     }
-
-    delete[] encounterFlatbuffer;
 
     return result;
   }
