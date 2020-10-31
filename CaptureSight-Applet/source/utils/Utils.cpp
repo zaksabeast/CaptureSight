@@ -14,4 +14,11 @@ namespace utils {
 
     return BOREALIS_ASSET("pokemon-sprites/b_" + species + form + shiny + ".png");
   }
+
+  std::string getPokemonIconPath(u16 speciesNum, u16 formNum) {
+    std::string species = speciesNum == 0 ? "0-1" : std::to_string(speciesNum);
+    std::string form = formNum > 0 ? "-" + std::to_string(formNum) : "";
+
+    return BOREALIS_ASSET("pokemon-sprites/b_" + species + form + ".png");
+  }
 }  // utils

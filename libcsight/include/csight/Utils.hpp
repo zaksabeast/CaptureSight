@@ -65,4 +65,6 @@ namespace csight::utils {
   enums::ShinyType getShinyType(u32 PID, u32 SIDTID);
 
   u16 getAbilityOfPokemon(u16 species, u8 form, enums::Ability ability);
+
+  std::pair<enums::PokemonType, enums::PokemonType> getPokemonTypes(u16 species, u16 form);
 }

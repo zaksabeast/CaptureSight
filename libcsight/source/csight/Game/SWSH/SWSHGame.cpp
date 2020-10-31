@@ -1,11 +1,13 @@
 #include <csight/Enums/Ability.hpp>
 #include <csight/Game/GameReader.hpp>
 #include <csight/Game/SWSH/DenHashes.hpp>
+#include <csight/Game/SWSH/DmaxAdventure.hpp>
 #include <csight/Game/SWSH/EncounterNest8Archive_generated.h>
 #include <csight/Game/SWSH/NestHoleDistributionEncounter8Archive_generated.h>
 #include <csight/Game/SWSH/RaidSettings.hpp>
 #include <csight/Game/SWSH/SWSHGame.hpp>
 #include <csight/PKM/PK8.hpp>
+#include <csight/RNG/RNG.hpp>
 #include <csight/TitleIds.hpp>
 #include <memory>
 #include <switch.h>
@@ -222,6 +224,19 @@ namespace csight::game::swsh {
   std::shared_ptr<pkm ::PK8> SWSHGame::readRaid() { return this->readPKM(m_raidOffset, pkm::PK8::PartySize); }
 
   std::shared_ptr<pkm ::PK8> SWSHGame::readTrade() { return this->readPKM(m_tradeOffset, pkm::PK8::PartySize); }
+
+  u64 SWSHGame::readDmaxAdventureSeed() {
+    u64 seed = 0;
+
+    this->readHeap(m_dmaxAdventureSpeciesSeedOffset, &seed, sizeof(u64));
+
+    return seed;
+  }
+
+  std::shared_ptr<DmaxAdventure> SWSHGame::getDmaxAdventureSpeciesList(u8 npcCount) {
+    auto seed = this->readDmaxAdventureSeed();
+    return generateDmaxAdventureTemplate(seed, npcCount);
+  }
 
   u32 SWSHGame::getTrainerSIDTID() {
     u32 sidtid = 0;

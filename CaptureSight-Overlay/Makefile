@@ -19,7 +19,7 @@ ICON	    	:= icon.jpg
 
 BUILD       := build
 SOURCES     := source source/ui source/ui/views source/utils
-INCLUDES    := include include/ui include/ui/views include/utils
+INCLUDES    := include include/ui include/ui/views include/utils ../flatbuffers/include
 
 ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
 

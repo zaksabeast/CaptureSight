@@ -50,6 +50,40 @@ namespace ui {
     }
   }
 
+  void addDmaxAdventureEncounterToView(brls::List *container, std::vector<csight::game::swsh::DmaxAdventureTemplate> templates) {
+    for (auto encounterTemplate : templates) {
+      auto title = csight::utils::getSpeciesName(encounterTemplate.species);
+      auto numItem = new brls::ListItem(title);
+      numItem->setThumbnail(utils::getPokemonIconPath(encounterTemplate.species, encounterTemplate.altForm));
+
+      container->addView(numItem);
+    }
+  }
+
+  void addDmaxAdventureToView(brls::List *container, std::shared_ptr<csight::game::swsh::DmaxAdventure> dmaxAdventure) {
+    container->addView(new brls::Label(brls::LabelStyle::REGULAR, I18N::translate("Rental Pokemon")));
+    addDmaxAdventureEncounterToView(container, dmaxAdventure->rentals);
+
+    container->addView(new brls::Label(brls::LabelStyle::REGULAR, I18N::translate("Encounters")));
+    addDmaxAdventureEncounterToView(container, dmaxAdventure->encounters);
+  }
+
+  void addDmaxAdventureButton(brls::List *container, std::string title, u8 npcCount) {
+    auto button = new brls::ListItem(title);
+
+    button->getClickEvent()->subscribe([npcCount](brls::View *view) {
+      auto frame = new brls::StagedAppletFrame();
+      auto dmaxAdvList = new brls::List();
+
+      addDmaxAdventureToView(dmaxAdvList, g_gameReader->getDmaxAdventureSpeciesList(npcCount));
+      frame->addStage(dmaxAdvList);
+
+      brls::Application::pushView(frame);
+    });
+
+    container->addView(button);
+  }
+
   std::string getPokemonTitle(std::shared_ptr<csight::pkm::PKM> pkm) {
     auto shiny = pkm->getIsShiny() ? I18N::translate("Shiny") + " " : "";
     auto species = I18N::translate("species", pkm->getSpeciesString());
@@ -129,12 +163,22 @@ namespace ui {
     auto allDens = g_gameReader->readDens(true);
     addDensToView(m_allDenList, allDens);
 
+    auto m_dmaxAdventureList = new brls::List();
+
+    auto dmaxAdventureSeed = csight::utils::convertNumToHexString(g_gameReader->readDmaxAdventureSeed());
+    m_dmaxAdventureList->addView(new brls::Label(brls::LabelStyle::REGULAR, I18N::translate("Seed: ") + dmaxAdventureSeed));
+    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 0 NPCs"), 0);
+    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 1 NPCs"), 1);
+    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 2 NPCs"), 2);
+    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 3 NPCs"), 3);
+
     this->addTranslatedTab("Misc Pokemon", m_miscPokemonList);
     this->addTranslatedTab("Party Pokemon", m_partyPokemonList);
     this->addTranslatedTab("Box Pokemon", m_boxPokemonList);
     this->addSeparator();
     this->addTranslatedTab("Active dens", m_activeDenList);
     this->addTranslatedTab("All dens", m_allDenList);
+    this->addTranslatedTab("Dmax Adventure", m_dmaxAdventureList);
   }
 
   MainView::~MainView() { }

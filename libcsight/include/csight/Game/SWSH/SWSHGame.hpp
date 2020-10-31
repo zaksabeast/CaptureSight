@@ -2,6 +2,7 @@
 
 #include <csight/Game/GameReader.hpp>
 #include <csight/Game/SWSH/Den.hpp>
+#include <csight/Game/SWSH/DmaxAdventure.hpp>
 #include <csight/PKM/PK8.hpp>
 #include <memory>
 #include <vector>
@@ -20,6 +21,8 @@ namespace csight::game::swsh {
     std::shared_ptr<pkm::PK8> readWild();
     std::shared_ptr<pkm::PK8> readRaid();
     std::shared_ptr<pkm::PK8> readTrade();
+    u64 readDmaxAdventureSeed();
+    std::shared_ptr<DmaxAdventure> getDmaxAdventureSpeciesList(u8 npcCount);
     u32 getTrainerSIDTID();
 
    private:
@@ -27,6 +30,7 @@ namespace csight::game::swsh {
     u64 m_eventFlatbufferOffset = 0x2f9eb350;
     u64 m_nestFlatbufferOffset = 0x40bc5b50;
     u64 m_nestFlatbufferSanityOffset = 0x40bc5b70;
+    u64 m_dmaxAdventureSpeciesSeedOffset = 0x4514a4b0;
     u64 m_trainerBlockOffset = 0x45068fb8;
     u64 m_raidOffset = 0x886c1ec8;
     u64 m_legendOffset = 0x886bc058;

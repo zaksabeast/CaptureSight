@@ -1,5 +1,6 @@
 #pragma once
 
+#include <csight/RNG/MersenneTwister.hpp>
 #include <csight/RNG/XOROSHIRO.hpp>
 #include <switch.h>
 
