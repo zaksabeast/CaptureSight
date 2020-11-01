@@ -74,10 +74,10 @@ namespace ui {
     auto button = new brls::ListItem(title);
 
     button->getClickEvent()->subscribe([npcCount](brls::View *view) {
-      auto frame = new brls::StagedAppletFrame();
       auto dmaxAdvList = new brls::List();
-
       addDmaxAdventureToView(dmaxAdvList, g_gameReader->getDmaxAdventureSpeciesList(npcCount));
+
+      auto frame = new brls::StagedAppletFrame();
       frame->addStage(dmaxAdvList);
 
       brls::Application::pushView(frame);
@@ -121,6 +121,27 @@ namespace ui {
     container->addView(button);
   }
 
+  void addBoxButtonsToView(brls::List *container) {
+    for (u32 box = 0; box < csight::game::swsh::SWSHGame::MaxBox; box++) {
+      auto boxButton = new brls::ListItem(I18N::translate("Box") + " " + std::to_string(box + 1));
+
+      boxButton->getClickEvent()->subscribe([box](brls::View *view) {
+        auto boxPokemonList = new brls::List();
+
+        auto boxPokemon = g_gameReader->readBoxes(box);
+        auto getTitle = [box](auto pkm, size_t slot) { return getBoxTitle(pkm, box, slot); };
+        addPokemonToView(boxPokemonList, boxPokemon, getTitle);
+
+        auto frame = new brls::StagedAppletFrame();
+        frame->addStage(boxPokemonList);
+
+        brls::Application::pushView(frame);
+      });
+
+      container->addView(boxButton);
+    }
+  }
+
   std::string getPokemonTitle(std::shared_ptr<csight::pkm::PKM> pkm) {
     auto shiny = pkm->getIsShiny() ? I18N::translate("Shiny") + " " : "";
     auto species = I18N::translate("species", pkm->getSpeciesString());
@@ -137,8 +158,8 @@ namespace ui {
     return "[" + I18N::translate("Party") + " " + std::to_string(index + 1) + "] " + getPokemonTitleIfValid(pkm);
   }
 
-  std::string getBoxTitle(std::shared_ptr<csight::pkm::PKM> pkm, size_t index) {
-    return "[B" + std::to_string((index / 30) + 1) + "S" + std::to_string((index % 30) + 1) + "] " + getPokemonTitleIfValid(pkm);
+  std::string getBoxTitle(std::shared_ptr<csight::pkm::PKM> pkm, u16 box, size_t slot) {
+    return "[B" + std::to_string(box + 1) + "S" + std::to_string(slot + 1) + "] " + getPokemonTitleIfValid(pkm);
   }
 
   std::string getMiscTitle(std::shared_ptr<csight::pkm::PKM> pkm, size_t index) {
@@ -185,8 +206,7 @@ namespace ui {
     addPokemonToView(m_miscPokemonList, miscPokemon, getMiscTitle);
 
     m_boxPokemonList = new brls::List();
-    auto boxPokemon = g_gameReader->readBoxes();
-    addPokemonToView(m_boxPokemonList, boxPokemon, getBoxTitle);
+    addBoxButtonsToView(m_boxPokemonList);
 
     m_activeDenList = new brls::List();
     addViewDensButton(m_activeDenList, csight::game::swsh::DenType::Vanilla, true);

@@ -19,13 +19,15 @@ namespace csight::game::swsh {
     std::shared_ptr<RaidEncounterTable> readEventEncounterTable();
     bool checkSanity(u64 offset, u32 size);
     std::vector<std::shared_ptr<pkm::PK8>> readParty();
-    std::vector<std::shared_ptr<pkm::PK8>> readBoxes();
+    std::vector<std::shared_ptr<pkm::PK8>> readBoxes(u16 box);
     std::shared_ptr<pkm::PK8> readWild();
     std::shared_ptr<pkm::PK8> readRaid();
     std::shared_ptr<pkm::PK8> readTrade();
     u64 readDmaxAdventureSeed();
     std::shared_ptr<DmaxAdventure> getDmaxAdventureSpeciesList(u8 npcCount);
     u32 getTrainerSIDTID();
+
+    static const u16 MaxBox = 32;
 
    private:
     u64 m_denOffset = 0x450c8a70;
@@ -37,7 +39,7 @@ namespace csight::game::swsh {
     u64 m_tradeOffset = 0xaf286078;
     u64 m_partyOffset = 0x450c68b0;
     u64 m_wildOffset = 0x8fea3648;
-    u64 m_boxOffset = 0x45075880;
+    u64 m_baseBoxOffset = 0x45075880;
 
     u32 m_eventFlatbufferSize = 0x23D4;
 

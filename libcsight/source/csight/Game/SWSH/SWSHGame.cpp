@@ -258,7 +258,12 @@ namespace csight::game::swsh {
 
   std::vector<std::shared_ptr<pkm::PK8>> SWSHGame::readParty() { return this->readPKMs(m_partyOffset, 6, pkm::PK8::PartySize); }
 
-  std::vector<std::shared_ptr<pkm::PK8>> SWSHGame::readBoxes() { return this->readPKMs(m_boxOffset, 960, pkm::PK8::PartySize); }
+  std::vector<std::shared_ptr<pkm::PK8>> SWSHGame::readBoxes(u16 box) {
+    u16 safeBox = box > SWSHGame::MaxBox ? 0 : box;
+    auto boxOffset = m_baseBoxOffset + (safeBox * 30 * pkm::PK8::PartySize);
+
+    return this->readPKMs(boxOffset, 30, pkm::PK8::PartySize);
+  }
 
   std::shared_ptr<pkm::PK8> SWSHGame::readWild() {
     auto pkm = this->readPKM(m_wildOffset, pkm::PK8::PartySize);
