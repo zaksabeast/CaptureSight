@@ -70,7 +70,7 @@ namespace ui {
     addDmaxAdventureEncounterToView(container, dmaxAdventure->encounters);
   }
 
-  void addDmaxAdventureButton(brls::List *container, std::string title, u8 npcCount) {
+  void addDmaxAdventureButtonToView(brls::List *container, std::string title, u8 npcCount) {
     auto button = new brls::ListItem(title);
 
     button->getClickEvent()->subscribe([npcCount](brls::View *view) {
@@ -86,7 +86,7 @@ namespace ui {
     container->addView(button);
   }
 
-  void addViewDensButton(brls::List *container, csight::game::swsh::DenType denType, bool filterActiveDens) {
+  void addViewDensButtonToView(brls::List *container, csight::game::swsh::DenType denType, bool filterActiveDens) {
     std::string title = "";
 
     switch (denType) {
@@ -119,27 +119,6 @@ namespace ui {
     });
 
     container->addView(button);
-  }
-
-  void addBoxButtonsToView(brls::List *container) {
-    for (u32 box = 0; box < csight::game::swsh::SWSHGame::MaxBox; box++) {
-      auto boxButton = new brls::ListItem(I18N::translate("Box") + " " + std::to_string(box + 1));
-
-      boxButton->getClickEvent()->subscribe([box](brls::View *view) {
-        auto boxPokemonList = new brls::List();
-
-        auto boxPokemon = g_gameReader->readBoxes(box);
-        auto getTitle = [box](auto pkm, size_t slot) { return getBoxTitle(pkm, box, slot); };
-        addPokemonToView(boxPokemonList, boxPokemon, getTitle);
-
-        auto frame = new brls::StagedAppletFrame();
-        frame->addStage(boxPokemonList);
-
-        brls::Application::pushView(frame);
-      });
-
-      container->addView(boxButton);
-    }
   }
 
   std::string getPokemonTitle(std::shared_ptr<csight::pkm::PKM> pkm) {
@@ -189,6 +168,27 @@ namespace ui {
     }
   }
 
+  void addBoxButtonsToView(brls::List *container) {
+    for (u32 box = 0; box < csight::game::swsh::SWSHGame::MaxBox; box++) {
+      auto boxButton = new brls::ListItem(I18N::translate("Box") + " " + std::to_string(box + 1));
+
+      boxButton->getClickEvent()->subscribe([box](brls::View *view) {
+        auto boxPokemonList = new brls::List();
+
+        auto boxPokemon = g_gameReader->readBoxes(box);
+        auto getTitle = [box](auto pkm, size_t slot) { return getBoxTitle(pkm, box, slot); };
+        addPokemonToView(boxPokemonList, boxPokemon, getTitle);
+
+        auto frame = new brls::StagedAppletFrame();
+        frame->addStage(boxPokemonList);
+
+        brls::Application::pushView(frame);
+      });
+
+      container->addView(boxButton);
+    }
+  }
+
   MainView::MainView() {
     this->setTitle("CaptureSight");
     this->setIcon(BOREALIS_ASSET("icon/app.jpg"));
@@ -209,23 +209,23 @@ namespace ui {
     addBoxButtonsToView(m_boxPokemonList);
 
     m_activeDenList = new brls::List();
-    addViewDensButton(m_activeDenList, csight::game::swsh::DenType::Vanilla, true);
-    addViewDensButton(m_activeDenList, csight::game::swsh::DenType::IsleOfArmor, true);
-    addViewDensButton(m_activeDenList, csight::game::swsh::DenType::CrownTundra, true);
+    addViewDensButtonToView(m_activeDenList, csight::game::swsh::DenType::Vanilla, true);
+    addViewDensButtonToView(m_activeDenList, csight::game::swsh::DenType::IsleOfArmor, true);
+    addViewDensButtonToView(m_activeDenList, csight::game::swsh::DenType::CrownTundra, true);
 
     m_allDenList = new brls::List();
-    addViewDensButton(m_allDenList, csight::game::swsh::DenType::Vanilla, false);
-    addViewDensButton(m_allDenList, csight::game::swsh::DenType::IsleOfArmor, false);
-    addViewDensButton(m_allDenList, csight::game::swsh::DenType::CrownTundra, false);
+    addViewDensButtonToView(m_allDenList, csight::game::swsh::DenType::Vanilla, false);
+    addViewDensButtonToView(m_allDenList, csight::game::swsh::DenType::IsleOfArmor, false);
+    addViewDensButtonToView(m_allDenList, csight::game::swsh::DenType::CrownTundra, false);
 
     auto m_dmaxAdventureList = new brls::List();
 
     auto dmaxAdventureSeed = csight::utils::convertNumToHexString(g_gameReader->readDmaxAdventureSeed());
     m_dmaxAdventureList->addView(new brls::Label(brls::LabelStyle::REGULAR, I18N::translate("Seed: ") + dmaxAdventureSeed));
-    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 0 NPCs"), 0);
-    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 1 NPCs"), 1);
-    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 2 NPCs"), 2);
-    addDmaxAdventureButton(m_dmaxAdventureList, I18N::translate("With 3 NPCs"), 3);
+    addDmaxAdventureButtonToView(m_dmaxAdventureList, I18N::translate("With 0 NPCs"), 0);
+    addDmaxAdventureButtonToView(m_dmaxAdventureList, I18N::translate("With 1 NPCs"), 1);
+    addDmaxAdventureButtonToView(m_dmaxAdventureList, I18N::translate("With 2 NPCs"), 2);
+    addDmaxAdventureButtonToView(m_dmaxAdventureList, I18N::translate("With 3 NPCs"), 3);
 
     this->addTranslatedTab("Misc Pokemon", m_miscPokemonList);
     this->addTranslatedTab("Party Pokemon", m_partyPokemonList);
