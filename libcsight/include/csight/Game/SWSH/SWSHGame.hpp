@@ -17,7 +17,6 @@ namespace csight::game::swsh {
     std::vector<std::shared_ptr<Den>> readDens(DenType filterDenType, bool filterActiveDens = false);
     std::vector<RaidEncounterTable> readEncounterTables(std::string swordFlatbufferFile, std::string shieldFlatbufferFile);
     std::shared_ptr<RaidEncounterTable> readEventEncounterTable();
-    bool checkSanity(u64 offset, u32 size);
     std::vector<std::shared_ptr<pkm::PK8>> readParty();
     std::vector<std::shared_ptr<pkm::PK8>> readBoxes(u16 box);
     std::shared_ptr<pkm::PK8> readWild();
@@ -31,7 +30,6 @@ namespace csight::game::swsh {
 
    private:
     u64 m_denOffset = 0x450c8a70;
-    u64 m_eventFlatbufferOffset = 0x2f9eb350;
     u64 m_dmaxAdventureSpeciesSeedOffset = 0x4514a4b0;
     u64 m_trainerBlockOffset = 0x45068fb8;
     u64 m_raidOffset = 0x886c1ec8;
@@ -41,7 +39,7 @@ namespace csight::game::swsh {
     u64 m_wildOffset = 0x8fea3648;
     u64 m_baseBoxOffset = 0x45075880;
 
-    u32 m_eventFlatbufferSize = 0x23D4;
+    u32 m_eventFlatbufferSize = 0x23B4;
 
     std::vector<RaidEncounterTable> m_encounterTables;
     std::shared_ptr<RaidEncounterTable> m_eventTemplateTable;

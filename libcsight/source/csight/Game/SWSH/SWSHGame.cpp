@@ -9,6 +9,7 @@
 #include <csight/PKM/PK8.hpp>
 #include <csight/RNG/RNG.hpp>
 #include <csight/TitleIds.hpp>
+#include <flatbuffers/flatbuffers.h>
 #include <fstream>
 #include <memory>
 #include <switch.h>
@@ -23,37 +24,36 @@ namespace csight::game::swsh {
     switch (language) {
       case SetLanguage_ZHCN:
       case SetLanguage_ZHHANS:
-        return 0x2F9EA410;
+        return 0x2f9ea520;
       case SetLanguage_ZHTW:
       case SetLanguage_ZHHANT:
-        return 0x2F9EA3B0;
+        return 0x2f9ea4c0;
       case SetLanguage_KO:
-        return 0x2F9EA810;
+        return 0x2f9ea920;
       case SetLanguage_IT:
-        return 0x2F9EB190;
+        return 0x2f9eb2a0;
       case SetLanguage_JA:
-        return 0x2F9EB370;
+        return 0x2f9eb480;
       case SetLanguage_FR:
       case SetLanguage_FRCA:
-        return 0x2F9EB400;
+        return 0x2f9eb510;
       case SetLanguage_ES:
       case SetLanguage_ES419:
-        return 0x2F9EB3D0;
+        return 0x2f9eb4e0;
       case SetLanguage_DE:
-        return 0x2F9EB4E0;
+        return 0x2f9eb5f0;
+      case SetLanguage_NL:
+        return 0x2f9ec4d0;
       case SetLanguage_PT:
       case SetLanguage_RU:
-      case SetLanguage_NL:
       case SetLanguage_ENUS:
       case SetLanguage_ENGB:
       default:
-        return 0x2F9EB350;
+        return 0x2f9eb320;
     }
   }
 
   SWSHGame::SWSHGame() : GameReader<pkm::PK8>() {
-    m_eventFlatbufferOffset = GetEventFlatbufferOffset();
-
     std::vector<RaidEncounter> templates = {
       {
         species : 0,
@@ -70,10 +70,8 @@ namespace csight::game::swsh {
   }
 
   SWSHGame::SWSHGame(std::string swordFlatbufferFile, std::string shieldFlatbufferFile) : GameReader<pkm::PK8>() {
-    m_eventFlatbufferOffset = GetEventFlatbufferOffset();
-
-    m_encounterTables = this->readEncounterTables(swordFlatbufferFile, shieldFlatbufferFile);
     m_eventTemplateTable = this->readEventEncounterTable();
+    m_encounterTables = this->readEncounterTables(swordFlatbufferFile, shieldFlatbufferFile);
   }
 
   std::shared_ptr<Den> SWSHGame::readDen(u16 denId) {
@@ -125,14 +123,6 @@ namespace csight::game::swsh {
     }
 
     return this->readDens(denRange.first, denRange.second, filterActiveDens);
-  }
-
-  bool SWSHGame::checkSanity(u64 offset, u32 size) {
-    u32 readSize = 0;
-
-    this->readHeap(offset, &readSize, sizeof(u32));
-
-    return readSize == size;
   }
 
   // Unfortunately this is mostly a duplicate of readEventEncounterTable.
@@ -187,15 +177,18 @@ namespace csight::game::swsh {
   std::shared_ptr<RaidEncounterTable> SWSHGame::readEventEncounterTable() {
     std::vector<RaidEncounter> raidEncounters;
     auto encounterTable = std::make_shared<RaidEncounterTable>(RaidEncounterTable { eventHash, raidEncounters });
+    u8 *eventFlatbuffer = new u8[m_eventFlatbufferSize];
+    auto eventFlatbufferOffset = GetEventFlatbufferOffset();
 
-    bool isValid = this->checkSanity(m_eventFlatbufferOffset - 0x10, m_eventFlatbufferSize - 4);
+    this->readHeap(eventFlatbufferOffset, eventFlatbuffer, m_eventFlatbufferSize);
+
+    auto verifier = flatbuffers::Verifier(eventFlatbuffer, m_eventFlatbufferSize);
+    bool isValid = pkNX::Structures::VerifyNestHoleDistributionEncounter8ArchiveBuffer(verifier);
 
     if (!isValid) {
       return encounterTable;
     }
 
-    u8 *eventFlatbuffer = new u8[m_eventFlatbufferSize];
-    this->readHeap(m_eventFlatbufferOffset, eventFlatbuffer, m_eventFlatbufferSize);
     auto eventEncounterTables = pkNX::Structures::GetNestHoleDistributionEncounter8Archive(eventFlatbuffer)->Tables();
 
     // Don't assume Sword will always be first
