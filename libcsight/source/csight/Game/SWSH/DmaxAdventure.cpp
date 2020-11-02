@@ -182,7 +182,7 @@ namespace csight::game::swsh {
     for (u32 i = 0; i < poolSize; i++) {
       maxRand = maxRand - 1;
 
-      u32 rand = mt.next(0, maxRand) + i;
+      u32 rand = mt.next(maxRand, 0x1ff) + i;
 
       if (rand != 0) {
         auto tmp = pool[i];
@@ -194,60 +194,59 @@ namespace csight::game::swsh {
     return pool;
   }
 
-  void setTemplateFromRNG(rng::xoroshiro *rng, std::vector<DmaxAdventureTemplate> &results) {
-    auto pool = createPokemonPool(rng->next(0xffffffff));
+  void setTemplate(rng::xoroshiro *rng, std::vector<DmaxAdventureTemplate> &results) {
+    auto pool = createPokemonPool(rng->next());
     auto result = getTemplateFromPool(pool, results);
 
     results.push_back(result);
   }
 
-  void setEncounterFromRNG(rng::xoroshiro *rng, std::vector<DmaxAdventureTemplate> &results) {
-    setTemplateFromRNG(rng, results);
+  void setEncounterTemplate(rng::xoroshiro *rng, std::vector<DmaxAdventureTemplate> &results) {
+    setTemplate(rng, results);
 
     auto pokemon = results.back();
     auto types = utils::getPokemonTypes(pokemon.species, pokemon.altForm);
 
     // If the Pokemon has two types, the game chooses which type to display
     if (types.second != enums::PokemonType::NoType) {
-      rng->nextuint();
+      rng->next();
     }
   }
 
-  std::shared_ptr<DmaxAdventure> generateDmaxAdventureTemplate(u64 seed, u32 npcCount) {
+  std::shared_ptr<DmaxAdventure> generateDmaxAdventure(u64 seed, u8 npcCount) {
     auto rng = new rng::xoroshiro(seed);
 
     std::vector<DmaxAdventureTemplate> result;
 
     if (npcCount > 2) {
-      rng->nextulong();
+      rng->next(27);
     }
 
     for (u32 i = 0; i < 4; i++) {
-      setTemplateFromRNG(rng, result);
+      setTemplate(rng, result);
     }
 
     if (npcCount > 2) {
-      rng->nextulong();
+      rng->next(2);
     }
 
-    setTemplateFromRNG(rng, result);
+    setTemplate(rng, result);
 
     if (npcCount > 1) {
-      rng->nextulong();
+      rng->next(2);
     }
 
-    setTemplateFromRNG(rng, result);
+    setTemplate(rng, result);
 
     if (npcCount > 0) {
-      rng->nextulong();
+      rng->next(2);
     }
 
-    rng->nextulong();
-    rng->nextulong();
-    rng->nextulong();
+    rng->next(2);
+    rng->next(9);
 
     for (u32 i = 0; i < 10; i++) {
-      setEncounterFromRNG(rng, result);
+      setEncounterTemplate(rng, result);
     }
 
     std::vector<DmaxAdventureTemplate> rentals(result.begin(), result.begin() + 6);

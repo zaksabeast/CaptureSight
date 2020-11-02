@@ -16,5 +16,5 @@ namespace csight::game::swsh {
     std::vector<DmaxAdventureTemplate> encounters;
   };
 
-  std::shared_ptr<DmaxAdventure> generateDmaxAdventureTemplate(u64 seed, u32 npcCount);
+  std::shared_ptr<DmaxAdventure> generateDmaxAdventure(u64 seed, u8 npcCount);
 }

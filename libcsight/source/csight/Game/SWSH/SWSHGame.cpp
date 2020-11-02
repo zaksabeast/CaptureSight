@@ -239,7 +239,7 @@ namespace csight::game::swsh {
 
   std::shared_ptr<DmaxAdventure> SWSHGame::getDmaxAdventureSpeciesList(u8 npcCount) {
     auto seed = this->readDmaxAdventureSeed();
-    return generateDmaxAdventureTemplate(seed, npcCount);
+    return generateDmaxAdventure(seed, npcCount);
   }
 
   u32 SWSHGame::getTrainerSIDTID() {

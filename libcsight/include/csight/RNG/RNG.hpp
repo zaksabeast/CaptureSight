@@ -1,5 +1,6 @@
 #pragma once
 
+#include <csight/RNG/IRNG.hpp>
 #include <csight/RNG/MersenneTwister.hpp>
 #include <csight/RNG/XOROSHIRO.hpp>
 #include <switch.h>
@@ -11,13 +12,13 @@ namespace csight::rng {
     u32 advance(u32 seed);
   }
 
-  class xoroshiro {
+  class xoroshiro : public IRNG {
    public:
+    using IRNG::next;
+
     xoroshiro(ulong seed);
     u64 nextulong();
-    u32 nextuint();
-    uint next(uint mask);
-    u32 next(u32 compare, u32 mask);
+    u32 next();
 
    private:
     swsh_xoroshiro m_prng;
