@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <csight/Enums/Types.hpp>
 #include <csight/Game/SWSH/DmaxAdventure.hpp>
+#include <csight/RNG/MersenneTwister.hpp>
 #include <csight/RNG/RNG.hpp>
 #include <csight/Utils.hpp>
 #include <iostream>
