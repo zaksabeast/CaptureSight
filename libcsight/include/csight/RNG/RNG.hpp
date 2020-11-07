@@ -29,19 +29,7 @@ namespace csight::rng {
       return result;
     }
 
-    u32 nextuint() { return (u32)nextulong(); }
-
-    u32 next(u32 mask) { return nextulong() & mask; }
-
-    u32 next(u32 max, u32 mask) {
-      u32 rand = nextulong() & mask;
-
-      while (rand >= max) {
-        rand = nextulong() & mask;
-      }
-
-      return rand;
-    }
+    u32 next() { return (u32)nextulong(); }
 
    private:
     u64 state0, state1;
