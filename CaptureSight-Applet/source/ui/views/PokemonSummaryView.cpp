@@ -30,6 +30,7 @@ namespace ui {
     std::string friendshipTranslationKey = pkm->getIsEgg() ? "Egg cycles" : "Friendship";
     m_miscTable = new brls::Table();
     ADD_HEADER_ROW(m_miscTable, "Misc");
+    ADD_BODY_ROW(m_miscTable, "Shiny type", "app", pkm->getShinyTypeString());
     ADD_BODY_ROW(m_miscTable, "Nature", "natures", pkm->getNatureString());
     ADD_BODY_ROW(m_miscTable, "Minted Nature", "natures", pkm->getMintedNatureString());
     ADD_BODY_ROW(m_miscTable, "Ability", "abilities", pkm->getAbilityString());

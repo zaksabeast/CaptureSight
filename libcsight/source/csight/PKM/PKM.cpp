@@ -27,6 +27,8 @@ namespace csight::pkm {
 
   std::string PKM::getNatureString() { return utils::getIndex(resources::NatureList, this->getNature()); }
 
+  std::string PKM::getShinyTypeString() { return utils::getShinyTypeString(this->PKM::getShinyType()); }
+
   std::string PKM::getAbilitySlotString() {
     switch (this->getAbilitySlot()) {
       case enums::Ability::First:

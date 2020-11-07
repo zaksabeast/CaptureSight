@@ -41,6 +41,8 @@ namespace csight::pkm {
 
     std::string getNatureString();
 
+    std::string getShinyTypeString();
+
     std::string getAbilitySlotString();
 
     std::pair<enums::PokemonType, enums::PokemonType> getTypes();
