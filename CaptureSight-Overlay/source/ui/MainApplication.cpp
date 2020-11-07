@@ -9,7 +9,7 @@
 #include <ui/views/PokemonSummaryLayout.hpp>
 
 std::unique_ptr<tsl::Gui> MainApplication::loadInitialGui() {
-  m_gameReader = std::make_shared<csight::game::swsh::SWSHGame>(true);
+  m_gameReader = std::make_shared<csight::game::swsh::SWSHGame>();
 
   if (R_FAILED(m_gameReader->attach()))
     return initially<ErrorLayout>();
@@ -65,13 +65,29 @@ void MainApplication::changeViewMode(ViewMode mode) {
   std::function<std::string(u32)> getTitle = [](u32) { return ""; };
 
   switch (mode) {
-    case activeDens:
-      dens = m_gameReader->readDens(false);
-      tsl::changeTo<DenMenuLayout>(dens, "Active Dens");
+    case vanillaActiveDens:
+      dens = m_gameReader->readDens(csight::game::swsh::DenType::Vanilla, true);
+      tsl::changeTo<DenMenuLayout>(dens, "Vanilla Active Dens");
       return;
-    case allDens:
-      dens = m_gameReader->readDens(true);
-      tsl::changeTo<DenMenuLayout>(dens, "All Dens");
+    case vanillaAllDens:
+      dens = m_gameReader->readDens(csight::game::swsh::DenType::Vanilla, false);
+      tsl::changeTo<DenMenuLayout>(dens, "Vanilla All Dens");
+      return;
+    case ioaActiveDens:
+      dens = m_gameReader->readDens(csight::game::swsh::DenType::IsleOfArmor, true);
+      tsl::changeTo<DenMenuLayout>(dens, "IoA Active Dens");
+      return;
+    case ioaAllDens:
+      dens = m_gameReader->readDens(csight::game::swsh::DenType::IsleOfArmor, false);
+      tsl::changeTo<DenMenuLayout>(dens, "IoA All Dens");
+      return;
+    case ctActiveDens:
+      dens = m_gameReader->readDens(csight::game::swsh::DenType::CrownTundra, true);
+      tsl::changeTo<DenMenuLayout>(dens, "CT Active Dens");
+      return;
+    case ctAllDens:
+      dens = m_gameReader->readDens(csight::game::swsh::DenType::CrownTundra, false);
+      tsl::changeTo<DenMenuLayout>(dens, "CT All Dens");
       return;
     case wild:
       guiTitle = "Wild/Trade/Party";

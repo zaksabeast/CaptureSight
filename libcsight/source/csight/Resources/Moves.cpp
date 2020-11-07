@@ -822,5 +822,13 @@ namespace csight::resources {
     "Jungle Healing",
     "Wicked Blow",
     "Surging Strikes",
+    "Thunder Cage",
+    "Dragon Energy",
+    "Freezing Glare",
+    "Fiery Wrath",
+    "Thunderous Kick",
+    "Glacial Lance",
+    "Astral Barrage",
+    "Eerie Spell",
   };
 }

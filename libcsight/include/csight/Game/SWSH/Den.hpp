@@ -13,16 +13,14 @@
 #endif
 
 #define FIRST_IOA_DEN_ID 100
+#define FIRST_CT_DEN_ID 190
 
 namespace csight::game::swsh {
-  enum DenType {
-    Vanilla,
-    IsleOfArmor,
-  };
+  enum DenType { Vanilla, IsleOfArmor, CrownTundra };
 
   class Den {
    public:
-    Den(u8 *data, u8 denId, std::vector<RaidEncounterTable> encounterTables,
+    Den(u8 *data, u16 denId, std::vector<RaidEncounterTable> encounterTables,
         std::shared_ptr<RaidEncounterTable> eventEncounterTable, u32 playerSIDTID);
     ~Den();
     u64 getSeed();
@@ -37,7 +35,7 @@ namespace csight::game::swsh {
     bool getHasWatts();
     bool getIsEvent();
     bool getIsActive();
-    u8 getDenId();
+    u16 getDenId();
     std::string getDenDisplayId();
     std::string getDenDisplayName();
     bool getIsRare();
@@ -47,7 +45,7 @@ namespace csight::game::swsh {
    private:
     u8 m_size = 0x18;
     u8 *m_data = new u8[0x18];
-    u8 m_denId = 0;
+    u16 m_denId = 0;
     u16 m_shinyAdvance = 0;
     u32 m_playerSIDTID = 0;
     RaidEncounter m_spawn;

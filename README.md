@@ -64,7 +64,14 @@ DevkitPro and libnx will be needed to build this tool.
 
 After installing those, run `make`.
 
-Optional: To build the raid event flatbuffer header, install [flatc](https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html) and run `flatc --cpp -o libcsight/include/csight/ libcsight/resources/NestHoleDistributionEncounter8Archive.fbs`. Alternatively, use a docker image with `flatc`, such as [neomantra/flatbuffers](https://hub.docker.com/r/neomantra/flatbuffers).
+Optional: To build the raid event flatbuffer headers, install [flatc](https://google.github.io/flatbuffers/flatbuffers_guide_using_schema_compiler.html) and run `flatc --cpp -o libcsight/include/csight/ Resources/NestHoleDistributionEncounter8Archive.fbs` for each `fbs`. Alternatively, use a docker image with `flatc`, such as [neomantra/flatbuffers](https://hub.docker.com/r/neomantra/flatbuffers).
+
+Optional: To build the data files, use `flatc -b Resources/EncounterNest8Archive.fbs libcsight/resources/shield-encounters.json` for both encounter files.
+
+Flatbuffers are used to:
+
+- Read from the game's memory and parse the data
+- Make maintaining easier by using the game's own data structures
 
 ## Credits
 
@@ -72,7 +79,7 @@ Thanks to the following for helping make this app:
 
 - Switchbrew for their research and [libnx](https://github.com/switchbrew/libnx) which makes it possible to create homebrew
 - ReSwitched for their research, [Atmosphere](https://github.com/Atmosphere-NX/Atmosphere) and [libstratosphere](https://github.com/Atmosphere-NX/libstratosphere) which is invaluable for switch homebrew
-- Kaphotics, SciresM, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) and [pkNX](https://github.com/kwsch/pkNX) which have resource including Pokemon icons, i18n for Pokemon, and great documentation
+- Kaphotics, SciresM, Matt, and all contributors of [PKHeX](https://github.com/kwsch/PKHeX/) and [pkNX](https://github.com/kwsch/pkNX) for the all the great resources this app uses
 - imneme for their [cpp xoroshiro gist](https://gist.github.com/imneme/f76f4bb7b7f67ff0850199ab7c077bf7) which is used in CaptureSight
 - nlohmann for their [c++ JSON library](https://github.com/nlohmann/json)
 - natinusala for [borealis](https://github.com/natinusala/borealis)

@@ -43,17 +43,7 @@ namespace csight::pkm {
     auto form = this->getForm();
     auto species = this->getSpecies();
 
-    // Arceus and Silvally have the most forms with different types at 18
-    std::vector<csight::enums::PokemonTypeSet> filteredList(18);
-    auto endIterator = std::copy_if(resources::pokemonTypeMap.begin(), resources::pokemonTypeMap.end(), filteredList.begin(),
-                                    [species](auto type) { return type.species == species; });
-
-    filteredList.resize(std::distance(filteredList.begin(), endIterator));
-
-    auto resultIterator = std::find_if(filteredList.begin(), filteredList.end(), [form](auto type) { return type.form == form; });
-    auto result = resultIterator[0];
-
-    return std::make_pair(result.type1, result.type2);
+    return utils::getPokemonTypes(species, form);
   }
 
   std::vector<enums::TypeMultiplier> PKM::getWeaknesses() {

@@ -6,7 +6,7 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITPRO)/libnx/switch_rules
 
 VER_MAJOR	:= 0
-VER_MINOR	:= 8
+VER_MINOR	:= 9
 VER_MICRO	:= 0
 
 APP_TITLE   := CaptureSight
@@ -19,7 +19,7 @@ ICON	    	:= icon.jpg
 
 BUILD       := build
 SOURCES     := source source/ui source/ui/views source/utils
-INCLUDES    := include include/ui include/ui/views include/utils
+INCLUDES    := include include/ui include/ui/views include/utils ../flatbuffers/include
 
 ARCH	:=	-march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE
 

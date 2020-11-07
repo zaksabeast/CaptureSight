@@ -10,7 +10,7 @@
 
 namespace csight::game::swsh {
   // Pass the den encounter tables to use since its responsibility is to parse the den data, not read/choose encounter tables
-  Den::Den(u8 *data, u8 denId, std::vector<RaidEncounterTable> encounterTables,
+  Den::Den(u8 *data, u16 denId, std::vector<RaidEncounterTable> encounterTables,
            std::shared_ptr<RaidEncounterTable> eventEncounterTable, u32 playerSIDTID) {
     std::copy(data, data + m_size, m_data);
 
@@ -61,14 +61,19 @@ namespace csight::game::swsh {
 
   bool Den::getIsActive() { return this->getType() > 0; }
 
-  u8 Den::getDenId() { return m_denId; }
+  u16 Den::getDenId() { return m_denId; }
 
   std::string Den::getDenDisplayName() {
-    u8 displayId = m_denId + 1;
-    if (this->getDenType() == Vanilla) {
-      return "[Vanilla " + std::to_string(displayId) + "]";
-    } else {
-      return "[IoA " + std::to_string(displayId - FIRST_IOA_DEN_ID) + "]";
+    u16 displayId = m_denId + 1;
+
+    switch (this->getDenType()) {
+      case DenType::IsleOfArmor:
+        return "[IOA " + std::to_string(displayId - FIRST_IOA_DEN_ID) + "]";
+      case DenType::CrownTundra:
+        return "[CT " + std::to_string(displayId - FIRST_CT_DEN_ID) + "]";
+      default:
+      case DenType::Vanilla:
+        return "[Vanilla " + std::to_string(displayId) + "]";
     }
   }
 
@@ -76,7 +81,15 @@ namespace csight::game::swsh {
     return std::make_shared<pkm::RaidPokemon>(this->getSeed(), m_spawn, m_playerSIDTID);
   };
 
-  DenType Den::getDenType() { return m_denId >= FIRST_IOA_DEN_ID ? IsleOfArmor : Vanilla; }
+  DenType Den::getDenType() {
+    if (m_denId >= FIRST_CT_DEN_ID) {
+      return DenType::CrownTundra;
+    } else if (m_denId >= FIRST_IOA_DEN_ID) {
+      return DenType::IsleOfArmor;
+    } else {
+      return DenType::Vanilla;
+    }
+  }
 
   RaidEncounter Den::findSpawn(std::vector<RaidEncounter> raidEncounters) {
     u32 userProbability = 1;

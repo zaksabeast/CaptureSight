@@ -961,5 +961,16 @@ namespace csight::resources {
     { species : 889, form : 0, type1 : enums::PokemonType::Fighting, type2 : enums::PokemonType::NoType },
     { species : 889, form : 1, type1 : enums::PokemonType::Fighting, type2 : enums::PokemonType::Steel },
     { species : 890, form : 0, type1 : enums::PokemonType::Poison, type2 : enums::PokemonType::Dragon },
+    { species : 891, form : 0, type1 : enums::PokemonType::Fighting, type2 : enums::PokemonType::NoType },
+    { species : 892, form : 0, type1 : enums::PokemonType::Fighting, type2 : enums::PokemonType::Dark },
+    { species : 892, form : 1, type1 : enums::PokemonType::Fighting, type2 : enums::PokemonType::Water },
+    { species : 893, form : 0, type1 : enums::PokemonType::Dark, type2 : enums::PokemonType::Grass },
+    { species : 894, form : 0, type1 : enums::PokemonType::Electric, type2 : enums::PokemonType::NoType },
+    { species : 895, form : 0, type1 : enums::PokemonType::Dragon, type2 : enums::PokemonType::NoType },
+    { species : 896, form : 0, type1 : enums::PokemonType::Ice, type2 : enums::PokemonType::NoType },
+    { species : 897, form : 0, type1 : enums::PokemonType::Ghost, type2 : enums::PokemonType::NoType },
+    { species : 898, form : 0, type1 : enums::PokemonType::Psychic, type2 : enums::PokemonType::Grass },
+    { species : 898, form : 1, type1 : enums::PokemonType::Psychic, type2 : enums::PokemonType::Ice },
+    { species : 898, form : 2, type1 : enums::PokemonType::Psychic, type2 : enums::PokemonType::Ghost },
   };
 }

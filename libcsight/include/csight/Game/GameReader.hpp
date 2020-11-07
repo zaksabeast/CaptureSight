@@ -11,7 +11,7 @@ namespace csight::game {
   template <class PKMType>
   class GameReader {
    public:
-    GameReader(bool shouldUseSmallMemoryMode) { m_isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht"); }
+    GameReader() { m_isDebugServiceRunning = utils::checkIfServiceIsRunning("dmnt:cht"); }
 
     Result attach() { return dmntchtGetCheatProcessMetadata(&m_metadata); }
 
@@ -21,7 +21,7 @@ namespace csight::game {
 
     u64 getTitleId() { return m_metadata.title_id; }
 
-    virtual std::vector<std::shared_ptr<PKMType>> readBoxes() = 0;
+    virtual std::vector<std::shared_ptr<PKMType>> readBoxes(u16 box) = 0;
     virtual std::vector<std::shared_ptr<PKMType>> readParty() = 0;
     virtual std::shared_ptr<PKMType> readWild() = 0;
     virtual u32 getTrainerSIDTID() = 0;

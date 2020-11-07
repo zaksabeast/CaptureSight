@@ -14,10 +14,10 @@ namespace csight::pkm {
     m_spawn = spawn;
     m_SIDTID = playerSIDTID;
     auto rng = rng::xoroshiro(m_seed);
-    m_EC = rng.next(0xFFFFFFFF);
+    m_EC = rng.next();
     // Shininess is determined with a fake SIDTID
-    u32 fakeSIDTID = rng.next(0xFFFFFFFF);
-    m_PID = rng.next(0xFFFFFFFF);
+    u32 fakeSIDTID = rng.next();
+    m_PID = rng.next();
     auto naturalShinyType = utils::getShinyType(m_PID, fakeSIDTID);
 
     if (m_spawn.shinyType == game::swsh::ShinyRaidSetting::ForcedNonShiny) {
@@ -33,7 +33,7 @@ namespace csight::pkm {
       s32 ivIndex;
 
       do {
-        ivIndex = (s32)rng.next(7);
+        ivIndex = (s32)(rng.next() & 7);
       } while (m_IVs[ivIndex] != EMPTY_IV);
 
       m_IVs[ivIndex] = 31;
@@ -41,7 +41,7 @@ namespace csight::pkm {
 
     for (s32 i = 0; i < 6; i++) {
       if (m_IVs[i] == EMPTY_IV) {
-        m_IVs[i] = (u8)rng.next(31);
+        m_IVs[i] = (u8)(rng.next() & 31);
       }
     }
 

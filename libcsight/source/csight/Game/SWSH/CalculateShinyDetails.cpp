@@ -15,8 +15,8 @@ namespace csight::game::swsh {
     while (shinyAdvance < maxAdvances) {
       auto rng = rng::xoroshiro(seed);
       seed = rng.nextulong();  // Also advance for EC
-      u32 SIDTID = rng.nextuint();
-      u32 PID = rng.nextuint();
+      u32 SIDTID = rng.next();
+      u32 PID = rng.next();
       shineType = utils::getShinyType(PID, SIDTID);
       if (shineType > enums::ShinyType::None)
         break;

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <csight/Enums/Ability.hpp>
 #include <csight/Enums/ShinyType.hpp>
 #include <csight/Enums/Types.hpp>
@@ -167,5 +168,27 @@ namespace csight::utils {
       case enums::Ability::First:
         return formAbilities[0];
     }
+  }
+
+  std::pair<enums::PokemonType, enums::PokemonType> getPokemonTypes(u16 species, u16 form) {
+    // Arceus and Silvally have the most forms with different types at 18
+    std::vector<csight::enums::PokemonTypeSet> filteredList(18);
+
+    // Some Pokemon have the same type regardless of form, such as all the Unown or Ash Hat/Cosplay Pikachu
+    // so we find the species first, then filter by form.
+    // A cleaner approach would be to have a more complete list of types per form.
+    auto endIterator = std::copy_if(resources::pokemonTypeMap.begin(), resources::pokemonTypeMap.end(), filteredList.begin(),
+                                    [species](auto type) { return type.species == species; });
+
+    if (endIterator == resources::pokemonTypeMap.end()) {
+      return std::make_pair(enums::PokemonType::NoType, enums::PokemonType::NoType);
+    }
+
+    filteredList.resize(std::distance(filteredList.begin(), endIterator));
+
+    auto resultIterator = std::find_if(filteredList.begin(), filteredList.end(), [form](auto type) { return type.form == form; });
+    auto result = resultIterator == filteredList.end() ? filteredList[0] : resultIterator[0];
+
+    return std::make_pair(result.type1, result.type2);
   }
 }
