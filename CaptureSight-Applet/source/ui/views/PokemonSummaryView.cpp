@@ -37,6 +37,7 @@ namespace ui {
     ADD_BODY_ROW(m_miscTable, "EC", "app", csight::utils::convertNumToHexString(pkm->getEC()));
     ADD_BODY_ROW(m_miscTable, "PID", "app", csight::utils::convertNumToHexString(pkm->getPID()));
     ADD_BODY_ROW(m_miscTable, "OT Gender", "app", pkm->getOTGenderString());
+    ADD_BODY_ROW(m_miscTable, "Alt Form", "app", std::to_string(pkm->getForm()));
 
     m_ivTable = new brls::Table();
     ADD_HEADER_ROW(m_ivTable, "IVs");
