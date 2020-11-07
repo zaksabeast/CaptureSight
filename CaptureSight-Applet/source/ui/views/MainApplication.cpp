@@ -226,6 +226,10 @@ namespace ui {
     addDmaxAdventureButtonToView(m_dmaxAdventureList, I18N::translate("With 1 NPCs"), 1);
     addDmaxAdventureButtonToView(m_dmaxAdventureList, I18N::translate("With 2 NPCs"), 2);
     addDmaxAdventureButtonToView(m_dmaxAdventureList, I18N::translate("With 3 NPCs"), 3);
+    auto dmaxAdventureNote = I18N::translate("Note: This is expirimental and does not include the boss.  "
+                                             "If you have incorrect results, please open a GitHub issue with the seed, "
+                                             "screenshots of the csight encounters, and screenshots of the actual encounters");
+    m_dmaxAdventureList->addView(new brls::Label(brls::LabelStyle::REGULAR, dmaxAdventureNote, true));
 
     this->addTranslatedTab("Misc Pokemon", m_miscPokemonList);
     this->addTranslatedTab("Party Pokemon", m_partyPokemonList);
