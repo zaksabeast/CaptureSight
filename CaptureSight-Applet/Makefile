@@ -7,7 +7,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 
 VER_MAJOR	:= 0
 VER_MINOR	:= 9
-VER_MICRO	:= 0
+VER_MICRO	:= 1
 
 APP_TITLE   := CaptureSight
 APP_AUTHOR  := Zaksabeast
