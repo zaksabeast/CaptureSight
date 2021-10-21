@@ -1,0 +1,13 @@
+[target.aarch64-none-elf]
+linker = "aarch64-none-eabi-gcc"
+rustflags = [
+    "-Clink-arg=-specs=switch.specs",
+    "-Clink-arg=-mfloat-abi=hard",
+    "-Clink-arg=-march=armv8-a",
+    "-Clink-arg=-mtune=mpcore",
+    "-Clink-arg=-z",
+    "-Clink-arg=muldefs",
+    "-Clink-arg=-lgcc",
+    "-Clink-arg=-lsysbase",
+    "-Clink-arg=-lc"
+]

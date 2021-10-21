@@ -1,0 +1,17 @@
+[package]
+name = "csight-core"
+version = "0.1.0"
+authors = ["zaksabeast <19464008+zaksabeast@users.noreply.github.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+num_enum = { version = "0.5", default-features = false }
+cstr_core = { version = "0.2.4", default-features = false, features = ["alloc"] }
+no_std_io = { git = "https://github.com/zaksabeast/no_std_io.git", rev = "77499d6" }
+pkm-rs = { git = "https://github.com/zaksabeast/pkm-rs.git", rev = "e04fb87" }
+
+[target.'cfg(target_os = "horizon")'.dependencies]
+linked_list_allocator = "0.9.0"

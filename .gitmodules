@@ -1,12 +1,6 @@
-[submodule "Atmosphere-libs"]
-	path = Atmosphere-libs
+[submodule "libs/Atmosphere-libs"]
+	path = libs/Atmosphere-libs
 	url = https://github.com/Atmosphere-NX/Atmosphere-libs.git
-[submodule "libtesla"]
-	path = libtesla
+[submodule "libs/libtesla"]
+	path = libs/libtesla
 	url = https://github.com/WerWolv/libtesla.git
-[submodule "flatbuffers"]
-	path = flatbuffers
-	url = https://github.com/google/flatbuffers.git
-[submodule "borealis"]
-	path = borealis
-	url = https://github.com/natinusala/borealis.git

@@ -35,8 +35,10 @@
 *.elf
 *.nacp
 *.nro
-build/
-output/
+*.ovl
+build
+out
+target
 
 # VSCode
 .vscode
