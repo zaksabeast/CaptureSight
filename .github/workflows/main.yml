@@ -1,0 +1,25 @@
+name: CICD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  lint-build-deploy:
+    name: Lint, test, and build
+    runs-on: ubuntu-latest
+    container: zaksabeast/devkita64-rust
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Lint
+        run: make -C libs/csight-core lint
+
+      - name: Test
+        run: make -C libs/csight-core test
+
+      - name: Build
+        run: make

@@ -202,7 +202,7 @@ $(OUTPUT).elf	:	$(OFILES) $(RUST_LIB)
 $(OFILES_SRC)	: $(HFILES_BIN)
 
 $(RUST_LIB):
-	@make -C $(RUST_DIR)
+	@make -C $(RUST_DIR) release
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
