@@ -1,6 +1,8 @@
 name: CICD
 
 on:
+  workflow_dispatch:
+    branches: [main]
   push:
     branches: [main]
 
@@ -23,3 +25,17 @@ jobs:
 
       - name: Build
         run: make
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: CaptureSight
+          retention-days: 5
+          path: out/capturesight.ovl
+
+      - name: Draft release
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: out/capturesight.ovl
