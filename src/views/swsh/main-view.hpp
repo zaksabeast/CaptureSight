@@ -3,6 +3,7 @@
 #include "../../constants.hpp"
 #include "../../views/party-list-view.hpp"
 #include "../../views/swsh/den-list-view.hpp"
+#include "../../views/swsh/rng-view.hpp"
 #include "../../views/swsh/wild-trade-raid-view.hpp"
 #include <csight-core.h>
 #include <cstring>
@@ -38,6 +39,9 @@ class MainSwShView : public tsl::Gui {
     list->addItem(new ActiveIoADenListViewButton());
     list->addItem(new AllCTDenListViewButton());
     list->addItem(new ActiveCTDenListViewButton());
+
+    list->addItem(new tsl::elm::CategoryHeader("RNG"));
+    list->addItem(new RngViewButton("Main RNG", swsh::RngOffset::Main));
 
     frame->setContent(list);
 

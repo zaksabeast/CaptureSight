@@ -12,6 +12,10 @@ impl Xoroshiro {
         }
     }
 
+    pub fn from_state(s0: u64, s1: u64) -> Self {
+        Self { s0, s1 }
+    }
+
     pub fn next_u64(&mut self) -> u64 {
         let result = self.s0.wrapping_add(self.s1);
 
@@ -24,6 +28,26 @@ impl Xoroshiro {
 
     pub fn next(&mut self) -> u32 {
         self.next_u64() as u32
+    }
+
+    pub fn get_state(&self) -> [u64; 2] {
+        [self.s0, self.s1]
+    }
+
+    pub fn advance_to_state(&mut self, state: [u64; 2]) -> Option<u64> {
+        let mut advances = 0;
+
+        // 10,000 is an arbitary limit to avoid an infinite loop
+        while self.get_state() != state {
+            self.next();
+            advances += 1;
+
+            if advances > 10_000 {
+                return None;
+            }
+        }
+
+        Some(advances)
     }
 }
 

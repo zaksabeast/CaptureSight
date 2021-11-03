@@ -19,4 +19,8 @@ namespace swsh {
     IslandOfArmor = 0x450c94d8,
     CrownTundra = 0x450c9f40,
   };
+
+  enum RngOffset {
+    Main = 0x4c2aac18,
+  };
 }

@@ -2,6 +2,7 @@ pub mod c_str;
 pub mod den;
 pub mod pk8;
 pub mod raid_seed;
+pub mod xoroshiro;
 
 use crate::heap_allocator;
 

@@ -2,6 +2,7 @@
 
 #include "den.h"
 #include "pk8.h"
+#include "xoroshiro.h"
 #include <switch.h>
 
 #ifdef __cplusplus
