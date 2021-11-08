@@ -17,12 +17,13 @@ class RngView : public tsl::Gui {
   ~RngView() {};
 
   virtual tsl::elm::Element *createUI() {
-    auto frame = new tsl::elm::OverlayFrame(m_title, " ");
+    auto frame = new tsl::elm::OverlayFrame(m_title, "Press \uE079 Up to attach/detach controls");
     auto list = new tsl::elm::List();
 
     list->addItem(new tsl::elm::CategoryHeader("States"));
     m_state0_list_item = new tsl::elm::ListItem("State 0");
     list->addItem(m_state0_list_item);
+
     m_state1_list_item = new tsl::elm::ListItem("State 1");
     list->addItem(m_state1_list_item);
 
@@ -42,12 +43,30 @@ class RngView : public tsl::Gui {
   }
 
   virtual void update() override {
+    // The user can't control the view, so remove the highlight from list item
+    m_state0_list_item->setFocused(false);
+
     auto rng_state = this->read_rng_state();
     m_state0_list_item->setText(utils::num_to_hex(rng_state[0]));
     m_state1_list_item->setText(utils::num_to_hex(rng_state[1]));
 
     m_advances += m_rng->AdvanceToState(rng_state[0], rng_state[1]);
     m_advances_list_item->setText(std::to_string(m_advances));
+  }
+
+  virtual bool handleInput(u64 keysDown, u64 keysHeld, const HidTouchState &touchPos, HidAnalogStickState leftJoyStick,
+                           HidAnalogStickState rightJoyStick) {
+    if (keysDown & HidNpadButton_B && utils::getIsAttached()) {
+      return false;
+    }
+
+    if (keysDown & HidNpadButton_Up) {
+      utils::toggleAttached();
+    }
+
+    // This view stays open while the game accepts input,
+    // so handling the input prevents odd visual effects
+    return true;
   }
 
  private:

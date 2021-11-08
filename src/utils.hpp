@@ -1,10 +1,12 @@
 #pragma once
 
+#include <atomic>
 #include <csight-core.h>
 #include <iomanip>
 #include <memory>
 #include <string>
 #include <switch.h>
+#include <tesla.hpp>
 
 namespace utils {
   template <typename T>
@@ -46,5 +48,20 @@ namespace utils {
   std::shared_ptr<csight::Pkx> read_pkx(u64 offset) {
     auto ek8 = dbg::ReadCheatProcessHeap<csight::Pk8::StoredSize>(offset);
     return std::make_shared<csight::Pk8>(ek8);
+  }
+
+  std::atomic<bool> g_isAttached(false);
+
+  bool getIsAttached() { return g_isAttached; }
+
+  bool setIsAttached(bool attached) {
+    g_isAttached = attached;
+    tsl::hlp::requestForeground(attached);
+    return g_isAttached;
+  }
+
+  bool toggleAttached() {
+    bool isAttached = getIsAttached();
+    return setIsAttached(!isAttached);
   }
 }

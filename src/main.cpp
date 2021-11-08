@@ -50,6 +50,10 @@ class MainOverlay : public tsl::Overlay {
 
     return initially<ErrorView>("Unsupported game!");
   }
+
+  virtual void onShow() { utils::setIsAttached(true); }
+
+  virtual void onHide() { utils::setIsAttached(false); }
 };
 
 int main(int argc, char **argv) {
