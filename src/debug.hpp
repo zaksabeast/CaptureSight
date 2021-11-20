@@ -10,6 +10,7 @@ DmntCheatProcessMetadata g_metadata;
 namespace dbg {
   Result Initialize() {
     dmntchtInitialize();
+    dmntchtForceOpenCheatProcess();
     return dmntchtGetCheatProcessMetadata(&g_metadata);
   }
 
