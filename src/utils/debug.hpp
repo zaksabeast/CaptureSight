@@ -59,4 +59,10 @@ namespace dbg {
     u64 address = GetNsoAddress(offset);
     return ReadCheatProcess<T>(address);
   }
+
+  template <typename T>
+  T ReadCheatProcessHeap(u64 offset) {
+    u64 address = GetHeapAddress(offset);
+    return ReadCheatProcess<T>(address);
+  }
 }

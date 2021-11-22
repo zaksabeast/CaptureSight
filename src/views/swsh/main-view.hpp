@@ -5,6 +5,7 @@
 #include "../party-list-view.hpp"
 #include "../rng-view.hpp"
 #include "./den-list-view.hpp"
+#include "./trainer-view.hpp"
 #include "./wild-trade-raid-view.hpp"
 #include <csight-core.h>
 #include <cstring>
@@ -37,6 +38,9 @@ class MainSwShView : public tsl::Gui {
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
     auto rng_address = dbg::GetHeapAddress(swsh::RngOffset::Main);
     list->addItem(new XoroshiroRngViewButton("Main RNG", rng_address));
+
+    list->addItem(new tsl::elm::CategoryHeader("Trainer Info"));
+    list->addItem(new TrainerViewButton());
 
     frame->setContent(list);
 

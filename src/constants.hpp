@@ -25,6 +25,14 @@ namespace swsh {
   enum RngOffset {
     Main = 0x4c2aac18,
   };
+
+  enum MyStatus8Offset {
+    SidTid = 0xa0,
+  };
+
+  enum BlockOffset {
+    MyStatus8 = 0x45068f18,
+  };
 }
 
 namespace bdsp {
