@@ -21,10 +21,14 @@ namespace csight {
 
   class Xoroshiro {
    public:
-    Xoroshiro(u64 s0, u64 s1) { m_xoroshiro = get_xoroshiro(s0, s1); }
+    static const size_t StateCount = 2;
+    typedef u64 StateItem;
+    typedef std::array<Xoroshiro::StateItem, Xoroshiro::StateCount> State;
+
+    Xoroshiro(Xoroshiro::State state) { m_xoroshiro = get_xoroshiro(state[0], state[1]); }
     ~Xoroshiro() { free_xoroshiro(m_xoroshiro); }
 
-    u64 AdvanceToState(u64 s0, u64 s1) { return xoroshiro_advance_to_state(m_xoroshiro, s0, s1); }
+    u64 AdvanceToState(Xoroshiro::State state) { return xoroshiro_advance_to_state(m_xoroshiro, state[0], state[1]); }
 
    private:
     xoroshiro_t *m_xoroshiro;

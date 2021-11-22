@@ -1,8 +1,9 @@
 #define TESLA_INIT_IMPL
 
+#include "./utils/debug.hpp"
+#include "./utils/general.hpp"
 #include "constants.hpp"
-#include "debug.hpp"
-#include "utils.hpp"
+#include "views/bdsp/main-view.hpp"
 #include "views/error-view.hpp"
 #include "views/swsh/main-view.hpp"
 #include <csight-core.h>
@@ -24,11 +25,12 @@ class MainOverlay : public tsl::Overlay {
     auto title_id = dbg::GetCheatProcessTitleId();
     auto build_id = dbg::GetCheatProcessBuildId();
 
+    if (!dbg::HasCheatProcess()) {
+      return initially<ErrorView>("No cheat process!\n\nIs a game running?\n\nIs something else\nusing dmnt:cht?");
+    }
+
     if (title_id == SupportedGame::Sword) {
-      std::array<u8, 32> supported_build_id = {
-        0xA3, 0xB7, 0x5B, 0xCD, 0x33, 0x11, 0x38, 0x5A, 0xEE, 0xD6, 0x7F, 0xBE, 0xEB, 0x79, 0xCB, 0xB7,
-        0xBF, 0x02, 0xF4, 0x71, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-      };
+      std::array<u8, 8> supported_build_id = { 0xA3, 0xB7, 0x5B, 0xCD, 0x33, 0x11, 0x38, 0x5A };
       if (build_id == supported_build_id) {
         return initially<MainSwShView>();
       }
@@ -37,10 +39,7 @@ class MainOverlay : public tsl::Overlay {
     }
 
     if (title_id == SupportedGame::Shield) {
-      std::array<u8, 32> supported_build_id = {
-        0xA1, 0x68, 0x02, 0x62, 0x5E, 0x78, 0x26, 0xBF, 0x83, 0xB6, 0xF9, 0x70, 0x8E, 0x47, 0x5B, 0x91,
-        0x2A, 0x9A, 0xB7, 0xDF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-      };
+      std::array<u8, 8> supported_build_id = { 0xA1, 0x68, 0x02, 0x62, 0x5E, 0x78, 0x26, 0xBF };
       if (build_id == supported_build_id) {
         return initially<MainSwShView>();
       }
@@ -48,7 +47,25 @@ class MainOverlay : public tsl::Overlay {
       return initially<ErrorView>("Unsupported game update!");
     }
 
-    return initially<ErrorView>("Unsupported game!");
+    if (title_id == SupportedGame::BrilliantDiamond) {
+      std::array<u8, 8> supported_build_id = { 0xD9, 0xE9, 0x6F, 0xB9, 0x28, 0x78, 0xE3, 0x45 };
+      if (build_id == supported_build_id) {
+        return initially<MainBdSpView>();
+      }
+
+      return initially<ErrorView>("Unsupported game update!");
+    }
+
+    if (title_id == SupportedGame::ShiningPearl) {
+      std::array<u8, 8> supported_build_id = { 0x3C, 0x70, 0xCA, 0xE1, 0x53, 0xDF, 0x0B, 0x4F };
+      if (build_id == supported_build_id) {
+        return initially<MainBdSpView>();
+      }
+
+      return initially<ErrorView>("Unsupported game update!");
+    }
+
+    return initially<ErrorView>("Unsupported game!\n\nTitle Id:\n" + utils::num_to_hex(title_id));
   }
 
   virtual void onShow() { utils::setIsAttached(true); }

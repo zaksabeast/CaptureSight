@@ -1,4 +1,5 @@
 use crate::rng;
+use crate::rng::Rng;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum ShinyType {

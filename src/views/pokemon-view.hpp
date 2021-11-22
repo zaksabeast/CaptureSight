@@ -1,53 +1,53 @@
 #pragma once
 
 #include "../components/button.hpp"
-#include "../debug.hpp"
-#include "../utils.hpp"
+#include "../utils/debug.hpp"
+#include "../utils/general.hpp"
 #include <csight-core.h>
+#include <functional>
 #include <memory>
 #include <tesla.hpp>
 #include <vector>
 
+typedef std::function<std::shared_ptr<csight::Pkx>()> ReadPokemonFn;
+
 class PokemonView : public tsl::Gui {
  public:
-  PokemonView(std::shared_ptr<csight::Pkx> pkm) : m_pkm(pkm) {};
+  PokemonView(ReadPokemonFn read_pkm) : m_read_pkm(read_pkm) {};
   ~PokemonView() {};
 
   virtual tsl::elm::Element *createUI() {
-    auto frame = new tsl::elm::OverlayFrame(m_pkm->SpeciesString(), " ");
-
-    auto drawer
-        = new tsl::elm::CustomDrawer(std::bind(&PokemonView::addBodyDrawer, this, std::placeholders::_1, std::placeholders::_2,
-                                               std::placeholders::_3, std::placeholders::_4, std::placeholders::_5));
-
-    frame->setContent(drawer);
-    return frame;
+    m_frame = new tsl::elm::OverlayFrame("", " ");
+    this->updateFrame();
+    return m_frame;
   }
 
-  void addBodyDrawer(tsl::gfx::Renderer *screen, u16 x, u16 y, u16 w, u16 h) {
-    std::string shiny = m_pkm->IsShiny() ? "Shiny " : "";
+  virtual void update() { this->updateFrame(); }
 
-    auto ivs = m_pkm->Ivs();
+  void addBodyDrawer(tsl::gfx::Renderer *screen, std::shared_ptr<csight::Pkx> pkm) {
+    std::string shiny = pkm->IsShiny() ? "Shiny " : "";
+
+    auto ivs = pkm->Ivs();
     std::vector<u8> ivs_vec = { ivs.hp, ivs.atk, ivs.def, ivs.spa, ivs.spd, ivs.spe };
     std::string formatted_ivs = "IVs: " + utils::join(ivs_vec, "/");
 
-    auto evs = m_pkm->Evs();
+    auto evs = pkm->Evs();
     std::vector<u8> evs_vec = { evs.hp, evs.atk, evs.def, evs.spa, evs.spd, evs.spe };
     std::string formatted_evs = "EVs: " + utils::join(evs_vec, "/");
 
-    std::string nature = "Nature: " + m_pkm->NatureString();
-    std::string minted_nature = "Minted Nature: " + m_pkm->MintedNatureString();
-    std::string ability = "Ability: " + m_pkm->AbilityString();
+    std::string nature = "Nature: " + pkm->NatureString();
+    std::string minted_nature = "Minted Nature: " + pkm->MintedNatureString();
+    std::string ability = "Ability: " + pkm->AbilityString();
 
-    std::string friendshipLabel = m_pkm->IsEgg() ? "Egg cycles: " : "Friendship: ";
-    std::string friendship = friendshipLabel + std::to_string(m_pkm->CurrentFriendship());
+    std::string friendshipLabel = pkm->IsEgg() ? "Egg cycles: " : "Friendship: ";
+    std::string friendship = friendshipLabel + std::to_string(pkm->CurrentFriendship());
 
-    std::string move1 = "- " + m_pkm->Move1String();
-    std::string move2 = "- " + m_pkm->Move2String();
-    std::string move3 = "- " + m_pkm->Move3String();
-    std::string move4 = "- " + m_pkm->Move4String();
+    std::string move1 = "- " + pkm->Move1String();
+    std::string move2 = "- " + pkm->Move2String();
+    std::string move3 = "- " + pkm->Move3String();
+    std::string move4 = "- " + pkm->Move4String();
 
-    std::string pid_ec = "PID: " + utils::num_to_hex(m_pkm->Pid()) + " EC: " + utils::num_to_hex(m_pkm->EncryptionConstant());
+    std::string pid_ec = "PID: " + utils::num_to_hex(pkm->Pid()) + " EC: " + utils::num_to_hex(pkm->EncryptionConstant());
 
     screen->drawString(formatted_ivs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
     screen->drawString(formatted_evs.c_str(), false, 50, 200, 24, screen->a(0xFFFF));
@@ -63,8 +63,19 @@ class PokemonView : public tsl::Gui {
     screen->drawString(pid_ec.c_str(), false, 50, 600, 24, screen->a(0xFFFF));
   }
 
+  void updateFrame() {
+    auto pkm = m_read_pkm();
+    m_frame->setTitle(pkm->SpeciesString());
+
+    auto drawer = new tsl::elm::CustomDrawer(
+        [this, pkm](tsl::gfx::Renderer *screen, u16 x, u16 y, u16 w, u16 h) { this->addBodyDrawer(screen, pkm); });
+
+    m_frame->setContent(drawer);
+  }
+
  private:
-  std::shared_ptr<csight::Pkx> m_pkm;
+  tsl::elm::OverlayFrame *m_frame;
+  ReadPokemonFn m_read_pkm;
   u64 m_seed = 0;
 };
 
@@ -72,8 +83,14 @@ class PokemonViewButton : public Button {
  public:
   PokemonViewButton(const std::string &text, u64 offset) : Button(text) {
     this->onClick([offset]() {
-      auto pkm = utils::read_pkx(offset);
-      tsl::changeTo<PokemonView>(pkm);
+      tsl::changeTo<PokemonView>([offset]() {
+        u64 address = dbg::GetHeapAddress(offset);
+        return utils::read_pkx(address);
+      });
     });
+  }
+
+  PokemonViewButton(const std::string &text, ReadPokemonFn get_pkx) : Button(text) {
+    this->onClick([get_pkx]() { tsl::changeTo<PokemonView>(get_pkx); });
   }
 };

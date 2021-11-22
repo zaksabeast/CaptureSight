@@ -1,3 +1,4 @@
+use crate::rng::Rng;
 use crate::rng::Xoroshiro;
 use pkm_rs::{Pk8, Pkx};
 

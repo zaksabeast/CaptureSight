@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../../constants.hpp"
-#include "../../views/party-list-view.hpp"
-#include "../../views/swsh/den-list-view.hpp"
-#include "../../views/swsh/rng-view.hpp"
-#include "../../views/swsh/wild-trade-raid-view.hpp"
+#include "../../utils/swsh.hpp"
+#include "../party-list-view.hpp"
+#include "../rng-view.hpp"
+#include "./den-list-view.hpp"
+#include "./wild-trade-raid-view.hpp"
 #include <csight-core.h>
 #include <cstring>
 #include <iomanip>
@@ -23,14 +24,7 @@ class MainSwShView : public tsl::Gui {
 
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
     list->addItem(new WildTradeRaidViewButton());
-    list->addItem(new PartyListViewButton({
-        swsh::Pk8Offset::Party + (0 * 0x158),
-        swsh::Pk8Offset::Party + (1 * 0x158),
-        swsh::Pk8Offset::Party + (2 * 0x158),
-        swsh::Pk8Offset::Party + (3 * 0x158),
-        swsh::Pk8Offset::Party + (4 * 0x158),
-        swsh::Pk8Offset::Party + (5 * 0x158),
-    }));
+    list->addItem(new PartyListViewButton(swsh::utils::read_party_pokemon));
 
     list->addItem(new tsl::elm::CategoryHeader("Dens"));
     list->addItem(new AllVanillaDenListViewButton());
@@ -41,7 +35,8 @@ class MainSwShView : public tsl::Gui {
     list->addItem(new ActiveCTDenListViewButton());
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
-    list->addItem(new RngViewButton("Main RNG", swsh::RngOffset::Main));
+    auto rng_address = dbg::GetHeapAddress(swsh::RngOffset::Main);
+    list->addItem(new XoroshiroRngViewButton("Main RNG", rng_address));
 
     frame->setContent(list);
 

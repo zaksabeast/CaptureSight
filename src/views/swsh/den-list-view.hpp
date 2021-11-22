@@ -2,8 +2,8 @@
 
 #include "../../components/button.hpp"
 #include "../../constants.hpp"
-#include "../../debug.hpp"
-#include "../../utils.hpp"
+#include "../../utils/debug.hpp"
+#include "../../utils/general.hpp"
 #include "../pokemon-view.hpp"
 #include <csight-core.h>
 #include <dmntcht.h>
@@ -28,7 +28,7 @@ class DenListView : public tsl::Gui {
       size_t den_id = i + m_id_offset;
       bool is_sword = dbg::GetCheatProcessTitleId() == SupportedGame::Sword;
 
-      auto den_bytes = dbg::ReadCheatProcessHeap<csight::Den::Size>(offset);
+      auto den_bytes = dbg::ReadCheatProcessHeapBytes<csight::Den::Size>(offset);
       auto den = csight::Den(den_bytes, den_id, is_sword);
 
       if (!m_filter_active || den.IsActive()) {

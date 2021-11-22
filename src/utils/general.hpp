@@ -1,9 +1,12 @@
 #pragma once
 
+#include "../constants.hpp"
+#include "./debug.hpp"
 #include <atomic>
 #include <csight-core.h>
 #include <iomanip>
 #include <memory>
+#include <sstream>
 #include <string>
 #include <switch.h>
 #include <tesla.hpp>
@@ -11,8 +14,8 @@
 namespace utils {
   template <typename T>
   std::string num_to_hex(T num) {
-    std::stringstream stream;
-    stream << std::hex << num;
+    std::ostringstream stream;
+    stream << std::right << std::setfill('0') << std::setw(sizeof(T) * 2) << std::hex << num;
     return stream.str();
   }
 
@@ -45,8 +48,8 @@ namespace utils {
     return running;
   }
 
-  std::shared_ptr<csight::Pkx> read_pkx(u64 offset) {
-    auto ek8 = dbg::ReadCheatProcessHeap<csight::Pk8::StoredSize>(offset);
+  std::shared_ptr<csight::Pkx> read_pkx(u64 address) {
+    auto ek8 = dbg::ReadCheatProcessArray<u8, csight::Pk8::StoredSize>(address);
     return std::make_shared<csight::Pk8>(ek8);
   }
 

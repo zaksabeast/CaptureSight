@@ -1,30 +1,31 @@
 #pragma once
 
 #include "../components/button.hpp"
-#include "../debug.hpp"
-#include "../utils.hpp"
+#include "../utils/general.hpp"
 #include "pokemon-view.hpp"
-#include <array>
 #include <csight-core.h>
 #include <dmntcht.h>
+#include <functional>
 #include <memory>
 #include <switch.h>
 #include <tesla.hpp>
 
+typedef std::function<std::shared_ptr<csight::Pkx>(size_t slot)> ReadPartyPokemonFn;
+
 class PartyListView : public tsl::Gui {
  public:
-  PartyListView(std::array<u64, 6> party_offsets) : m_party_offsets(party_offsets) { }
+  PartyListView(ReadPartyPokemonFn read_party_slot) : m_read_party_slot(read_party_slot) { }
 
   virtual tsl::elm::Element *createUI() override {
     auto frame = new tsl::elm::OverlayFrame("Party Pokemon", " ");
     auto list = new tsl::elm::List();
 
-    list->addItem(new PokemonViewButton("Party 1", m_party_offsets[0]));
-    list->addItem(new PokemonViewButton("Party 2", m_party_offsets[1]));
-    list->addItem(new PokemonViewButton("Party 3", m_party_offsets[2]));
-    list->addItem(new PokemonViewButton("Party 4", m_party_offsets[3]));
-    list->addItem(new PokemonViewButton("Party 5", m_party_offsets[4]));
-    list->addItem(new PokemonViewButton("Party 6", m_party_offsets[5]));
+    list->addItem(new PokemonViewButton("Party 1", [this]() { return this->m_read_party_slot(0); }));
+    list->addItem(new PokemonViewButton("Party 2", [this]() { return this->m_read_party_slot(1); }));
+    list->addItem(new PokemonViewButton("Party 3", [this]() { return this->m_read_party_slot(2); }));
+    list->addItem(new PokemonViewButton("Party 4", [this]() { return this->m_read_party_slot(3); }));
+    list->addItem(new PokemonViewButton("Party 5", [this]() { return this->m_read_party_slot(4); }));
+    list->addItem(new PokemonViewButton("Party 6", [this]() { return this->m_read_party_slot(5); }));
 
     frame->setContent(list);
 
@@ -32,12 +33,12 @@ class PartyListView : public tsl::Gui {
   }
 
  private:
-  std::array<u64, 6> m_party_offsets;
+  ReadPartyPokemonFn m_read_party_slot;
 };
 
 class PartyListViewButton : public Button {
  public:
-  PartyListViewButton(std::array<u64, 6> party_offsets) : Button("Party") {
-    this->onClick([party_offsets]() { tsl::changeTo<PartyListView>(party_offsets); });
+  PartyListViewButton(ReadPartyPokemonFn read_party_slot) : Button("Party") {
+    this->onClick([read_party_slot]() { tsl::changeTo<PartyListView>(read_party_slot); });
   }
 };

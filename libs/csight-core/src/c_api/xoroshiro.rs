@@ -1,3 +1,4 @@
+use crate::rng::Rng;
 use crate::rng::Xoroshiro;
 use alloc::boxed::Box;
 
@@ -5,7 +6,7 @@ use alloc::boxed::Box;
 /// The caller needs to ensure the data is valid.
 #[no_mangle]
 pub unsafe extern "C" fn get_xoroshiro(s0: u64, s1: u64) -> *mut Xoroshiro {
-    Box::into_raw(Box::new(Xoroshiro::from_state(s0, s1)))
+    Box::into_raw(Box::new(Xoroshiro::from_state([s0, s1])))
 }
 
 /// # Safety

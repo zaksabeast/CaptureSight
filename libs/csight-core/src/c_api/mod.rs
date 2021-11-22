@@ -3,6 +3,7 @@ pub mod den;
 pub mod pk8;
 pub mod raid_seed;
 pub mod xoroshiro;
+pub mod xorshift;
 
 use crate::heap_allocator;
 

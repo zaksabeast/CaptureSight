@@ -1,53 +1,47 @@
+use super::Rng;
+
+type XoroshiroState = [u64; 2];
+
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub struct Xoroshiro {
-    s0: u64,
-    s1: u64,
+    state: XoroshiroState,
+}
+
+impl Rng for Xoroshiro {
+    type State = XoroshiroState;
+
+    fn from_state(state: Self::State) -> Self {
+        Self { state }
+    }
+
+    fn set_state(&mut self, state: Self::State) {
+        self.state = state;
+    }
+
+    fn get_state(&self) -> Self::State {
+        self.state
+    }
+
+    fn next(&mut self) -> u32 {
+        self.next_u64() as u32
+    }
 }
 
 impl Xoroshiro {
     pub fn new(seed: u64) -> Self {
         Self {
-            s0: seed,
-            s1: 0x82A2B175229D6A5B,
+            state: [seed, 0x82A2B175229D6A5B],
         }
-    }
-
-    pub fn from_state(s0: u64, s1: u64) -> Self {
-        Self { s0, s1 }
     }
 
     pub fn next_u64(&mut self) -> u64 {
-        let result = self.s0.wrapping_add(self.s1);
+        let result = self.state[0].wrapping_add(self.state[1]);
 
-        self.s1 ^= self.s0;
-        self.s0 = self.s0.rotate_left(24) ^ self.s1 ^ (self.s1 << 16);
-        self.s1 = self.s1.rotate_left(37);
+        self.state[1] ^= self.state[0];
+        self.state[0] = self.state[0].rotate_left(24) ^ self.state[1] ^ (self.state[1] << 16);
+        self.state[1] = self.state[1].rotate_left(37);
 
         result
-    }
-
-    pub fn next(&mut self) -> u32 {
-        self.next_u64() as u32
-    }
-
-    pub fn get_state(&self) -> [u64; 2] {
-        [self.s0, self.s1]
-    }
-
-    pub fn advance_to_state(&mut self, state: [u64; 2]) -> Option<u64> {
-        let mut advances = 0;
-
-        // 10,000 is an arbitary limit to avoid an infinite loop
-        while self.get_state() != state {
-            self.next();
-            advances += 1;
-
-            if advances > 10_000 {
-                return None;
-            }
-        }
-
-        Some(advances)
     }
 }
 

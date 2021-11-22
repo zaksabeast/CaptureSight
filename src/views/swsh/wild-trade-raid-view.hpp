@@ -2,7 +2,7 @@
 
 #include "../../components/button.hpp"
 #include "../../constants.hpp"
-#include "../../utils.hpp"
+#include "../../utils/general.hpp"
 #include "../pokemon-view.hpp"
 #include <csight-core.h>
 #include <dmntcht.h>
@@ -15,7 +15,7 @@ class RaidSeedButton : public Button {
  public:
   RaidSeedButton(std::string label, u64 offset) : Button(label) {
     this->onClick([this, offset]() {
-      auto pk8 = utils::read_pkx(offset);
+      auto pk8 = utils::read_pkx(dbg::GetHeapAddress(offset));
       auto raid_seed = pk8->FindRaidSeed();
       std::string new_label = raid_seed.has_value() ? utils::num_to_hex(raid_seed.value()) : "None";
       this->setText(utils::num_to_hex(new_label));

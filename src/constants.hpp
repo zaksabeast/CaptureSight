@@ -3,6 +3,8 @@
 enum SupportedGame {
   Sword = 0x0100ABF008968000,
   Shield = 0x01008DB008C2C000,
+  BrilliantDiamond = 0x100000011D90000,
+  ShiningPearl = 0x010018E011D92000,
 };
 
 namespace swsh {
@@ -22,5 +24,16 @@ namespace swsh {
 
   enum RngOffset {
     Main = 0x4c2aac18,
+  };
+}
+
+namespace bdsp {
+  enum Offset {
+    DiamondPlayerPrefsProviderInstance = 0x4c49098,
+    PearlPlayerPrefsProviderInstance = 0x4e60170,
+  };
+
+  enum RngOffset {
+    MainPtr = 0x4f8ccd0,
   };
 }
