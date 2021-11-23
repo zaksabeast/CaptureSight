@@ -17,7 +17,7 @@ class PokemonView : public tsl::Gui {
   ~PokemonView() {};
 
   virtual tsl::elm::Element *createUI() {
-    m_frame = new tsl::elm::OverlayFrame("", " ");
+    m_frame = new tsl::elm::OverlayFrame("", "Press \uE0A2 X to toggle PID/EC");
     this->updateFrame();
     return m_frame;
   }
@@ -47,7 +47,9 @@ class PokemonView : public tsl::Gui {
     std::string move3 = "- " + pkm->Move3String();
     std::string move4 = "- " + pkm->Move4String();
 
-    std::string pid_ec = "PID: " + utils::num_to_hex(pkm->Pid()) + " EC: " + utils::num_to_hex(pkm->EncryptionConstant());
+    std::string pid_ec = m_hide_sensitive_info
+        ? ""
+        : "PID: " + utils::num_to_hex(pkm->Pid()) + " EC: " + utils::num_to_hex(pkm->EncryptionConstant());
 
     screen->drawString(formatted_ivs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
     screen->drawString(formatted_evs.c_str(), false, 50, 200, 24, screen->a(0xFFFF));
@@ -73,10 +75,21 @@ class PokemonView : public tsl::Gui {
     m_frame->setContent(drawer);
   }
 
+  virtual bool handleInput(u64 keysDown, u64 keysHeld, const HidTouchState &touchPos, HidAnalogStickState leftJoyStick,
+                           HidAnalogStickState rightJoyStick) {
+    if (keysDown & HidNpadButton_X) {
+      m_hide_sensitive_info = !m_hide_sensitive_info;
+      return true;
+    }
+
+    return false;
+  }
+
  private:
   tsl::elm::OverlayFrame *m_frame;
   ReadPokemonFn m_read_pkm;
   u64 m_seed = 0;
+  bool m_hide_sensitive_info = false;
 };
 
 class PokemonViewButton : public Button {
