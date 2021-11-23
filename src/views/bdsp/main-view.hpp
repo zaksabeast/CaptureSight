@@ -6,6 +6,7 @@
 #include "../pokemon-view.hpp"
 #include "../rng-view.hpp"
 #include "./daycare-view.hpp"
+#include "./underground-view.hpp"
 #include <csight-core.h>
 #include <cstring>
 #include <iomanip>
@@ -26,6 +27,7 @@ class MainBdSpView : public tsl::Gui {
     list->addItem(new PokemonViewButton("Wild", bdsp::utils::read_wild_pokemon));
     list->addItem(new PartyListViewButton(bdsp::utils::read_party_pokemon));
     list->addItem(new DaycareViewButton());
+    list->addItem(new UndergroundViewButton());
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
 

@@ -93,4 +93,8 @@ class PokemonViewButton : public Button {
   PokemonViewButton(const std::string &text, ReadPokemonFn get_pkx) : Button(text) {
     this->onClick([get_pkx]() { tsl::changeTo<PokemonView>(get_pkx); });
   }
+
+  PokemonViewButton(const std::string &text, std::shared_ptr<csight::Pkx> pkx) : Button(text) {
+    this->onClick([pkx]() { tsl::changeTo<PokemonView>([pkx]() { return pkx; }); });
+  }
 };

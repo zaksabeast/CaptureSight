@@ -3,7 +3,9 @@
 #include "../constants.hpp"
 #include "./debug.hpp"
 #include "./general.hpp"
+#include <algorithm>
 #include <csight-core.h>
+#include <vector>
 
 namespace bdsp {
 
@@ -28,6 +30,12 @@ namespace bdsp {
       tmp = dbg::ReadCheatProcess<u64>(tmp + 0x18);
       tmp = dbg::ReadCheatProcess<u64>(tmp + 0xc0);
       tmp = dbg::ReadCheatProcess<u64>(tmp + 0x28);
+      tmp = dbg::ReadCheatProcess<u64>(tmp + 0xb8);
+      return dbg::ReadCheatProcess<u64>(tmp);
+    }
+
+    u64 get_field_manager_addr() {
+      u64 tmp = dbg::ReadCheatProcessNso<u64>(bdsp::Offset::FieldManager);
       tmp = dbg::ReadCheatProcess<u64>(tmp + 0xb8);
       return dbg::ReadCheatProcess<u64>(tmp);
     }
@@ -71,6 +79,32 @@ namespace bdsp {
       u64 address = get_daycare_addr();
       auto egg_details = dbg::ReadCheatProcess<EggDetails>(address + 8, default_egg_details);
       return std::make_shared<EggDetails>(egg_details);
+    }
+
+    u64 read_underground_main_proc_addr() {
+      u64 tmp = get_field_manager_addr();
+      tmp = dbg::ReadCheatProcess<u64>(tmp + 0xa8);
+      return dbg::ReadCheatProcess<u64>(tmp + 0x10);
+    }
+
+    std::vector<std::shared_ptr<csight::Pkx>> read_underground_pokemon() {
+      u64 tmp = read_underground_main_proc_addr();
+      u8 read_size = dbg::ReadCheatProcess<u8>(tmp + 0x18);
+      u8 size = std::min(read_size, (u8)15);
+      tmp = dbg::ReadCheatProcess<u64>(tmp + 0x10);
+      std::vector<std::shared_ptr<csight::Pkx>> result;
+
+      result.reserve(size);
+
+      for (u8 i = 0; i < size; i++) {
+        u64 pkx_addr = dbg::ReadCheatProcess<u64>(tmp + 0x20 + (8 * i));
+        pkx_addr = dbg::ReadCheatProcess<u64>(pkx_addr + 0x10);
+        pkx_addr = dbg::ReadCheatProcess<u64>(pkx_addr + 0x10);
+        auto pkx = ::utils::read_pkx(pkx_addr + 0x20);
+        result.push_back(pkx);
+      }
+
+      return result;
     }
   }
 }

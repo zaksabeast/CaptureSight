@@ -39,6 +39,7 @@ namespace bdsp {
   enum Offset {
     DiamondPlayerPrefsProviderInstance = 0x4c49098,
     PearlPlayerPrefsProviderInstance = 0x4e60170,
+    FieldManager = 0x4c13650,
   };
 
   enum RngOffset {
