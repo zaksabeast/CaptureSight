@@ -36,11 +36,20 @@ namespace swsh {
 }
 
 namespace bdsp {
-  enum Offset {
-    DiamondPlayerPrefsProviderInstance = 0x4c49098,
-    PearlPlayerPrefsProviderInstance = 0x4e60170,
-    FieldManager = 0x4c13650,
-  };
+
+  namespace diamond {
+    enum Offsets {
+      PlayerPrefsProviderInstance = 0x4c49098,
+      FieldManager = 0x4c13650,
+    };
+  }
+
+  namespace pearl {
+    enum Offsets {
+      PlayerPrefsProviderInstance = 0x4e60170,
+      FieldManager = 0x4e2a728,
+    };
+  }
 
   enum RngOffset {
     MainPtr = 0x4f8ccd0,

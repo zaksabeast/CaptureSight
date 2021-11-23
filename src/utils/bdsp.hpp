@@ -18,10 +18,10 @@ namespace bdsp {
   namespace utils {
     u64 get_player_prefs_provider_offset() {
       if (dbg::GetCheatProcessTitleId() == SupportedGame::BrilliantDiamond) {
-        return bdsp::Offset::DiamondPlayerPrefsProviderInstance;
+        return bdsp::diamond::Offsets::PlayerPrefsProviderInstance;
       }
 
-      return bdsp::Offset::PearlPlayerPrefsProviderInstance;
+      return bdsp::pearl::Offsets::PlayerPrefsProviderInstance;
     }
 
     u64 get_player_prefs_provider() {
@@ -34,8 +34,17 @@ namespace bdsp {
       return dbg::ReadCheatProcess<u64>(tmp);
     }
 
+    u64 get_field_manager_offset() {
+      if (dbg::GetCheatProcessTitleId() == SupportedGame::BrilliantDiamond) {
+        return bdsp::diamond::Offsets::FieldManager;
+      }
+
+      return bdsp::pearl::Offsets::FieldManager;
+    }
+
     u64 get_field_manager_addr() {
-      u64 tmp = dbg::ReadCheatProcessNso<u64>(bdsp::Offset::FieldManager);
+      u64 offset = get_field_manager_offset();
+      u64 tmp = dbg::ReadCheatProcessNso<u64>(offset);
       tmp = dbg::ReadCheatProcess<u64>(tmp + 0xb8);
       return dbg::ReadCheatProcess<u64>(tmp);
     }
