@@ -4,6 +4,9 @@ pub use xoroshiro::*;
 mod xorshift;
 pub use xorshift::*;
 
+mod lcrng;
+pub use lcrng::*;
+
 /// An RNG
 pub trait Rng: Copy {
     type State: PartialEq;

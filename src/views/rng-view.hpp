@@ -94,3 +94,10 @@ class XorshiftRngViewButton : public Button {
     this->onClick([title, rng_offset]() { tsl::changeTo<RngView<csight::Xorshift>>(title, rng_offset); });
   }
 };
+
+class LcrngViewButton : public Button {
+ public:
+  LcrngViewButton(const std::string title, u64 rng_offset) : Button(title) {
+    this->onClick([title, rng_offset]() { tsl::changeTo<RngView<csight::Lcrng>>(title, rng_offset); });
+  }
+};

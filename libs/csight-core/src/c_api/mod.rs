@@ -1,5 +1,6 @@
 pub mod c_str;
 pub mod den;
+pub mod lcrng;
 pub mod pk8;
 pub mod raid_seed;
 pub mod xoroshiro;

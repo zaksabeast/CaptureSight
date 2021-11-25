@@ -30,9 +30,12 @@ class MainBdSpView : public tsl::Gui {
     list->addItem(new UndergroundViewButton());
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
-
-    auto rng_address = dbg::ReadCheatProcessNso<u64>(bdsp::RngOffset::MainPtr);
-    list->addItem(new XorshiftRngViewButton("Main RNG", rng_address));
+    auto main_rng_addr = dbg::ReadCheatProcessNso<u64>(bdsp::RngOffset::MainPtr);
+    list->addItem(new XorshiftRngViewButton("Main RNG", main_rng_addr));
+    auto rand_group_0_addr = bdsp::utils::get_random_group_state_addr(0);
+    list->addItem(new LcrngViewButton("Random Group 0", rand_group_0_addr));
+    auto rand_group_1_addr = bdsp::utils::get_random_group_state_addr(1);
+    list->addItem(new LcrngViewButton("Random Group 1", rand_group_1_addr));
 
     frame->setContent(list);
 

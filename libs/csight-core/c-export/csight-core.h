@@ -1,6 +1,7 @@
 #pragma once
 
 #include "den.h"
+#include "lcrng.h"
 #include "pk8.h"
 #include "xoroshiro.h"
 #include "xorshift.h"

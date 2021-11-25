@@ -55,6 +55,8 @@ namespace bdsp {
 
     u64 get_daycare_addr() { return get_player_prefs_provider() + 0x450; }
 
+    u64 get_random_group_addr() { return dbg::ReadCheatProcess<u64>(get_player_prefs_provider() + 0x348); }
+
     std::shared_ptr<csight::Pkx> read_pokemon_from_poke_param(u64 address) {
       u64 tmp = dbg::ReadCheatProcess<u64>(address + 0x20);
       tmp = dbg::ReadCheatProcess<u64>(tmp + 0x18);
@@ -114,6 +116,11 @@ namespace bdsp {
       }
 
       return result;
+    }
+
+    u64 get_random_group_state_addr(size_t index) {
+      u64 addr = get_random_group_addr();
+      return addr + (index * 0x38) + 0x40;
     }
   }
 }
