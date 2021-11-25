@@ -41,7 +41,8 @@ class DaycareView : public DetachableView {
     m_seed_item->setText(utils::num_to_hex((u32)egg_details->seed));
 
     m_steps_item->setFocused(false);
-    m_steps_item->setText(std::to_string(egg_details->stepCount));
+    // Subtract from 180 so the numbers go backwards
+    m_steps_item->setText(std::to_string(180 - egg_details->stepCount));
   }
 
  private:
