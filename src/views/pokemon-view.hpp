@@ -25,7 +25,7 @@ class PokemonView : public tsl::Gui {
   virtual void update() { this->updateFrame(); }
 
   void addBodyDrawer(tsl::gfx::Renderer *screen, std::shared_ptr<csight::Pkx> pkm) {
-    std::string shiny = pkm->IsShiny() ? "Shiny " : "";
+    std::string shiny = pkm->IsShiny() ? "Shiny " : " ";
 
     auto ivs = pkm->Ivs();
     std::vector<u8> ivs_vec = { ivs.hp, ivs.atk, ivs.def, ivs.spa, ivs.spd, ivs.spe };
@@ -47,21 +47,24 @@ class PokemonView : public tsl::Gui {
     std::string move3 = "- " + pkm->Move3String();
     std::string move4 = "- " + pkm->Move4String();
 
+    std::string tidsid = "TID: " + std::to_string(pkm->Tid()) + " SID: " + std::to_string(pkm->Sid());
+
     std::string pid_ec = m_hide_sensitive_info
-        ? ""
+        ? " "
         : "PID: " + utils::num_to_hex(pkm->Pid()) + " EC: " + utils::num_to_hex(pkm->EncryptionConstant());
 
-    screen->drawString(formatted_ivs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
-    screen->drawString(formatted_evs.c_str(), false, 50, 200, 24, screen->a(0xFFFF));
-    screen->drawString(nature.c_str(), false, 50, 240, 24, screen->a(0xFFFF));
-    screen->drawString(minted_nature.c_str(), false, 50, 280, 24, screen->a(0xFFFF));
-    screen->drawString(friendship.c_str(), false, 50, 320, 24, screen->a(0xFFFF));
-    screen->drawString(ability.c_str(), false, 50, 360, 24, screen->a(0xFFFF));
-    screen->drawString("Moves:", false, 50, 400, 24, screen->a(0xFFFF));
-    screen->drawString(move1.c_str(), false, 50, 440, 24, screen->a(0xFFFF));
-    screen->drawString(move2.c_str(), false, 50, 480, 24, screen->a(0xFFFF));
-    screen->drawString(move3.c_str(), false, 50, 520, 24, screen->a(0xFFFF));
-    screen->drawString(move4.c_str(), false, 50, 560, 24, screen->a(0xFFFF));
+    screen->drawString(formatted_ivs.c_str(), false, 50, 120, 24, screen->a(0xFFFF));
+    screen->drawString(formatted_evs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
+    screen->drawString(nature.c_str(), false, 50, 200, 24, screen->a(0xFFFF));
+    screen->drawString(minted_nature.c_str(), false, 50, 240, 24, screen->a(0xFFFF));
+    screen->drawString(friendship.c_str(), false, 50, 280, 24, screen->a(0xFFFF));
+    screen->drawString(ability.c_str(), false, 50, 320, 24, screen->a(0xFFFF));
+    screen->drawString("Moves:", false, 50, 360, 24, screen->a(0xFFFF));
+    screen->drawString(move1.c_str(), false, 50, 400, 24, screen->a(0xFFFF));
+    screen->drawString(move2.c_str(), false, 50, 440, 24, screen->a(0xFFFF));
+    screen->drawString(move3.c_str(), false, 50, 480, 24, screen->a(0xFFFF));
+    screen->drawString(move4.c_str(), false, 50, 520, 24, screen->a(0xFFFF));
+    screen->drawString(tidsid.c_str(), false, 50, 560, 24, screen->a(0xFFFF));
     screen->drawString(pid_ec.c_str(), false, 50, 600, 24, screen->a(0xFFFF));
   }
 

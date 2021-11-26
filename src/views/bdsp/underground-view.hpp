@@ -22,7 +22,7 @@ class UndergroundView : public tsl::Gui {
     auto pkxs = bdsp::utils::read_underground_pokemon();
 
     for (auto pkx : pkxs) {
-      std::string label = pkx->SpeciesString() + (pkx->IsShiny() ? " ★" : "");
+      std::string label = pkx->SpeciesString() + (pkx->IsShiny() ? " ★" : " ");
       list->addItem(new PokemonViewButton(label, pkx));
     }
 
