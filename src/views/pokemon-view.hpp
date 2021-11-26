@@ -53,19 +53,19 @@ class PokemonView : public tsl::Gui {
         ? " "
         : "PID: " + utils::num_to_hex(pkm->Pid()) + " EC: " + utils::num_to_hex(pkm->EncryptionConstant());
 
-    screen->drawString(formatted_ivs.c_str(), false, 50, 120, 24, screen->a(0xFFFF));
-    screen->drawString(formatted_evs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
-    screen->drawString(nature.c_str(), false, 50, 200, 24, screen->a(0xFFFF));
-    screen->drawString(minted_nature.c_str(), false, 50, 240, 24, screen->a(0xFFFF));
-    screen->drawString(friendship.c_str(), false, 50, 280, 24, screen->a(0xFFFF));
-    screen->drawString(ability.c_str(), false, 50, 320, 24, screen->a(0xFFFF));
-    screen->drawString("Moves:", false, 50, 360, 24, screen->a(0xFFFF));
-    screen->drawString(move1.c_str(), false, 50, 400, 24, screen->a(0xFFFF));
+    screen->drawString(formatted_ivs.c_str(), false, 50, 160, 24, screen->a(0xFFFF));
+    screen->drawString(formatted_evs.c_str(), false, 50, 195, 24, screen->a(0xFFFF));
+    screen->drawString(nature.c_str(), false, 50, 230, 24, screen->a(0xFFFF));
+    screen->drawString(minted_nature.c_str(), false, 50, 265, 24, screen->a(0xFFFF));
+    screen->drawString(friendship.c_str(), false, 50, 300, 24, screen->a(0xFFFF));
+    screen->drawString(ability.c_str(), false, 50, 335, 24, screen->a(0xFFFF));
+    screen->drawString("Moves:", false, 50, 370, 24, screen->a(0xFFFF));
+    screen->drawString(move1.c_str(), false, 50, 405, 24, screen->a(0xFFFF));
     screen->drawString(move2.c_str(), false, 50, 440, 24, screen->a(0xFFFF));
-    screen->drawString(move3.c_str(), false, 50, 480, 24, screen->a(0xFFFF));
-    screen->drawString(move4.c_str(), false, 50, 520, 24, screen->a(0xFFFF));
-    screen->drawString(tidsid.c_str(), false, 50, 560, 24, screen->a(0xFFFF));
-    screen->drawString(pid_ec.c_str(), false, 50, 600, 24, screen->a(0xFFFF));
+    screen->drawString(move3.c_str(), false, 50, 475, 24, screen->a(0xFFFF));
+    screen->drawString(move4.c_str(), false, 50, 510, 24, screen->a(0xFFFF));
+    screen->drawString(tidsid.c_str(), false, 50, 545, 24, screen->a(0xFFFF));
+    screen->drawString(pid_ec.c_str(), false, 50, 580, 24, screen->a(0xFFFF));
   }
 
   void updateFrame() {
