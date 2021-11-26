@@ -122,5 +122,10 @@ namespace bdsp {
       u64 addr = get_random_group_addr();
       return addr + (index * 0x38) + 0x40;
     }
+
+    std::shared_ptr<::utils::TrainerInfo> read_trainer_info() {
+      u32 sidtid = dbg::ReadCheatProcess<u32>(get_player_prefs_provider() + 0xe8);
+      return ::utils::get_trainer_info(sidtid);
+    }
   }
 }

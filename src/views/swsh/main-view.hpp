@@ -4,8 +4,8 @@
 #include "../../utils/swsh.hpp"
 #include "../party-list-view.hpp"
 #include "../rng-view.hpp"
+#include "../trainer-view.hpp"
 #include "./den-list-view.hpp"
-#include "./trainer-view.hpp"
 #include "./wild-trade-raid-view.hpp"
 #include <csight-core.h>
 #include <cstring>
@@ -40,7 +40,8 @@ class MainSwShView : public tsl::Gui {
     list->addItem(new XoroshiroRngViewButton("Main RNG", rng_address));
 
     list->addItem(new tsl::elm::CategoryHeader("Trainer Info"));
-    list->addItem(new TrainerViewButton());
+    auto trainer_info = swsh::utils::read_trainer_info();
+    list->addItem(new TrainerViewButton(trainer_info));
 
     frame->setContent(list);
 

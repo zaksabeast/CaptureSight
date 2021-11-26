@@ -6,18 +6,9 @@
 
 namespace swsh {
   namespace utils {
-    struct TrainerInfo {
-      u16 sid;
-      u16 tid;
-    };
-
-    std::shared_ptr<TrainerInfo> read_trainer_info() {
+    std::shared_ptr<::utils::TrainerInfo> read_trainer_info() {
       u32 sidtid = dbg::ReadCheatProcessHeap<u32>(swsh::BlockOffset::MyStatus8 + swsh::MyStatus8Offset::SidTid);
-
-      return std::make_shared<TrainerInfo>(TrainerInfo {
-        sid : (u16)(sidtid >> 16),
-        tid : (u16)sidtid,
-      });
+      return ::utils::get_trainer_info(sidtid);
     }
 
     std::shared_ptr<csight::Pkx> read_party_pokemon(size_t index) {

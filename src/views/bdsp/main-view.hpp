@@ -5,6 +5,7 @@
 #include "../party-list-view.hpp"
 #include "../pokemon-view.hpp"
 #include "../rng-view.hpp"
+#include "../trainer-view.hpp"
 #include "./daycare-view.hpp"
 #include "./underground-view.hpp"
 #include <csight-core.h>
@@ -36,6 +37,10 @@ class MainBdSpView : public tsl::Gui {
     list->addItem(new LcrngViewButton("Random Group 0", rand_group_0_addr));
     auto rand_group_1_addr = bdsp::utils::get_random_group_state_addr(1);
     list->addItem(new LcrngViewButton("Random Group 1", rand_group_1_addr));
+
+    list->addItem(new tsl::elm::CategoryHeader("Trainer Info"));
+    auto trainer_info = bdsp::utils::read_trainer_info();
+    list->addItem(new TrainerViewButton(trainer_info));
 
     frame->setContent(list);
 

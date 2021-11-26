@@ -12,6 +12,18 @@
 #include <tesla.hpp>
 
 namespace utils {
+  struct TrainerInfo {
+    u16 sid;
+    u16 tid;
+  };
+
+  std::shared_ptr<::utils::TrainerInfo> get_trainer_info(u32 sidtid) {
+    return std::make_shared<::utils::TrainerInfo>(::utils::TrainerInfo {
+      sid : (u16)(sidtid >> 16),
+      tid : (u16)sidtid,
+    });
+  }
+
   template <typename T>
   std::string num_to_hex(T num) {
     std::ostringstream stream;
