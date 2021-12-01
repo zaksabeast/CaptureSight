@@ -11,7 +11,7 @@ crate-type = ["staticlib"]
 num_enum = { version = "0.5", default-features = false }
 cstr_core = { version = "0.2.4", default-features = false, features = ["alloc"] }
 no_std_io = { git = "https://github.com/zaksabeast/no_std_io.git", rev = "77499d6" }
-pkm-rs = { git = "https://github.com/zaksabeast/pkm-rs.git", rev = "e04fb87" }
+pkm-rs = { git = "https://github.com/zaksabeast/pkm-rs.git", rev = "51d48a5" }
 
 [target.'cfg(target_os = "horizon")'.dependencies]
 linked_list_allocator = "0.9.0"
