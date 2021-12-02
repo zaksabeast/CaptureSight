@@ -39,7 +39,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 
 APP_TITLE			:=		CaptureSight
-APP_VERSION 	:= 		0.10.0
+APP_VERSION 	:= 		0.10.1
 
 TARGET		:=	capturesight
 BUILD		:=	build
