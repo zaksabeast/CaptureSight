@@ -3,7 +3,7 @@
 enum SupportedGame {
   Sword = 0x0100ABF008968000,
   Shield = 0x01008DB008C2C000,
-  BrilliantDiamond = 0x100000011D90000,
+  BrilliantDiamond = 0x0100000011D90000,
   ShiningPearl = 0x010018E011D92000,
 };
 
@@ -36,20 +36,10 @@ namespace swsh {
 }
 
 namespace bdsp {
-
-  namespace diamond {
-    enum Offsets {
-      PlayerPrefsProviderInstance = 0x4c49098,
-      FieldManager = 0x4c13650,
-    };
-  }
-
-  namespace pearl {
-    enum Offsets {
-      PlayerPrefsProviderInstance = 0x4e60170,
-      FieldManager = 0x4e2a728,
-    };
-  }
+  enum Offsets {
+    PlayerPrefsProviderInstance = 0x4e60170,
+    FieldManager = 0x4e2a728,
+  };
 
   enum RngOffset {
     MainPtr = 0x4f8ccd0,
