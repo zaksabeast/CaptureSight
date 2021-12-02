@@ -25,8 +25,6 @@ class PokemonView : public tsl::Gui {
   virtual void update() { this->updateFrame(); }
 
   void addBodyDrawer(tsl::gfx::Renderer *screen, std::shared_ptr<csight::Pkx> pkm) {
-    std::string shiny = pkm->IsShiny() ? "Shiny " : " ";
-
     auto ivs = pkm->Ivs();
     std::vector<u8> ivs_vec = { ivs.hp, ivs.atk, ivs.def, ivs.spa, ivs.spd, ivs.spe };
     std::string formatted_ivs = "IVs: " + utils::join(ivs_vec, "/");
@@ -70,7 +68,8 @@ class PokemonView : public tsl::Gui {
 
   void updateFrame() {
     auto pkm = m_read_pkm();
-    m_frame->setTitle(pkm->SpeciesString());
+    std::string shiny = pkm->IsShiny() ? "Shiny " : " ";
+    m_frame->setTitle(shiny + pkm->SpeciesString());
 
     auto drawer = new tsl::elm::CustomDrawer(
         [this, pkm](tsl::gfx::Renderer *screen, u16 x, u16 y, u16 w, u16 h) { this->addBodyDrawer(screen, pkm); });
