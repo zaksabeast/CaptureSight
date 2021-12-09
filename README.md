@@ -4,6 +4,7 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon data while playing Po
 
 ### Features:
 
+#### Sword & Shield
 - View Pokemon species, attacks, IVs, etc. for
   - Wild Pokemon
   - In-Trade Pokemon
@@ -17,14 +18,24 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon data while playing Po
 - Find the raid seed that created a Pokemon
   - Join a trade or raid with a person who doesn't have custom firmware and use CaptureSight to get their raid seed
   - With raid and trade views, anyone without custom firmware only needs to know someone with custom firmware to do Raid RNG
+- View the main RNG states for RNG purposes
+- View your TID and SID
+
+#### Brilliant Diamond & Shining Pearl
+- View Pokemon species, attacks, IVs, etc. for
+  - Wild Pokemon
+  - Party Pokemon
+  - Underground Pokemon
+- View the main RNG states for RNG purposes
+- View egg seed and group seeds for RNG purposes
+- View your TID and SID
 
 ## How do I use CaptureSight?
 
 1. Setup WerWolv's Tesla - https://gbatemp.net/threads/tesla-the-nintendo-switch-overlay-menu.557362/
-1. Download the latest `CaptureSight.zip`
-1. Unzip the archive to get `capturesight.ovl`
+1. Download the latest `capturesight.ovl`
 1. Copy `capturesight.ovl` to be inside the `/switch/.overlays` directory on your switch's SD card
-1. Start Pokemon Sword or Shield
+1. Start Pokemon Sword or Shield, or Brilliant Diamond or Shining Pearl
 1. Press the key combo to open Tesla Menu (L + Dpad Down + R joystick as of this writing)
 1. Open CaptureSight with Tesla
 
