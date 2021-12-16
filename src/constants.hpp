@@ -39,6 +39,7 @@ namespace bdsp {
   enum Offsets {
     PlayerPrefsProviderInstance = 0x4e60170,
     FieldManager = 0x4e2a728,
+    UnionRoomManager = 0x4e376e8,
   };
 
   enum RngOffset {

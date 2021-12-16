@@ -31,6 +31,13 @@ namespace bdsp {
       return dbg::ReadCheatProcess<u64>(tmp);
     }
 
+    u64 get_union_room_manager() {
+      u64 tmp = dbg::ReadCheatProcessNso<u64>(bdsp::Offsets::UnionRoomManager);
+      tmp = dbg::ReadCheatProcess<u64>(tmp + 0x18);
+      tmp = dbg::ReadCheatProcess<u64>(tmp + 0xb8);
+      return dbg::ReadCheatProcess<u64>(tmp);
+    }
+
     u64 get_battle_setup_param_addr() { return dbg::ReadCheatProcess<u64>(get_player_prefs_provider() + 0x7e8); }
 
     u64 get_read_player_party_addr() { return dbg::ReadCheatProcess<u64>(get_player_prefs_provider() + 0x7f0); }
@@ -108,6 +115,13 @@ namespace bdsp {
     std::shared_ptr<::utils::TrainerInfo> read_trainer_info() {
       u32 sidtid = dbg::ReadCheatProcess<u32>(get_player_prefs_provider() + 0xe8);
       return ::utils::get_trainer_info(sidtid);
+    }
+
+    std::shared_ptr<csight::Pkx> read_other_player_union_trade_pokemon() {
+      u64 union_trade_manager_addr = dbg::ReadCheatProcess<u64>(get_union_room_manager() + 0x108);
+      u64 trade_select_model_addr = dbg::ReadCheatProcess<u64>(union_trade_manager_addr + 0x28);
+      u64 poke_param_addr = dbg::ReadCheatProcess<u64>(trade_select_model_addr + 0x70);
+      return read_pokemon_from_poke_param(poke_param_addr);
     }
   }
 }

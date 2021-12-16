@@ -29,6 +29,7 @@ class MainBdSpView : public tsl::Gui {
     list->addItem(new PartyListViewButton(bdsp::utils::read_party_pokemon));
     list->addItem(new DaycareViewButton());
     list->addItem(new UndergroundViewButton());
+    list->addItem(new PokemonViewButton("Union Trade", bdsp::utils::read_other_player_union_trade_pokemon));
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
     auto main_rng_addr = dbg::ReadCheatProcessNso<u64>(bdsp::RngOffset::MainPtr);
