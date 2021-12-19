@@ -156,8 +156,8 @@ mod test {
             0x79128863d624f7ba,
         ];
 
-        for i in 0..100 {
-            assert_eq!(rng.next_u64(), expected_results[i]);
+        for rand in expected_results {
+            assert_eq!(rng.next_u64(), rand);
         }
     }
 
@@ -182,8 +182,8 @@ mod test {
             0x71b0651d, 0xd624f7ba,
         ];
 
-        for i in 0..100 {
-            assert_eq!(rng.next(), expected_results[i]);
+        for rand in expected_results {
+            assert_eq!(rng.next(), rand);
         }
     }
 }

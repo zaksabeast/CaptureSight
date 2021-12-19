@@ -63,8 +63,8 @@ mod test {
             0xdc5bfb19, 0x714657ca,
         ];
 
-        for i in 0..100 {
-            assert_eq!(rng.next(), expected_results[i]);
+        for rand in expected_results {
+            assert_eq!(rng.next(), rand);
         }
     }
 }
