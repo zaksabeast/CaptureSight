@@ -7,6 +7,7 @@
 #include "../rng-view.hpp"
 #include "../trainer-view.hpp"
 #include "./daycare-view.hpp"
+#include "./roamer-view.hpp"
 #include "./underground-view.hpp"
 #include <csight-core.h>
 #include <cstring>
@@ -30,6 +31,7 @@ class MainBdSpView : public tsl::Gui {
     list->addItem(new DaycareViewButton());
     list->addItem(new UndergroundViewButton());
     list->addItem(new PokemonViewButton("Union Trade", bdsp::utils::read_other_player_union_trade_pokemon));
+    list->addItem(new RoamerListViewButton());
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
     auto main_rng_addr = dbg::ReadCheatProcessNso<u64>(bdsp::RngOffset::MainPtr);

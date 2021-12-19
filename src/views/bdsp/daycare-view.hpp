@@ -26,9 +26,6 @@ class DaycareView : public DetachableView {
     list->addItem(m_steps_item);
   }
 
-  virtual void handleInputIfAttached(u64 keysDown, u64 keysHeld, const HidTouchState &touchPos, HidAnalogStickState leftJoyStick,
-                                     HidAnalogStickState rightJoyStick) { }
-
   virtual void update() {
     auto egg_details = bdsp::utils::read_egg_data();
 

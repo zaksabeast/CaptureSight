@@ -37,8 +37,7 @@ class DetachableView : public tsl::Gui {
 
   virtual void setupList(tsl::elm::List *list) = 0;
   virtual void handleInputIfAttached(u64 keysDown, u64 keysHeld, const HidTouchState &touchPos, HidAnalogStickState leftJoyStick,
-                                     HidAnalogStickState rightJoyStick)
-      = 0;
+                                     HidAnalogStickState rightJoyStick) {};
 
  private:
   std::string m_title;

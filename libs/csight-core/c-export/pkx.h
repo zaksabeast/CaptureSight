@@ -20,10 +20,18 @@ namespace csight {
     u8 spe;
   } stats;
 
+  void get_species_string(u16 species, char *out, size_t out_size);
+
 #ifdef __cplusplus
 
   class Pkx {
    public:
+    static std::string SpeciesString(u16 species) {
+      char text[13];
+      get_species_string(species, text, 13);
+      return std::string(text);
+    }
+
     virtual u32 EncryptionConstant() = 0;
     virtual std::string SpeciesString() = 0;
     virtual u16 Tid() = 0;
