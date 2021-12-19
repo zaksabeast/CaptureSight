@@ -51,7 +51,5 @@ class DaycareView : public DetachableView {
 
 class DaycareViewButton : public Button {
  public:
-  DaycareViewButton() : Button("Daycare view") {
-    this->onClick([]() { tsl::changeTo<DaycareView>(); });
-  }
+  DaycareViewButton() : Button("Daycare view") { this->onClick(tsl::changeTo<DaycareView>); }
 };

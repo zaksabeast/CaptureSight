@@ -35,7 +35,5 @@ class UndergroundView : public tsl::Gui {
 
 class UndergroundViewButton : public Button {
  public:
-  UndergroundViewButton() : Button("Underground") {
-    this->onClick([]() { tsl::changeTo<UndergroundView>(); });
-  }
+  UndergroundViewButton() : Button("Underground") { this->onClick(tsl::changeTo<UndergroundView>); }
 };

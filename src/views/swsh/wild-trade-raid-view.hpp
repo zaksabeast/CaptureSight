@@ -49,7 +49,5 @@ class WildTradeRaidView : public tsl::Gui {
 
 class WildTradeRaidViewButton : public Button {
  public:
-  WildTradeRaidViewButton() : Button("Wild/Trade/Raid") {
-    this->onClick([]() { tsl::changeTo<WildTradeRaidView>(); });
-  }
+  WildTradeRaidViewButton() : Button("Wild/Trade/Raid") { this->onClick(tsl::changeTo<WildTradeRaidView>); }
 };
