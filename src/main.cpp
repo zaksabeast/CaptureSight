@@ -48,7 +48,7 @@ class MainOverlay : public tsl::Overlay {
     }
 
     if (title_id == SupportedGame::BrilliantDiamond) {
-      std::array<u8, 8> supported_build_id = { 0x1B, 0x52, 0x15, 0xDF, 0x91, 0x8B, 0xA0, 0x4B };
+      std::array<u8, 8> supported_build_id = { 0xBC, 0x25, 0x9F, 0x7E, 0xE8, 0xE7, 0x9A, 0x49 };
       if (build_id == supported_build_id) {
         return initially<MainBdSpView>();
       }
@@ -57,7 +57,7 @@ class MainOverlay : public tsl::Overlay {
     }
 
     if (title_id == SupportedGame::ShiningPearl) {
-      std::array<u8, 8> supported_build_id = { 0x5D, 0x3A, 0x3B, 0x56, 0x32, 0x1F, 0xFD, 0x4C };
+      std::array<u8, 8> supported_build_id = { 0x04, 0x6D, 0x13, 0x0F, 0x08, 0x73, 0x31, 0x4A };
       if (build_id == supported_build_id) {
         return initially<MainBdSpView>();
       }
