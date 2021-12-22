@@ -136,7 +136,7 @@ namespace bdsp {
     std::shared_ptr<csight::Pkx> read_other_player_union_trade_pokemon() {
       u64 union_trade_manager_addr = dbg::ReadCheatProcess<u64>(get_union_room_manager() + 0x108);
       u64 trade_select_model_addr = dbg::ReadCheatProcess<u64>(union_trade_manager_addr + 0x28);
-      u64 poke_param_addr = dbg::ReadCheatProcess<u64>(trade_select_model_addr + 0x70);
+      u64 poke_param_addr = dbg::ReadCheatProcess<u64>(trade_select_model_addr + 0x68);
       return read_pokemon_from_poke_param(poke_param_addr);
     }
 
