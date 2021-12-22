@@ -9,14 +9,11 @@
 
 namespace bdsp {
 
-  struct __attribute__((__packed__)) EggDetails {
+  struct EggDetails {
     bool exists;
-    u8 padding[1];
     u64 seed;
     s32 stepCount;
   };
-
-  static_assert(sizeof(struct EggDetails) == 0x0B);
 
   struct __attribute__((__packed__)) Roamer {
     s32 area_id;
