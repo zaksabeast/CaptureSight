@@ -11,7 +11,7 @@ namespace bdsp {
 
   struct __attribute__((__packed__)) EggDetails {
     bool exists;
-    u8 padding[3];
+    u8 padding[1];
     u64 seed;
     s32 stepCount;
   };
