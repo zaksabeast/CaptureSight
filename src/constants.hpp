@@ -37,12 +37,12 @@ namespace swsh {
 
 namespace bdsp {
   enum Offsets {
-    PlayerPrefsProviderInstance = 0x4e60170,
-    FieldManager = 0x4e2a728,
-    UnionRoomManager = 0x4e376e8,
+    PlayerPrefsProviderInstance = 0x4e853f0,
+    FieldManager = 0x4e4f730,
+    UnionRoomManager = 0x4e5c790,
   };
 
   enum RngOffset {
-    MainPtr = 0x4f8ccd0,
+    MainPtr = 0x4fb2050,
   };
 }
