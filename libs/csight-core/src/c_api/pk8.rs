@@ -119,7 +119,12 @@ pub unsafe extern "C" fn pk8_minted_nature_string(ptr: *mut Pk8, dst: *mut u8, d
 pub unsafe extern "C" fn pk8_gender(ptr: *mut Pk8) -> types::Gender {
     assert!(!ptr.is_null());
     let pk8 = &*ptr;
-    pk8.gender()
+
+    if pk8.is_valid() {
+        pk8.gender()
+    } else {
+        types::Gender::Unknown
+    }
 }
 
 /// # Safety

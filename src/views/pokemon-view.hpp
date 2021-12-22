@@ -69,7 +69,7 @@ class PokemonView : public tsl::Gui {
   void updateFrame() {
     auto pkm = m_read_pkm();
     std::string shiny = pkm->IsShiny() ? "Shiny " : " ";
-    m_frame->setTitle(shiny + pkm->SpeciesString());
+    m_frame->setTitle(shiny + pkm->SpeciesString() + " " + csight::Pkx::SmallGenderString(pkm->Gender()));
 
     auto drawer = new tsl::elm::CustomDrawer(
         [this, pkm](tsl::gfx::Renderer *screen, u16 x, u16 y, u16 w, u16 h) { this->addBodyDrawer(screen, pkm); });

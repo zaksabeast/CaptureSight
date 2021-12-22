@@ -21,6 +21,7 @@ namespace csight {
   } stats;
 
   void get_species_string(u16 species, char *out, size_t out_size);
+  void get_small_gender_string(u8 gender, char *out, size_t out_size);
 
 #ifdef __cplusplus
 
@@ -29,6 +30,12 @@ namespace csight {
     static std::string SpeciesString(u16 species) {
       char text[13];
       get_species_string(species, text, 13);
+      return std::string(text);
+    }
+
+    static std::string SmallGenderString(u8 gender) {
+      char text[4];
+      get_small_gender_string(gender, text, 4);
       return std::string(text);
     }
 
