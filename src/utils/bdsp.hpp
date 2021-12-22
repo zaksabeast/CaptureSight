@@ -9,28 +9,27 @@
 
 namespace bdsp {
 
-  struct __attribute__((__packed__)) EggDetails {
+  struct EggDetails {
     bool exists;
-    u8 padding_1[7];
     u64 seed;
     s32 stepCount;
   };
-  
-  static_assert(sizeof(struct EggDetails) == 0x14);
 
-  struct __attribute__((__packed__)) Roamer {
+  static_assert(sizeof(struct EggDetails) == 24);
+
+// MV_POKE_DATA
+#pragma pack(4)
+  struct Roamer {
     s32 area_id;
     u64 rng_seed;
     u32 species;
     u32 hp;
     u8 level;
-    u8 padding_1[3];
     u32 status;
     u8 encounter_status;
-    u8 padding_2[3];
   };
 
-  static_assert(sizeof(struct Roamer) == 0x20);
+  static_assert(sizeof(struct Roamer) == 32);
 
   namespace utils {
     u64 get_player_prefs_provider() {
