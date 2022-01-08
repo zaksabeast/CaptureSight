@@ -19,6 +19,7 @@ namespace csight {
   void den_species_string(den_t *ptr, char *out, size_t out_size);
   bool den_is_event(den_t *ptr);
   bool den_is_active(den_t *ptr);
+  u64 den_seed(den_t *ptr);
 
 #ifdef __cplusplus
   }
@@ -52,6 +53,8 @@ namespace csight {
     bool IsEvent() { return den_is_event(m_den); }
 
     bool IsActive() { return den_is_active(m_den); }
+
+    u64 Seed() { return den_seed(m_den); }
 
    private:
     den_t *m_den;

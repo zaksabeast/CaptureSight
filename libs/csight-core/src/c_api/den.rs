@@ -91,3 +91,12 @@ pub unsafe extern "C" fn den_is_active(ptr: *mut Den) -> bool {
     let den = &*ptr;
     den.is_active()
 }
+
+/// # Safety
+/// The caller needs to ensure the pointer is not null.
+#[no_mangle]
+pub unsafe extern "C" fn den_seed(ptr: *mut Den) -> u64 {
+    assert!(!ptr.is_null());
+    let den = &*ptr;
+    den.seed()
+}

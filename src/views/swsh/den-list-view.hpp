@@ -5,6 +5,7 @@
 #include "../../utils/debug.hpp"
 #include "../../utils/general.hpp"
 #include "../pokemon-view.hpp"
+#include "./den-seed-view.hpp"
 #include <csight-core.h>
 #include <dmntcht.h>
 #include <memory>
@@ -29,11 +30,14 @@ class DenListView : public tsl::Gui {
       bool is_sword = dbg::GetCheatProcessTitleId() == SupportedGame::Sword;
 
       auto den_bytes = dbg::ReadCheatProcessHeapBytes<csight::Den::Size>(offset);
-      auto den = csight::Den(den_bytes, den_id, is_sword);
+      auto den = std::make_shared<csight::Den>(den_bytes, den_id, is_sword);
 
-      if (!m_filter_active || den.IsActive()) {
-        std::string label = std::to_string(i + 1) + ", " + den.SpeciesString() + ", " + den.ShinyDetailsString();
-        list->addItem(new tsl::elm::ListItem(label));
+      if (!m_filter_active || den->IsActive()) {
+        size_t den_id = i + 1;
+        std::string label = std::to_string(den_id) + ", " + den->SpeciesString() + ", " + den->ShinyDetailsString();
+        auto den_item = new Button(label);
+        den_item->onClick([den, den_id]() { tsl::changeTo<DenSeedView>(den, den_id); });
+        list->addItem(den_item);
       }
     }
 

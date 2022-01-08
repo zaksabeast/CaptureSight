@@ -28,7 +28,7 @@ impl Den {
         Self { data, index, game }
     }
 
-    fn seed(&self) -> u64 {
+    pub fn seed(&self) -> u64 {
         self.default_read(0x8)
     }
 
