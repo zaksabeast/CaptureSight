@@ -15,7 +15,6 @@ namespace csight {
 
   typedef struct pk8 pk8_t;
 
-  pk8_t *get_pk8(u8 bytes[328]);
   void free_pk8(pk8_t *ptr);
 
   u32 pk8_encryption_constant(pk8_t *ptr);
@@ -47,7 +46,7 @@ namespace csight {
    public:
     static const size_t StoredSize = 328;
 
-    Pk8(std::array<u8, Pk8::StoredSize> bytes) : m_pk8(get_pk8(bytes.data())) { }
+    Pk8(pk8_t *pk8) : m_pk8(pk8) { }
     ~Pk8() { free_pk8(m_pk8); }
 
     u32 EncryptionConstant() { return pk8_encryption_constant(m_pk8); }

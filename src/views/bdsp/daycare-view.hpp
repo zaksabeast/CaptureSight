@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../components/button.hpp"
-#include "../../utils/bdsp.hpp"
 #include "../detachable-view.hpp"
 #include <csight-core.h>
 #include <memory>
@@ -27,7 +26,7 @@ class DaycareView : public DetachableView {
   }
 
   virtual void update() {
-    auto egg_details = bdsp::utils::read_egg_data();
+    auto egg_details = csight::bdsp::read_egg_details();
 
     m_exits_item->setFocused(false);
     m_exits_item->setText(egg_details->exists ? "True" : "False");

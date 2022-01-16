@@ -1,6 +1,33 @@
-use super::Rng;
+use super::{Rng, RngState};
+use alloc::{vec, vec::Vec};
+use safe_transmute::TriviallyTransmutable;
 
-pub type XorshiftState = [u32; 4];
+#[derive(Clone, Copy, PartialEq, Debug, Default)]
+pub struct XorshiftState([u32; 4]);
+
+impl RngState for XorshiftState {
+    const STATE_COUNT: usize = 4;
+    type StateItem = u32;
+
+    fn get_inner(&self) -> Vec<u64> {
+        let state = self.0;
+        vec![
+            state[0] as u64,
+            state[1] as u64,
+            state[2] as u64,
+            state[3] as u64,
+        ]
+    }
+}
+
+unsafe impl TriviallyTransmutable for XorshiftState {}
+
+impl XorshiftState {
+    #[cfg(test)]
+    pub fn new(state: [u32; 4]) -> Self {
+        Self(state)
+    }
+}
 
 #[derive(Clone, Copy, Debug)]
 pub struct Xorshift {
@@ -23,15 +50,16 @@ impl Rng for Xorshift {
     }
 
     fn next(&mut self) -> u32 {
-        let s0 = self.state[0];
-        self.state[0] = self.state[1];
-        self.state[1] = self.state[2];
-        self.state[2] = self.state[3];
+        let state = &mut self.state.0;
+        let s0 = state[0];
+        state[0] = state[1];
+        state[1] = state[2];
+        state[2] = state[3];
 
         let tmp = s0 ^ s0 << 11;
-        let tmp = tmp ^ tmp >> 8 ^ self.state[2] ^ self.state[2] >> 19;
+        let tmp = tmp ^ tmp >> 8 ^ state[2] ^ state[2] >> 19;
 
-        self.state[3] = tmp;
+        state[3] = tmp;
 
         (tmp % 0xffffffff).wrapping_add(0x80000000)
     }
@@ -44,7 +72,8 @@ mod test {
 
     #[test]
     fn should_generate_u32s() {
-        let mut rng = Xorshift::from_state([0xaabbccdd, 0xaabbccdd, 0x11223344, 0x11223344]);
+        let state = XorshiftState::new([0xaabbccdd, 0xaabbccdd, 0x11223344, 0x11223344]);
+        let mut rng = Xorshift::from_state(state);
         let expected_results = vec![
             0xe58bc899, 0x91223dd1, 0x919a94a2, 0x91223dc6, 0xaad6f07b, 0xaa1a8c45, 0x6fe03220,
             0x6f2cee17, 0xf2e48ea1, 0x0c625c1c, 0xe2fd0e82, 0x6a29089c, 0x3cee02fe, 0xa2f22bc3,

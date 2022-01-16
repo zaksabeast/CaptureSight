@@ -43,11 +43,14 @@ APP_VERSION 	:= 		0.11.0
 
 TARGET		:=	capturesight
 BUILD		:=	build
-SOURCES		:=	src libs/Atmosphere-libs/libstratosphere/source/dmnt
+SOURCES		:=	src
 DATA		:=	data
 INCLUDES	:=	libs/libtesla/include libs/csight-core/c-export libs/Atmosphere-libs/libstratosphere/source/dmnt
 
 NO_ICON		:=  1
+
+DMNTCHT_DIR	:= $(TOPDIR)/libs/dmntcht
+DMNTCHT_LIB	:= $(DMNTCHT_DIR)/lib/libdmntcht.a
 
 RUST_DIR	:= $(TOPDIR)/libs/csight-core
 RUST_LIB	:= $(RUST_DIR)/target/aarch64-none-elf/release/libcsight_core.a
@@ -67,7 +70,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-exceptions -std=c++17
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lnx $(RUST_LIB)
+LIBS	:= -lnx $(RUST_LIB) $(DMNTCHT_LIB)
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -177,6 +180,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@make clean -C $(RUST_DIR)
+	@make clean -C $(DMNTCHT_DIR)
 	@rm -fr $(BUILD) $(OUTPUT_DIR)
 
 
@@ -197,9 +201,12 @@ $(OUTPUT).ovl		:	$(OUTPUT).elf $(OUTPUT).nacp
 	@elf2nro $< $@ $(NROFLAGS)
 	@echo "built ... $(notdir $(OUTPUT).ovl)"
 
-$(OUTPUT).elf	:	$(OFILES) $(RUST_LIB)
+$(OUTPUT).elf	:	$(OFILES) $(DMNTCHT_LIB) $(RUST_LIB)
 
 $(OFILES_SRC)	: $(HFILES_BIN)
+
+$(DMNTCHT_LIB):
+	@make -C $(DMNTCHT_DIR)
 
 $(RUST_LIB):
 	@make -C $(RUST_DIR) release

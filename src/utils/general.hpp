@@ -12,17 +12,7 @@
 #include <tesla.hpp>
 
 namespace utils {
-  struct TrainerInfo {
-    u16 sid;
-    u16 tid;
-  };
-
-  std::shared_ptr<::utils::TrainerInfo> get_trainer_info(u32 sidtid) {
-    return std::make_shared<::utils::TrainerInfo>(::utils::TrainerInfo {
-      sid : (u16)(sidtid >> 16),
-      tid : (u16)sidtid,
-    });
-  }
+  typedef std::function<std::shared_ptr<csight::Pkx>()> ReadPokemonFn;
 
   template <typename T>
   std::string num_to_hex(T num) {
@@ -58,11 +48,6 @@ namespace utils {
       smUnregisterService(service_name);
 
     return running;
-  }
-
-  std::shared_ptr<csight::Pkx> read_pkx(u64 address) {
-    auto ek8 = dbg::ReadCheatProcessArray<u8, csight::Pk8::StoredSize>(address);
-    return std::make_shared<csight::Pk8>(ek8);
   }
 
   std::atomic<bool> g_isAttached(false);

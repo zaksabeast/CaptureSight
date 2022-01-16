@@ -1,10 +1,11 @@
 #pragma once
 
+#include "bdsp.h"
 #include "den.h"
-#include "lcrng.h"
 #include "pk8.h"
-#include "xoroshiro.h"
-#include "xorshift.h"
+#include "rng_tracker.h"
+#include "swsh.h"
+#include "trainer_info.h"
 #include <switch.h>
 
 #ifdef __cplusplus

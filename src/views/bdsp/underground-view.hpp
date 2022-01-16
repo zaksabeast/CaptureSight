@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../components/button.hpp"
-#include "../../utils/bdsp.hpp"
 #include "../detachable-view.hpp"
 #include "../pokemon-view.hpp"
 #include <csight-core.h>
@@ -20,7 +19,7 @@ class UndergroundView : public tsl::Gui {
 
     // We always need at least one item in a list to prevent it from crashing
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
-    auto pkxs = bdsp::utils::read_underground_pokemon();
+    auto pkxs = csight::bdsp::read_underground_pokemon();
 
     for (auto pkx : pkxs) {
       std::string label = pkx->SpeciesString() + (pkx->IsShiny() ? " ★" : " ");

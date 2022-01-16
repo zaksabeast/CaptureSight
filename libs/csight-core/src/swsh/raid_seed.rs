@@ -91,10 +91,29 @@ fn find_raid_seed(ec: u32, pid: u32, ivs: [u8; 6]) -> Option<u64> {
     None
 }
 
-pub fn find_pk8_raid_seed(pk8: &Pk8) -> Option<u64> {
+fn find_pk8_raid_seed(pk8: &Pk8) -> Option<u64> {
     let ivs = pk8.ivs();
     let iv_array = [ivs.hp, ivs.atk, ivs.def, ivs.spa, ivs.spd, ivs.spe];
     find_raid_seed(pk8.encryption_constant(), pk8.pid(), iv_array)
+}
+
+mod c_api {
+    use pkm_rs::Pk8;
+
+    #[no_mangle]
+    pub unsafe extern "C" fn find_pk8_raid_seed(out: *mut u64, ptr: *mut Pk8) -> bool {
+        assert!(!ptr.is_null());
+        let pk8 = &*ptr;
+        let seed = super::find_pk8_raid_seed(pk8);
+
+        match seed {
+            Some(seed) => {
+                *out = seed;
+                true
+            }
+            None => false,
+        }
+    }
 }
 
 #[cfg(test)]

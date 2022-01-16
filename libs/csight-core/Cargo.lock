@@ -11,6 +11,7 @@ dependencies = [
  "no_std_io",
  "num_enum",
  "pkm-rs",
+ "safe-transmute",
 ]
 
 [[package]]
@@ -103,7 +104,7 @@ dependencies = [
 [[package]]
 name = "pkm-rs"
 version = "0.1.0"
-source = "git+https://github.com/zaksabeast/pkm-rs.git?rev=883846c#883846ce356115dd0f7f14c9137f471c9f2da849"
+source = "git+https://github.com/zaksabeast/pkm-rs.git?rev=d8c9316#d8c931604bc2fc6b29b89eac5ad64896f0741b36"
 dependencies = [
  "no_std_io",
  "num_enum",

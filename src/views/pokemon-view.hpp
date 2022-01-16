@@ -9,11 +9,9 @@
 #include <tesla.hpp>
 #include <vector>
 
-typedef std::function<std::shared_ptr<csight::Pkx>()> ReadPokemonFn;
-
 class PokemonView : public tsl::Gui {
  public:
-  PokemonView(ReadPokemonFn read_pkm) : m_read_pkm(read_pkm) {};
+  PokemonView(utils::ReadPokemonFn read_pkm) : m_read_pkm(read_pkm) {};
   ~PokemonView() {};
 
   virtual tsl::elm::Element *createUI() {
@@ -89,23 +87,14 @@ class PokemonView : public tsl::Gui {
 
  private:
   tsl::elm::OverlayFrame *m_frame;
-  ReadPokemonFn m_read_pkm;
+  utils::ReadPokemonFn m_read_pkm;
   u64 m_seed = 0;
   bool m_hide_sensitive_info = false;
 };
 
 class PokemonViewButton : public Button {
  public:
-  PokemonViewButton(const std::string &text, u64 offset) : Button(text) {
-    this->onClick([offset]() {
-      tsl::changeTo<PokemonView>([offset]() {
-        u64 address = dbg::GetHeapAddress(offset);
-        return utils::read_pkx(address);
-      });
-    });
-  }
-
-  PokemonViewButton(const std::string &text, ReadPokemonFn get_pkx) : Button(text) {
+  PokemonViewButton(const std::string &text, utils::ReadPokemonFn get_pkx) : Button(text) {
     this->onClick([get_pkx]() { tsl::changeTo<PokemonView>(get_pkx); });
   }
 

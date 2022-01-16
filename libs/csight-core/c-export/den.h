@@ -6,15 +6,19 @@
 
 #include <array>
 #include <string>
-namespace csight {
+namespace csight::swsh {
   extern "C" {
 #endif
   typedef struct den den_t;
 
-  den_t *get_sword_den(u8 bytes[0x18], size_t index);
-  den_t *get_shield_den(u8 bytes[0x18], size_t index);
-  void free_den(den_t *ptr);
+  enum DenType {
+    Vanilla = 0,
+    IslandOfArmor = 1,
+    CrownTundra = 2,
+  };
 
+  den_t *swsh_read_den(bool is_sword, size_t index, DenType den_type);
+  void free_den(den_t *ptr);
   void den_shiny_details_string(den_t *ptr, char *out, size_t out_size);
   void den_species_string(den_t *ptr, char *out, size_t out_size);
   bool den_is_event(den_t *ptr);
@@ -28,14 +32,7 @@ namespace csight {
    public:
     static const size_t Size = 0x18;
 
-    Den(std::array<u8, Den::Size> bytes, size_t index, bool is_sword) {
-      auto byte_ptr = bytes.data();
-      if (is_sword) {
-        m_den = get_sword_den(byte_ptr, index);
-      } else {
-        m_den = get_shield_den(byte_ptr, index);
-      }
-    }
+    Den(bool is_sword, size_t index, DenType den_type) { m_den = swsh_read_den(is_sword, index, den_type); }
     ~Den() { free_den(m_den); }
 
     std::string ShinyDetailsString() {

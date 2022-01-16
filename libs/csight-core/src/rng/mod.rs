@@ -7,9 +7,29 @@ pub use xorshift::*;
 mod lcrng;
 pub use lcrng::*;
 
+mod rng_tracker;
+pub use rng_tracker::*;
+
+use alloc::vec::Vec;
+use safe_transmute::TriviallyTransmutable;
+
+use core::mem;
+
+pub trait RngState: PartialEq + Default + TriviallyTransmutable {
+    const STATE_COUNT: usize;
+    type StateItem;
+
+    // This provides a consistent interface between all state types
+    fn get_inner(&self) -> Vec<u64>;
+
+    fn get_state_item_size() -> usize {
+        mem::size_of::<Self::StateItem>()
+    }
+}
+
 /// An RNG
 pub trait Rng: Copy {
-    type State: PartialEq;
+    type State: RngState;
 
     /// Creates the rng.
     fn from_state(state: Self::State) -> Self;

@@ -15,8 +15,8 @@
 
 class DenListView : public tsl::Gui {
  public:
-  DenListView(std::string title, u64 mem_offset, size_t id_offset, size_t count, bool filter_active) :
-      m_title(title), m_mem_offset(mem_offset), m_id_offset(id_offset), m_count(count), m_filter_active(filter_active) { }
+  DenListView(std::string title, csight::swsh::DenType den_type, size_t count, bool filter_active) :
+      m_title(title), m_den_type(den_type), m_count(count), m_filter_active(filter_active) { }
 
   virtual tsl::elm::Element *createUI() override {
     auto frame = new tsl::elm::OverlayFrame(m_title, " ");
@@ -25,12 +25,8 @@ class DenListView : public tsl::Gui {
     list->addItem(new tsl::elm::CategoryHeader("Dens"));
 
     for (size_t i = 0; i < m_count; i++) {
-      u64 offset = m_mem_offset + (i * csight::Den::Size);
-      size_t den_id = i + m_id_offset;
       bool is_sword = dbg::GetCheatProcessTitleId() == SupportedGame::Sword;
-
-      auto den_bytes = dbg::ReadCheatProcessHeapBytes<csight::Den::Size>(offset);
-      auto den = std::make_shared<csight::Den>(den_bytes, den_id, is_sword);
+      auto den = std::make_shared<csight::swsh::Den>(is_sword, i, m_den_type);
 
       if (!m_filter_active || den->IsActive()) {
         size_t den_id = i + 1;
@@ -48,8 +44,7 @@ class DenListView : public tsl::Gui {
 
  private:
   std::string m_title;
-  u64 m_mem_offset;
-  size_t m_id_offset;
+  csight::swsh::DenType m_den_type;
   size_t m_count;
   bool m_filter_active;
 };
@@ -57,41 +52,40 @@ class DenListView : public tsl::Gui {
 class AllVanillaDenListViewButton : public Button {
  public:
   AllVanillaDenListViewButton() : Button("Vanilla All Dens") {
-    this->onClick([]() { tsl::changeTo<DenListView>("Vanilla All Dens", swsh::DenOffset::Vanilla, 0, 100, false); });
+    this->onClick([]() { tsl::changeTo<DenListView>("Vanilla All Dens", csight::swsh::DenType::Vanilla, 100, false); });
   }
 };
 
 class ActiveVanillaDenListViewButton : public Button {
  public:
   ActiveVanillaDenListViewButton() : Button("Vanilla Active Dens") {
-    this->onClick([]() { tsl::changeTo<DenListView>("Vanilla Active Dens", swsh::DenOffset::Vanilla, 0, 100, true); });
+    this->onClick([]() { tsl::changeTo<DenListView>("Vanilla Active Dens", csight::swsh::DenType::Vanilla, 100, true); });
   }
 };
 
 class AllIoADenListViewButton : public Button {
  public:
   AllIoADenListViewButton() : Button("IoA All Dens") {
-    this->onClick([]() { tsl::changeTo<DenListView>("IoA All Dens", swsh::DenOffset::IslandOfArmor, 100, 90, false); });
+    this->onClick([]() { tsl::changeTo<DenListView>("IoA All Dens", csight::swsh::DenType::IslandOfArmor, 90, false); });
   }
 };
 
 class ActiveIoADenListViewButton : public Button {
  public:
   ActiveIoADenListViewButton() : Button("IoA Active Dens") {
-    this->onClick([]() { tsl::changeTo<DenListView>("IoA Active Dens", swsh::DenOffset::IslandOfArmor, 100, 90, true); });
+    this->onClick([]() { tsl::changeTo<DenListView>("IoA Active Dens", csight::swsh::DenType::IslandOfArmor, 90, true); });
   }
 };
-
 class AllCTDenListViewButton : public Button {
  public:
   AllCTDenListViewButton() : Button("CT All Dens") {
-    this->onClick([]() { tsl::changeTo<DenListView>("CT All Dens", swsh::DenOffset::CrownTundra, 190, 86, false); });
+    this->onClick([]() { tsl::changeTo<DenListView>("CT All Dens", csight::swsh::DenType::CrownTundra, 86, false); });
   }
 };
 
 class ActiveCTDenListViewButton : public Button {
  public:
   ActiveCTDenListViewButton() : Button("CT Active Dens") {
-    this->onClick([]() { tsl::changeTo<DenListView>("CT Active Dens", swsh::DenOffset::CrownTundra, 190, 86, true); });
+    this->onClick([]() { tsl::changeTo<DenListView>("CT Active Dens", csight::swsh::DenType::CrownTundra, 86, true); });
   }
 };

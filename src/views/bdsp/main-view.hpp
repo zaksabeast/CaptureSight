@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../constants.hpp"
-#include "../../utils/bdsp.hpp"
 #include "../party-list-view.hpp"
 #include "../pokemon-view.hpp"
 #include "../rng-view.hpp"
@@ -26,23 +25,20 @@ class MainBdSpView : public tsl::Gui {
     auto list = new tsl::elm::List();
 
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
-    list->addItem(new PokemonViewButton("Wild", bdsp::utils::read_wild_pokemon));
-    list->addItem(new PartyListViewButton(bdsp::utils::read_party_pokemon));
+    list->addItem(new PokemonViewButton("Wild", csight::bdsp::read_wild_pokemon));
+    list->addItem(new PartyListViewButton(csight::bdsp::read_party_pokemon));
     list->addItem(new DaycareViewButton());
     list->addItem(new UndergroundViewButton());
-    list->addItem(new PokemonViewButton("Union Trade", bdsp::utils::read_other_player_union_trade_pokemon));
+    list->addItem(new PokemonViewButton("Union Trade", csight::bdsp::read_other_player_union_trade_pokemon));
     list->addItem(new RoamerListViewButton());
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
-    auto main_rng_addr = dbg::ReadCheatProcessNso<u64>(bdsp::RngOffset::MainPtr);
-    list->addItem(new XorshiftRngViewButton("Main RNG", main_rng_addr));
-    auto rand_group_0_addr = bdsp::utils::get_random_group_state_addr(0);
-    list->addItem(new LcrngViewButton("Random Group 0", rand_group_0_addr));
-    auto rand_group_1_addr = bdsp::utils::get_random_group_state_addr(1);
-    list->addItem(new LcrngViewButton("Random Group 1", rand_group_1_addr));
+    list->addItem(new RngViewButton("Main RNG", csight::bdsp::get_main_rng_tracker));
+    list->addItem(new RngViewButton("Random Group 0", []() { return csight::bdsp::get_random_group_rng_tracker(0); }));
+    list->addItem(new RngViewButton("Random Group 1", []() { return csight::bdsp::get_random_group_rng_tracker(1); }));
 
     list->addItem(new tsl::elm::CategoryHeader("Trainer Info"));
-    auto trainer_info = bdsp::utils::read_trainer_info();
+    auto trainer_info = csight::bdsp::read_trainer_info();
     list->addItem(new TrainerViewButton(trainer_info));
 
     frame->setContent(list);

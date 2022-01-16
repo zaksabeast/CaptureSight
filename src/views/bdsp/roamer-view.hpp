@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../components/button.hpp"
-#include "../../utils/bdsp.hpp"
 #include "../detachable-view.hpp"
 #include "../pokemon-view.hpp"
 #include <csight-core.h>
@@ -11,9 +10,9 @@
 #include <tesla.hpp>
 #include <vector>
 
-static std::string getRoamerLabel(bdsp::Roamer *roamer) {
-  // Limit the seed to 32 bits since only 32 bits are ever set
-  return csight::Pkx::SpeciesString(roamer->species) + " Seed: " + utils::num_to_hex((u32)roamer->rng_seed);
+static std::string getRoamerLabel(csight::bdsp::Roamer *roamer) {
+  // Only show the lower 32 bits since the upper 32 bits are never used
+  return csight::Pkx::SpeciesString(roamer->species) + " Seed: " + utils::num_to_hex(roamer->rng_seed_low);
 }
 
 class RoamerListView : public DetachableView {
@@ -24,7 +23,7 @@ class RoamerListView : public DetachableView {
     // We always need at least one item in a list to prevent it from crashing
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
 
-    auto roamers = bdsp::utils::read_roamers();
+    auto roamers = csight::bdsp::read_roamers();
 
     for (auto roamer : roamers) {
       auto roamer_item = new tsl::elm::ListItem(getRoamerLabel(&roamer));
@@ -34,7 +33,7 @@ class RoamerListView : public DetachableView {
   }
 
   virtual void update() {
-    auto roamers = bdsp::utils::read_roamers();
+    auto roamers = csight::bdsp::read_roamers();
     // The number of roamers won't change after the game starts,
     // but we'll lean on the side of caution.
     u32 size = std::min(roamers.size(), m_roamer_items.size());

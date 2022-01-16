@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../constants.hpp"
-#include "../../utils/swsh.hpp"
 #include "../party-list-view.hpp"
 #include "../rng-view.hpp"
 #include "../trainer-view.hpp"
@@ -25,7 +24,7 @@ class MainSwShView : public tsl::Gui {
 
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
     list->addItem(new WildTradeRaidViewButton());
-    list->addItem(new PartyListViewButton(swsh::utils::read_party_pokemon));
+    list->addItem(new PartyListViewButton(csight::swsh::read_party_pokemon));
 
     list->addItem(new tsl::elm::CategoryHeader("Dens"));
     list->addItem(new AllVanillaDenListViewButton());
@@ -36,11 +35,10 @@ class MainSwShView : public tsl::Gui {
     list->addItem(new ActiveCTDenListViewButton());
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
-    auto rng_address = dbg::GetHeapAddress(swsh::RngOffset::Main);
-    list->addItem(new XoroshiroRngViewButton("Main RNG", rng_address));
+    list->addItem(new RngViewButton("Main RNG", csight::swsh::get_main_rng_tracker));
 
     list->addItem(new tsl::elm::CategoryHeader("Trainer Info"));
-    auto trainer_info = swsh::utils::read_trainer_info();
+    auto trainer_info = csight::swsh::read_trainer_info();
     list->addItem(new TrainerViewButton(trainer_info));
 
     frame->setContent(list);
