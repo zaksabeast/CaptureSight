@@ -3,6 +3,7 @@
 #include "./utils/debug.hpp"
 #include "./utils/general.hpp"
 #include "constants.hpp"
+#include "views/arceus/main-view.hpp"
 #include "views/bdsp/main-view.hpp"
 #include "views/error-view.hpp"
 #include "views/swsh/main-view.hpp"
@@ -48,6 +49,9 @@ class MainOverlay : public tsl::Overlay {
 
     std::array<u8, 8> supported_pearl_build_id = { 0x04, 0x6D, 0x13, 0x0F, 0x08, 0x73, 0x31, 0x4A };
     tryGameWithBuildId(MainBdSpView, SupportedGame::ShiningPearl, supported_pearl_build_id);
+
+    std::array<u8, 8> supported_arceus_build_id = { 0x5E, 0x42, 0x07, 0x16, 0x00, 0xD2, 0xBF, 0x1D };
+    tryGameWithBuildId(MainArceusView, SupportedGame::Arceus, supported_arceus_build_id);
 
     return initially<ErrorView>("Unsupported game!\n\nTitle Id:\n" + utils::num_to_hex(title_id));
   }

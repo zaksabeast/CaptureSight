@@ -3,6 +3,7 @@
 
 extern crate alloc;
 
+mod arceus;
 mod bdsp;
 mod c_str;
 mod dmntcht;
