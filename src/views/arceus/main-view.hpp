@@ -4,6 +4,7 @@
 #include "../party-list-view.hpp"
 #include "../rng-view.hpp"
 #include "./spawn-list-view.hpp"
+#include "./wild-list-view.hpp"
 #include <csight-core.h>
 #include <tesla.hpp>
 
@@ -16,7 +17,7 @@ class MainArceusView : public tsl::Gui {
     auto list = new tsl::elm::List();
 
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
-    list->addItem(new PokemonViewButton("Wild", csight::arceus::read_wild_pokemon));
+    list->addItem(new WildListViewButton());
     list->addItem(new PartyListViewButton(csight::arceus::read_party_pokemon));
     list->addItem(new SpawnListViewButton());
 
