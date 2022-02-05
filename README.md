@@ -32,6 +32,14 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon data while playing Po
 - View egg seed and group seeds for RNG purposes
 - View your TID and SID
 
+#### Legends Arceus
+
+- View Pokemon species, attacks, IVs, etc. for
+  - Wild Pokemon
+  - Party Pokemon
+- View Pokemon generator seeds for RNG purposes
+- View the main RNG states for RNG purposes
+
 ## How do I use CaptureSight?
 
 1. Setup WerWolv's Tesla - https://gbatemp.net/threads/tesla-the-nintendo-switch-overlay-menu.557362/
