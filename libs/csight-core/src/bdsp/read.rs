@@ -56,7 +56,7 @@ fn read_party_pokemon(index: u8) -> Pk8 {
     read_pokemon_in_party(player_party, index)
 }
 
-fn read_wild_pokemon(index: u8) -> Pk8 {
+fn read_encounter_pokemon(index: u8) -> Pk8 {
     // Wild Pokemon are set up in a fake party
     let battle_party = get_battle_setup_param().follow(0x58).follow(0x28);
     read_pokemon_in_party(battle_party, index)
@@ -156,8 +156,8 @@ mod c_api {
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn bdsp_read_wild_pokemon(index: u8) -> *mut Pk8 {
-        Box::into_raw(Box::new(read_wild_pokemon(index)))
+    pub unsafe extern "C" fn bdsp_read_encounter_pokemon(index: u8) -> *mut Pk8 {
+        Box::into_raw(Box::new(read_encounter_pokemon(index)))
     }
 
     #[no_mangle]
