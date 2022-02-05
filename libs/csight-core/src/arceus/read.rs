@@ -1,4 +1,4 @@
-use super::{offsets::Offset, spawn::Spawn};
+use super::{offsets::Offset, spawn_group::SpawnGroup};
 use crate::dmntcht::DmntReader;
 use alloc::boxed::Box;
 use core::cmp;
@@ -69,44 +69,15 @@ fn get_spawn_list() -> DmntReader {
         .follow(0x330)
 }
 
-fn read_spawn_count() -> usize {
+fn read_spawn_group_count() -> usize {
     let spawn_list_byte_size = get_spawn_list().read_offset::<u32>(0x18) as usize;
-    (spawn_list_byte_size / Spawn::DATA_SIZE) - 1
+    (spawn_list_byte_size / SpawnGroup::DATA_SIZE) - 1
 }
 
-fn read_spawn(index: usize) -> Spawn {
-    // Same value as Spawn::DATA_SIZE, but they aren't linked
+fn read_spawn_group(index: usize) -> SpawnGroup {
     let list_start = get_spawn_list().add(0x70);
-    let offset = index * Spawn::DATA_SIZE;
+    let offset = index * SpawnGroup::DATA_SIZE;
     list_start.read_offset(offset as u64)
-}
-
-fn read_active_spawn_count() -> usize {
-    let spawn_count = read_spawn_count();
-
-    let mut active_spawn_count = 0;
-
-    for index in 0..spawn_count {
-        let spawn = read_spawn(index);
-        if spawn.get_is_active() {
-            active_spawn_count += 1;
-        }
-    }
-
-    active_spawn_count
-}
-
-fn read_next_active_spawn(start_index: usize) -> (Spawn, usize) {
-    let spawn_count = read_spawn_count();
-
-    for index in start_index..spawn_count {
-        let spawn = read_spawn(index);
-        if spawn.get_is_active() {
-            return (spawn, index);
-        }
-    }
-
-    (Spawn::default(), 0)
 }
 
 mod c_api {
@@ -128,31 +99,12 @@ mod c_api {
     }
 
     #[no_mangle]
-    pub extern "C" fn arceus_read_active_spawn_count() -> usize {
-        read_active_spawn_count()
+    pub extern "C" fn arceus_read_spawn_group_count() -> usize {
+        read_spawn_group_count()
     }
 
     #[no_mangle]
-    pub extern "C" fn arceus_read_spawn_count() -> usize {
-        read_spawn_count()
-    }
-
-    #[no_mangle]
-    pub unsafe extern "C" fn arceus_read_spawn(index: usize) -> *mut Spawn {
-        Box::into_raw(Box::new(read_spawn(index)))
-    }
-
-    #[no_mangle]
-    pub unsafe extern "C" fn arceus_read_next_active_spawn(
-        start_index: usize,
-        found_index: *mut usize,
-    ) -> *mut Spawn {
-        let (spawn, index) = read_next_active_spawn(start_index);
-
-        assert!(!found_index.is_null());
-
-        *found_index = index;
-
-        Box::into_raw(Box::new(spawn))
+    pub unsafe extern "C" fn arceus_read_spawn_group(index: usize) -> *mut SpawnGroup {
+        Box::into_raw(Box::new(read_spawn_group(index)))
     }
 }

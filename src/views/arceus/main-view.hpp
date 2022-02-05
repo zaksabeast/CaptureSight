@@ -3,7 +3,7 @@
 #include "../../utils/general.hpp"
 #include "../party-list-view.hpp"
 #include "../rng-view.hpp"
-#include "./spawn-list-view.hpp"
+#include "./spawn-group-list-view.hpp"
 #include "./wild-list-view.hpp"
 #include <csight-core.h>
 #include <tesla.hpp>
@@ -19,7 +19,7 @@ class MainArceusView : public tsl::Gui {
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
     list->addItem(new WildListViewButton());
     list->addItem(new PartyListViewButton(csight::arceus::read_party_pokemon));
-    list->addItem(new SpawnListViewButton());
+    list->addItem(new SpawnGroupListViewButton());
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
     list->addItem(new RngViewButton("Main RNG", csight::arceus::get_main_rng_tracker));
