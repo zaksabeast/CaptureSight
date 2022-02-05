@@ -5,6 +5,7 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon data while playing Po
 ### Features:
 
 #### Sword & Shield
+
 - View Pokemon species, attacks, IVs, etc. for
   - Wild Pokemon
   - In-Trade Pokemon
@@ -22,6 +23,7 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon data while playing Po
 - View your TID and SID
 
 #### Brilliant Diamond & Shining Pearl
+
 - View Pokemon species, attacks, IVs, etc. for
   - Wild Pokemon
   - Party Pokemon
@@ -41,8 +43,9 @@ CaptureSight is a Nintendo Switch homebrew to view Pokemon data while playing Po
 
 ## Building
 
-1. Install [devkitA64](https://devkitpro.org/wiki/Getting_Started), [libnx](https://github.com/switchbrew/libnx), and [rust](https://www.rust-lang.org/tools/install)
-2. Run `make`
+1. Install [devkitPro-pacman](https://github.com/devkitPro/pacman/releases) and [rust](https://www.rust-lang.org/tools/install)
+2. Run `sudo dkp-pacman -S switch-dev` and choose `devkitA64`, `libnx`, and `switch-tools`
+3. Run `make`
 
 ## Credits
 
