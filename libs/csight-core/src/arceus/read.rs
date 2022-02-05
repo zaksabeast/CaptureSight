@@ -2,7 +2,7 @@ use super::{offsets::Offset, spawn::Spawn};
 use crate::dmntcht::DmntReader;
 use alloc::boxed::Box;
 use core::cmp;
-use pkm_rs::{Pk9, Pk9Data};
+use pkm_rs::{Pa8, Pa8Data};
 
 // 30 is the hardcoded max.  For reference: .text + 0x830eb4 in 1.0.0
 const MAX_BATTLE_POKEMON_COUNT: u8 = 30;
@@ -11,11 +11,11 @@ pub fn get_player_singleton() -> DmntReader {
     DmntReader::new_from_main_nso(Offset::PlayerSingleton).follow(0)
 }
 
-fn read_pokemon_from_poke_param(reader: DmntReader) -> Pk9 {
+fn read_pokemon_from_poke_param(reader: DmntReader) -> Pa8 {
     reader
         .follow(0x98)
         .follow(0x10)
-        .read_offset::<Pk9Data>(0)
+        .read_offset::<Pa8Data>(0)
         .into()
 }
 
@@ -23,7 +23,7 @@ fn get_party() -> DmntReader {
     get_player_singleton().follow(0xd0).follow(0x58)
 }
 
-fn read_party_pokemon(index: u8) -> Pk9 {
+fn read_party_pokemon(index: u8) -> Pa8 {
     let party_member_param = get_party().follow(0x58 + (index as u64) * 8);
     read_pokemon_from_poke_param(party_member_param)
 }
@@ -53,7 +53,7 @@ fn read_wild_pokemon_count() -> u8 {
     }
 }
 
-fn read_wild_pokemon(index: u8) -> Pk9 {
+fn read_wild_pokemon(index: u8) -> Pa8 {
     let party_count = read_party_count();
     let battle_setup = get_battle_setup();
     let safe_index = cmp::min(party_count + index, MAX_BATTLE_POKEMON_COUNT);
@@ -113,7 +113,7 @@ mod c_api {
     use super::*;
 
     #[no_mangle]
-    pub unsafe extern "C" fn arceus_read_party_pokemon(index: u8) -> *mut Pk9 {
+    pub unsafe extern "C" fn arceus_read_party_pokemon(index: u8) -> *mut Pa8 {
         Box::into_raw(Box::new(read_party_pokemon(index)))
     }
 
@@ -123,7 +123,7 @@ mod c_api {
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn arceus_read_wild_pokemon(index: u8) -> *mut Pk9 {
+    pub unsafe extern "C" fn arceus_read_wild_pokemon(index: u8) -> *mut Pa8 {
         Box::into_raw(Box::new(read_wild_pokemon(index)))
     }
 
