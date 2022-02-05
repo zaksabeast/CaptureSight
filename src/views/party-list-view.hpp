@@ -20,12 +20,12 @@ class PartyListView : public tsl::Gui {
     auto frame = new tsl::elm::OverlayFrame("Party Pokemon", " ");
     auto list = new tsl::elm::List();
 
-    list->addItem(new PokemonViewButton("Party 1", [this]() { return this->m_read_party_slot(0); }));
-    list->addItem(new PokemonViewButton("Party 2", [this]() { return this->m_read_party_slot(1); }));
-    list->addItem(new PokemonViewButton("Party 3", [this]() { return this->m_read_party_slot(2); }));
-    list->addItem(new PokemonViewButton("Party 4", [this]() { return this->m_read_party_slot(3); }));
-    list->addItem(new PokemonViewButton("Party 5", [this]() { return this->m_read_party_slot(4); }));
-    list->addItem(new PokemonViewButton("Party 6", [this]() { return this->m_read_party_slot(5); }));
+    for (int party_pokemon = 0; party_pokemon < 6;party_pokemon++){ // tried to implement gathering of wild party count through offsets but got tired
+      auto current_pokemon = this->m_read_party_slot(party_pokemon);
+      if (current_pokemon->SpeciesString() != "None") {
+        list->addItem(new PokemonViewButton(current_pokemon->SpeciesString()+ (current_pokemon->IsShiny() ? " ★" : " "), current_pokemon));
+      }
+    }
 
     frame->setContent(list);
 
