@@ -35,7 +35,7 @@ namespace csight::bdsp {
 
   void bdsp_read_trainer_info(TrainerInfo *out);
   void bdsp_read_egg_details(EggDetails *out);
-  pk8_t *bdsp_read_wild_pokemon();
+  pk8_t *bdsp_read_wild_pokemon(u8 index);
   pk8_t *bdsp_read_party_pokemon(u8 index);
   pk8_t *bdsp_read_other_player_union_trade_pokemon();
   size_t bdsp_read_underground_pokemon_count();
@@ -61,7 +61,7 @@ namespace csight::bdsp {
     return std::make_shared<EggDetails>(egg_details);
   }
 
-  std::shared_ptr<Pk8> read_wild_pokemon() { return std::make_shared<Pk8>(bdsp_read_wild_pokemon()); }
+  std::shared_ptr<Pk8> read_wild_pokemon(u8 index) { return std::make_shared<Pk8>(bdsp_read_wild_pokemon(index)); }
 
   std::shared_ptr<Pk8> read_party_pokemon(u8 index) { return std::make_shared<Pk8>(bdsp_read_party_pokemon(index)); }
   std::shared_ptr<Pk8> read_underground_pokemon(u8 index) { return std::make_shared<Pk8>(bdsp_read_underground_pokemon(index)); }

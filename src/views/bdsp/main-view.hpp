@@ -25,7 +25,7 @@ class MainBdSpView : public tsl::Gui {
     auto list = new tsl::elm::List();
 
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
-    list->addItem(new PokemonViewButton("Wild", csight::bdsp::read_wild_pokemon));
+    list->addItem(new PartyListViewButton(csight::bdsp::read_wild_pokemon));
     list->addItem(new PartyListViewButton(csight::bdsp::read_party_pokemon));
     list->addItem(new DaycareViewButton());
     list->addItem(new UndergroundViewButton());
