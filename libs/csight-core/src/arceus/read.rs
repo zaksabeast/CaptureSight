@@ -71,7 +71,8 @@ fn get_spawn_list() -> DmntReader {
 
 fn read_spawn_group_count() -> usize {
     let spawn_list_byte_size = get_spawn_list().read_offset::<u32>(0x18) as usize;
-    (spawn_list_byte_size / SpawnGroup::DATA_SIZE) - 1
+    let read_spawn_group_count = (spawn_list_byte_size / SpawnGroup::DATA_SIZE) - 1;
+    cmp::min(read_spawn_group_count, 510)
 }
 
 fn read_spawn_group(index: usize) -> SpawnGroup {
