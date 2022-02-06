@@ -12,7 +12,13 @@
 
 class SpawnGroupListView : public tsl::Gui {
  public:
-  SpawnGroupListView() { m_count = csight::arceus::arceus_read_spawn_group_count(); }
+  SpawnGroupListView(bool active_groups) {
+    if (active_groups) {
+      m_count = csight::arceus::arceus_read_active_spawn_group_count();
+    } else {
+      m_count = csight::arceus::arceus_read_spawn_group_count();
+    }
+  }
 
   virtual tsl::elm::Element *createUI() override {
     auto frame = new tsl::elm::OverlayFrame("Spawner Groups", " ");
@@ -36,7 +42,7 @@ class SpawnGroupListView : public tsl::Gui {
 
 class SpawnGroupListViewButton : public Button {
  public:
-  SpawnGroupListViewButton() : Button("Spawners") {
-    this->onClick([]() { tsl::changeTo<SpawnGroupListView>(); });
+  SpawnGroupListViewButton(std::string button_label, bool active_groups) : Button(button_label) {
+    this->onClick([active_groups]() { tsl::changeTo<SpawnGroupListView>(active_groups); });
   }
 };

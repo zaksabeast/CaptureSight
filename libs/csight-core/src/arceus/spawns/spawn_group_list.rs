@@ -23,6 +23,18 @@ impl SpawnGroupList {
         cmp::min(read_spawn_group_count, MAX_SPAWN_GROUP_COUNT)
     }
 
+    pub fn get_active_spawn_group_count(&self) -> usize {
+        let count = self.get_spawn_group_count();
+
+        for index in 0..count {
+            if !self.get_spawn_group(index).get_is_active() {
+                return index;
+            }
+        }
+
+        count
+    }
+
     pub fn get_spawn_group(&self, index: usize) -> SpawnGroup {
         if self.get_spawn_group_count() <= index {
             return SpawnGroup::default();
@@ -48,6 +60,12 @@ mod c_api {
     pub extern "C" fn arceus_read_spawn_group_count() -> usize {
         let spawn_group_list = read_spawn_group_list();
         spawn_group_list.get_spawn_group_count()
+    }
+
+    #[no_mangle]
+    pub extern "C" fn arceus_read_active_spawn_group_count() -> usize {
+        let spawn_group_list = read_spawn_group_list();
+        spawn_group_list.get_active_spawn_group_count()
     }
 
     #[no_mangle]
@@ -127,6 +145,91 @@ mod test {
             let count = spawn_group_list.get_spawn_group_count();
 
             assert_eq!(count, MAX_SPAWN_GROUP_COUNT)
+        }
+    }
+
+    mod get_active_spawn_group_count {
+        use super::*;
+        use crate::arceus::spawns::{spawn::Spawn, spawn_pair::SpawnPair};
+
+        #[test]
+        fn should_read_active_count_if_all_groups_are_active() {
+            let mut mock_spawn = Spawn::default();
+            mock_spawn.set_is_active(true);
+
+            let mut mock_spawn_pair = SpawnPair::default();
+            mock_spawn_pair.set_spawner_1(&mock_spawn);
+
+            let mut mock_spawn_group = SpawnGroup::default();
+            mock_spawn_group.set_spawn_pair(&mock_spawn_pair);
+
+            let mut mock_data = MockSpawnGroupListData::new();
+            mock_data.write_spawn_group_count(1);
+            mock_data.write_spawn_group(0, &mock_spawn_group);
+            mock_data.configure_mock_dmnt_read();
+
+            let spawn_group_list = new_mock_spawn_group_list();
+
+            assert_eq!(spawn_group_list.get_active_spawn_group_count(), 1)
+        }
+
+        #[test]
+        fn should_read_active_count_if_not_all_groups_are_active() {
+            let mut mock_data = MockSpawnGroupListData::new();
+            mock_data.write_spawn_group_count(2);
+
+            // -----------------------------
+            // First spawn group (active)
+            // -----------------------------
+            let mut mock_spawn = Spawn::default();
+            mock_spawn.set_is_active(true);
+
+            let mut mock_spawn_pair = SpawnPair::default();
+            mock_spawn_pair.set_spawner_1(&mock_spawn);
+
+            let mut mock_spawn_group = SpawnGroup::default();
+            mock_spawn_group.set_spawn_pair(&mock_spawn_pair);
+
+            mock_data.write_spawn_group(0, &mock_spawn_group);
+
+            // -----------------------------
+            // Second spawn group (inactive)
+            // -----------------------------
+            let mut mock_spawn = Spawn::default();
+            mock_spawn.set_is_active(false);
+
+            let mut mock_spawn_pair = SpawnPair::default();
+            mock_spawn_pair.set_spawner_1(&mock_spawn);
+
+            let mut mock_spawn_group = SpawnGroup::default();
+            mock_spawn_group.set_spawn_pair(&mock_spawn_pair);
+
+            mock_data.write_spawn_group(1, &mock_spawn_group);
+            mock_data.configure_mock_dmnt_read();
+
+            let spawn_group_list = new_mock_spawn_group_list();
+            assert_eq!(spawn_group_list.get_active_spawn_group_count(), 2)
+        }
+
+        #[test]
+        fn should_return_0_if_count_is_0() {
+            let mut mock_spawn = Spawn::default();
+            mock_spawn.set_is_active(true);
+
+            let mut mock_spawn_pair = SpawnPair::default();
+            mock_spawn_pair.set_spawner_1(&mock_spawn);
+
+            let mut mock_spawn_group = SpawnGroup::default();
+            mock_spawn_group.set_spawn_pair(&mock_spawn_pair);
+
+            let mut mock_data = MockSpawnGroupListData::new();
+            mock_data.write_spawn_group_count(0);
+            mock_data.write_spawn_group(0, &mock_spawn_group);
+            mock_data.configure_mock_dmnt_read();
+
+            let spawn_group_list = new_mock_spawn_group_list();
+
+            assert_eq!(spawn_group_list.get_active_spawn_group_count(), 0)
         }
     }
 

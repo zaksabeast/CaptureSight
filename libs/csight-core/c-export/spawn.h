@@ -17,6 +17,7 @@ namespace csight::arceus {
   arceus_spawn_group_t *arceus_read_spawn_group(size_t index);
   arceus_spawn_group_t *arceus_read_next_active_spawn(size_t start_index, size_t *found_index);
   size_t arceus_read_spawn_group_count();
+  size_t arceus_read_active_spawn_group_count();
 
 #ifdef __cplusplus
   }

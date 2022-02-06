@@ -19,7 +19,8 @@ class MainArceusView : public tsl::Gui {
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
     list->addItem(new WildListViewButton());
     list->addItem(new PartyListViewButton(csight::arceus::read_party_pokemon));
-    list->addItem(new SpawnGroupListViewButton());
+    list->addItem(new SpawnGroupListViewButton("Active spawners", true));
+    list->addItem(new SpawnGroupListViewButton("All spawners", false));
 
     list->addItem(new tsl::elm::CategoryHeader("RNG"));
     list->addItem(new RngViewButton("Main RNG", csight::arceus::get_main_rng_tracker));
