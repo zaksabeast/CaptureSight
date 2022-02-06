@@ -7,7 +7,7 @@ pub struct Spawn {
 }
 
 impl Spawn {
-    pub const DATA_SIZE: usize = 0x36;
+    pub const DATA_SIZE: usize = 0x38;
 
     pub fn get_seed(&self) -> u64 {
         self.default_read(0x20)
