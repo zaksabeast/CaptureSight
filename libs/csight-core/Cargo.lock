@@ -8,7 +8,8 @@ version = "0.1.0"
 dependencies = [
  "cstr_core",
  "linked_list_allocator",
- "no_std_io",
+ "mocktopus",
+ "no_std_io 0.1.0 (git+https://github.com/zaksabeast/no_std_io.git?rev=60c33e4)",
  "num_enum",
  "pkm-rs",
  "safe-transmute",
@@ -72,6 +73,35 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "308cc39be01b73d0d18f82a0e7b2a3df85245f84af96fdddc5d202d27e47b86a"
 
 [[package]]
+name = "mocktopus"
+version = "0.7.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d1e54a5bbecd61a064cb9c6ef396f8c896aee14e5baba8d1d555f35167dfd7c3"
+dependencies = [
+ "mocktopus_macros",
+]
+
+[[package]]
+name = "mocktopus_macros"
+version = "0.7.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3048ef3680533a27f9f8e7d6a0bce44dc61e4895ea0f42709337fa1c8616fefe"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "no_std_io"
+version = "0.1.0"
+source = "git+https://github.com/zaksabeast/no_std_io.git?rev=60c33e4#60c33e4a470f668ba4055367c18c70496d3180ad"
+dependencies = [
+ "safe-transmute",
+ "snafu",
+]
+
+[[package]]
 name = "no_std_io"
 version = "0.1.0"
 source = "git+https://github.com/zaksabeast/no_std_io.git?rev=77499d6#77499d696c0ceec7d63ea10788940b7346eca511"
@@ -106,7 +136,7 @@ name = "pkm-rs"
 version = "0.1.0"
 source = "git+https://github.com/zaksabeast/pkm-rs.git?rev=9176d3e#9176d3e2a7ec9296846f960b699f19514d659a4e"
 dependencies = [
- "no_std_io",
+ "no_std_io 0.1.0 (git+https://github.com/zaksabeast/no_std_io.git?rev=77499d6)",
  "num_enum",
  "safe-transmute",
 ]

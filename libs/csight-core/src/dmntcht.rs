@@ -1,3 +1,10 @@
+#[cfg(test)]
+use alloc::vec::Vec;
+#[cfg(test)]
+use core::convert::TryFrom;
+#[cfg(test)]
+use mocktopus::mocking::{MockResult, Mockable};
+
 use safe_transmute::{transmute_one_to_bytes_mut, TriviallyTransmutable};
 
 type NxResultCode = i32;
@@ -49,10 +56,27 @@ pub fn get_memory_base() -> NxResult<DmntChtMemoryBase> {
     Ok(out)
 }
 
+#[cfg_attr(test, mocktopus::macros::mockable)]
 fn read_cheat_process_memory_into_slice(address: u64, out: &mut [u8]) -> NxResult<()> {
     let result_code =
         unsafe { dmntchtReadCheatProcessMemory(address, out.as_mut_ptr(), out.len()) };
     parse_nx_result_code(result_code)
+}
+
+#[cfg(test)]
+pub fn configure_mock_dmnt_read(data: Vec<u8>) {
+    read_cheat_process_memory_into_slice.mock_safe(move |offset: u64, out: &mut [u8]| {
+        // This is currently only supported on 64 bit machines
+        let offset = usize::try_from(offset).unwrap();
+        let out_size = out.len() + offset;
+
+        if out_size < data.len() {
+            out.copy_from_slice(&data[offset..out_size]);
+            MockResult::Return(Ok(()))
+        } else {
+            MockResult::Return(Err(-1))
+        }
+    });
 }
 
 pub fn read_cheat_process_memory<T: TriviallyTransmutable + Default>(address: u64) -> NxResult<T> {
