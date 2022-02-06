@@ -1,4 +1,4 @@
-use super::{offsets::Offset, spawn_group::SpawnGroup};
+use super::offsets::Offset;
 use crate::dmntcht::DmntReader;
 use alloc::boxed::Box;
 use core::cmp;
@@ -62,25 +62,6 @@ fn read_wild_pokemon(index: u8) -> Pa8 {
     read_pokemon_from_poke_param(poke_param)
 }
 
-// Todo: make better after playing the game
-fn get_spawn_list() -> DmntReader {
-    DmntReader::new_from_main_nso(Offset::SpawnSingleton)
-        .follow(0)
-        .follow(0x330)
-}
-
-fn read_spawn_group_count() -> usize {
-    let spawn_list_byte_size = get_spawn_list().read_offset::<u32>(0x18) as usize;
-    let read_spawn_group_count = (spawn_list_byte_size / SpawnGroup::DATA_SIZE) - 1;
-    cmp::min(read_spawn_group_count, 510)
-}
-
-fn read_spawn_group(index: usize) -> SpawnGroup {
-    let list_start = get_spawn_list().add(0x70);
-    let offset = index * SpawnGroup::DATA_SIZE;
-    list_start.read_offset(offset as u64)
-}
-
 mod c_api {
     use super::*;
 
@@ -97,15 +78,5 @@ mod c_api {
     #[no_mangle]
     pub unsafe extern "C" fn arceus_read_wild_pokemon(index: u8) -> *mut Pa8 {
         Box::into_raw(Box::new(read_wild_pokemon(index)))
-    }
-
-    #[no_mangle]
-    pub extern "C" fn arceus_read_spawn_group_count() -> usize {
-        read_spawn_group_count()
-    }
-
-    #[no_mangle]
-    pub unsafe extern "C" fn arceus_read_spawn_group(index: usize) -> *mut SpawnGroup {
-        Box::into_raw(Box::new(read_spawn_group(index)))
     }
 }
