@@ -56,10 +56,24 @@ fn read_party_pokemon(index: u8) -> Pk8 {
     read_pokemon_in_party(player_party, index)
 }
 
-fn read_encounter_pokemon(index: u8) -> Pk8 {
+fn read_pokemon_count_in_party(reader: DmntReader) -> u32 {
+    let count = reader.read_offset(0x18);
+    core::cmp::min(count, 6)
+}
+
+fn read_encounter_party() -> DmntReader {
     // Wild Pokemon are set up in a fake party
-    let battle_party = get_battle_setup_param().follow(0x58).follow(0x28);
-    read_pokemon_in_party(battle_party, index)
+    get_battle_setup_param().follow(0x58).follow(0x28)
+}
+
+fn read_encounter_pokemon(index: u8) -> Pk8 {
+    let encounter_party = read_encounter_party();
+    read_pokemon_in_party(encounter_party, index)
+}
+
+fn read_encounter_pokemon_count() -> u32 {
+    let encounter_party = read_encounter_party();
+    read_pokemon_count_in_party(encounter_party)
 }
 
 fn get_union_room_manager() -> DmntReader {
@@ -153,6 +167,11 @@ mod c_api {
     #[no_mangle]
     pub unsafe extern "C" fn bdsp_read_egg_details(out: *mut EggDetails) {
         *out = read_egg_details();
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn bdsp_read_encounter_pokemon_count() -> u32 {
+        read_encounter_pokemon_count()
     }
 
     #[no_mangle]
