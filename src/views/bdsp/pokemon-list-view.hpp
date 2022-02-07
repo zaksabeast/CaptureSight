@@ -24,10 +24,8 @@ class PokemonListView : public tsl::Gui {
 
     for (u32 index = 0; index < m_count; index++) {
       auto current_pokemon = this->m_read_pokemon_by_index(index);
-      if (current_pokemon->SpeciesString() != "None") {
-        list->addItem(
-            new PokemonViewButton(current_pokemon->SpeciesString() + (current_pokemon->IsShiny() ? " ★" : " "), current_pokemon));
-      }
+      list->addItem(
+          new PokemonViewButton(current_pokemon->SpeciesString() + (current_pokemon->IsShiny() ? " ★" : " "), current_pokemon));
     }
 
     frame->setContent(list);
