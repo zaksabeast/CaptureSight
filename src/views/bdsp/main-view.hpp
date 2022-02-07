@@ -24,9 +24,10 @@ class MainBdSpView : public tsl::Gui {
     auto frame = new tsl::elm::OverlayFrame("CaptureSight", " ");
     auto list = new tsl::elm::List();
     u32 encounter_count = csight::bdsp::read_encounter_pokemon_count();
+    u32 party_count = csight::bdsp::read_party_pokemon_count();
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
     list->addItem(new PokemonListViewButton("Encounters", csight::bdsp::read_encounter_pokemon, encounter_count));
-    list->addItem(new PokemonListViewButton("Party", csight::bdsp::read_party_pokemon, 6));
+    list->addItem(new PokemonListViewButton("Party", csight::bdsp::read_party_pokemon, party_count));
     list->addItem(new DaycareViewButton());
     list->addItem(new UndergroundViewButton());
     list->addItem(new PokemonViewButton("Union Trade", csight::bdsp::read_other_player_union_trade_pokemon));
