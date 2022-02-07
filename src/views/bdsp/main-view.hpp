@@ -1,14 +1,13 @@
 #pragma once
 
 #include "../../constants.hpp"
-#include "../party-list-view.hpp"
 #include "../pokemon-view.hpp"
 #include "../rng-view.hpp"
 #include "../trainer-view.hpp"
 #include "./daycare-view.hpp"
 #include "./roamer-view.hpp"
 #include "./underground-view.hpp"
-#include "./encounter-list-view.hpp"
+#include "./pokemon-list-view.hpp"
 #include <csight-core.h>
 #include <cstring>
 #include <iomanip>
@@ -24,10 +23,10 @@ class MainBdSpView : public tsl::Gui {
   virtual tsl::elm::Element *createUI() override {
     auto frame = new tsl::elm::OverlayFrame("CaptureSight", " ");
     auto list = new tsl::elm::List();
-
+    u32 encounter_count = csight::bdsp::read_encounter_pokemon_count();
     list->addItem(new tsl::elm::CategoryHeader("Pokemon"));
-    list->addItem(new EncounterListViewButton(csight::bdsp::read_encounter_pokemon));
-    list->addItem(new PartyListViewButton(csight::bdsp::read_party_pokemon));
+    list->addItem(new PokemonListViewButton("Encounters", csight::bdsp::read_encounter_pokemon, encounter_count));
+    list->addItem(new PokemonListViewButton("Party", csight::bdsp::read_party_pokemon, 6));
     list->addItem(new DaycareViewButton());
     list->addItem(new UndergroundViewButton());
     list->addItem(new PokemonViewButton("Union Trade", csight::bdsp::read_other_player_union_trade_pokemon));
