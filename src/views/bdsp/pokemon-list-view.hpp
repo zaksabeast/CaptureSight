@@ -35,8 +35,8 @@ class PokemonListView : public tsl::Gui {
 
  private:
   std::string m_label;
-  u32 m_count;
   ReadPartyPokemonFn m_read_pokemon_by_index;
+  u32 m_count;
 };
 
 class PokemonListViewButton : public Button {
