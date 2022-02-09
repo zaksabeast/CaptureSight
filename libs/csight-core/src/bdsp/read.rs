@@ -56,10 +56,29 @@ fn read_party_pokemon(index: u8) -> Pk8 {
     read_pokemon_in_party(player_party, index)
 }
 
-fn read_wild_pokemon() -> Pk8 {
+fn read_pokemon_count_in_party(reader: DmntReader) -> u32 {
+    let count = reader.read_offset(0x18);
+    core::cmp::min(count, 6)
+}
+
+fn read_party_pokemon_count() -> u32 {
+    let player_party = get_read_player_party();
+    read_pokemon_count_in_party(player_party)
+}
+
+fn read_encounter_party() -> DmntReader {
     // Wild Pokemon are set up in a fake party
-    let battle_party = get_battle_setup_param().follow(0x58).follow(0x28);
-    read_pokemon_in_party(battle_party, 0)
+    get_battle_setup_param().follow(0x58).follow(0x28)
+}
+
+fn read_encounter_pokemon(index: u8) -> Pk8 {
+    let encounter_party = read_encounter_party();
+    read_pokemon_in_party(encounter_party, index)
+}
+
+fn read_encounter_pokemon_count() -> u32 {
+    let encounter_party = read_encounter_party();
+    read_pokemon_count_in_party(encounter_party)
 }
 
 fn get_union_room_manager() -> DmntReader {
@@ -156,13 +175,23 @@ mod c_api {
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn bdsp_read_wild_pokemon() -> *mut Pk8 {
-        Box::into_raw(Box::new(read_wild_pokemon()))
+    pub unsafe extern "C" fn bdsp_read_encounter_pokemon_count() -> u32 {
+        read_encounter_pokemon_count()
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn bdsp_read_encounter_pokemon(index: u8) -> *mut Pk8 {
+        Box::into_raw(Box::new(read_encounter_pokemon(index)))
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn bdsp_read_party_pokemon(index: u8) -> *mut Pk8 {
         Box::into_raw(Box::new(read_party_pokemon(index)))
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn bdsp_read_party_pokemon_count() -> u32 {
+        read_party_pokemon_count()
     }
 
     #[no_mangle]
