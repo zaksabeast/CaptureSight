@@ -134,7 +134,7 @@ dependencies = [
 [[package]]
 name = "pkm-rs"
 version = "0.1.0"
-source = "git+https://github.com/zaksabeast/pkm-rs.git?rev=9176d3e#9176d3e2a7ec9296846f960b699f19514d659a4e"
+source = "git+https://github.com/zaksabeast/pkm-rs.git?rev=6d4bbcc#6d4bbcc7576fa5569126bb537ce9595f3a9c31fc"
 dependencies = [
  "no_std_io 0.1.0 (git+https://github.com/zaksabeast/no_std_io.git?rev=77499d6)",
  "num_enum",
