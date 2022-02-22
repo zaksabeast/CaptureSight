@@ -91,7 +91,7 @@ fn get_union_room_manager() -> DmntReader {
 
 fn read_other_player_union_trade_pokemon() -> Pk8 {
     let trade_poke_param = get_union_room_manager()
-        .follow(0x108)
+        .follow(0x110)
         .follow(0x28)
         .follow(0x68);
     read_pokemon_from_poke_param(trade_poke_param)
