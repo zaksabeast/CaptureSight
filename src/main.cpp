@@ -50,7 +50,7 @@ class MainOverlay : public tsl::Overlay {
     std::array<u8, 8> supported_pearl_build_id = { 0xD7, 0x52, 0x46, 0xEC, 0x33, 0xC2, 0xF6, 0x4B };
     tryGameWithBuildId(MainBdSpView, SupportedGame::ShiningPearl, supported_pearl_build_id);
 
-    std::array<u8, 8> supported_arceus_build_id = { 0xBE, 0xF2, 0x91, 0xF2, 0x63, 0x9F, 0x7A, 0xFE };
+    std::array<u8, 8> supported_arceus_build_id = { 0x66, 0xF1, 0x5C, 0x28, 0x1E, 0xFA, 0x7A, 0xDD };
     tryGameWithBuildId(MainArceusView, SupportedGame::Arceus, supported_arceus_build_id);
 
     return initially<ErrorView>("Unsupported game!\n\nTitle Id:\n" + utils::num_to_hex(title_id));
