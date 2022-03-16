@@ -15,6 +15,7 @@ type NxResult<T> = Result<T, NxResultCode>;
 pub struct DmntChtMemoryBase {
     pub main_nso: u64,
     pub heap: u64,
+    pub title_id: u64,
 }
 
 #[cfg(target_os = "horizon")]
@@ -54,6 +55,11 @@ pub fn get_memory_base() -> NxResult<DmntChtMemoryBase> {
     parse_nx_result_code(result_code)?;
 
     Ok(out)
+}
+
+pub fn get_title_id() -> Option<u64> {
+    let base = get_memory_base().ok()?;
+    Some(base.title_id)
 }
 
 #[cfg_attr(test, mocktopus::macros::mockable)]
