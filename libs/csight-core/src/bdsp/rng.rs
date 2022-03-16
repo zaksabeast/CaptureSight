@@ -1,6 +1,6 @@
 mod c_api {
     use crate::{
-        bdsp::{offsets::Offset, read::read_random_group_state_reader},
+        bdsp::{offsets, read::read_random_group_state_reader},
         dmntcht::DmntReader,
         rng::{LcrngTracker, XorshiftTracker},
     };
@@ -8,7 +8,7 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn bdsp_get_main_rng_tracker() -> *mut XorshiftTracker {
-        let reader = DmntReader::new_from_main_nso(Offset::MainRng).follow(0);
+        let reader = DmntReader::new_from_main_nso(offsets::get_main_rng()).follow(0);
         Box::into_raw(Box::new(XorshiftTracker::new_from_reader(reader)))
     }
 
