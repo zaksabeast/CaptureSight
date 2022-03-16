@@ -23,11 +23,11 @@ fn get_field_manager() -> DmntReader {
 }
 
 fn get_battle_setup_param() -> DmntReader {
-    get_player_prefs_provider().follow(0x7f0)
+    get_player_prefs_provider().follow(0x800)
 }
 
 fn get_read_player_party() -> DmntReader {
-    get_player_prefs_provider().follow(0x7f8)
+    get_player_prefs_provider().follow(0x808)
 }
 
 fn get_daycare() -> DmntReader {

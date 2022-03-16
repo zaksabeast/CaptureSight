@@ -44,10 +44,10 @@ class MainOverlay : public tsl::Overlay {
     std::array<u8, 8> supported_shield_build_id = { 0xA1, 0x68, 0x02, 0x62, 0x5E, 0x78, 0x26, 0xBF };
     tryGameWithBuildId(MainSwShView, SupportedGame::Shield, supported_shield_build_id);
 
-    std::array<u8, 8> supported_diamond_build_id = { 0x35, 0xB9, 0xD8, 0x77, 0x9B, 0x19, 0x51, 0x41 };
+    std::array<u8, 8> supported_diamond_build_id = { 0x94, 0xCE, 0xAE, 0x32, 0x5C, 0x20, 0x5C, 0x4B };
     tryGameWithBuildId(MainBdSpView, SupportedGame::BrilliantDiamond, supported_diamond_build_id);
 
-    std::array<u8, 8> supported_pearl_build_id = { 0xD7, 0x52, 0x46, 0xEC, 0x33, 0xC2, 0xF6, 0x4B };
+    std::array<u8, 8> supported_pearl_build_id = { 0x38, 0xF5, 0x9C, 0xBD, 0xA2, 0xEB, 0x9C, 0x44 };
     tryGameWithBuildId(MainBdSpView, SupportedGame::ShiningPearl, supported_pearl_build_id);
 
     std::array<u8, 8> supported_arceus_build_id = { 0x66, 0xF1, 0x5C, 0x28, 0x1E, 0xFA, 0x7A, 0xDD };
