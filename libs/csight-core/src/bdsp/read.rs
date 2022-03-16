@@ -1,4 +1,4 @@
-use super::offsets::Offset;
+use super::offsets;
 use crate::{dmntcht::DmntReader, trainer_info::TrainerInfo};
 use alloc::boxed::Box;
 use core::mem;
@@ -6,7 +6,7 @@ use pkm_rs::{Pk8, Pk8Data};
 use safe_transmute::TriviallyTransmutable;
 
 fn get_player_prefs_provider() -> DmntReader {
-    DmntReader::new_from_main_nso(Offset::PlayerPrefsProviderInstance)
+    DmntReader::new_from_main_nso(offsets::get_player_prefs_provider_instance())
         .follow(0)
         .follow(0x18)
         .follow(0xc0)
@@ -16,7 +16,7 @@ fn get_player_prefs_provider() -> DmntReader {
 }
 
 fn get_field_manager() -> DmntReader {
-    DmntReader::new_from_main_nso(Offset::FieldManager)
+    DmntReader::new_from_main_nso(offsets::get_field_manager())
         .follow(0)
         .follow(0xb8)
         .follow(0x0)
@@ -82,7 +82,7 @@ fn read_encounter_pokemon_count() -> u32 {
 }
 
 fn get_union_room_manager() -> DmntReader {
-    DmntReader::new_from_main_nso(Offset::UnionRoomManager)
+    DmntReader::new_from_main_nso(offsets::get_union_room_manager())
         .follow(0)
         .follow(0x18)
         .follow(0xb8)
