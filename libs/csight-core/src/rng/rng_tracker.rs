@@ -70,13 +70,13 @@ mod c_api {
 
         match rng_type {
             RngType::Xoroshiro => {
-                Box::from_raw(ptr as *mut _ as *mut XoroshiroTracker);
+                drop(Box::from_raw(ptr as *mut _ as *mut XoroshiroTracker));
             }
             RngType::Xorshift => {
-                Box::from_raw(ptr as *mut _ as *mut XorshiftTracker);
+                drop(Box::from_raw(ptr as *mut _ as *mut XorshiftTracker));
             }
             RngType::Lcrng => {
-                Box::from_raw(ptr as *mut _ as *mut LcrngTracker);
+                drop(Box::from_raw(ptr as *mut _ as *mut LcrngTracker));
             }
         };
     }

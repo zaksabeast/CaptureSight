@@ -1,6 +1,6 @@
 use super::offsets::{BlockOffset, MyStatus8Offset, Pk8Offset};
 use crate::{dmntcht::DmntReader, trainer_info::TrainerInfo};
-use pkm_rs::{Pk8, Pk8Data};
+use pkm_rs::{Ek8, Pk8};
 
 pub fn read_trainer_info() -> TrainerInfo {
     DmntReader::new_from_heap(
@@ -11,31 +11,31 @@ pub fn read_trainer_info() -> TrainerInfo {
 
 pub fn read_party_pokemon(index: u8) -> Pk8 {
     DmntReader::new_from_heap(u64::from(Pk8Offset::Party) + ((index as u64) * 0x158))
-        .read_offset::<Pk8Data>(0)
+        .read_offset::<Ek8>(0)
         .into()
 }
 
 pub fn read_wild_pokemon() -> Pk8 {
     DmntReader::new_from_heap(Pk8Offset::Wild)
-        .read_offset::<Pk8Data>(0)
+        .read_offset::<Ek8>(0)
         .into()
 }
 
 pub fn read_wild_legend_pokemon() -> Pk8 {
     DmntReader::new_from_heap(Pk8Offset::WildLegend)
-        .read_offset::<Pk8Data>(0)
+        .read_offset::<Ek8>(0)
         .into()
 }
 
 pub fn read_trade_pokemon() -> Pk8 {
     DmntReader::new_from_heap(Pk8Offset::Trade)
-        .read_offset::<Pk8Data>(0)
+        .read_offset::<Ek8>(0)
         .into()
 }
 
 pub fn read_raid_pokemon() -> Pk8 {
     DmntReader::new_from_heap(Pk8Offset::Raid)
-        .read_offset::<Pk8Data>(0)
+        .read_offset::<Ek8>(0)
         .into()
 }
 

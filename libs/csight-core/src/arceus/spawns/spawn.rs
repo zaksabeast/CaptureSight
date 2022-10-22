@@ -1,10 +1,9 @@
 #[cfg(test)]
 use no_std_io::Writer;
 
-use no_std_io::Reader;
-use safe_transmute::TriviallyTransmutable;
+use no_std_io::{EndianRead, EndianWrite, Reader};
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, EndianWrite, EndianRead)]
 pub struct Spawn {
     data: [u8; Self::DATA_SIZE],
 }
@@ -50,8 +49,6 @@ impl Writer for Spawn {
         &mut self.data
     }
 }
-
-unsafe impl TriviallyTransmutable for Spawn {}
 
 #[cfg(test)]
 mod test {

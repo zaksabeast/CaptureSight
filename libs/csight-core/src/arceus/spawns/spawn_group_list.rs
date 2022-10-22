@@ -95,12 +95,12 @@ mod test {
         fn write_spawn_group_count(&mut self, count: u32) {
             let size = u32::try_from(SpawnGroup::DATA_SIZE).unwrap();
             let base_offset = usize::try_from(SpawnGroupList::COUNT_OFFSET).unwrap();
-            self.write(base_offset, &(count * size)).unwrap();
+            self.write_le(base_offset, &(count * size)).unwrap();
         }
 
         fn write_spawn_group(&mut self, index: usize, spawn_group: &SpawnGroup) {
             let base_offset = usize::try_from(SpawnGroupList::LIST_OFFSET).unwrap();
-            self.write(base_offset + (index * SpawnGroup::DATA_SIZE), spawn_group)
+            self.write_le(base_offset + (index * SpawnGroup::DATA_SIZE), spawn_group)
                 .unwrap();
         }
 

@@ -5,7 +5,9 @@ use core::convert::TryFrom;
 #[cfg(test)]
 use mocktopus::mocking::{MockResult, Mockable};
 
-use safe_transmute::{transmute_one_to_bytes_mut, TriviallyTransmutable};
+use alloc::vec;
+use core::mem;
+use no_std_io::{EndianRead, Reader};
 
 type NxResultCode = i32;
 type NxResult<T> = Result<T, NxResultCode>;
@@ -85,17 +87,16 @@ pub fn configure_mock_dmnt_read(data: Vec<u8>) {
     });
 }
 
-pub fn read_cheat_process_memory<T: TriviallyTransmutable + Default>(address: u64) -> NxResult<T> {
-    let mut out: T = Default::default();
-    let out_bytes = transmute_one_to_bytes_mut(&mut out);
+pub fn read_cheat_process_memory<T: EndianRead>(address: u64) -> NxResult<T> {
+    let mut out = vec![0u8; mem::size_of::<T>()];
 
-    read_cheat_process_memory_into_slice(address, out_bytes)?;
+    read_cheat_process_memory_into_slice(address, &mut out)?;
 
-    Ok(out)
+    out.read_le(0).map_err(|_| 0x1234i32)
 }
 
-pub fn read_cheat_process_memory_default<T: TriviallyTransmutable + Default>(address: u64) -> T {
-    read_cheat_process_memory::<T>(address).unwrap_or_default()
+pub fn read_cheat_process_memory_default<T: EndianRead + Default>(address: u64) -> T {
+    read_cheat_process_memory(address).unwrap_or_default()
 }
 
 pub struct DmntReader {
@@ -129,7 +130,7 @@ impl DmntReader {
         }
     }
 
-    pub fn read_offset<T: TriviallyTransmutable + Default>(&self, offset: u64) -> T {
+    pub fn read_offset<T: EndianRead + Default>(&self, offset: u64) -> T {
         read_cheat_process_memory_default(self.address + offset)
     }
 }

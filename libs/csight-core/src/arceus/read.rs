@@ -2,7 +2,7 @@ use super::offsets::Offset;
 use crate::dmntcht::DmntReader;
 use alloc::boxed::Box;
 use core::cmp;
-use pkm_rs::{Pa8, Pa8Data};
+use pkm_rs::{Ea8, Pa8};
 
 // 30 is the hardcoded max.  For reference: .text + 0x830eb4 in 1.0.0
 const MAX_BATTLE_POKEMON_COUNT: u8 = 30;
@@ -15,7 +15,7 @@ fn read_pokemon_from_poke_param(reader: DmntReader) -> Pa8 {
     reader
         .follow(0x98)
         .follow(0x10)
-        .read_offset::<Pa8Data>(0)
+        .read_offset::<Ea8>(0)
         .into()
 }
 

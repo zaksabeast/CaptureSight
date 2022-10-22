@@ -29,10 +29,9 @@ pub unsafe fn init_heap() {
     // This is safe since we guarantee the fake heap will
     // only be used here and is a valid pointer.
     let fake_heap_ptr = FAKE_HEAP.0.as_mut_ptr();
-    ALLOCATOR.lock().init(
-        fake_heap_ptr as usize,
-        fake_heap_ptr.add(FAKE_HEAP_SIZE) as usize,
-    )
+    ALLOCATOR
+        .lock()
+        .init(fake_heap_ptr, fake_heap_ptr.add(FAKE_HEAP_SIZE) as usize)
 }
 
 #[cfg(not(target_os = "horizon"))]

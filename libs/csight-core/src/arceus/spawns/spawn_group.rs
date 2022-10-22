@@ -2,10 +2,9 @@
 use no_std_io::Writer;
 
 use super::spawn_pair::SpawnPair;
-use no_std_io::Reader;
-use safe_transmute::TriviallyTransmutable;
+use no_std_io::{EndianRead, EndianWrite, Reader};
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, EndianWrite, EndianRead)]
 pub struct SpawnGroup {
     data: [u8; Self::DATA_SIZE],
 }
@@ -19,7 +18,7 @@ impl SpawnGroup {
             return SpawnPair::default();
         }
 
-        self.default_read(index * SpawnPair::DATA_SIZE)
+        self.default_read_le(index * SpawnPair::DATA_SIZE)
     }
 
     pub fn get_spawn_pair_seeds(&self, index: usize) -> (u64, u64) {
@@ -54,7 +53,7 @@ impl SpawnGroup {
     #[cfg(test)]
     pub fn set_spawn_pair(&mut self, spawn_pair: &SpawnPair) {
         // During tests we'll panic if data isn't set up correctly
-        self.write(0, spawn_pair).unwrap();
+        self.write_le(0, spawn_pair).unwrap();
     }
 }
 
@@ -79,8 +78,6 @@ impl Writer for SpawnGroup {
     }
 }
 
-unsafe impl TriviallyTransmutable for SpawnGroup {}
-
 mod c_api {
     use super::*;
     use alloc::boxed::Box;
@@ -91,7 +88,7 @@ mod c_api {
             return;
         }
 
-        Box::from_raw(ptr);
+        drop(Box::from_raw(ptr));
     }
 
     #[no_mangle]

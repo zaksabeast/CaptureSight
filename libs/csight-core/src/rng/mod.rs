@@ -11,11 +11,11 @@ mod rng_tracker;
 pub use rng_tracker::*;
 
 use alloc::vec::Vec;
-use safe_transmute::TriviallyTransmutable;
+use no_std_io::EndianRead;
 
 use core::mem;
 
-pub trait RngState: PartialEq + Default + TriviallyTransmutable {
+pub trait RngState: PartialEq + Default + EndianRead {
     const STATE_COUNT: usize;
     type StateItem;
 

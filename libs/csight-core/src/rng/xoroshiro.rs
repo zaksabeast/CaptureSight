@@ -1,20 +1,21 @@
 use super::{Rng, RngState};
-use alloc::vec::Vec;
-use safe_transmute::TriviallyTransmutable;
+use alloc::{vec, vec::Vec};
+use no_std_io::EndianRead;
 
-#[derive(Clone, Copy, PartialEq, Debug, Default)]
-pub struct XoroshiroState([u64; 2]);
+#[derive(Clone, Copy, PartialEq, Debug, Default, EndianRead)]
+pub struct XoroshiroState {
+    s0: u64,
+    s1: u64,
+}
 
 impl RngState for XoroshiroState {
     const STATE_COUNT: usize = 2;
     type StateItem = u64;
 
     fn get_inner(&self) -> Vec<u64> {
-        self.0.to_vec()
+        vec![self.s0, self.s1]
     }
 }
-
-unsafe impl TriviallyTransmutable for XoroshiroState {}
 
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub struct Xoroshiro {
@@ -44,17 +45,20 @@ impl Rng for Xoroshiro {
 impl Xoroshiro {
     pub fn new(seed: u64) -> Self {
         Self {
-            state: XoroshiroState([seed, 0x82A2B175229D6A5B]),
+            state: XoroshiroState {
+                s0: seed,
+                s1: 0x82A2B175229D6A5B,
+            },
         }
     }
 
     pub fn next_u64(&mut self) -> u64 {
-        let state = &mut self.state.0;
-        let result = state[0].wrapping_add(state[1]);
+        let state = &mut self.state;
+        let result = state.s0.wrapping_add(state.s1);
 
-        state[1] ^= state[0];
-        state[0] = state[0].rotate_left(24) ^ state[1] ^ (state[1] << 16);
-        state[1] = state[1].rotate_left(37);
+        state.s1 ^= state.s0;
+        state.s0 = state.s0.rotate_left(24) ^ state.s1 ^ (state.s1 << 16);
+        state.s1 = state.s1.rotate_left(37);
 
         result
     }

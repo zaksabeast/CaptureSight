@@ -160,7 +160,7 @@ mod c_api {
             return;
         }
 
-        Box::from_raw(ptr);
+        drop(Box::from_raw(ptr));
     }
 
     #[no_mangle]

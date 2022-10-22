@@ -1,31 +1,38 @@
 use super::{Rng, RngState};
 use alloc::{vec, vec::Vec};
-use safe_transmute::TriviallyTransmutable;
+use no_std_io::EndianRead;
 
-#[derive(Clone, Copy, PartialEq, Debug, Default)]
-pub struct XorshiftState([u32; 4]);
+#[derive(Clone, Copy, PartialEq, Debug, Default, EndianRead)]
+pub struct XorshiftState {
+    s0: u32,
+    s1: u32,
+    s2: u32,
+    s3: u32,
+}
 
 impl RngState for XorshiftState {
     const STATE_COUNT: usize = 4;
     type StateItem = u32;
 
     fn get_inner(&self) -> Vec<u64> {
-        let state = self.0;
         vec![
-            state[0] as u64,
-            state[1] as u64,
-            state[2] as u64,
-            state[3] as u64,
+            self.s0 as u64,
+            self.s1 as u64,
+            self.s2 as u64,
+            self.s3 as u64,
         ]
     }
 }
 
-unsafe impl TriviallyTransmutable for XorshiftState {}
-
 impl XorshiftState {
     #[cfg(test)]
     pub fn new(state: [u32; 4]) -> Self {
-        Self(state)
+        Self {
+            s0: state[0],
+            s1: state[1],
+            s2: state[2],
+            s3: state[3],
+        }
     }
 }
 
@@ -50,16 +57,16 @@ impl Rng for Xorshift {
     }
 
     fn next(&mut self) -> u32 {
-        let state = &mut self.state.0;
-        let s0 = state[0];
-        state[0] = state[1];
-        state[1] = state[2];
-        state[2] = state[3];
+        let state = &mut self.state;
+        let s0 = state.s0;
+        state.s0 = state.s1;
+        state.s1 = state.s2;
+        state.s2 = state.s3;
 
         let tmp = s0 ^ s0 << 11;
-        let tmp = tmp ^ tmp >> 8 ^ state[2] ^ state[2] >> 19;
+        let tmp = tmp ^ tmp >> 8 ^ state.s2 ^ state.s2 >> 19;
 
-        state[3] = tmp;
+        state.s3 = tmp;
 
         (tmp % 0xffffffff).wrapping_add(0x80000000)
     }

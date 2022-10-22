@@ -2,10 +2,9 @@
 use no_std_io::Writer;
 
 use super::spawn::Spawn;
-use no_std_io::Reader;
-use safe_transmute::TriviallyTransmutable;
+use no_std_io::{EndianRead, EndianWrite, Reader};
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, EndianWrite, EndianRead)]
 pub struct SpawnPair {
     data: [u8; Self::DATA_SIZE],
 }
@@ -14,11 +13,11 @@ impl SpawnPair {
     pub const DATA_SIZE: usize = 0x80;
 
     pub fn get_spawner_0(&self) -> Spawn {
-        self.default_read(0)
+        self.default_read_le(0)
     }
 
     pub fn get_spawner_1(&self) -> Spawn {
-        self.default_read(Spawn::DATA_SIZE)
+        self.default_read_le(Spawn::DATA_SIZE)
     }
 
     pub fn get_is_active(&self) -> bool {
@@ -29,7 +28,7 @@ impl SpawnPair {
     #[cfg(test)]
     pub fn set_spawner_1(&mut self, spawn: &Spawn) {
         // During tests we'll panic if data isn't set up correctly
-        self.write(Spawn::DATA_SIZE, spawn).unwrap();
+        self.write_le(Spawn::DATA_SIZE, spawn).unwrap();
     }
 }
 
@@ -53,8 +52,6 @@ impl Writer for SpawnPair {
         &mut self.data
     }
 }
-
-unsafe impl TriviallyTransmutable for SpawnPair {}
 
 #[cfg(test)]
 mod test {

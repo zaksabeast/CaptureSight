@@ -2,8 +2,8 @@ use super::offsets;
 use crate::{dmntcht::DmntReader, trainer_info::TrainerInfo};
 use alloc::boxed::Box;
 use core::mem;
-use pkm_rs::{Pk8, Pk8Data};
-use safe_transmute::TriviallyTransmutable;
+use no_std_io::EndianRead;
+use pkm_rs::{Ek8, Pk8};
 
 fn get_player_prefs_provider() -> DmntReader {
     DmntReader::new_from_main_nso(offsets::get_player_prefs_provider_instance())
@@ -42,7 +42,7 @@ fn read_pokemon_from_poke_param(reader: DmntReader) -> Pk8 {
     reader
         .follow(0x20)
         .follow(0x18)
-        .read_offset::<Pk8Data>(0x20)
+        .read_offset::<Ek8>(0x20)
         .into()
 }
 
@@ -97,15 +97,13 @@ fn read_other_player_union_trade_pokemon() -> Pk8 {
     read_pokemon_from_poke_param(trade_poke_param)
 }
 
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy, Default, EndianRead)]
 #[repr(C)]
 pub struct EggDetails {
     exists: bool,
     seed: u64,
     step_count: i32,
 }
-
-unsafe impl TriviallyTransmutable for EggDetails {}
 
 fn read_egg_details() -> EggDetails {
     get_daycare().read_offset(8)
@@ -121,7 +119,7 @@ fn read_underground_pokemon(index: usize) -> Pk8 {
         .follow(0x20 + ((index as u64) * 8))
         .follow(0x10)
         .follow(0x10)
-        .read_offset::<Pk8Data>(0x20)
+        .read_offset::<Ek8>(0x20)
         .into()
 }
 
@@ -129,7 +127,7 @@ fn read_trainer_info() -> TrainerInfo {
     get_player_prefs_provider().read_offset(0xe8)
 }
 
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy, Default, EndianRead)]
 #[repr(C)]
 pub struct Roamer {
     pub area_id: i32,
@@ -141,8 +139,6 @@ pub struct Roamer {
     pub status: u32,
     pub encounter_status: u8,
 }
-
-unsafe impl TriviallyTransmutable for Roamer {}
 
 fn get_roamer_reader() -> DmntReader {
     get_player_prefs_provider().follow(0x2a0)

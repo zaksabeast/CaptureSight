@@ -9,10 +9,9 @@ dependencies = [
  "cstr_core",
  "linked_list_allocator",
  "mocktopus",
- "no_std_io 0.1.0 (git+https://github.com/zaksabeast/no_std_io.git?rev=60c33e4)",
+ "no_std_io",
  "num_enum",
  "pkm-rs",
- "safe-transmute",
 ]
 
 [[package]]
@@ -32,6 +31,41 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7313c0d620d0cb4dbd9d019e461a4beb501071ff46ec0ab933efb4daa76d73e3"
 
 [[package]]
+name = "darling"
+version = "0.14.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4529658bdda7fd6769b8614be250cdcfc3aeb0ee72fe66f9e41e5e5eb73eac02"
+dependencies = [
+ "darling_core",
+ "darling_macro",
+]
+
+[[package]]
+name = "darling_core"
+version = "0.14.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "649c91bc01e8b1eac09fb91e8dbc7d517684ca6be8ebc75bb9cafc894f9fdb6f"
+dependencies = [
+ "fnv",
+ "ident_case",
+ "proc-macro2",
+ "quote",
+ "strsim",
+ "syn",
+]
+
+[[package]]
+name = "darling_macro"
+version = "0.14.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ddfc69c5bfcbd2fc09a0f38451d2daf0e372e367986a83906d1b0dbc88134fb5"
+dependencies = [
+ "darling_core",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "derivative"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -49,10 +83,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fea41bba32d969b513997752735605054bc0dfa92b4c56bf1189f2e174be7a10"
 
 [[package]]
-name = "linked_list_allocator"
-version = "0.9.0"
+name = "fnv"
+version = "1.0.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d0b725207570aa16096962d0b20c79f8a543df2280bd3c903022b9b0b4d7ea68"
+checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
+
+[[package]]
+name = "ident_case"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
+
+[[package]]
+name = "linked_list_allocator"
+version = "0.10.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e322f259d225fbae43a1b053b2dc6a5968a6bdf8b205f5de684dab485b95030e"
 dependencies = [
  "spinning_top",
 ]
@@ -64,6 +110,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "712a4d093c9976e24e7dbca41db895dabcbac38eb5f4045393d17a95bdfb1109"
 dependencies = [
  "scopeguard",
+]
+
+[[package]]
+name = "macros"
+version = "0.1.0"
+source = "git+https://github.com/zaksabeast/no_std_io.git?rev=4bc5adf#4bc5adfd8bd323609eec9f8f796ee033defe56dd"
+dependencies = [
+ "darling",
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -95,17 +152,9 @@ dependencies = [
 [[package]]
 name = "no_std_io"
 version = "0.1.0"
-source = "git+https://github.com/zaksabeast/no_std_io.git?rev=60c33e4#60c33e4a470f668ba4055367c18c70496d3180ad"
+source = "git+https://github.com/zaksabeast/no_std_io.git?rev=4bc5adf#4bc5adfd8bd323609eec9f8f796ee033defe56dd"
 dependencies = [
- "safe-transmute",
- "snafu",
-]
-
-[[package]]
-name = "no_std_io"
-version = "0.1.0"
-source = "git+https://github.com/zaksabeast/no_std_io.git?rev=77499d6#77499d696c0ceec7d63ea10788940b7346eca511"
-dependencies = [
+ "macros",
  "safe-transmute",
  "snafu",
 ]
@@ -134,27 +183,26 @@ dependencies = [
 [[package]]
 name = "pkm-rs"
 version = "0.1.0"
-source = "git+https://github.com/zaksabeast/pkm-rs.git?rev=6d4bbcc#6d4bbcc7576fa5569126bb537ce9595f3a9c31fc"
+source = "git+https://github.com/zaksabeast/pkm-rs.git?rev=b8e739f#b8e739f4ccc3b2c4b4eb8a18d0f863bd3dde4226"
 dependencies = [
- "no_std_io 0.1.0 (git+https://github.com/zaksabeast/no_std_io.git?rev=77499d6)",
+ "no_std_io",
  "num_enum",
- "safe-transmute",
 ]
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.30"
+version = "1.0.47"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "edc3358ebc67bc8b7fa0c007f945b0b18226f78437d61bec735a9eb96b61ee70"
+checksum = "5ea3d908b0e36316caf9e9e2c4625cdde190a7e6f440d794667ed17a1855e725"
 dependencies = [
- "unicode-xid",
+ "unicode-ident",
 ]
 
 [[package]]
 name = "quote"
-version = "1.0.10"
+version = "1.0.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "38bc8cc6a5f2e3655e0899c1b848643b2562f853f114bfec7be120678e3ace05"
+checksum = "bbe448f377a7d6961e30f5955f9b8d106c3f5e449d493ee1b125c1d43c2b5179"
 dependencies = [
  "proc-macro2",
 ]
@@ -202,18 +250,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "syn"
-version = "1.0.80"
+name = "strsim"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d010a1623fbd906d51d650a9916aaefc05ffa0e4053ff7fe601167f3e715d194"
+checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
+
+[[package]]
+name = "syn"
+version = "1.0.102"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3fcd952facd492f9be3ef0d0b7032a6e442ee9b361d4acc2b1d0c4aaa5f613a1"
 dependencies = [
  "proc-macro2",
  "quote",
- "unicode-xid",
+ "unicode-ident",
 ]
 
 [[package]]
-name = "unicode-xid"
-version = "0.2.2"
+name = "unicode-ident"
+version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ccb82d61f80a663efe1f787a51b16b5a51e3314d6ac365b08639f52387b33f3"
+checksum = "6ceab39d59e4c9499d4e5a8ee0e2735b891bb7308ac83dfb4e80cad195c9f6f3"

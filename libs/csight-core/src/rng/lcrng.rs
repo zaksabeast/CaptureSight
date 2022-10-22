@@ -1,20 +1,20 @@
 use super::{Rng, RngState};
-use alloc::vec::Vec;
-use safe_transmute::TriviallyTransmutable;
+use alloc::{vec, vec::Vec};
+use no_std_io::EndianRead;
 
-#[derive(Clone, Copy, PartialEq, Debug, Default)]
-pub struct LcrngState([u64; 1]);
+#[derive(Clone, Copy, PartialEq, Debug, Default, EndianRead)]
+pub struct LcrngState {
+    s0: u64,
+}
 
 impl RngState for LcrngState {
     const STATE_COUNT: usize = 1;
     type StateItem = u64;
 
     fn get_inner(&self) -> Vec<u64> {
-        self.0.to_vec()
+        vec![self.s0]
     }
 }
-
-unsafe impl TriviallyTransmutable for LcrngState {}
 
 #[derive(Clone, Copy, Debug)]
 pub struct Lcrng {
@@ -37,6 +37,6 @@ impl Rng for Lcrng {
     }
 
     fn next(&mut self) -> u32 {
-        self.state.0[0].wrapping_mul(0x6c078965).wrapping_add(1) as u32
+        self.state.s0.wrapping_mul(0x6c078965).wrapping_add(1) as u32
     }
 }
