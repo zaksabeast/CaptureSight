@@ -2,7 +2,7 @@ use super::{Rng, RngState};
 use alloc::{vec, vec::Vec};
 use no_std_io::EndianRead;
 
-#[derive(Clone, Copy, PartialEq, Debug, Default, EndianRead)]
+#[derive(Clone, Copy, Eq, PartialEq, Debug, Default, EndianRead)]
 pub struct XorshiftState {
     s0: u32,
     s1: u32,

@@ -4,7 +4,7 @@ use no_std_io::Writer;
 use super::spawn_pair::SpawnPair;
 use no_std_io::{EndianRead, EndianWrite, Reader};
 
-#[derive(Debug, Clone, Copy, PartialEq, EndianWrite, EndianRead)]
+#[derive(Debug, Clone, Copy, Eq, PartialEq, EndianWrite, EndianRead)]
 pub struct SpawnGroup {
     data: [u8; Self::DATA_SIZE],
 }
