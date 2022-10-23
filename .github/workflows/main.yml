@@ -10,7 +10,7 @@ jobs:
   lint-build-deploy:
     name: Lint, test, and build
     runs-on: ubuntu-latest
-    container: zaksabeast/devkita64-rust
+    container: zaksabeast/devkitarm-rust
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
