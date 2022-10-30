@@ -101,6 +101,7 @@ fn read_other_player_union_trade_pokemon() -> Pk8 {
 #[repr(C)]
 pub struct EggDetails {
     exists: bool,
+    #[no_std_io(pad_before = 7)]
     seed: u64,
     step_count: i32,
 }
@@ -136,6 +137,7 @@ pub struct Roamer {
     pub species: u32,
     pub hp: u32,
     pub level: u8,
+    #[no_std_io(pad_before = 3)]
     pub status: u32,
     pub encounter_status: u8,
 }
