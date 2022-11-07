@@ -18,7 +18,7 @@ class RaidSeedButton : public Button {
       auto pk8 = read_pk8();
       auto raid_seed = pk8->FindRaidSeed();
       std::string new_label = raid_seed.has_value() ? utils::num_to_hex(raid_seed.value()) : "None";
-      this->setText(utils::num_to_hex(new_label));
+      this->setText(new_label);
     });
   }
 };
