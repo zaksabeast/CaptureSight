@@ -2,7 +2,6 @@ use crate::{
     dmntcht::DmntReader,
     rng::{Lcrng, Rng, RngState, Xoroshiro, Xorshift},
 };
-use alloc::boxed::Box;
 use core::ffi::c_void;
 
 pub struct RngTracker<GameRng: Rng> {
@@ -64,19 +63,18 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn free_rng_tracker(ptr: *mut c_void, rng_type: RngType) {
-        if ptr.is_null() {
-            return;
-        }
-
         match rng_type {
             RngType::Xoroshiro => {
-                drop(Box::from_raw(ptr as *mut _ as *mut XoroshiroTracker));
+                let ptr = ptr as *mut _ as *mut XoroshiroTracker;
+                crate::utils::free!(ptr);
             }
             RngType::Xorshift => {
-                drop(Box::from_raw(ptr as *mut _ as *mut XorshiftTracker));
+                let ptr = ptr as *mut _ as *mut XorshiftTracker;
+                crate::utils::free!(ptr);
             }
             RngType::Lcrng => {
-                drop(Box::from_raw(ptr as *mut _ as *mut LcrngTracker));
+                let ptr = ptr as *mut _ as *mut LcrngTracker;
+                crate::utils::free!(ptr);
             }
         };
     }

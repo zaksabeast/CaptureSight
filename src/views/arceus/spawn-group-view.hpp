@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../components/button.hpp"
-#include "../../constants.hpp"
 #include "../../utils/general.hpp"
 #include <algorithm>
 #include <csight-core.h>

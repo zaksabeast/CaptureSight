@@ -1,27 +1,11 @@
 #pragma once
 
+#include "generated.h"
 #include <array>
 #include <memory>
 #include <switch.h>
 
-#ifdef __cplusplus
-
 namespace csight::arceus {
-  extern "C" {
-#endif
-  typedef struct arceus_spawn_group arceus_spawn_group_t;
-
-  arceus_spawn_group_t *free_spawn_group(arceus_spawn_group_t *ptr);
-  void spawn_group_get_spawn_pair_seeds(arceus_spawn_group_t *ptr, u64 *seed0, u64 *seed1, size_t index);
-  u64 spawn_group_get_seed(arceus_spawn_group_t *ptr);
-  arceus_spawn_group_t *arceus_read_spawn_group(size_t index);
-  arceus_spawn_group_t *arceus_read_next_active_spawn(size_t start_index, size_t *found_index);
-  size_t arceus_read_spawn_group_count();
-  size_t arceus_read_active_spawn_group_count();
-
-#ifdef __cplusplus
-  }
-
   typedef std::array<u64, 2> SpawnSeedPair;
 
   class SpawnGroup {
@@ -56,4 +40,3 @@ namespace csight::arceus {
     size_t m_index;
   };
 };
-#endif

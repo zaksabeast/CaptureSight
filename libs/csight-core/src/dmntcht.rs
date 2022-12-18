@@ -15,9 +15,10 @@ type NxResult<T> = Result<T, NxResultCode>;
 #[derive(Clone, Copy, Debug, Default)]
 #[repr(C)]
 pub struct DmntChtMemoryBase {
-    pub main_nso: u64,
-    pub heap: u64,
-    pub title_id: u64,
+    main_nso: u64,
+    heap: u64,
+    alias: u64,
+    title_id: u64,
 }
 
 #[cfg(target_os = "horizon")]
@@ -99,6 +100,7 @@ pub fn read_cheat_process_memory_default<T: EndianRead + Default>(address: u64) 
     read_cheat_process_memory(address).unwrap_or_default()
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct DmntReader {
     address: u64,
 }
@@ -128,6 +130,11 @@ impl DmntReader {
         Self {
             address: self.address + offset,
         }
+    }
+
+    pub fn nso_address(&self) -> u64 {
+        let base = get_memory_base().unwrap_or_default();
+        self.address - base.main_nso + 0x7100000000
     }
 
     pub fn read_offset<T: EndianRead + Default>(&self, offset: u64) -> T {

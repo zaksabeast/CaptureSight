@@ -1,56 +1,11 @@
 #pragma once
 
-#include "pk8.h"
+#include "generated.h"
+#include "pkx.h"
 #include "rng_tracker.h"
-#include "trainer_info.h"
-
-#ifdef __cplusplus
 #include <memory>
 
 namespace csight::bdsp {
-  extern "C" {
-#endif
-
-  struct EggDetails {
-    bool exists;
-    u64 seed;
-    s32 stepCount;
-  };
-
-  static_assert(sizeof(struct EggDetails) == 24);
-
-  // MV_POKE_DATA
-  struct Roamer {
-    s32 area_id;
-    u32 rng_seed_low;
-    u32 rng_seed_high;
-    u32 species;
-    u32 hp;
-    u8 level;
-    u32 status;
-    u8 encounter_status;
-  };
-
-  static_assert(sizeof(struct Roamer) == 32);
-
-  void bdsp_read_trainer_info(TrainerInfo *out);
-  void bdsp_read_egg_details(EggDetails *out);
-  pk8_t *bdsp_read_encounter_pokemon(u8 index);
-  u64 bdsp_read_encounter_pokemon_count();
-  pk8_t *bdsp_read_party_pokemon(u8 index);
-  u64 bdsp_read_party_pokemon_count();
-  pk8_t *bdsp_read_other_player_union_trade_pokemon();
-  size_t bdsp_read_underground_pokemon_count();
-  pk8_t *bdsp_read_underground_pokemon(size_t index);
-  size_t bdsp_read_roamer_count();
-  void bdsp_read_roamer(Roamer *out, size_t index);
-
-  xorshift_tracker_t *bdsp_get_main_rng_tracker();
-  lcrng_tracker_t *bdsp_get_random_group_rng_tracker(size_t index);
-
-#ifdef __cplusplus
-  }
-
   std::shared_ptr<TrainerInfo> read_trainer_info() {
     TrainerInfo trainer_info;
     bdsp_read_trainer_info(&trainer_info);
@@ -63,11 +18,21 @@ namespace csight::bdsp {
     return std::make_shared<EggDetails>(egg_details);
   }
 
-  std::shared_ptr<Pk8> read_encounter_pokemon(u8 index) { return std::make_shared<Pk8>(bdsp_read_encounter_pokemon(index)); }
-  u64 read_encounter_pokemon_count() { return bdsp_read_encounter_pokemon_count(); }
-  std::shared_ptr<Pk8> read_party_pokemon(u8 index) { return std::make_shared<Pk8>(bdsp_read_party_pokemon(index)); }
-  u64 read_party_pokemon_count() { return bdsp_read_party_pokemon_count(); }
-  std::shared_ptr<Pk8> read_underground_pokemon(u8 index) { return std::make_shared<Pk8>(bdsp_read_underground_pokemon(index)); }
+  std::shared_ptr<Pk8> read_encounter_pokemon(u8 index) {
+    return std::make_shared<Pk8>(bdsp_read_encounter_pokemon(index));
+  }
+  u64 read_encounter_pokemon_count() {
+    return bdsp_read_encounter_pokemon_count();
+  }
+  std::shared_ptr<Pk8> read_party_pokemon(u8 index) {
+    return std::make_shared<Pk8>(bdsp_read_party_pokemon(index));
+  }
+  u64 read_party_pokemon_count() {
+    return bdsp_read_party_pokemon_count();
+  }
+  std::shared_ptr<Pk8> read_underground_pokemon(u8 index) {
+    return std::make_shared<Pk8>(bdsp_read_underground_pokemon(index));
+  }
   std::shared_ptr<Pk8> read_other_player_union_trade_pokemon() {
     return std::make_shared<Pk8>(bdsp_read_other_player_union_trade_pokemon());
   }
@@ -83,12 +48,12 @@ namespace csight::bdsp {
     return result;
   }
 
-  std::vector<Roamer> read_roamers() {
-    std::vector<Roamer> result;
+  std::vector<BdspRoamer> read_roamers() {
+    std::vector<BdspRoamer> result;
     auto count = bdsp_read_roamer_count();
 
     for (size_t i = 0; i < count; i++) {
-      Roamer roamer;
+      BdspRoamer roamer;
       bdsp_read_roamer(&roamer, i);
       result.push_back(roamer);
     }
@@ -104,4 +69,3 @@ namespace csight::bdsp {
     return std::make_shared<RngTracker>((void *)bdsp_get_random_group_rng_tracker(index), RngType::Lcrng);
   }
 };
-#endif

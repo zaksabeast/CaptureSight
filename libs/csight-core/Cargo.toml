@@ -11,7 +11,7 @@ crate-type = ["staticlib"]
 num_enum = { version = "0.5", default-features = false }
 cstr_core = { version = "0.2.4", default-features = false, features = ["alloc"] }
 no_std_io = { git = "https://github.com/zaksabeast/no_std_io.git", rev = "4bc5adf" }
-pkm-rs = { git = "https://github.com/zaksabeast/pkm-rs.git", rev = "b8e739f" }
+pkm-rs = { git = "https://github.com/zaksabeast/pkm-rs.git", rev = "35165e2" }
 
 [dev-dependencies]
 mocktopus = "0.7.11"

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../constants.hpp"
 #include "../party-list-view.hpp"
 #include "../rng-view.hpp"
 #include "../trainer-view.hpp"

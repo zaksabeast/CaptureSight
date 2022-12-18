@@ -1,6 +1,5 @@
 use super::offsets::Offset;
 use crate::dmntcht::DmntReader;
-use alloc::boxed::Box;
 use core::cmp;
 use pkm_rs::{Ea8, Pa8};
 
@@ -67,7 +66,7 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn arceus_read_party_pokemon(index: u8) -> *mut Pa8 {
-        Box::into_raw(Box::new(read_party_pokemon(index)))
+        crate::utils::boxed!(read_party_pokemon(index))
     }
 
     #[no_mangle]
@@ -77,6 +76,6 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn arceus_read_wild_pokemon(index: u8) -> *mut Pa8 {
-        Box::into_raw(Box::new(read_wild_pokemon(index)))
+        crate::utils::boxed!(read_wild_pokemon(index))
     }
 }

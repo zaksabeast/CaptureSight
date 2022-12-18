@@ -10,9 +10,11 @@ mod dmntcht;
 mod heap_allocator;
 mod pkm;
 mod rng;
+mod sv;
 mod swsh;
 mod titles;
 mod trainer_info;
+mod utils;
 
 #[cfg(not(test))]
 use core::panic::PanicInfo;

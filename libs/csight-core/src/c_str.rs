@@ -7,7 +7,8 @@ use core::fmt::Display;
 ///
 /// The caller must follow all safety rules from [pointer::copy_from_nonoverlapping]
 /// and [pointer::write].
-pub unsafe fn copy_as_c_str(src: &str, dst: *mut u8, dst_length: usize) {
+pub unsafe fn copy_as_c_str(src: &str, dst: *mut core::ffi::c_char, dst_length: usize) {
+    let dst = dst as *mut u8;
     let src_bytes = src.as_bytes();
     let copy_size = core::cmp::min(dst_length - 1, src_bytes.len());
 
@@ -24,7 +25,11 @@ pub unsafe fn copy_as_c_str(src: &str, dst: *mut u8, dst_length: usize) {
 ///
 /// # Safety
 /// The same rules as [copy_as_c_str] applies.
-pub unsafe fn copy_display_as_c_str<T: Display>(src: T, dst: *mut u8, dst_length: usize) {
+pub unsafe fn copy_display_as_c_str<T: Display>(
+    src: T,
+    dst: *mut core::ffi::c_char,
+    dst_length: usize,
+) {
     let formatted = alloc::format!("{}", src);
     copy_as_c_str(&formatted, dst, dst_length);
 }

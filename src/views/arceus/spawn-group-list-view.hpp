@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../components/button.hpp"
-#include "../../constants.hpp"
 #include "./spawn-group-view.hpp"
 #include <algorithm>
 #include <csight-core.h>
@@ -14,9 +13,9 @@ class SpawnGroupListView : public tsl::Gui {
  public:
   SpawnGroupListView(bool active_groups) {
     if (active_groups) {
-      m_count = csight::arceus::arceus_read_active_spawn_group_count();
+      m_count = csight::arceus_read_active_spawn_group_count();
     } else {
-      m_count = csight::arceus::arceus_read_spawn_group_count();
+      m_count = csight::arceus_read_spawn_group_count();
     }
   }
 

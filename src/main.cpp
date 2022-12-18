@@ -2,10 +2,10 @@
 
 #include "./utils/debug.hpp"
 #include "./utils/general.hpp"
-#include "constants.hpp"
 #include "views/arceus/main-view.hpp"
 #include "views/bdsp/main-view.hpp"
 #include "views/error-view.hpp"
+#include "views/sv/main-view.hpp"
 #include "views/swsh/main-view.hpp"
 #include <csight-core.h>
 #include <dmntcht.h>
@@ -14,7 +14,7 @@
 #include <tesla.hpp>
 
 #define tryGameWithBuildId(view, game, supported_build_id)   \
-  if (title_id == game) {                                    \
+  if (title_id == (u64)game) {                               \
     if (build_id == supported_build_id) {                    \
       return initially<view>();                              \
     }                                                        \
@@ -39,19 +39,25 @@ class MainOverlay : public tsl::Overlay {
     auto build_id = dbg::GetCheatProcessBuildId();
 
     std::array<u8, 8> supported_sword_build_id = { 0xA3, 0xB7, 0x5B, 0xCD, 0x33, 0x11, 0x38, 0x5A };
-    tryGameWithBuildId(MainSwShView, SupportedGame::Sword, supported_sword_build_id);
+    tryGameWithBuildId(MainSwShView, csight::SupportedGame::Sword, supported_sword_build_id);
 
     std::array<u8, 8> supported_shield_build_id = { 0xA1, 0x68, 0x02, 0x62, 0x5E, 0x78, 0x26, 0xBF };
-    tryGameWithBuildId(MainSwShView, SupportedGame::Shield, supported_shield_build_id);
+    tryGameWithBuildId(MainSwShView, csight::SupportedGame::Shield, supported_shield_build_id);
 
     std::array<u8, 8> supported_diamond_build_id = { 0x94, 0xCE, 0xAE, 0x32, 0x5C, 0x20, 0x5C, 0x4B };
-    tryGameWithBuildId(MainBdSpView, SupportedGame::BrilliantDiamond, supported_diamond_build_id);
+    tryGameWithBuildId(MainBdSpView, csight::SupportedGame::BrilliantDiamond, supported_diamond_build_id);
 
     std::array<u8, 8> supported_pearl_build_id = { 0x38, 0xF5, 0x9C, 0xBD, 0xA2, 0xEB, 0x9C, 0x44 };
-    tryGameWithBuildId(MainBdSpView, SupportedGame::ShiningPearl, supported_pearl_build_id);
+    tryGameWithBuildId(MainBdSpView, csight::SupportedGame::ShiningPearl, supported_pearl_build_id);
 
     std::array<u8, 8> supported_arceus_build_id = { 0xAE, 0xE8, 0xF1, 0x50, 0xDD, 0xA1, 0xB5, 0xA8 };
-    tryGameWithBuildId(MainArceusView, SupportedGame::Arceus, supported_arceus_build_id);
+    tryGameWithBuildId(MainArceusView, csight::SupportedGame::Arceus, supported_arceus_build_id);
+
+    std::array<u8, 8> supported_scarlet_build_id = { 0xB2, 0x6A, 0x63, 0x11, 0x09, 0xA2, 0x91, 0x24 };
+    tryGameWithBuildId(MainSvView, csight::SupportedGame::Scarlet, supported_scarlet_build_id);
+
+    std::array<u8, 8> supported_violet_build_id = { 0xF7, 0xF7, 0x4F, 0x80, 0x45, 0x64, 0x2C, 0xBE };
+    tryGameWithBuildId(MainSvView, csight::SupportedGame::Violet, supported_violet_build_id);
 
     return initially<ErrorView>("Unsupported game!\n\nTitle Id:\n" + utils::num_to_hex(title_id));
   }

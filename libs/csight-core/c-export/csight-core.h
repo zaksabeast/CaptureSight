@@ -3,12 +3,10 @@
 #include "arceus.h"
 #include "bdsp.h"
 #include "den.h"
-#include "pa8.h"
-#include "pk8.h"
 #include "rng_tracker.h"
 #include "spawn.h"
+#include "sv.h"
 #include "swsh.h"
-#include "trainer_info.h"
 #include <switch.h>
 
 #ifdef __cplusplus

@@ -1,6 +1,5 @@
 use super::offsets;
 use crate::{dmntcht::DmntReader, trainer_info::TrainerInfo};
-use alloc::boxed::Box;
 use core::mem;
 use no_std_io::EndianRead;
 use pkm_rs::{Ek8, Pk8};
@@ -179,12 +178,12 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn bdsp_read_encounter_pokemon(index: u8) -> *mut Pk8 {
-        Box::into_raw(Box::new(read_encounter_pokemon(index)))
+        crate::utils::boxed!(read_encounter_pokemon(index))
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn bdsp_read_party_pokemon(index: u8) -> *mut Pk8 {
-        Box::into_raw(Box::new(read_party_pokemon(index)))
+        crate::utils::boxed!(read_party_pokemon(index))
     }
 
     #[no_mangle]
@@ -199,12 +198,12 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn bdsp_read_underground_pokemon(index: usize) -> *mut Pk8 {
-        Box::into_raw(Box::new(read_underground_pokemon(index)))
+        crate::utils::boxed!(read_underground_pokemon(index))
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn bdsp_read_other_player_union_trade_pokemon() -> *mut Pk8 {
-        Box::into_raw(Box::new(read_other_player_union_trade_pokemon()))
+        crate::utils::boxed!(read_other_player_union_trade_pokemon())
     }
 
     #[no_mangle]

@@ -10,7 +10,7 @@
 #include <tesla.hpp>
 #include <vector>
 
-static std::string getRoamerLabel(csight::bdsp::Roamer *roamer) {
+static std::string getRoamerLabel(csight::BdspRoamer *roamer) {
   // Only show the lower 32 bits since the upper 32 bits are never used
   return csight::Pkx::SpeciesString(roamer->species) + " Seed: " + utils::num_to_hex(roamer->rng_seed_low);
 }

@@ -46,7 +46,6 @@ mod c_api {
         titles::SupportedGame,
         trainer_info::TrainerInfo,
     };
-    use alloc::boxed::Box;
     use pkm_rs::Pk8;
 
     #[no_mangle]
@@ -56,27 +55,27 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn swsh_read_party_pokemon(index: u8) -> *mut Pk8 {
-        Box::into_raw(Box::new(super::read_party_pokemon(index)))
+        crate::utils::boxed!(super::read_party_pokemon(index))
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn swsh_read_wild_pokemon() -> *mut Pk8 {
-        Box::into_raw(Box::new(super::read_wild_pokemon()))
+        crate::utils::boxed!(super::read_wild_pokemon())
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn swsh_read_wild_legend_pokemon() -> *mut Pk8 {
-        Box::into_raw(Box::new(super::read_wild_legend_pokemon()))
+        crate::utils::boxed!(super::read_wild_legend_pokemon())
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn swsh_read_trade_pokemon() -> *mut Pk8 {
-        Box::into_raw(Box::new(super::read_trade_pokemon()))
+        crate::utils::boxed!(super::read_trade_pokemon())
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn swsh_read_raid_pokemon() -> *mut Pk8 {
-        Box::into_raw(Box::new(super::read_raid_pokemon()))
+        crate::utils::boxed!(super::read_raid_pokemon())
     }
 
     #[no_mangle]
@@ -99,6 +98,6 @@ mod c_api {
 
         let den = Den::new(data, den_hash_index, game);
 
-        Box::into_raw(Box::new(den))
+        crate::utils::boxed!(den)
     }
 }

@@ -80,22 +80,15 @@ impl Writer for SpawnGroup {
 
 mod c_api {
     use super::*;
-    use alloc::boxed::Box;
 
     #[no_mangle]
     pub unsafe extern "C" fn free_spawn_group(ptr: *mut SpawnGroup) {
-        if ptr.is_null() {
-            return;
-        }
-
-        drop(Box::from_raw(ptr));
+        crate::utils::free!(ptr);
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn spawn_group_get_seed(ptr: *mut SpawnGroup) -> u64 {
-        assert!(!ptr.is_null());
-        let spawn_group = &*ptr;
-        spawn_group.get_seed()
+        crate::utils::run_method!(ptr, get_seed)
     }
 
     #[no_mangle]
@@ -105,8 +98,7 @@ mod c_api {
         seed1: *mut u64,
         index: usize,
     ) {
-        assert!(!ptr.is_null());
-        let spawn_group = &*ptr;
+        let spawn_group = crate::utils::open_box!(ptr);
         let (read_seed0, read_seed1) = spawn_group.get_spawn_pair_seeds(index);
         *seed0 = read_seed0;
         *seed1 = read_seed1;

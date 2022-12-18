@@ -1,38 +1,16 @@
 #pragma once
 
-#include <switch.h>
-
-#ifdef __cplusplus
-
+#include "generated.h"
 #include <array>
 #include <string>
+#include <switch.h>
+
 namespace csight::swsh {
-  extern "C" {
-#endif
-  typedef struct den den_t;
-
-  enum DenType {
-    Vanilla = 0,
-    IslandOfArmor = 1,
-    CrownTundra = 2,
-  };
-
-  den_t *swsh_read_den(bool is_sword, size_t index, DenType den_type);
-  void free_den(den_t *ptr);
-  void den_shiny_details_string(den_t *ptr, char *out, size_t out_size);
-  void den_species_string(den_t *ptr, char *out, size_t out_size);
-  bool den_is_event(den_t *ptr);
-  bool den_is_active(den_t *ptr);
-  u64 den_seed(den_t *ptr);
-
-#ifdef __cplusplus
-  }
-
   class Den {
    public:
     static const size_t Size = 0x18;
 
-    Den(bool is_sword, size_t index, DenType den_type) { m_den = swsh_read_den(is_sword, index, den_type); }
+    Den(bool is_sword, size_t index, SwshDenType den_type) { m_den = swsh_read_den(is_sword, index, den_type); }
     ~Den() { free_den(m_den); }
 
     std::string ShinyDetailsString() {
@@ -57,4 +35,3 @@ namespace csight::swsh {
     den_t *m_den;
   };
 };
-#endif

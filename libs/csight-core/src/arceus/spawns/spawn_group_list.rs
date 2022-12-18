@@ -1,6 +1,5 @@
 use super::spawn_group::SpawnGroup;
 use crate::{arceus::offsets::Offset, dmntcht::DmntReader};
-use alloc::boxed::Box;
 use core::cmp;
 
 const MAX_SPAWN_GROUP_COUNT: usize = 512;
@@ -72,7 +71,7 @@ mod c_api {
     pub unsafe extern "C" fn arceus_read_spawn_group(index: usize) -> *mut SpawnGroup {
         let spawn_group_list = read_spawn_group_list();
         let spawn_group = spawn_group_list.get_spawn_group(index);
-        Box::into_raw(Box::new(spawn_group))
+        crate::utils::boxed!(spawn_group)
     }
 }
 

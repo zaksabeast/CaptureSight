@@ -6,7 +6,7 @@ use super::{
     shield_nests, sword_nests,
 };
 use crate::{swsh::ShinyType, titles::SupportedGame};
-use alloc::{boxed::Box, string::ToString};
+use alloc::string::ToString;
 use no_std_io::Reader;
 
 type DenBytes = [u8; Den::SIZE];
@@ -156,21 +156,16 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn free_den(ptr: *mut Den) {
-        if ptr.is_null() {
-            return;
-        }
-
-        drop(Box::from_raw(ptr));
+        crate::utils::free!(ptr);
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn den_shiny_details_string(
         ptr: *mut Den,
-        dst: *mut u8,
+        dst: *mut core::ffi::c_char,
         dst_length: usize,
     ) {
-        assert!(!ptr.is_null());
-        let den = &*ptr;
+        let den = crate::utils::open_box!(ptr);
 
         let shiny_details = den.shiny_details(10000);
 
@@ -184,9 +179,12 @@ mod c_api {
     }
 
     #[no_mangle]
-    pub unsafe extern "C" fn den_species_string(ptr: *mut Den, dst: *mut u8, dst_length: usize) {
-        assert!(!ptr.is_null());
-        let den = &*ptr;
+    pub unsafe extern "C" fn den_species_string(
+        ptr: *mut Den,
+        dst: *mut core::ffi::c_char,
+        dst_length: usize,
+    ) {
+        let den = crate::utils::open_box!(ptr);
 
         if den.is_event() {
             c_str::copy_as_c_str("Event", dst, dst_length)
@@ -198,22 +196,16 @@ mod c_api {
 
     #[no_mangle]
     pub unsafe extern "C" fn den_is_event(ptr: *mut Den) -> bool {
-        assert!(!ptr.is_null());
-        let den = &*ptr;
-        den.is_event()
+        crate::utils::run_method!(ptr, is_event)
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn den_is_active(ptr: *mut Den) -> bool {
-        assert!(!ptr.is_null());
-        let den = &*ptr;
-        den.is_active()
+        crate::utils::run_method!(ptr, is_active)
     }
 
     #[no_mangle]
     pub unsafe extern "C" fn den_seed(ptr: *mut Den) -> u64 {
-        assert!(!ptr.is_null());
-        let den = &*ptr;
-        den.seed()
+        crate::utils::run_method!(ptr, seed)
     }
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../constants.hpp"
 #include "./debug.hpp"
 #include <atomic>
 #include <csight-core.h>
@@ -52,7 +51,9 @@ namespace utils {
 
   std::atomic<bool> g_isAttached(false);
 
-  bool getIsAttached() { return g_isAttached; }
+  bool getIsAttached() {
+    return g_isAttached;
+  }
 
   bool setIsAttached(bool attached) {
     g_isAttached = attached;

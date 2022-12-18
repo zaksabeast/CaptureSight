@@ -98,12 +98,11 @@ fn find_pk8_raid_seed(pk8: &Pk8) -> Option<u64> {
 }
 
 mod c_api {
-    use pkm_rs::Pk8;
+    use pkm_rs::{Pa8, Pk8, Pk9};
 
     #[no_mangle]
     pub unsafe extern "C" fn find_pk8_raid_seed(out: *mut u64, ptr: *mut Pk8) -> bool {
-        assert!(!ptr.is_null());
-        let pk8 = &*ptr;
+        let pk8 = crate::utils::open_box!(ptr);
         let seed = super::find_pk8_raid_seed(pk8);
 
         match seed {
@@ -113,6 +112,16 @@ mod c_api {
             }
             None => false,
         }
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn find_pa8_raid_seed(_out: *mut u64, _ptr: *mut Pa8) -> bool {
+        false
+    }
+
+    #[no_mangle]
+    pub unsafe extern "C" fn find_pk9_raid_seed(_out: *mut u64, _ptr: *mut Pk9) -> bool {
+        false
     }
 }
 

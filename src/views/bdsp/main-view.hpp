@@ -1,13 +1,12 @@
 #pragma once
 
-#include "../../constants.hpp"
 #include "../pokemon-view.hpp"
 #include "../rng-view.hpp"
 #include "../trainer-view.hpp"
 #include "./daycare-view.hpp"
+#include "./pokemon-list-view.hpp"
 #include "./roamer-view.hpp"
 #include "./underground-view.hpp"
-#include "./pokemon-list-view.hpp"
 #include <csight-core.h>
 #include <cstring>
 #include <iomanip>
