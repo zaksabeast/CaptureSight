@@ -131,9 +131,9 @@ checksum = "308cc39be01b73d0d18f82a0e7b2a3df85245f84af96fdddc5d202d27e47b86a"
 
 [[package]]
 name = "mocktopus"
-version = "0.7.11"
+version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d1e54a5bbecd61a064cb9c6ef396f8c896aee14e5baba8d1d555f35167dfd7c3"
+checksum = "1e4f0d5a1621fea252541cf67533c4b9c32ee892d790768f4ad48f1063059537"
 dependencies = [
  "mocktopus_macros",
 ]

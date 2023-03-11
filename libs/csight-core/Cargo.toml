@@ -14,7 +14,7 @@ no_std_io = { git = "https://github.com/zaksabeast/no_std_io.git", rev = "4bc5ad
 pkm-rs = { git = "https://github.com/zaksabeast/pkm-rs.git", rev = "b8e739f" }
 
 [dev-dependencies]
-mocktopus = "0.7.11"
+mocktopus = "0.8.0"
 
 [target.'cfg(target_os = "horizon")'.dependencies]
 linked_list_allocator = "0.10"
